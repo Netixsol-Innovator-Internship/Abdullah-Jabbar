@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html>
+    <hr>
   <head>
     HTML Tags Practice Page by Abdullah Jabbar
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   </head>
   <title>HTML Tags Page</title>
+  <header> This is Header  <nav>home</nav></header>
   <body>
+    
+     <nav>
+    <a href="#Headings">Headings</a>
+    <a href="#Lists">Lists</a>
+    <a href="#Table">Table</a>
+     <a href="#inputs">Form</a>
+     <a href="contact">Contact</a>
+  </nav>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
     <br />(a linebreak is inserted using br tag hear) <br /><br />Text is inside
     body tag Headings:
     <hr />
     used hr Tag ubove
+    <section id="Headings">
     <h1>H1 Tag</h1>
     <h2>H2 Tag</h2>
     <h3>H3 Tag</h3>
     <h4>H4 Tag</h4>
     <h5>H5 Tag</h5>
     <h6>H6 Tag</h6>
+    </section>
     <br>
     <p>Writing Text in p Tags</p>
     <p>My name is Abdullah Jabbar</p>
     <p>I am a NetixSol Intern</p>
     <p>Graduated from FAST</p>
 
+    <section id="Lists">
     <ul> Unordered List:  
         <li>A</li>
         <li>B</li>
@@ -55,7 +73,7 @@
         <li><a href="https://apps.cognitiveclass.ai/authn/login?next=%2Foauth2%2Fauthorize%3Fclient_id%3DXCTzu9NHWn%26redirect_uri%3Dhttps%253A%252F%252Fcognitiveclass.ai%252Fauth%252Fopen_edx%252Fcallback%26response_type%3Dcode%26scope%3Duser_id%2520profile%2520email%26state%3D476fa36a7aae75eea122f6bd29e2710b4c3152db19b234b3">
             Cognitive Class</a></li>
     </ol>
-
+    </section>
     <br>
     Image Tags
     <br>
@@ -69,8 +87,11 @@
     <br>Pawn <img width="50" height="50" src="https://img.icons8.com/fluency/50/pawn.png" alt="pawn"/>
 
 
+    <br><br>
+    <section id="Table">
+    <th>Table</th>
     <br>
-    <table>  <th>Table</th>
+    <table>  
         <tr>
             <td>
                 Entry 1
@@ -81,10 +102,146 @@
             <td>Entry 3</td>
         </tr>
         <tr>
-            <td>Entry 1</td>
-            <td></td>
+            <td><em>Entry 1</em></td>
+            <td><em>Entry 2</em></td>
+            <td><em>Entry 3</em></td>
         </tr>
+        <tr><strong>Entry 1</strong></tr>
+        <tr><strong>Entry 2</strong></tr>
+        <tr><strong>Entry 3</strong></tr>
 
     </table>
+    </section>
+    <section id="inputs">
+    <form action="">This is a form</form>
+    <input type="text" placeholder="Enter your name here" />
+    <button>Enter</button>
+     <br><button>Clear input</button>
+<br>
+    <input type="text" placeholder="Enter your email here" />
+    <button>Enter</button>
+   </section>
+
+   <section id="contact">
+  <h5>Contact Me</h5>
+  <form>
+    <label for="name">Name:</label>
+    <input type="text" id="name" placeholder="Your name here">
+    <br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Your email here">
+    <br><br>
+    <button type="submit">Send</button>
+    <button type="reset">Clear</button>
+  </form>
+</section>
+
+    <br><hr><br><footer>
+        All Rights Recieved &copy; 2023 Abdullah Jabbar
+        <br>
+    </footer>
+    <hr>
+    
+    <script></script>
+    <!-- Extra headings -->
+<h2>Extra Heading One</h2>
+<h3>Extra Heading Two</h3>
+<h4>Extra Heading Three</h4>
+<h5>Extra Heading Four</h5>
+<h6>Extra Heading Five</h6>
+
+<p>This is another paragraph added for testing.</p>
+<p>Learning HTML is fun and useful!</p>
+<strong>This text is bold.</strong>
+<em>This text is italicized.</em>
+<br><br>
+<hr>
+
+<!-- More lists -->
+<ul>
+  <li>HTML</li>
+  <li>CSS</li>
+  <li>JavaScript</li>
+</ul>
+
+<ol>
+  <li>Learn syntax</li>
+  <li>Practice examples</li>
+  <li>Build projects</li>
+</ol>
+
+
+<a href="https://www.example.com">Visit Example</a>
+<a href="#top">Back to Top</a>
+<img src="https://via.placeholder.com/100" alt="Placeholder 1">
+<img src="https://via.placeholder.com/120" alt="Placeholder 2">
+
+
+<div>This is an additional <span>inline span</span> inside a div.</div>
+<div>Practicing <strong>block containers</strong>.</div>
+
+
+<table >
+  <tr>
+    <th>Tool</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td>VS Code</td>
+    <td>Code Editor</td>
+  </tr>
+  <tr>
+    <td>Git</td>
+    <td>Version Control</td>
+  </tr>
+</table>
+
+
+<form>
+  <label for="phone">Phone:</label>
+  <input type="tel" id="phone" placeholder="Enter phone number">
+  <br>
+  <button>Submit</button>
+</form>
+
+<form>
+  <label for="age">Age:</label>
+  <input type="number" id="age" placeholder="Enter age">
+  <br>
+  <button>Send</button>
+</form>
+
+
+<section>
+  <h4>Mini Section</h4>
+  <p>This is a small section block with text.</p>
+</section>
+
+<header>
+  <h2>Repeated Header Area</h2>
+</header>
+
+<footer>
+  <p>This is an additional footer section.</p>
+</footer>
+
+
+<button>One</button>
+<button>Two</button>
+<button>Three</button>
+<button>Four</button>
+<button>Five</button>
+
+
+<input type="text" placeholder="Extra input 1">
+<input type="text" placeholder="Extra input 2">
+<input type="text" placeholder="Extra input 3">
+<input type="email" placeholder="Extra email">
+
+
+<meta name="author" content="Abdullah Jabbar">
+<link rel="stylesheet" href="extra-style.css">
+<script>console.log('Extra script running');</script>
+
   </body>
 </html>
