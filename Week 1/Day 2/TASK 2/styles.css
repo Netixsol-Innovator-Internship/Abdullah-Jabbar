@@ -1,0 +1,168 @@
+.page {
+    margin: 30px;
+    transform: scale(0.9);
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f9f9f9;
+}
+
+h1, h2 {
+  color: #1e1e1e;
+}
+
+.Icons {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+hr {
+    height: 2px;
+    background-color: black;
+    border: none;
+    margin: 20px 0;
+}
+
+header {
+    text-align: center;
+}
+
+/* Global link styling and animation */
+a {
+    position: relative;
+   color: #0073e6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+a:hover {
+     color: #005bb5;
+}
+
+a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Grid layout with spacing */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1rem;
+}
+
+/* Make grid list items look like cells */
+
+.flex-2cols {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;         /* Optional spacing between columns */
+}
+
+.flex-2cols > .col-1 {
+  flex: 0 0 24%; /* 60% width */
+}
+
+.flex-2cols > .col-2 {
+  flex: 0 0 75%; /* 40% width */
+}
+.split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+
+}
+.split h4 {
+  margin: 0;
+  font-weight: 600;
+}
+.split2
+{
+     display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+}
+
+.lang-grid {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+}
+
+.lang-cell {
+  flex: 1;
+  justify-self: center;
+
+}
+.lang-cell-date {
+  float: right;
+  font-size: 1rem;
+
+}
+
+
+@media (max-width: 768px) {
+  .page {
+    margin: 10px;
+    transform: scale(1); /* Remove scale on small screens for readability */
+    padding: 0.5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* Reduce to 2 columns on small screens */
+  }
+
+  .flex-2cols {
+    flex-direction: column;
+  }
+
+  .flex-2cols > .col-1,
+  .flex-2cols > .col-2 {
+    flex: 1 1 100%;
+  }
+
+  .split {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .split2 {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .lang-grid {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .lang-cell {
+    width: 100%;
+  }
+
+  .lang-cell-date {
+    float: none;
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+}
