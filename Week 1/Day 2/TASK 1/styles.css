@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #edf2f8;
+  font-family: "Barlow Semi Condensed", sans-serif;
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.container {
+    transform: scale(0.90); /* scale down to 85% */
+  transform-origin: top center;
+  max-width: 75rem;
+    margin-top: 20px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 30px;
+  row-gap: 15px;
+
+  height: 85%;           /* optional: limit height */
+     /
+}
+
+.item {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /*added hover effect*/
+}
+
+.item:hover {
+  transform: scale(1.03);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 20px 40px;
+}
+
+.item__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item__header h3 {
+  font-size: 15px;
+}
+
+.item__header p {
+  opacity: 50%;
+}
+
+.item__img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #996ed9;
+  margin-right: 10px;
+}
+
+.item__lead {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+
+.item__quote {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  opacity: 70%;
+}
+
+.item--bg-purple {
+  background: hsl(263, 55%, 52%);
+  color: #fff;
+  background-image: url("./images/bg-pattern-quotation.svg");
+  background-repeat: no-repeat;
+  background-position: top 10px right 100px;
+}
+
+.item--bg-gray-blue {
+  background: hsl(217, 19%, 35%);
+  color: #fff;
+}
+
+.item--bg-black-blue {
+  background: hsl(219, 29%, 14%);
+  color: #fff;
+}
+
+/* Defining Variable Sizes for Cards */
+.item:nth-of-type(1) {
+  grid-column: 1 / 3;
+}
+
+.item:nth-of-type(4) {
+  grid-column: 2 / 4;
+  grid-row: 2;
+}
+
+.item:nth-of-type(5) {
+  grid-column: 4;
+  grid-row: 1 / 3;
+}
+/* ----------------------------------- */
+
+
+/* Mobile View / Small Screen View */
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .item:nth-of-type(1) {
+    grid-column: 1;
+  }
+
+  .item:nth-of-type(4) {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .item:nth-of-type(5) {
+    grid-column: 1;
+    grid-row: 5;
+  }
+}
