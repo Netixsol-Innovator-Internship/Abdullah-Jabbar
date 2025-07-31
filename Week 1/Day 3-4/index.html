@@ -6,343 +6,601 @@
     <title>Explore Saudi Arabia</title>
     <link href="./dist/output.css" rel="stylesheet" />
     <link rel="icon" href="/images/Saudi Weclome.svg" type="image/x-icon" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body class="bg-black text-white font-sans">
     <!-- Container Div -->
-      <div class="max-w-7xl mx-auto">
-    <!-- Hero Section -->
-<section
-  class="relative min-h-screen bg-cover bg-bottom "
-  style="background-image:url('/images/saudi-logo.png')"
->
-  <div class="max-w-7xl mx-auto px-4 flex flex-col justify-between ">
-
-
-      <!-- Top Nav -->
-      <header class="flex justify-between items-center px-4 sm:px-6 lg:px-8 pt-4">
-        <div>
-          <img src="/images/Saudi Weclome.svg" alt="Saudi Logo" class="h-15 ml-3 mt-2" />
-        </div>
-        <nav class="flex items-center space-x-6">
-      <button
-  id="theme-toggle"
-  type="button"
-  class="relative mt-1 h-6 px-2 rounded-full text-sm bg-white text-black flex items-center space-x-3 overflow-hidden"
->
-  <!-- Sliding background circle -->
-  <span
-    id="indicator"
-    class="absolute top-[2px] left-2 h-5 w-5 rounded-full bg-gray-300 z-0 transition-transform duration-300"
-    style="transform: translateX(0);"
-  ></span>
-
-  <!-- Moon icon -->
-  <span id="moon-icon" class="w-4 h-4 z-10 flex-shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none"
-      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" />
-    </svg>
-  </span>
-
-  <!-- Sun icon -->
-  <span id="sun-icon" class="w-4 h-4 z-10 flex-shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none"
-      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2M12 20v2M20 12h2M2 12H4M17.66 6.34l1.41-1.41M4.93 4.93L6.34 6.34M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41" />
-    </svg>
-  </span>
-</button>
-
-          <a href="#" class="hover:underline">Destinations</a>
-          <a href="#" class="hover:underline">Members</a>
-          <a href="#" class="hover:underline">Gallery</a>
-        </nav>
-      </header>
-
-      <!-- Center Text -->
-      <div class="text-center mb-12 ">
-        <h1 class=" text-5xl md:text-4xl font-extrabold leading-tight">
-          Explore<br />Saudi Arabia
-        </h1>
-        <p class="mt-3 max-w-sm mx-auto">
-          Saudi Arabia is rich in heritage and history. The country is home to
-          hundreds of historically important sites.
-        </p>
-      </div>
-
-  
-     <!-- Bottom Info Boxes -->
-<div class="flex flex-col md:flex-row md:justify-between px-4 sm:px-6 lg:px-8 pb-12 space-y-8 md:space-y-0 md:space-x-8">
-  <!-- Box 1 -->
-  <div class="max-w-sm flex flex-col space-y-2">
-    <h2 class="text-4xl font-semibold">History and Heritage</h2>
-    <p class="text-sm">
-      Saudi Arabia has long occupied an important role at the center of
-      the Islamic and Arab worlds. Located at the heart of three
-      continents.
-    </p>
-  </div>
-
-  <!-- Box 2 -->
-  <div class="max-w-sm flex flex-col space-y-2">
-    <h2 class="text-4xl font-semibold">People and Culture</h2>
-    <p class="text-sm">
-      Saudi Arabia has a rich Culture shaped by the diversity of its
-      people, which has formed the basis of its cultural identity.
-    </p>
-  </div>
-</div>
-
-      
-      </div>
-    </section>
-
-
-<!-- 2nd Section -->
-<section class="bg-black py-12">
-  <div class="max-w-[90rem] mx-auto px-6 sm:px-12">
-    <div class="flex flex-wrap justify-center gap-x-8 md:gap-x-16 gap-y-10">
-
-      <img src="/images/Arabic Saudi.png" alt="Saudia Logo" class="h-20 object-contain" />
-      <img src="/images/Al_Rajhi_Bank_Logo.png" alt="Al Rajhi Bank Logo" class="h-20 object-contain" />
-      <img src="/images/STC.png" alt="STC Logo" class="h-20 object-contain" />
-      <img src="/images/Almarai.png" alt="Almarai Logo" class="h-20 object-contain" />
-    </div>
-  </div>
-</section>
-
-<!-- 3rd Section -->
-<section class="bg-black text-white py-16">
-  <div class="max-w-7xl mx-auto px-4">
-    <!-- Section Header -->
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold">Best Destinations</h2>
-      <p class="mt-2 text-gray-400">Explore the enchanting landscapes of Saudi Arabia, from the breathtaking deserts to the stunning coastal shores.</p>
-    </div>
-
-    <!-- Destination Cards Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-      <div class="relative rounded-xl overflow-hidden h-96 bg-cover bg-center" style="background-image: url('/images/card1.png');">
-        <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
-          <h3 class="font-semibold text-lg">Hisma Desert</h3>
-          <p class="text-sm text-gray-300">The Hisma desert is a true marvel of nature...</p>
-          <div class="flex items-center mt-4">
-            <img src="/images/P1.png" class="w-8 h-8 rounded-full mr-2" />
+    <div class="max-w-7xl mx-auto">
+      <!-- Hero Section -->
+      <section
+        class="relative min-h-screen bg-cover bg-bottom"
+        style="background-image: url('/images/saudi-logo.png')"
+      >
+        <div class="max-w-7xl mx-auto px-4 flex flex-col justify-between">
+          <!-- Top Nav -->
+          <!-- Top Nav -->
+          <header
+            class="flex justify-between items-center px-4 sm:px-6 lg:px-8 pt-4 relative"
+          >
+            <!-- Logo -->
             <div>
-              <p class="text-sm font-medium">Wazeem Al Mulk</p>
-              <p class="text-xs text-gray-400">Traveler</p>
+              <img
+                src="/images/Saudi Weclome.svg"
+                alt="Saudi Logo"
+                class="h-16 ml-3 mt-2"
+              />
+            </div>
+
+            <!-- Hamburger (shown on small screens only) -->
+            <button id="hamburger" class="sm:hidden focus:outline-none">
+              <svg
+                class="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
+            <!-- Main Navigation -->
+            <nav
+              id="nav-menu"
+              class="hidden sm:flex flex-wrap items-center space-x-4 sm:space-x-6 absolute sm:static top-16 left-0 w-full sm:w-auto bg-black sm:bg-transparent px-4 sm:px-0 py-4 sm:py-0 z-50"
+            >
+              <!-- Theme toggle button -->
+              <button
+                id="theme-toggle"
+                type="button"
+                class="relative h-6 px-2 rounded-full text-sm bg-white text-black flex items-center space-x-3 overflow-hidden"
+              >
+                <!-- Indicator -->
+                <span
+                  id="indicator"
+                  class="absolute top-[2px] left-2 h-5 w-5 rounded-full bg-gray-300 z-0 transition-transform duration-300"
+                  style="transform: translateX(0)"
+                ></span>
+
+                <!-- Moon -->
+                <span id="moon-icon" class="w-4 h-4 z-10 flex-shrink-0">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-full h-full"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"
+                    />
+                  </svg>
+                </span>
+
+                <!-- Sun -->
+                <span id="sun-icon" class="w-4 h-4 z-10 flex-shrink-0">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-full h-full"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <circle cx="12" cy="12" r="4" />
+                    <path
+                      d="M12 2v2M12 20v2M20 12h2M2 12H4M17.66 6.34l1.41-1.41M4.93 4.93L6.34 6.34M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41"
+                    />
+                  </svg>
+                </span>
+              </button>
+
+              <!-- Nav Links -->
+              <a href="#destinations" class="hover:underline text-white"
+                >Destinations</a
+              >
+              <a href="#members" class="hover:underline text-white">Members</a>
+              <a href="#gallery" class="hover:underline text-white">Gallery</a>
+            </nav>
+          </header>
+
+          <!-- Center Text -->
+          <div class="text-center mb-12">
+            <h1 class="text-5xl md:text-4xl font-extrabold leading-tight">
+              Explore<br />Saudi Arabia
+            </h1>
+            <p class="mt-3 max-w-sm mx-auto">
+              Saudi Arabia is rich in heritage and history. The country is home
+              to hundreds of historically important sites.
+            </p>
+          </div>
+
+          <!-- Bottom Info Boxes -->
+          <div
+            class="flex flex-col md:flex-row md:justify-between px-4 sm:px-6 lg:px-8 pb-12 space-y-8 md:space-y-0 md:space-x-8"
+          >
+            <!-- Box 1 -->
+            <div class="max-w-sm flex flex-col space-y-2">
+              <h2 class="text-4xl font-semibold">History and Heritage</h2>
+              <p class="text-sm">
+                Saudi Arabia has long occupied an important role at the center
+                of the Islamic and Arab worlds. Located at the heart of three
+                continents.
+              </p>
+            </div>
+
+            <!-- Box 2 -->
+            <div class="max-w-sm flex flex-col space-y-2">
+              <h2 class="text-4xl font-semibold">People and Culture</h2>
+              <p class="text-sm">
+                Saudi Arabia has a rich Culture shaped by the diversity of its
+                people, which has formed the basis of its cultural identity.
+              </p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="relative rounded-xl overflow-hidden h-96 bg-cover bg-center" style="background-image: url('/images/card2.png');">
-        <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
-          <h3 class="font-semibold text-lg">Kafd World Trade Centre, Riyadh.</h3>
-          <div class="flex items-center mt-4">
-            <img src="/images/P2.png" class="w-8 h-8 rounded-full mr-2" />
-            <div>
-              <p class="text-sm font-medium">Benjamin Vargas</p>
-              <p class="text-xs text-gray-400">Traveler</p>
-            </div>
+      <!-- 2nd Section -->
+      <section class="bg-black py-12">
+        <div class="max-w-[90rem] mx-auto px-6 sm:px-12">
+          <div
+            class="flex flex-wrap justify-center gap-x-8 md:gap-x-16 gap-y-10"
+          >
+            <img
+              src="/images/Arabic Saudi.png"
+              alt="Saudia Logo"
+              class="h-20 object-contain"
+            />
+            <img
+              src="/images/Al_Rajhi_Bank_Logo.png"
+              alt="Al Rajhi Bank Logo"
+              class="h-20 object-contain"
+            />
+            <img
+              src="/images/STC.png"
+              alt="STC Logo"
+              class="h-20 object-contain"
+            />
+            <img
+              src="/images/Almarai.png"
+              alt="Almarai Logo"
+              class="h-20 object-contain"
+            />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="relative rounded-xl overflow-hidden h-96 bg-cover bg-center" style="background-image: url('/images/card3.png');">
-        <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
-          <h3 class="font-semibold text-lg">Al Qarah Mountain</h3>
-          <p class="text-sm text-gray-300">The Mountain’s distinctive rock formations invite adventure...</p>
-          <div class="flex items-center mt-4">
-            <img src="/images/P3.png" class="w-8 h-8 rounded-full mr-2" />
-            <div>
-              <p class="text-sm font-medium">John Towner</p>
-              <p class="text-xs text-gray-400">Traveler</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="relative rounded-xl overflow-hidden h-96 bg-cover bg-center" style="background-image: url('/images/card4.png');">
-        <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
-          <h3 class="font-semibold text-lg">The best of Tabuk</h3>
-          <p class="text-sm text-gray-300">Tabuk also spelled Tabouk...</p>
-          <div class="flex items-center mt-4">
-            <img src="/images/P4.png" class="w-8 h-8 rounded-full mr-2" />
-            <div>
-              <p class="text-sm font-medium">Jonatan Pie</p>
-              <p class="text-xs text-gray-400">Influencer</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="relative rounded-xl overflow-hidden h-96 bg-cover bg-center" style="background-image: url('/images/card5.png');">
-        <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
-          <h3 class="font-semibold text-lg">AlUla</h3>
-          <p class="text-sm text-gray-300">AlUla is a global destination...</p>
-          <div class="flex items-center mt-4">
-            <img src="/images/P5.png" class="w-8 h-8 rounded-full mr-2" />
-            <div>
-              <p class="text-sm font-medium">Garrett Parker</p>
-              <p class="text-xs text-gray-400">Traveler</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="relative rounded-xl overflow-hidden h-96 bg-cover bg-center" style="background-image: url('/images/card6.png');">
-        <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
-          <h3 class="font-semibold text-lg">The best things To do in Taif</h3>
-          <p class="text-sm text-gray-300">Taif is the only governorate in the Makkah Region...</p>
-          <div class="flex items-center mt-4">
-            <img src="/images/P6.png" class="w-8 h-8 rounded-full mr-2" />
-            <div>
-              <p class="text-sm font-medium">Cristiano Gottardi</p>
-              <p class="text-xs text-gray-400">Traveler</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- See More Link -->
-    <div class="text-right mt-6 xl:mr-2">
-      <a href="#" class="text-sm text-white font-semibold underline">See More</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- Section 5 -->
-<section class="relative h-screen w-full bg-cover bg-center" style="background-image: url('images/HismaDesert.png');">
-  <!-- Top Gradient Fade -->
-  <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent z-0"></div>
-
-  <!-- Bottom Gradient Fade -->
-  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-0"></div>
-
-  <!-- Optional: Full faint overlay for mood (can be adjusted or removed) -->
-  <div class="absolute inset-0 bg-black opacity-30 z-0"></div>
-
-  <!-- Content (on top of gradients) -->
-  <div class="relative z-10 flex justify-between items-end h-full text-white p-6 px-8 md:px-12 lg:px-20">
-    <div class="flex flex-col">
-      <h2 class="text-8xl font-normal" style="font-family: 'Imperial Script', cursive;">Hisma</h2>
-      <p class="text-8xl font-semibold" style="font-family: 'Poppins', sans-serif;">Desert</p>
-    </div>
-    <div class="flex items-center mb-8">
-      <div class="w-16 h-16 rounded-full bg-cover bg-center" style="background-image: url('images/P1.png');"></div>
-      <div class="ml-4">
-        <p class="text-lg font-semibold">Wazeem Al Mulk</p>
-        <p class="text-sm">Traveler</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Section 6 -->
- <section class="container mx-auto px-4 py-8 md:py-12 text-center max-w-4xl">
-  <p class="text-lg text-left md:text-xl leading-relaxed text-white">
-    The Hisma Desert in Saudi Arabia is a realm of ethereal beauty that captivates the senses. Its vast expanse of golden sand dunes, sculpted by the winds of time, creates a mesmerizing landscape that stretches as far as the eye can see. As the sun sets, painting the sky with vivid hues.
+      <!-- 3rd Section -->
+     <section
+        class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  p-6 rounded-lg shadow-lg max-w-screen-xl mx-auto h-[1106px] mt-12 "
+      >
+        <div
+          class=" rounded-lg shadow-sm grid grid-rows-[61%_39%] h-full"
+        >
+        <!-- Card 1 -->
+          <div style="background-image: url('/images/card1.png');"
+            class=" text-white text-left p-4 rounded-lg flex items-center justify-center  text-sm font-semibold">
+            <div class="p-4   text-white rounded-b-lg flex flex-col justify-between h-full">
+    <!-- Top Row -->
+   <div>
+  <h3 class="font-bold text-xl lg:text-2xl">Hisma Desert</h3>
+  <p class="text-base lg:text-lg text-gray-300 mt-1">
+    The hisma desert is a true marvel of
+nature, and several desert oasis.
   </p>
-</section>
+</div>
 
-<!-- Section 7 -->
-<section class="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg mb-10">
-  <!-- Background Image -->
-  <img src="images/ExploreSaudi.png" 
-       onerror="this.onerror=null;this.src='https://placehold.co/1200x600/000000/FFFFFF?text=Explore%20Saudi%20Arabia'"
-       alt="Desert landscape with a person exploring an archway"
-       class="absolute inset-0 w-full h-full object-cover">
-
-  <!-- Full left-to-right gradient overlay -->
-  <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-0"></div>
-
-  <!-- Top-left corner fade -->
-  <div class="absolute top-0 left-0 w-32 h-24 bg-gradient-to-br from-black/60 to-transparent pointer-events-none z-0"></div>
-
-  <!-- Top-right corner fade -->
-  <div class="absolute top-0 right-0 w-32 h-24 bg-gradient-to-bl from-black/60 to-transparent pointer-events-none z-0"></div>
-
-  <!-- Content -->
-  <div class="relative z-10 flex items-center justify-between h-full p-6 md:p-12 lg:p-20">
-    <div class="text-white">
-      <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 rounded">Explore</h2>
-      <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold rounded">Saudi Arabia</h1>
-    </div>
-
-    <!-- Navigation Arrow Button -->
-    <button class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-white text-white hover:bg-white hover:text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-      </svg>
-    </button>
-  </div>
-</section>
-
-
-
-<!-- Footer Section -->
-<footer class="flex flex-col sm:flex-row justify-center items-stretch p-4 w-full bg-[#201E1E] text-gray-200 rounded-lg shadow-xl min-h-32 gap-2 sm:gap-4">
-
-<!-- First Main Column (Left Side - Saudi Welcome / About Section) -->
-<div class="flex-1 p-2 sm:p-4 md:p-8 flex flex-col items-start space-y-4 min-w-0">
-  <!-- Placeholder for Saudi Welcome SVG Icon -->
-  <!-- Add w-full to make this div span the full width of its parent column -->
-  <div class="flex items-center justify-center w-full mb-4 md:justify-start">
-    <div>
-      <img src="/images/Saudi Weclome.svg" alt="Saudi Logo" class="h-20 w-full object-contain" />
-    </div>
+   <!-- Bottom Row (e.g., avatar) -->
+<div class="flex items-center mt-4">
+  <img src="/images/P1.png" class="w-12 h-12 rounded-full mr-3" />
+  
+  <div>
+    <p class="text-base font-semibold">Wazeem Al Mulk</p>
+    <p class="text-sm text-gray-400">Traveler</p>
   </div>
 </div>
 
-  <!-- Second Main Column (Right Side - Contains 3 Sub-Columns) -->
-  <div class="flex-1 p-2 sm:p-4 md:p-8 flex flex-col justify-start items-start text-left min-w-0">
-
-    <!-- Nested Three Columns -->
-    <div class="flex flex-col sm:flex-row justify-between items-start gap-4 w-full">
-      <!-- Sub-Column A: About -->
-      <div class="flex-1 text-white md:pr-4 min-w-0">
-        <h4 class="font-semibold text-white mb-3">About</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">About us</a></li>
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">Features</a></li>
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">News & Blogs</a></li>
-        </ul>
-      </div>
-
-      <!-- Sub-Column B: Contact -->
-      <div class="flex-1 text-white md:pr-4 min-w-0">
-        <h4 class="font-semibold text-white mb-3">Contact</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">Instagram</a></li>
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">Twitter</a></li>
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">Facebook</a></li>
-        </ul>
-      </div>
-
-      <!-- Sub-Column C: Support -->
-      <div class="flex-1 text-white md:pr-4 min-w-0">
-        <h4 class="font-semibold text-white mb-3">Support</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">FAQs</a></li>
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">Support Centre</a></li>
-          <li><a href="#" class="hover:text-yellow-400 transition-colors duration-200">Feedback</a></li>
-        </ul>
-      </div>
-    </div>
   </div>
-
-</footer>
-
-    
+          </div>
+          <!-- card 4-->
+          <div  style="background-image: url('/images/card4.png');"
+            class=" text-white p-4 rounded-lg mt-2 flex items-center justify-center text-left text-sm font-semibold">
+               <div class="p-4   text-white rounded-b-lg flex flex-col justify-between h-full">
+    <!-- Top Row -->
+   <div>
+  <h3 class="font-bold text-xl lg:text-2xl">The best of Tabuk</h3>
+  <p class="text-base lg:text-lg text-gray-300 mt-1">
+    Tabuk also spelled Tabouk, the capital city of the 
+Tabuk Region in northwestern Saudi Arabia.
+  </p>
 </div>
+
+   <!-- Bottom Row (e.g., avatar) -->
+<div class="flex items-center mt-4">
+  <img src="/images/P4.png" class="w-12 h-12 rounded-full mr-3" />
+  
+  <div>
+    <p class="text-base font-semibold">Jonatan Pie
+</p>
+    <p class="text-sm text-gray-400">Influencer</p>
+  </div>
+</div>
+
+  </div></div>
+        </div>
+
+        <div
+          class="rounded-lg shadow-sm grid grid-rows-[34%_66%] h-full"
+        >
+
+        <!-- card 2 -->
+          <div  style="background-image: url('/images/card2.png');"
+            class=" text-white p-4 rounded-lg flex items-center justify-center text-left text-sm font-semibold"
+          >     <div class="p-4   text-white rounded-b-lg flex flex-col justify-between h-full">
+    <!-- Top Row -->
+   <div>
+  <h3 class="font-bold text-xl lg:text-2xl">Kafd World Trade
+Centre, Riyadh.</h3>
+  <p class="text-base lg:text-lg text-gray-300 mt-1">
+  The Towering Structure stands as a
+testament to Saudi Arabia’s vision for
+a thriving business hub.
+  </p>
+</div>
+
+   <!-- Bottom Row (e.g., avatar) -->
+<div class="flex items-center mt-4">
+  <img src="/images/P2.png" class="w-12 h-12 rounded-full mr-3" />
+  
+  <div>
+    <p class="text-base font-semibold">Benjamin Voros
+</p>
+    <p class="text-sm text-gray-400">Traveler</p>
+  </div>
+</div>
+
+  </div></div>
+          <div  style="background-image: url('/images/card5.png')"
+            class=" text-white p-4 rounded-lg mt-2 flex items-center justify-center text-left text-sm font-semibold"
+          >
+             <div class="p-4   text-white rounded-b-lg flex flex-col justify-between h-full">
+    <!-- Top Row -->
+   <div>
+  <h3 class="font-bold text-xl lg:text-2xl">AlUIa</h3>
+  <p class="text-base lg:text-lg text-gray-300 mt-1">
+   AIUIa is located deep in the desert in
+the northwest of Saudi Arabia
+  </p>
+</div>
+
+   <!-- Bottom Row (e.g., avatar) -->
+<div class="flex items-center mt-4">
+  <img src="/images/P5.png" class="w-12 h-12 rounded-full mr-3" />
+  
+  <div>
+    <p class="text-base font-semibold">Garrett parker
+</p>
+    <p class="text-sm text-gray-400">Traveler</p>
+  </div>
+</div>
+
+  </div></div>
+        </div>
+
+        <div
+          class="  rounded-lg shadow-sm grid grid-rows-[63%_37%] h-full"
+        >
+          <div  style="background-image: url('/images/card3.png')"
+            class=" text-white p-4 rounded-lg flex items-center justify-center text-left text-sm font-semibold"
+          >     <div class="p-4   text-white rounded-b-lg flex flex-col justify-between h-full">
+    <!-- Top Row -->
+   <div>
+  <h3 class="font-bold text-xl lg:text-2xl">Al Qarah Mountain</h3>
+  <p class="text-base lg:text-lg text-gray-300 mt-1">
+    The Mountain’s distractive rocks
+formations inviting adventures to
+explore its hidden treasure.
+  </p>
+</div>
+
+   <!-- Bottom Row (e.g., avatar) -->
+<div class="flex items-center mt-4">
+  <img src="/images/P3.png" class="w-12 h-12 rounded-full mr-3" />
+  
+  <div>
+    <p class="text-base font-semibold">John Towner
+</p>
+    <p class="text-sm text-gray-400">Traveler</p>
+  </div>
+</div>
+
+  </div></div>
+  <!-- card 6 -->
+          <div  style="background-image: url('/images/card6.png')"
+            class=" text-white p-4 rounded-lg mt-2 flex items-center justify-center text-left text-sm font-semibold"
+          >
+             <div class="p-4   text-white rounded-b-lg flex flex-col justify-between h-full">
+    <!-- Top Row -->
+   <div>
+  <h3 class="font-bold text-xl lg:text-2xl">     The best things To do in Taif  </h3>
+  <p class="text-base lg:text-lg text-gray-300 mt-1">
+        Taif is the only governorate in the Makkah 
+  </p>
+</div>
+
+   <!-- Bottom Row (e.g., avatar) -->
+<div class="flex items-center mt-4">
+  <img src="/images/P6.png" class="w-12 h-12 rounded-full mr-3" />
+  
+  <div>
+    <p class="text-base font-semibold">Cristina Gottardi</p>
+    <p class="text-sm text-gray-400">Traveler</p>
+  </div>
+</div>
+
+  </div></div>
+        </div>
+      </section>
+
+
+      <!-- Section 4 -->
+      <section
+        class="relative h-screen w-full bg-cover bg-center"
+        style="background-image: url('images/HismaDesert.png')"
+      >
+        <!-- Top Gradient Fade -->
+        <div
+          class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent z-0"
+        ></div>
+
+        <!-- Bottom Gradient Fade -->
+        <div
+          class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-0"
+        ></div>
+
+        <!-- Optional: Full faint overlay for mood (can be adjusted or removed) -->
+        <div class="absolute inset-0 bg-black opacity-30 z-0"></div>
+
+        <!-- Content (on top of gradients) -->
+        <div
+          class="relative z-10 flex justify-between items-end h-full text-white p-6 px-8 md:px-12 lg:px-20"
+        >
+          <div class="flex flex-col">
+            <h2
+              class="text-8xl font-normal"
+              style="font-family: 'Imperial Script', cursive"
+            >
+              Hisma
+            </h2>
+            <p
+              class="text-8xl font-semibold"
+              style="font-family: 'Poppins', sans-serif"
+            >
+              Desert
+            </p>
+          </div>
+          <div class="flex items-center mb-8">
+            <div
+              class="w-16 h-16 rounded-full bg-cover bg-center"
+              style="background-image: url('images/P1.png')"
+            ></div>
+            <div class="ml-4">
+              <p class="text-lg font-semibold">Wazeem Al Mulk</p>
+              <p class="text-sm">Traveler</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5 -->
+      <section
+        id="Gallery"
+        class="container mx-auto px-4 py-8 md:py-12 text-center max-w-4xl"
+      >
+        <p class="text-lg text-left md:text-xl leading-relaxed text-white">
+          The Hisma Desert in Saudi Arabia is a realm of ethereal beauty that
+          captivates the senses. Its vast expanse of golden sand dunes, sculpted
+          by the winds of time, creates a mesmerizing landscape that stretches
+          as far as the eye can see. As the sun sets, painting the sky with
+          vivid hues.
+        </p>
+      </section>
+
+      <!-- Section 7 -->
+      <section
+        class="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg mb-10"
+      >
+        <!-- Background Image -->
+        <img
+          src="images/ExploreSaudi.png"
+          onerror="this.onerror=null;this.src='https://placehold.co/1200x600/000000/FFFFFF?text=Explore%20Saudi%20Arabia'"
+          alt="Desert landscape with a person exploring an archway"
+          class="absolute inset-0 w-full h-full object-cover"
+        />
+
+        <!-- Full left-to-right gradient overlay -->
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-0"
+        ></div>
+
+        <!-- Top-left corner fade -->
+        <div
+          class="absolute top-0 left-0 w-32 h-24 bg-gradient-to-br from-black/60 to-transparent pointer-events-none z-0"
+        ></div>
+
+        <!-- Top-right corner fade -->
+        <div
+          class="absolute top-0 right-0 w-32 h-24 bg-gradient-to-bl from-black/60 to-transparent pointer-events-none z-0"
+        ></div>
+
+        <!-- Content -->
+        <div
+          class="relative z-10 flex items-center justify-between h-full p-6 md:p-12 lg:p-20"
+        >
+          <div class="text-white">
+            <h2
+              class="text-3xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 rounded"
+            >
+              Explore
+            </h2>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold rounded">
+              Saudi Arabia
+            </h1>
+          </div>
+
+          <!-- Navigation Arrow Button -->
+          <button
+            class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-white text-white hover:bg-white hover:text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 md:h-8 md:w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+     
+
+      <!-- Footer Section -->
+      <footer
+        class="flex flex-col sm:flex-row justify-center items-stretch p-4 w-full bg-[#201E1E] text-gray-200 rounded-lg shadow-xl min-h-32 gap-2 sm:gap-4"
+      >
+        <!-- First Main Column (Left Side - Saudi Welcome / About Section) -->
+        <div
+          class="flex-1 p-2 sm:p-4 md:p-8 flex flex-col items-start space-y-4 min-w-0"
+        >
+          <!-- Placeholder for Saudi Welcome SVG Icon -->
+          <!-- Add w-full to make this div span the full width of its parent column -->
+          <div
+            class="flex items-center justify-center w-full mb-4 md:justify-start"
+          >
+            <div>
+              <img
+                src="/images/Saudi Weclome.svg"
+                alt="Saudi Logo"
+                class="h-20 w-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Main Column (Right Side - Contains 3 Sub-Columns) -->
+        <div
+          class="flex-1 p-2 sm:p-4 md:p-8 flex flex-col justify-start items-start text-left min-w-0"
+        >
+          <!-- Nested Three Columns -->
+          <div
+            class="flex flex-col sm:flex-row justify-between items-start gap-4 w-full"
+          >
+            <!-- Sub-Column A: About -->
+            <div class="flex-1 text-white md:pr-4 min-w-0">
+              <h4 class="font-semibold text-white mb-3">About</h4>
+              <ul class="space-y-2 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >About us</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >Features</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >News & Blogs</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Sub-Column B: Contact -->
+            <div class="flex-1 text-white md:pr-4 min-w-0">
+              <h4 class="font-semibold text-white mb-3">Contact</h4>
+              <ul class="space-y-2 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >Instagram</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >Twitter</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >Facebook</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Sub-Column C: Support -->
+            <div class="flex-1 text-white md:pr-4 min-w-0">
+              <h4 class="font-semibold text-white mb-3">Support</h4>
+              <ul class="space-y-2 text-sm">
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >FAQs</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >Support Centre</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="hover:text-yellow-400 transition-colors duration-200"
+                    >Feedback</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
   </body>
   <script src="script.js"></script>
 </html>

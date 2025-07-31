@@ -1,4 +1,12 @@
 // main.js
+const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('hidden');
+  });
+
+  
 document.addEventListener("DOMContentLoaded", () => {
   const html = document.documentElement;
   const toggleBtn = document.getElementById("theme-toggle");
