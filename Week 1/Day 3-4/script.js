@@ -1,11 +1,15 @@
-// main.js
-const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
+// script.js
+const hamburger = document.getElementById("hamburger");
+const mobileNav = document.getElementById("mobile-nav");
+const closeMenu = document.getElementById("close-menu");
 
-  hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('hidden');
-  });
+hamburger.addEventListener("click", () => {
+  mobileNav.classList.remove("translate-x-full");
+});
 
+closeMenu.addEventListener("click", () => {
+  mobileNav.classList.add("translate-x-full");
+});
   
 document.addEventListener("DOMContentLoaded", () => {
   const html = document.documentElement;

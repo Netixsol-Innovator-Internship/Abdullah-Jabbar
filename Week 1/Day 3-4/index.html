@@ -15,139 +15,147 @@
   </head>
   <body class="bg-black text-white font-sans">
     <!-- Container Div -->
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-[1512px] mx-auto">
       <!-- Hero Section -->
       <section
-        class="relative min-h-screen bg-cover bg-bottom"
-        style="background-image: url('/images/saudi-logo.png')"
+        class="  h-[603px] relative  bg-cover bg-bottom "
+        style="background-image: url('/images/saudi-logo.png') "
       >
-        <div class="max-w-7xl mx-auto px-4 flex flex-col justify-between">
+        <div class=" mx-auto px-4 flex flex-col justify-between">
+        
           <!-- Top Nav -->
-          <!-- Top Nav -->
-          <header
-            class="flex justify-between items-center px-4 sm:px-6 lg:px-8 pt-4 relative"
-          >
-            <!-- Logo -->
-            <div>
-              <img
-                src="/images/Saudi Weclome.svg"
-                alt="Saudi Logo"
-                class="h-16 ml-3 mt-2"
-              />
-            </div>
+<!-- Header -->
+<header class="flex justify-between items-center px-4 sm:px-6 lg:px-8 pt-4 relative  text-white z-50">
+  <!-- Logo -->
+  <div>
+    <img
+      src="/images/Saudi Weclome.svg"
+      alt="Saudi Logo"
+      class="h-16 ml-3 mt-2"
+    />
+  </div>
 
-            <!-- Hamburger (shown on small screens only) -->
-            <button id="hamburger" class="sm:hidden focus:outline-none">
-              <svg
-                class="w-6 h-6 text-white"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
+  <!-- Hamburger Button for Mobile -->
+  <button id="hamburger" class="sm:hidden focus:outline-none z-50">
+    <svg
+      class="w-6 h-6 text-white"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
 
-            <!-- Main Navigation -->
-            <nav
-              id="nav-menu"
-              class="hidden sm:flex flex-wrap items-center space-x-4 sm:space-x-6 absolute sm:static top-16 left-0 w-full sm:w-auto bg-black sm:bg-transparent px-4 sm:px-0 py-4 sm:py-0 z-50"
-            >
-              <!-- Theme toggle button -->
-              <button
-                id="theme-toggle"
-                type="button"
-                class="relative h-6 px-2 rounded-full text-sm bg-white text-black flex items-center space-x-3 overflow-hidden"
-              >
-                <!-- Indicator -->
-                <span
-                  id="indicator"
-                  class="absolute top-[2px] left-2 h-5 w-5 rounded-full bg-gray-300 z-0 transition-transform duration-300"
-                  style="transform: translateX(0)"
-                ></span>
+  <!-- Navigation Menu (desktop) -->
+  <nav class="hidden sm:flex flex-wrap items-center space-x-4 sm:space-x-6">
+    <!-- Theme toggle button -->
+    <button
+      id="theme-toggle"
+      type="button"
+      class="relative h-6 px-2 rounded-full text-sm bg-white text-black flex items-center space-x-3 overflow-hidden"
+    >
+      <span id="indicator" class="absolute top-[2px] left-2 h-5 w-5 rounded-full bg-gray-300 z-0 transition-transform duration-300"></span>
+      <span id="moon-icon" class="w-4 h-4 z-10 flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" />
+        </svg>
+      </span>
+      <span id="sun-icon" class="w-4 h-4 z-10 flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M20 12h2M2 12H4M17.66 6.34l1.41-1.41M4.93 4.93L6.34 6.34M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41" />
+        </svg>
+      </span>
+    </button>
 
-                <!-- Moon -->
-                <span id="moon-icon" class="w-4 h-4 z-10 flex-shrink-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-full h-full"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"
-                    />
-                  </svg>
-                </span>
+    <!-- Nav Links -->
+    <a href="#destinations" class="hover:underline text-white">Destinations</a>
+    <a href="#members" class="hover:underline text-white">Members</a>
+    <a href="#gallery" class="hover:underline text-white">Gallery</a>
+  </nav>
 
-                <!-- Sun -->
-                <span id="sun-icon" class="w-4 h-4 z-10 flex-shrink-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-full h-full"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <circle cx="12" cy="12" r="4" />
-                    <path
-                      d="M12 2v2M12 20v2M20 12h2M2 12H4M17.66 6.34l1.41-1.41M4.93 4.93L6.34 6.34M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41"
-                    />
-                  </svg>
-                </span>
-              </button>
+  <!-- Sliding Mobile Menu -->
+  <div id="mobile-nav" class="fixed top-0 right-0 h-full w-40 bg-transparent text-white transform translate-x-full transition-transform duration-300 ease-in-out sm:hidden z-40">
+    <div class="flex flex-col items-end p-4 space-y-4">
+      <button id="close-menu" class="focus:outline-none">
+        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <a href="#destinations" class="text-base hover:underline">Destinations</a>
+      <a href="#members" class="text-base hover:underline">Members</a>
+      <a href="#gallery" class="text-base hover:underline">Gallery</a>
+      <button
+        id="theme-toggle-mobile"
+        type="button"
+        class="mt-4 relative h-6 px-2 rounded-full text-sm bg-white text-black flex items-center space-x-3 overflow-hidden"
+      >
+        <span class="absolute top-[2px] left-2 h-5 w-5 rounded-full bg-gray-300 z-0 transition-transform duration-300"></span>
+        <span class="w-4 h-4 z-10 flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" />
+          </svg>
+        </span>
+        <span class="w-4 h-4 z-10 flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M20 12h2M2 12H4M17.66 6.34l1.41-1.41M4.93 4.93L6.34 6.34M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41" />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
 
-              <!-- Nav Links -->
-              <a href="#destinations" class="hover:underline text-white"
-                >Destinations</a
-              >
-              <a href="#members" class="hover:underline text-white">Members</a>
-              <a href="#gallery" class="hover:underline text-white">Gallery</a>
-            </nav>
-          </header>
+         <!-- Center Text -->
+<div class="text-center mb-8 sm:mb-10 md:mb-12">
+  <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+    Explore<br />Saudi Arabia
+  </h1>
+  <p class="mt-3 max-w-xs sm:max-w-sm md:max-w-md mx-auto text-sm sm:text-base md:text-lg">
+    Saudi Arabia is rich in heritage and history. The country is home
+    to hundreds of historically important sites.
+  </p>
+</div>
 
-          <!-- Center Text -->
-          <div class="text-center mb-12">
-            <h1 class="text-5xl md:text-4xl font-extrabold leading-tight">
-              Explore<br />Saudi Arabia
-            </h1>
-            <p class="mt-3 max-w-sm mx-auto">
-              Saudi Arabia is rich in heritage and history. The country is home
-              to hundreds of historically important sites.
-            </p>
-          </div>
+<!-- Bottom Info Boxes -->
+<div
+  class="flex flex-col md:flex-row md:justify-between px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10 md:pb-12 space-y-6 sm:space-y-8 md:space-y-0 md:space-x-8"
+>
+  <!-- Box 1 -->
+  <div class="max-w-sm flex flex-col space-y-2 text-left">
+    <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold w-fit">
+      History and Heritage
+    </h2>
+    <p
+      class="text-sm sm:text-base w-fit max-w-full"
+      style="max-width: 34ch;"
+    >
+      Saudi Arabia has long occupied an important role at the center
+      of the Islamic and Arab worlds. Located at the heart of three
+      continents.
+    </p>
+  </div>
 
-          <!-- Bottom Info Boxes -->
-          <div
-            class="flex flex-col md:flex-row md:justify-between px-4 sm:px-6 lg:px-8 pb-12 space-y-8 md:space-y-0 md:space-x-8"
-          >
-            <!-- Box 1 -->
-            <div class="max-w-sm flex flex-col space-y-2">
-              <h2 class="text-4xl font-semibold">History and Heritage</h2>
-              <p class="text-sm">
-                Saudi Arabia has long occupied an important role at the center
-                of the Islamic and Arab worlds. Located at the heart of three
-                continents.
-              </p>
-            </div>
+  <!-- Box 2 -->
+  <div class="max-w-sm flex flex-col space-y-2 text-left">
+    <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold w-fit">
+      People and Culture
+    </h2>
+    <p
+      class="text-sm sm:text-base w-fit max-w-full"
+      style="max-width: 34ch;"
+    >
+      Saudi Arabia has a rich culture shaped by the diversity of its
+      people, which has formed the basis of its cultural identity.
+    </p>
+  </div>
+</div>
 
-            <!-- Box 2 -->
-            <div class="max-w-sm flex flex-col space-y-2">
-              <h2 class="text-4xl font-semibold">People and Culture</h2>
-              <p class="text-sm">
-                Saudi Arabia has a rich Culture shaped by the diversity of its
-                people, which has formed the basis of its cultural identity.
-              </p>
-            </div>
-          </div>
+
+
         </div>
       </section>
 
@@ -364,9 +372,11 @@
         </div>
       </section>
 
+
+
      <!-- Section 4 -->
 <section
-  class="relative h-screen w-full bg-cover bg-center"
+  class="relative h-[400px] sm:h-[500px] md:h-[603px] w-full bg-cover bg-center"
   style="background-image: url('images/HismaDesert.png')"
 >
   <!-- Top Gradient Fade -->
@@ -416,6 +426,8 @@
   </div>
 </section>
 
+
+
       <!-- Section 5 -->
       <section
         id="Gallery"
@@ -429,70 +441,75 @@
           vivid hues.
         </p>
       </section>
+<!-- Section 6 -->
+<section
+  class="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg mb-10 bg-black"
+>
+  <!-- Centered Image Container -->
+  <div class="absolute inset-0 flex items-center justify-center">
+    <div class="relative w-[85%] h-[85%]">
+      <!-- Background Image -->
+      <img
+        src="images/ExploreSaudi.png"
+        onerror="this.onerror=null;this.src='https://placehold.co/1200x600/000000/FFFFFF?text=Explore%20Saudi%20Arabia'"
+        alt="Desert landscape with a person exploring an archway"
+        class="absolute inset-0 w-full h-full object-cover rounded-lg"
+      />
 
-      <!-- Section 7 -->
-      <section
-        class="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg mb-10"
+      <!-- Full left-to-right gradient overlay -->
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-0 rounded-lg"
+      ></div>
+
+      <!-- Top-left corner fade -->
+      <div
+        class="absolute top-0 left-0 w-32 h-24 bg-gradient-to-br from-black/60 to-transparent pointer-events-none z-0"
+      ></div>
+
+      <!-- Top-right corner fade -->
+      <div
+        class="absolute top-0 right-0 w-32 h-24 bg-gradient-to-bl from-black/60 to-transparent pointer-events-none z-0"
+      ></div>
+
+      <!-- Content -->
+      <div
+        class="relative z-10 flex items-center justify-between h-full p-4 sm:p-6 md:p-8"
       >
-        <!-- Background Image -->
-        <img
-          src="images/ExploreSaudi.png"
-          onerror="this.onerror=null;this.src='https://placehold.co/1200x600/000000/FFFFFF?text=Explore%20Saudi%20Arabia'"
-          alt="Desert landscape with a person exploring an archway"
-          class="absolute inset-0 w-full h-full object-cover"
-        />
-
-        <!-- Full left-to-right gradient overlay -->
-        <div
-          class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-0"
-        ></div>
-
-        <!-- Top-left corner fade -->
-        <div
-          class="absolute top-0 left-0 w-32 h-24 bg-gradient-to-br from-black/60 to-transparent pointer-events-none z-0"
-        ></div>
-
-        <!-- Top-right corner fade -->
-        <div
-          class="absolute top-0 right-0 w-32 h-24 bg-gradient-to-bl from-black/60 to-transparent pointer-events-none z-0"
-        ></div>
-
-        <!-- Content -->
-        <div
-          class="relative z-10 flex items-center justify-between h-full p-6 md:p-12 lg:p-20"
-        >
-          <div class="text-white">
-            <h2
-              class="text-3xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 rounded"
-            >
-              Explore
-            </h2>
-            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold rounded">
-              Saudi Arabia
-            </h1>
-          </div>
-
-          <!-- Navigation Arrow Button -->
-          <button
-            class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-white text-white hover:bg-white hover:text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+        <div class="text-white">
+          <h2
+            class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 md:h-8 md:w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+            Explore
+          </h2>
+          <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold">
+            Saudi Arabia
+          </h1>
         </div>
-      </section>
+
+        <!-- Navigation Arrow Button -->
+        <button
+          class="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border-2 border-white text-white hover:bg-white hover:text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 md:h-7 md:w-7"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <!-- Footer Section -->
       <footer
