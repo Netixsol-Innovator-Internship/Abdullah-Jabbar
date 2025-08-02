@@ -11,8 +11,9 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", ...defaultTheme.fontFamily.sans],
         spacemono: ["Space Mono", ...defaultTheme.fontFamily.mono],
-        inter: ['Inter', 'sans-serif'],
-        clash: ['ClashDisplay', 'sans-serif'],
+        inter: ["Inter", "sans-serif"],
+        clash: ["ClashDisplay", "sans-serif"],
+        worksans: ['"Work Sans"', "sans-serif"],
       },
     },
   },
