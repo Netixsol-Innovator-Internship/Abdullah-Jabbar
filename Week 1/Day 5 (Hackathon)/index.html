@@ -21,28 +21,87 @@
 
     <!-- Header -->
     <!------------------------------------------------------------------------------------------------------------------------------------------------------->
-    <header class="w-full h-[127px] bg-[#1A1A1A] text-white 2xl:px-48 flex items-center justify-between">
+<header class="w-full bg-[#1A1A1A] text-white flex items-center justify-between px-16 py-10
+               sm:h-[80px] sm:px-16 sm:py-14 
+               md:h-[110px] md:px-28 
+               lg:h-[130px] lg:px-32 
+               xl:h-[120px] xl:px-24 
+               2xl:h-[127px] 2xl:px-48">
 
-      <!-- Logo -->
-      <div class="text-3xl font-bold">LogoHere</div>
+  <!-- Logo - Increased size at sm -->
+  <div class="text-4xl font-bold sm:text-4xl md:text-4xl lg:text-5xl">LogoHere</div>
 
-      <!-- Navigation Links -->
-      <nav
-        class="flex-1 flex justify-end font-medium text-white text-base sm:text-lg lg:text-2xl space-x-6 sm:space-x-10 lg:space-x-20 mr-4 sm:mr-8 lg:mr-20">
-        <a href="#" class="hover:text-orange-400 transition">About</a>
-        <a href="#" class="hover:text-orange-400 transition">Collection</a>
-        <a href="#" class="hover:text-orange-400 transition">Creator</a>
-        <a href="#" class="hover:text-orange-400 transition">Road Map</a>
-      </nav>
-      <!-- Sign In Button -->
-      <div>
-        <button
-          class="bg-[#faaa66] text-white px-10 py-3 rounded-2xl border border-white font-semibold hover:bg-orange-500 transition">
-          Sign in
-        </button>
-      </div>
+     <nav class="hidden md:flex flex-1 justify-end items-center font-medium text-white 
+                md:text-2xl md:space-x-8 md:mr-16
+                lg:space-x-12 lg:mr-10
+                xl:space-x-16 xl:mr-16
+                2xl:space-x-20 2xl:mr-20">
+      <a href="#" class="hover:text-orange-400 transition px-2 py-1 md:px-3 md:py-2">About</a>
+      <a href="#" class="hover:text-orange-400 transition px-2 py-1 md:px-3 md:py-2">Collection</a>
+      <a href="#" class="hover:text-orange-400 transition px-2 py-1 md:px-3 md:py-2">Creator</a>
+      <a href="#" class="hover:text-orange-400 transition px-2 py-1 md:px-3 md:py-2">Road Map</a>
+    </nav>
 
-    </header>
+    <!-- Sign In (desktop only) -->
+    <div class="hidden md:block">
+      <button class="cursor-pointer bg-[#faaa66] text-white rounded-2xl border border-white font-semibold hover:bg-orange-500 transition
+                     md:px-10 md:py-3 md:text-2xl
+                     lg:px-12 lg:py-4 lg:text-2xl
+                     xl:px-10 xl:py-3 xl:text-2xl
+                     2xl:px-10 2xl:py-3">
+        Sign in
+      </button>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button
+      id="hamburgerBtn"
+      class="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-[#1A1A1A] rounded-md p-1"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mobileMenu"
+    >
+      <!-- Hamburger icon (shown by default) -->
+      <svg
+        id="hamburgerIcon"
+        class="w-12 h-12 sm:w-16 sm:h-16"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+      <!-- Close icon (hidden by default) -->
+      <svg
+        id="closeIcon"
+        class="hidden w-12 h-12 sm:w-16 sm:h-16"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile sliding menu -->
+  <div
+    id="mobileMenu"
+    class="fixed top-0 right-0 h-full w-3/4 max-w-xs bg-[#1A1A1A] transform translate-x-full transition-transform duration-300 md:hidden z-50"
+  >
+    <nav class="flex flex-col mt-16 space-y-6 px-6 text-white text-xl">
+      <a href="#" class="hover:text-orange-400 transition">About</a>
+      <a href="#" class="hover:text-orange-400 transition">Collection</a>
+      <a href="#" class="hover:text-orange-400 transition">Creator</a>
+      <a href="#" class="hover:text-orange-400 transition">Road Map</a>
+      <button class="mt-4 bg-[#faaa66] py-2 rounded-2xl font-semibold hover:bg-orange-500 transition">
+        Sign in
+      </button>
+    </nav>
+  </div>
+</header>
     <!------------------------------------------------------------------------------------------------------------------------------------------------------->
 
     <!-- Section 1  Main Page -->
@@ -74,11 +133,11 @@
 
           <div class="flex flex-col sm:flex-row font-bold flex-wrap gap-4 sm:gap-6 md:gap-8 lg:gap-10 sm:gap-x-14">
             <button
-              class="bg-[#faaa66] text-white px-10 py-3 rounded-2xl border border-white font-semibold hover:bg-orange-500 transition">
+              class="cursor-pointer bg-[#faaa66] text-white px-10 py-3 rounded-2xl border border-white font-semibold hover:bg-orange-500 transition">
               Get Whitelist
             </button>
             <button
-              class="border border-white text-white px-10 py-3 rounded-2xl hover:bg-white hover:text-black transition">
+              class="cursor-pointer border border-white text-white px-10 py-3 rounded-2xl hover:bg-white hover:text-black transition">
               Contact Us
             </button>
           </div>
@@ -121,7 +180,7 @@
 
     <!-- Next Button: next to the image -->
 <button
-  class="absolute right-[-54px] top-[340px]
+  class=" cursor-pointer absolute right-[-54px] top-[340px]
          w-[54px] h-[337.5px]
          border-t-[1px] border-r-[1px] border-b-[1px] border-[#CFB59B]
          rounded-tr-[18.9px] rounded-br-[18.9px]
@@ -205,7 +264,7 @@
             nisi semper adipiscing quam in est. Tempor sed dui nunc diam adipiscing at.</p>
 
 
-          <button class="text-white text-lg font-bold  absolute w-[199.02px] h-[58.97px] top-[2093.85px] left-[882.9px] 
+          <button class=" cursor-pointer text-white text-lg font-bold  absolute w-[199.02px] h-[58.97px] top-[2093.85px] left-[882.9px] 
          rounded-[20.88px] border border-[#DA8F4D] bg-white/35 opacity-100 ml-6 mt-10
          hover:bg-[#DA8F4D] hover:border-white transition duration-200" style="transform: rotate(0deg);">
             Connect Wallet
@@ -458,7 +517,7 @@
 
         </div>
         <button
-          class="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-white text-lg font-bold w-[199.02px] h-[58.97px] rounded-[20.88px] border border-[#DA8F4D] bg-white/35 hover:bg-[#DA8F4D] hover:border-white transition duration-200">
+          class="cursor-pointer absolute bottom-0 left-1/2 transform -translate-x-1/2 text-white text-lg font-bold w-[199.02px] h-[58.97px] rounded-[20.88px] border border-[#DA8F4D] bg-white/35 hover:bg-[#DA8F4D] hover:border-white transition duration-200">
           Explore More
         </button>
 
@@ -998,7 +1057,7 @@
 
       <button
   type="submit"
-  class="h-12 sm:h-14 px-12 
+  class="cursor-pointer h-12 sm:h-14 px-12 
          font-poppins font-bold text-lg 
          text-white bg-white/35 border border-[#DA8F4D]
          rounded-full transition duration-200
@@ -1029,5 +1088,5 @@
  
 </main>
 </body>
-
+<script src="script.js"></script>
 </html>
