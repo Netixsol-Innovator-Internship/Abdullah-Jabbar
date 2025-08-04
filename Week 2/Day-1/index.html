@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+  <link rel="icon" href="assets/age-range.png" type="image/png">
+  <link rel="stylesheet" href="dist/output.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="flex justify-center sm:px-4">
+
+<main class="mt-4 w-full max-w-2xl lg:min-w-[50rem] lg:max-w-4xl max-h-2xl md:min-h-[24rem] lg:min-h-[32rem] bg-gray-100 rounded-lg lg:rounded-none shadow-2xl flex justify-center items-center px-0 sm:px-4 md:px-6 lg:px-10 py-4 sm:py-5 lg:py-0">
+
+  <div class="mx-0 w-full sm:w-90 h-auto sm:h-70 border-2 bg-white shadow-gray-600 border-white rounded-2xl rounded-br-[5rem] py-3 px-3 sm:py-4 sm:pl-4 sm:pr-3 md:py-5 md:pl-5 md:pr-3 lg:py-5 lg:pl-5 lg:pr-3">
+
+    <form id="ageForm" class="relative max-w-xl mx-auto">
+      <!-- Input Group -->
+      <div class="flex justify-between gap-3 w-fit">
+        <!-- Day -->
+        <div class="flex flex-col items-start">
+          <label for="day" class="text-[10px] sm:text-[11px] font-bold tracking-widest text-gray-500 mb-1 sm:mb-1.5 uppercase">Day</label>
+          <input
+            type="number"
+            id="day"
+            name="day"
+            value="01" 
+            min="1"
+            max="31"
+            required
+            class="w-14 sm:w-16 h-7 sm:h-8 text-lg sm:text-xl font-bold text-black text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+        </div>
+
+        <!-- Month -->
+        <div class="flex flex-col items-start">
+          <label for="month" class="text-[10px] sm:text-[11px] font-bold tracking-widest text-gray-500 mb-1 sm:mb-1.5 uppercase">Month</label>
+          <input
+            type="number"
+            id="month"
+            value="01"
+            name="month"
+            min="1"
+            max="12"
+            required
+            class="w-14 sm:w-16 h-7 sm:h-8 text-lg sm:text-xl font-bold text-black text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+        </div>
+
+        <!-- Year -->
+        <div class="flex flex-col items-start">
+          <label for="year" class="text-[10px] sm:text-[11px] font-bold tracking-widest text-gray-500 mb-1 sm:mb-1.5 uppercase">Year</label>
+          <input
+            type="number"
+            id="year"
+            name="year"
+            value="2000"
+            min="1800"
+            max="2025"
+            required
+            class="w-14 sm:w-16 h-7 sm:h-8 text-lg sm:text-xl font-bold text-black text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+        </div>
+      </div>
+
+      <!----------------- Warning-------------- -->
+      <div id="form-warning" class="hidden absolute text-red-600 text-xs font-medium py-1 z-10"></div>
+
+      <!-- Horizontal line with circle button -->
+      <div class="relative flex items-center pt-5 sm:pt-6">
+        <hr class="flex-grow border-t-[0.7px] border-[rgba(0,0,0,0.1)]">
+        <!-- Submit Button -->
+        <button type="submit"
+          class="absolute right-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center shadow-md hover:bg-purple-800">
+          <img src="assets/down-32.png" alt="Down arrow" class="w-6 h-4 sm:w-8 sm:h-6">
+        </button>
+      </div>
+    </form>
+
+    <!-- Age Display Area -->
+    <div class="pt-3 sm:pt-4">
+      <h1 class="font-bold font-montserrat text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+        <em>
+          <span id="ageYears" class="text-purple-500">38</span> years <br>
+          <span id="ageMonths" class="text-purple-500">3</span> months <br>
+          <span id="ageDays" class="text-purple-500">28</span> days
+        </em>
+      </h1>
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
