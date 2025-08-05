@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dist/output.css">
+</head>
+<body>
+<!-- Header -->
+    <!------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- Header -->
+<header class="w-full bg-[#1A1A1A] text-white flex items-center justify-between px-4 py-4
+               sm:px-6 sm:py-5
+               md:h-[90px] md:px-8 md:py-0
+               lg:h-[110px] lg:px-16
+               xl:h-[120px] xl:px-24
+               2xl:h-[127px] 2xl:px-48">
+
+  <!-- Logo - Responsive sizing -->
+  <div class="text-2xl font-bold sm:text-3xl md:text-3xl lg:text-5xl">LogoHere</div>
+
+  <!-- Desktop Navigation -->
+  <nav class="hidden md:flex flex-1 justify-end items-center font-medium text-white 
+                md:text-lg md:space-x-4 md:mr-6
+                lg:text-xl lg:space-x-8 lg:mr-10
+                xl:text-2xl xl:space-x-12 xl:mr-16
+                2xl:space-x-20 2xl:mr-20">
+    <a href="#" class="hover:text-orange-400 transition px-2 py-1 md:px-2 md:py-1">About</a>
+    <a href="#" class="hover:text-orange-400 transition px-2 py-1 md:px-2 md:py-1">Collection</a>
+    <a href="#" class="hover:text-orange-400 transition px-2 py-1 md:px-2 md:py-1">Creator</a>
+    <a href="#" class="hover:text-orange-400 transition px-2 py-1 md:px-2 md:py-1">Road Map</a>
+  </nav>
+
+<!-- Desktop Sign In Button -->
+<div class="hidden md:block">
+  <button class="cursor-pointer bg-[#faaa66] text-white rounded-2xl border border-white font-semibold hover:bg-orange-500 transition
+                 text-lg px-4 py-1.5
+                 md:px-4 md:py-1.5
+                 lg:px-8 lg:py-2 lg:text-xl
+                 xl:px-10 xl:py-3 xl:text-2xl
+                 2xl:px-10 2xl:py-3">
+    Sign in
+  </button>
+</div>
+
+  <!-- Mobile menu button -->
+  <button
+    id="hamburgerBtn"
+    class="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-orange-400 rounded-md p-1"
+    aria-label="Toggle navigation menu"
+    aria-expanded="false"
+    aria-controls="mobileMenu"
+  >
+    <!-- Hamburger icon -->
+    <svg
+      id="hamburgerIcon"
+      class="w-8 h-8 sm:w-10 sm:h-10"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+    <!-- Close icon -->
+    <svg
+      id="closeIcon"
+      class="hidden w-8 h-8 sm:w-10 sm:h-10"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+
+  <!-- Mobile sliding menu -->
+  <div
+    id="mobileMenu"
+    class="fixed top-0 right-0 h-full w-4/5 max-w-xs bg-[#1A1A1A] transform translate-x-full transition-transform duration-300 ease-in-out md:hidden z-50 shadow-2xl"
+  >
+    <div class="flex justify-end p-4">
+      <button id="closeMenuBtn" class="text-white focus:outline-none">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <nav class="flex flex-col mt-4 space-y-6 px-6 text-white text-xl">
+      <a href="#" class="hover:text-orange-400 transition py-2 border-b border-gray-700">About</a>
+      <a href="#" class="hover:text-orange-400 transition py-2 border-b border-gray-700">Collection</a>
+      <a href="#" class="hover:text-orange-400 transition py-2 border-b border-gray-700">Creator</a>
+      <a href="#" class="hover:text-orange-400 transition py-2 border-b border-gray-700">Road Map</a>
+      <button class="mt-6 w-full bg-[#faaa66] py-3 rounded-2xl font-semibold hover:bg-orange-500 transition text-lg">
+        Sign in
+      </button>
+    </nav>
+  </div>
+</header>
+</body>
+<script src="script.js"></script>
+</html>
+    
