@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications Page by Abdullah Jabbar</title>
+    <link rel="stylesheet" href="dist/output.css">
+    <link rel="icon" href="assets/images/icons8-notification-96.png" type="image/pgn">
+</head>
+<body class="bg-gray-200">
+  
+        <!-- Content Container -->
+      <div class="bg-white p-4 rounded-lg shadow-lg box-border lg:min-h-130 mx-auto max-w-lg lg:mt-4 lg:px-6 md:px-6">
+        
+        <header class=" flex justify-between ">
+            <span class="font-bold text-lg text-blue-950 ">Notifications
+                <span id="counterBox" class="relative -top-0.5 text-white text-xs font-medium  box-border rounded-md px-2 py-0.5 ml-1 bg-blue-950">3</span>
+            </span> 
+           <button type="button" id="readAll" class="opacity-50 text-sm self-end cursor-pointer bg-transparent p-0 m-0 border-none appearance-none">
+  Mark all as read
+</button>
+
+</header>
+
+<section class="mt-4 flex flex-col">
+
+<!-- Notifications List -->
+<ul class="space-y-2 flex-1 ">
+
+<li isread="false" class="noti-fication p-2 bg-blue-50 hover:bg-blue-100 hover:scale-104 hover:shadow-none transition-transform duration-200 ease-in-out rounded-lg shadow-sm flex items-start gap-3">
+
+  <img src="assets/images/avatar-mark-webber.webp" alt="Profile" class="w-10 h-10 rounded-full mt-1">
+  <div class="flex-1">
+    <p class="text-xs text-gray-800">
+      <span class="font-bold">Mark Webber</span>
+      <span class="text-gray-600"> reacted to your recent post </span>
+      <span id="postSpan" class="font-bold text-gray-800">My first tournament today!</span>
+       <span id="groupSpan" class="font-bold text-blue-900"></span>
+      <span class="red-dot inline-block w-1.5 h-1.5 bg-red-500 rounded-full ml-1 align-middle"></span>
+    </p>
+    <p class="text-xs text-gray-500 mt-1">1m ago</p>
+
+    <!-- Message box -->
+    <div class="message-box mt-3 p-2 border border-gray-300 rounded-sm bg-white text-xs text-gray-500 hidden">
+      </div>
+
+  </div>
+  <img id="picCommentSpan" src="" alt="Profile" class=" hidden w-10 h-10 rounded-lg">
+</li>
+
+<li  isread="false" class="noti-fication p-2 bg-blue-50 hover:bg-blue-100 hover:scale-104 hover:shadow-none transition-transform duration-200 ease-in-out rounded-lg shadow-sm flex items-start gap-3">
+  <img src="assets/images/avatar-angela-gray.webp" alt="Profile" class="w-10 h-10 rounded-full mt-1">
+  <div class="flex-1">
+    <p class="text-xs text-gray-800">
+      <span class="font-bold">Angela Gray</span>
+      <span class="text-gray-600"> followed you </span>
+      <span id="postSpan" class="font-bold text-gray-800"></span>
+       <span id="groupSpan" class="font-bold text-blue-900"></span>
+      <span class="red-dot inline-block w-1.5 h-1.5 bg-red-500 rounded-full ml-1 align-middle"></span>
+    </p>
+    <p class="text-xs text-gray-500 mt-1">5m ago</p>
+
+    <!-- Message box -->
+    <div class="message-box mt-3 p-2 border border-gray-300 rounded-sm bg-white text-xs text-gray-500 hidden">
+    </div>
+
+  </div>
+  <img id="picCommentSpan" src="" alt="Profile" class=" hidden w-10 h-10 rounded-lg">
+</li>
+
+<li  isread="false" class="noti-fication p-2 bg-blue-50 hover:bg-blue-100 hover:scale-104 hover:shadow-none transition-transform duration-200 ease-in-out rounded-lg shadow-sm flex items-start gap-3">
+  <img src="assets/images/avatar-jacob-thompson.webp" alt="Profile" class="w-10 h-10 rounded-full mt-1">
+  <div class="flex-1">
+    <p class="text-xs text-gray-800">
+      <span class="font-bold">Jacob Thompson</span>
+      <span class="text-gray-600"> has joined your group </span>
+      <span id="postSpan" class="font-bold text-gray-800"></span>
+       <span id="groupSpan" class="font-bold text-blue-900">Chess Club</span>
+      <span class="red-dot inline-block w-1.5 h-1.5 bg-red-500 rounded-full ml-1 align-middle"></span>
+    </p>
+    <p class="text-xs text-gray-500 mt-1">1 day ago</p>
+
+    <!-- Message box -->
+    <div class="message-box mt-3 p-2 border border-gray-300 rounded-sm bg-white text-xs text-gray-500 hidden">
+      </div>
+
+  </div>
+  <img id="picCommentSpan" src="" alt="Profile" class=" hidden w-10 h-10 rounded-lg">
+</li>
+
+<li  isread="true" class="noti-fication p-2 bg-blue-50 hover:bg-blue-100 hover:scale-104 hover:shadow-none transition-transform duration-200 ease-in-out rounded-lg shadow-sm flex items-start gap-3">
+  <img src="assets/images/avatar-rizky-hasanuddin.webp" alt="Profile" class="w-10 h-10 rounded-full mt-1">
+  <div class="flex-1">
+    <p class="text-xs text-gray-800">
+      <span class="font-bold">Rizky Hasanuddin</span>
+      <span class="text-gray-600"> sent you a private message </span>
+      <span id="postSpan" class="font-bold text-gray-800"></span>
+      <span class="red-dot inline-block w-1.5 h-1.5 bg-red-500 rounded-full ml-1 align-middle"></span>
+    </p>
+    <p class="text-xs text-gray-500 mt-1">5 days ago</p>
+
+    <!-- Message box -->
+    <div class="message-box mt-3 p-2 border border-gray-300 rounded-sm bg-white text-xs text-gray-500">
+      Hello, thanks for setting up the Chess Club. I’ve been a member for a few weeks now and I’m already having lots of fun and improving my game.
+    </div>
+
+  </div>
+  <img id="picCommentSpan" src="" alt="Profile" class=" hidden w-10 h-10 rounded-lg">
+</li>
+
+<li  isread="true" class="noti-fication p-2 bg-blue-50 hover:bg-blue-100 hover:scale-104 hover:shadow-none transition-transform duration-200 ease-in-out rounded-lg shadow-sm flex items-start gap-3">
+  <img src="assets/images/avatar-kimberly-smith.webp" alt="Profile" class="w-10 h-10 rounded-full mt-1">
+  <div class="flex-1">
+    <p class="text-xs text-gray-800">
+      <span class="font-bold">Kimberly Smith</span>
+      <span class="text-gray-600"> commented on your picture</span>
+      <span id="postSpan" class="font-bold text-gray-800"></span>
+       <span id="groupSpan" class="font-bold text-blue-900"></span>
+      <span class="red-dot inline-block w-1.5 h-1.5 bg-red-500 rounded-full ml-1 align-middle"></span>
+    </p>
+    <p class="text-xs text-gray-500 mt-1">1 week ago</p>
+
+    <!-- Message box -->
+    <div class="message-box mt-3 p-2 border border-gray-300 rounded-sm bg-white text-xs text-gray-500 hidden">
+     </div>
+
+  </div>
+  <img id="picCommentSpan" src="assets/images/image-chess.webp" alt="Profile" class="w-10 h-10 rounded-lg">
+</li>
+
+<li  isread="true" class="noti-fication p-2 bg-blue-50 hover:bg-blue-100 hover:scale-104 hover:shadow-none transition-transform duration-200 ease-in-out rounded-lg shadow-sm flex items-start gap-3">
+  <img src="assets/images/avatar-nathan-peterson.webp" alt="Profile" class="w-10 h-10 rounded-full mt-1">
+  <div class="flex-1">
+    <p class="text-xs text-gray-800">
+      <span class="font-bold">Mark Webber</span>
+      <span class="text-gray-600"> reacted to your recent post </span>
+      <span id="post" class="font-bold text-gray-800">5 end-game strategies to increase your win rate</span>
+       <span id="groupSpan" class="font-bold text-blue-900"></span>
+      <span class="red-dot inline-block w-1.5 h-1.5 bg-red-500 rounded-full ml-1 align-middle"></span>
+    </p>
+    <p class="text-xs text-gray-500 mt-1">2 weeks ago</p>
+
+    <!-- Message box -->
+    <div class="message-box mt-3 p-2 border border-gray-300 rounded-sm bg-white text-xs text-gray-500 hidden">
+    </div>
+
+  </div>
+  <img id="picCommentSpan" src="" alt="Profile" class=" hidden w-10 h-10 rounded-lg">
+</li>
+
+<li  isread="true" class="noti-fication p-2 bg-blue-50 hover:bg-blue-100 hover:scale-104 hover:shadow-none transition-transform duration-200 ease-in-out rounded-lg shadow-sm flex items-start gap-3">
+  <img src="assets/images/avatar-anna-kim.webp" alt="Profile" class="w-10 h-10 rounded-full mt-1">
+  <div class="flex-1">
+    <p class="text-xs text-gray-800">
+      <span class="font-bold">Mark Webber</span>
+      <span class="text-gray-600"> left your group </span>
+      <span id="postSpan" class="font-bold text-gray-800"></span>
+        <span id="groupSpan" class="font-bold text-blue-900">Chess Club</span>
+      <span class="red-dot inline-block w-1.5 h-1.5 bg-red-500 rounded-full ml-1 align-middle "></span>
+    </p>
+    <p class="text-xs text-gray-500 mt-1">2 weeks ago</p>
+
+    <!-- Message box -->
+    <div class="message-box mt-3 p-2 border border-gray-300 rounded-sm bg-white text-xs text-gray-500 hidden">
+     </div>
+
+  </div>
+  <img id="picCommentSpan" src="" alt="Profile" class=" hidden w-10 h-10 rounded-lg">
+</li>
+
+</ul>
+
+</section>
+</div>    
+
+</body>
+<script src="script.js"></script>
+</html>
