@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order.UK</title>
+
+    <link rel="stylesheet" href="dist/output.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-[#444444]">
+    <main class="container w-full max-w-432 bg-white sm:px-6 lg:px-10 mx-auto">
+      <header
+        class="max-w-382 flex items-center justify-between p-2 2xl:py-5 border-gray-200 dark:bg-gray-900 dark:border-gray-700 mx-auto"
+      >
+        <!-- Hamburger on mobile -->
+        <button
+          id="menu-toggle"
+          type="button"
+          class="inline-flex items-center w-8 h-8 sm:w-10 sm:h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="mobile-nav-panel"
+          aria-expanded="false"
+        >
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+
+        <!-- Mobile Side Navigation Panel -->
+        <div
+          id="mobile-nav-panel"
+          class="fixed top-0 left-0 z-50 h-full w-44 bg-white dark:bg-gray-900 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden"
+        >
+          <ul
+            id="mobile-nav-links"
+            class="flex flex-col space-y-2 p-4 text-sm font-medium"
+          >
+            <li>
+              <a
+                href="#"
+                class="nav-link block py-2 px-4 text-gray-900 rounded-full dark:text-white"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link block py-2 px-4 text-gray-900 rounded-full dark:text-white"
+                >Special Offers</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link block py-2 px-4 text-white bg-[#FC8A06] rounded-full dark:text-white"
+                >Restaurants</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link block py-2 px-4 text-gray-900 rounded-full dark:text-white"
+                >Track Order</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- 2) Logo (left on all screens) -->
+        <a
+          href="#"
+          class="flex items-center space-x-3 rtl:space-x-reverse md:mr-4"
+        >
+          <img
+            src="assets/images/hero/LOGO 1.png"
+            class="h-6 sm:h-8 2xl:h-10"
+            alt="Order.UK Logo"
+          />
+        </a>
+
+        <!-- 3) Nav links (hidden on mobile, centered on desktop) -->
+        <nav class="hidden md:flex flex-1 justify-center">
+          <ul
+            id="navbar-multi-level"
+            class="hidden md:flex text-xs 2xl:text-base font-medium md:space-x-6 rtl:space-x-reverse md:flex-row py-1"
+          >
+            <li>
+              <a
+                href="#"
+                class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
+              >
+                Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
+              >
+                Special Offers
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link block py-2 px-6 text-white bg-[#FC8A06] rounded-full md:border-0 dark:text-white"
+              >
+                Resturants
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
+              >
+                Track Order
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="flex space-x-2">
+          <!-- 4) Cart button -->
+          <button
+            class="p-2 rounded-full bg-[#0A0A1F] hover:bg-gray-700 transition-colors duration-200 md:ml-4"
+          >
+            <img
+              src="assets/images/hero/shopping_cart.svg"
+              alt="Cart"
+              class="w-5 h-5 sm:w-6 sm:h-6 2xl:w-7 2xl:h-7"
+            />
+          </button>
+          <p class="self-center text-xs 2xl:text-base font-medium">Cart</p>
+        </div>
+      </header>
+
+      <section
+        class="mx-auto 2xl:mt-4 max-h-119 max-w-382 bg-cover bg-center bg-no-repeat h-screen flex items-center justify-center"
+        style="background-image: url('assets/images/hero/HeroImg.png')"
+      >
+        <div class="bg-[#03081fe5] h-full w-full rounded-lg">
+          <!-- Content div -->
+          <div class="flex 2xl:p-12">
+            <!-- Left Area -->
+            <div class="mt-32 text-div text-white font-poppins 2xl:text-xl">
+              <div><p class="mt-8">I'm lovin' it!</p></div>
+              <div>
+                <p class="text-6xl font-bold leading-tight">
+                  McDonald’s East London
+                </p>
+              </div>
+
+              <div class="flex space-x-5 font-semibold items-center mt-6">
+                <!-- Order Details -->
+
+                <!-- Order Detail 1-->
+                <div
+                  class="px-8 py-3 outline-1 outline-white rounded-full flex gap-4"
+                >
+                  <img
+                    src="assets/images/hero/Order Completed.svg"
+                    alt=""
+                    class="h-8"
+                  />
+                  <p class="self-center">Minimum Order: 12 GBP</p>
+                </div>
+
+                <!-- Order Detail 2 -->
+                <div
+                  class="px-8 py-3 outline-1 outline-white rounded-full flex gap-4"
+                >
+                  <img
+                    src="assets/images/hero/Motocross.svg"
+                    alt=""
+                    class="h-8"
+                  />
+                  <p class="self-center">Delivery in 20-25 Minutes</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Area -->
+            <div class="flex">
+              <!-- User Rating img -->
+              <div class="self-end translate-x-20 translate-y-2">
+                <img src="assets/images/hero/UserRating.png" alt="" />
+              </div>
+              <!-- Main Burger img -->
+              <div class="max-w-145 max-h-90">
+                <img src="assets/images/hero/HeroImg.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+   <!-- Burger Section -->
+<section class="max-w-382 py-12 bg-white mx-auto">
+  <h2 class="text-5xl font-extrabold mb-8">Burgers</h2>
+
+  <div id="burger-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- JS will populate cards here -->
+  </div>
+</section>
+
+
+
+<!-- ------------------------------------------------------------------------------------------- -->
+  <!-- Fries Section -->
+<section class="max-w-382 py-12 bg-white mx-auto">
+  <h2 class="text-5xl font-extrabold mb-8 text-[#FC8A06]">Fries</h2>
+  <div id="fries-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- JS will inject fries cards here -->
+  </div>
+</section>
+
+<!-- 🥤 Cold Drinks Section -->
+<section class="max-w-382 py-12 bg-white mx-auto">
+  <h2 class="text-5xl font-extrabold mb-8 text-[#FC8A06]">Cold Drinks</h2>
+  <div id="drinks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- JS will inject drinks cards here -->
+  </div>
+</section>
+
+      <!-- ------------------------------------------------- -->
+
+
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
