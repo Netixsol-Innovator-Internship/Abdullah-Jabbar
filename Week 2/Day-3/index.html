@@ -12,7 +12,7 @@
     />
   </head>
   <body class="bg-[#444444]">
-    <main class="container w-full max-w-432 bg-white sm:px-6 lg:px-10 mx-auto">
+    <main class="container w-full max-w-432 bg-white  mx-auto">
       <header
         class="max-w-382 flex items-center justify-between p-2 2xl:py-5 border-gray-200 dark:bg-gray-900 dark:border-gray-700 mx-auto"
       >
@@ -165,31 +165,24 @@
                 </p>
               </div>
 
-              <div class="flex space-x-5 font-semibold items-center mt-6">
-                <!-- Order Details -->
+
+              <!-- Order Details -->
+              <div class="flex flex-2 sm:flex space-x-1 sm:space-x-2 md:space-x-3 lg:space-x-4 xl:space-x-5 font-semibold items-center mt-6">                
 
                 <!-- Order Detail 1-->
                 <div
-                  class="px-8 py-3 outline-1 outline-white rounded-full flex gap-4"
-                >
+                  class="px-2 md:px-6 lg:px-8 py-1 md:py2 lg:py-3 outline-1 outline-white rounded-full flex gap-1 sm:gap-2 md:gap-3 lg:gap-4">
                   <img
-                    src="assets/images/hero/Order Completed.svg"
-                    alt=""
-                    class="h-8"
-                  />
-                  <p class="self-center">Minimum Order: 12 GBP</p>
+                    src="assets/images/hero/Order Completed.svg" alt="" class="lg:h-8"/>
+                  <p class="self-center text-xs md:text-base">Minimum Order: 12 GBP</p>
                 </div>
 
                 <!-- Order Detail 2 -->
                 <div
-                  class="px-8 py-3 outline-1 outline-white rounded-full flex gap-4"
+                  class="px-2 md:px-6 lg:px-8 py-1 md:py2 lg:py-3 outline-1 outline-white rounded-full flex gap-1 sm:gap-2 md:gap-3 lg:gap-4"
                 >
-                  <img
-                    src="assets/images/hero/Motocross.svg"
-                    alt=""
-                    class="h-8"
-                  />
-                  <p class="self-center">Delivery in 20-25 Minutes</p>
+                  <img src="assets/images/hero/Motocross.svg" alt="" class="lg:h-8"/>
+                  <p class="self-center text-xs md:text-base">Delivery in 20-25 Minutes</p>
                 </div>
               </div>
             </div>
@@ -197,7 +190,7 @@
             <!-- Right Area -->
             <div class="flex">
               <!-- User Rating img -->
-              <div class="self-end translate-x-20 translate-y-2">
+              <div class="self-end md:translate-x-20 md:translate-y-2">
                 <img src="assets/images/hero/UserRating.png" alt="" />
               </div>
               <!-- Main Burger img -->
@@ -210,12 +203,34 @@
       </section>
 
 
+<!-- All items Section -->
+<nav class="bg-[#FC8A06] w-full py-2 md:py-1  lg:py-6 px-4 sm:px-10 md:px-14 lg:px-20 xl:px-26 mt-4 overflow-x-auto whitespace-nowrap ">
+  <ul class="flex space-x-4 font-bold text-white text-sm lg:text-base items-center justify-between">
+  <li>
+    <button class="category-link bg-[#000000] text-white px-8 py-2 rounded-full">Offers</button>
+  </li>
+  <li><button class="category-link rounded-full ">Burgers</button></li>
+  <li><button class="category-link rounded-full ">Fries</button></li>
+  <li><button class="category-link rounded-full ">Snacks</button></li>
+  <li><button class="category-link rounded-full ">Salads</button></li>
+  <li><button class="category-link rounded-full ">Cold drinks</button></li>
+  <li><button class="category-link rounded-full ">Happy Meal®</button></li>
+  <li><button class="category-link rounded-full ">Desserts</button></li>
+  <li><button class="category-link rounded-full ">Hot drinks</button></li>
+  <li><button class="category-link rounded-full ">Sauces</button></li>
+  <li><button class="category-link rounded-full ">Orbit®</button></li>
+</ul>
+
+</nav>
+
+<!-- --------------------------------------------- -->
 
    <!-- Burger Section -->
-<section class="max-w-382 py-12 bg-white mx-auto">
+<section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
+  
   <h2 class="text-5xl font-extrabold mb-8">Burgers</h2>
 
-  <div id="burger-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div id="burger-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
     <!-- JS will populate cards here -->
   </div>
 </section>
@@ -224,7 +239,7 @@
 
 <!-- ------------------------------------------------------------------------------------------- -->
   <!-- Fries Section -->
-<section class="max-w-382 py-12 bg-white mx-auto">
+<section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
   <h2 class="text-5xl font-extrabold mb-8 text-[#FC8A06]">Fries</h2>
   <div id="fries-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <!-- JS will inject fries cards here -->
@@ -232,7 +247,7 @@
 </section>
 
 <!-- 🥤 Cold Drinks Section -->
-<section class="max-w-382 py-12 bg-white mx-auto">
+<section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
   <h2 class="text-5xl font-extrabold mb-8 text-[#FC8A06]">Cold Drinks</h2>
   <div id="drinks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <!-- JS will inject drinks cards here -->
@@ -241,6 +256,75 @@
 
       <!-- ------------------------------------------------- -->
 
+<!-- Similar Resturants Section -->
+
+<section class="w-full max-h-150 2xl:min-h-150 bg-white px-4 2xl:px-15 2xl:py-30">
+  <div class="w-full h-full">
+<h3 class="text-3xl font-bold font-poppins md:ml-8">Similar Resturants</h3>
+
+<ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4 sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 2xl:mt-14">
+  
+  <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
+    <img src="assets/images/similarResturants/McDonalds.png" alt="" class="2xl:h-50 w-full">
+    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
+  McDonald’s London
+    </h4>
+ </li>
+
+ <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
+    <img src="assets/images/similarResturants/PapaJhons.png" alt="" class="2xl:h-50 w-full">
+    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
+  Papa Jhons
+    </h4>
+ </li>
+
+
+ <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
+    <img src="assets/images/similarResturants/KFC.png" alt="" class="2xl:h-50 w-full">
+    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
+  KFC West London
+    </h4>
+ </li>
+
+ <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
+    <img src="assets/images/similarResturants/TexasChicken.png" alt="" class="2xl:h-50 w-full">
+    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
+  Texas Chicken
+    </h4>
+ </li>
+
+ <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
+    <img src="assets/images/similarResturants/BurgerKing.png" alt="" class="2xl:h-50 w-full">
+    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
+  Burger King
+    </h4>
+ </li>
+
+
+ <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
+    <img src="assets/images/similarResturants/ShaurmaN1.png" alt="" class="2xl:h-50 w-full">
+    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
+  Shaurma1
+    </h4>
+ </li>
+
+ 
+</ul>
+    
+  </div>
+
+</section>
+
+
+
+<!-- -----Footer Section--------- -->
+
+<section class="w-full max-h-111 2xl:min-h-111 bg-[#D9D9D9] px-20 py-25">
+  <div class="bg-amber-900 ">
+
+    
+  </div>
+</section>
 
     </main>
     <script src="script.js"></script>

@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // ✅ Highlight current nav link (works for both desktop + mobile if .nav-link used)
+  //  Highlight current nav link (works for both desktop + mobile if .nav-link used)
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", function () {
       document
@@ -44,6 +44,20 @@ document.addEventListener("DOMContentLoaded", function () {
       this.classList.add("bg-[#FC8A06]", "dark:bg-blue-900", "text-white");
     });
   });
+
+document.querySelectorAll(".category-link").forEach((btn) => {
+  btn.addEventListener("click", function () {
+    // Remove selected styles from all buttons
+    document.querySelectorAll(".category-link").forEach((el) => {
+      el.classList.remove("bg-[#000000]", "text-white", "px-8", "py-2");
+    });
+
+    // Add selected styles to the clicked button
+    this.classList.add("bg-[#000000]", "text-white", "px-8", "py-2");
+  });
+});
+
+
 
 
   const productCardsData = [
