@@ -12,7 +12,7 @@
     />
   </head>
   <body class="bg-[#444444]">
-    <main class="container w-full max-w-432 bg-white  mx-auto">
+    <main class="container w-full max-w-432 bg-white mx-auto">
       <header
         class="max-w-382 flex items-center justify-between p-2 2xl:py-5 border-gray-200 dark:bg-gray-900 dark:border-gray-700 mx-auto"
       >
@@ -135,18 +135,61 @@
         </nav>
 
         <div class="flex space-x-2">
-          <!-- 4) Cart button -->
-          <button
-            class="p-2 rounded-full bg-[#0A0A1F] hover:bg-gray-700 transition-colors duration-200 md:ml-4"
-          >
-            <img
-              src="assets/images/hero/shopping_cart.svg"
-              alt="Cart"
-              class="w-5 h-5 sm:w-6 sm:h-6 2xl:w-7 2xl:h-7"
-            />
-          </button>
-          <p class="self-center text-xs 2xl:text-base font-medium">Cart</p>
+         <!-- 4) Cart button -->
+<button
+  onclick="document.getElementById('cartModal').classList.remove('hidden')"
+  class="p-2 rounded-full bg-[#0A0A1F] hover:bg-gray-700 transition-colors duration-200 md:ml-4 cursor-pointer"
+>
+  <img
+    src="assets/images/hero/shopping_cart.svg"
+    alt="Cart"
+    class="w-5 h-5 sm:w-6 sm:h-6 2xl:w-7 2xl:h-7"
+  />
+</button>
+<p class="self-center text-xs 2xl:text-base font-medium">Cart</p>
+
         </div>
+
+ <!-- Modal Background -->
+<div
+  id="cartModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden"
+>
+  <div
+    id="cartContent"
+    class="bg-white border border-[#0000001C] w-[90%] max-w-[1326px] max-h-[90vh] overflow-y-auto rounded-lg p-8 relative"
+  >
+    <!-- Close Button -->
+    <button onclick="document.getElementById('cartModal').classList.add('hidden')" class=" cursor-pointer absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-500 text-white text-3xl font-bold">
+      ×
+    </button>
+
+    <!-- Banner -->
+    <div class="mb-6">
+      <img src="assets/images/cartModal/modalPizza.png" alt="Banner" class="w-full rounded-md" />
+    </div>
+
+   <!-- Cart Items -->
+<div id="cart-items-container" class="space-y-4"></div>
+
+
+    <!-- Footer -->
+    <div class="flex justify-between items-center mt-10">
+      <div class="text-xl font-semibold text-orange-500">
+        Total to pay: £32.60
+      </div>
+      <div class="flex space-x-4">
+        <button onclick="document.getElementById('cartModal').classList.add('hidden')" class="underline text-gray-600">Take me back</button>
+        <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded">
+          Next Step
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+   
       </header>
 
       <section
@@ -165,24 +208,36 @@
                 </p>
               </div>
 
-
               <!-- Order Details -->
-              <div class="flex flex-2 sm:flex space-x-1 sm:space-x-2 md:space-x-3 lg:space-x-4 xl:space-x-5 font-semibold items-center mt-6">                
-
+              <div
+                class="flex flex-2 sm:flex space-x-1 sm:space-x-2 md:space-x-3 lg:space-x-4 xl:space-x-5 font-semibold items-center mt-6"
+              >
                 <!-- Order Detail 1-->
                 <div
-                  class="px-2 md:px-6 lg:px-8 py-1 md:py2 lg:py-3 outline-1 outline-white rounded-full flex gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+                  class="px-2 md:px-6 lg:px-8 py-1 md:py2 lg:py-3 outline-1 outline-white rounded-full flex gap-1 sm:gap-2 md:gap-3 lg:gap-4"
+                >
                   <img
-                    src="assets/images/hero/Order Completed.svg" alt="" class="lg:h-8"/>
-                  <p class="self-center text-xs md:text-base">Minimum Order: 12 GBP</p>
+                    src="assets/images/hero/Order Completed.svg"
+                    alt=""
+                    class="lg:h-8"
+                  />
+                  <p class="self-center text-xs md:text-base">
+                    Minimum Order: 12 GBP
+                  </p>
                 </div>
 
                 <!-- Order Detail 2 -->
                 <div
                   class="px-2 md:px-6 lg:px-8 py-1 md:py2 lg:py-3 outline-1 outline-white rounded-full flex gap-1 sm:gap-2 md:gap-3 lg:gap-4"
                 >
-                  <img src="assets/images/hero/Motocross.svg" alt="" class="lg:h-8"/>
-                  <p class="self-center text-xs md:text-base">Delivery in 20-25 Minutes</p>
+                  <img
+                    src="assets/images/hero/Motocross.svg"
+                    alt=""
+                    class="lg:h-8"
+                  />
+                  <p class="self-center text-xs md:text-base">
+                    Delivery in 20-25 Minutes
+                  </p>
                 </div>
               </div>
             </div>
@@ -199,169 +254,283 @@
               </div>
             </div>
           </div>
+
+
+          <div class="mb-2 bg-[#FC8A06] text-center min-h-15 rounded-r-lg flex gap-x-2 items-center justify-center max-h6 max-w-70 ">
+          <img src="assets/images/hero/Clock.svg" alt="">
+         <p class=" text-white text-lg font-semibold ">       
+          Open until 3:00 AM
+         </p>
+         </div>
+
+        </div>
+
+     
+      </section>
+   
+<!-- ------------------------------------------------- -->
+      <!-- Search Section -->
+      <section
+        class="max-w-382 max-h-64 px-6 sm:px-8 md:px-10 lg:px-12 xl:px-14 py-6 lg:py-12 bg-white mx-auto flex justify-between"
+      >
+        <h3 class="text-4xl font-bold">
+          All Offers from McDonald’s East London
+        </h3>
+      <!-- Search Bar -->
+<div class="px-2 md:px-6 lg:px-8 py-1 md:py-2 lg:py-3 text-[#03081F] outline-1 outline-[#03081F] rounded-full flex gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+  <img src="assets/images/hero/Search More.svg" alt="Search Icon" class="lg:h-8 self-center" />
+  <input
+    type="text"
+    placeholder="Search from menu..."
+    class=" placeholder- bg-transparent border-none outline-none font-semibold text-[#03081F] text-xs md:text-base opacity-60 w-full self-center placeholder-[#03081F]"
+  />
+</div>
+
+      </section>
+<!-- ----------------------------------------------------------------- -->
+      <!-- All Categories Section -->
+      <nav
+        class="bg-[#FC8A06] w-full py-2 md:py-1 lg:py-6 px-4 sm:px-10 md:px-14 lg:px-20 xl:px-26  overflow-x-auto whitespace-nowrap"
+      >
+        <ul
+          class="flex space-x-4 font-bold text-white text-sm lg:text-base items-center justify-between"
+        >
+          <li>
+            <button
+              class="category-link bg-[#000000] text-white px-8 py-2 rounded-full"
+            >
+              Offers
+            </button>
+          </li>
+          <li><button class="category-link rounded-full">Burgers</button></li>
+          <li><button class="category-link rounded-full">Fries</button></li>
+          <li><button class="category-link rounded-full">Snacks</button></li>
+          <li><button class="category-link rounded-full">Salads</button></li>
+          <li>
+            <button class="category-link rounded-full">Cold drinks</button>
+          </li>
+          <li>
+            <button class="category-link rounded-full">Happy Meal®</button>
+          </li>
+          <li><button class="category-link rounded-full">Desserts</button></li>
+          <li>
+            <button class="category-link rounded-full">Hot drinks</button>
+          </li>
+          <li><button class="category-link rounded-full">Sauces</button></li>
+          <li><button class="category-link rounded-full">Orbit®</button></li>
+        </ul>
+      </nav>
+
+      <!-- ----------------------------------------------->
+
+      <!-- Burger Section -->
+      <section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
+        <h2 class="text-5xl font-extrabold mb-8">Burgers</h2>
+
+        <div
+          id="burger-cards-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <!-- JS will populate cards here -->
         </div>
       </section>
 
+      <!-- ------------------------------------------------------------------------------------------- -->
+      <!-- Fries Section -->
+      <section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
+        <h2 class="text-5xl font-extrabold mb-8 text-[#FC8A06]">Fries</h2>
+        <div
+          id="fries-cards-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <!-- JS will inject fries cards here -->
+        </div>
+      </section>
 
-<!-- All items Section -->
-<nav class="bg-[#FC8A06] w-full py-2 md:py-1  lg:py-6 px-4 sm:px-10 md:px-14 lg:px-20 xl:px-26 mt-4 overflow-x-auto whitespace-nowrap ">
-  <ul class="flex space-x-4 font-bold text-white text-sm lg:text-base items-center justify-between">
-  <li>
-    <button class="category-link bg-[#000000] text-white px-8 py-2 rounded-full">Offers</button>
-  </li>
-  <li><button class="category-link rounded-full ">Burgers</button></li>
-  <li><button class="category-link rounded-full ">Fries</button></li>
-  <li><button class="category-link rounded-full ">Snacks</button></li>
-  <li><button class="category-link rounded-full ">Salads</button></li>
-  <li><button class="category-link rounded-full ">Cold drinks</button></li>
-  <li><button class="category-link rounded-full ">Happy Meal®</button></li>
-  <li><button class="category-link rounded-full ">Desserts</button></li>
-  <li><button class="category-link rounded-full ">Hot drinks</button></li>
-  <li><button class="category-link rounded-full ">Sauces</button></li>
-  <li><button class="category-link rounded-full ">Orbit®</button></li>
-</ul>
-
-</nav>
-
-<!-- --------------------------------------------- -->
-
-   <!-- Burger Section -->
-<section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
-  
-  <h2 class="text-5xl font-extrabold mb-8">Burgers</h2>
-
-  <div id="burger-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
-    <!-- JS will populate cards here -->
-  </div>
-</section>
-
-
-
-<!-- ------------------------------------------------------------------------------------------- -->
-  <!-- Fries Section -->
-<section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
-  <h2 class="text-5xl font-extrabold mb-8 text-[#FC8A06]">Fries</h2>
-  <div id="fries-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- JS will inject fries cards here -->
-  </div>
-</section>
-
-<!-- 🥤 Cold Drinks Section -->
-<section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
-  <h2 class="text-5xl font-extrabold mb-8 text-[#FC8A06]">Cold Drinks</h2>
-  <div id="drinks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- JS will inject drinks cards here -->
-  </div>
-</section>
+      <!-- 🥤 Cold Drinks Section -->
+      <section class="max-w-382 px-4 py-6 lg:py-12 bg-white mx-auto">
+        <h2 class="text-5xl font-extrabold mb-8 text-[#FC8A06]">Cold Drinks</h2>
+        <div
+          id="drinks-cards-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <!-- JS will inject drinks cards here -->
+        </div>
+      </section>
 
       <!-- ------------------------------------------------- -->
-<!-- Customer Reviews Section -->
-<section class="w-full   bg-[#D9D9D9] px-4 2xl:px-15 2xl:py-25 py-10">
-  <div class="w-full mx-auto max-w-382">
+      <!-- Customer Reviews Section -->
+      <section class="w-full bg-[#D9D9D9] px-4 2xl:px-15 2xl:py-25 py-10">
+        <div class="w-full mx-auto max-w-382">
+          <div class="flex justify-between mb-8">
+            <!-- Heading -->
+            <h1 class="text-4xl md:text-5xl font-bold font-poppins">
+              Customer Reviews
+            </h1>
+            <!-- Arrows -->
+            <div class="flex gap-4 mt-6 xl:mt-0">
+              <button
+                class="w-14 h-14 md:w-18 md:h-18 rounded-full bg-[#FC8A06] hover:text-white flex items-center justify-center hover:scale-105 transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="cursor-pointer w-8 h-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <button
+                class="w-14 h-14 md:w-18 md:h-18 rounded-full bg-[#FC8A06] hover:text-white flex items-center justify-center hover:scale-105 transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="cursor-pointer w-8 h-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
 
-    <div class="flex justify-between mb-8">
-    <!-- Heading -->
-    <h1 class="text-4xl md:text-5xl font-bold font-poppins  ">Customer Reviews</h1>
-      <!-- Arrows -->
-      <div class="flex  gap-4 mt-6 xl:mt-0">
-        <button class=" w-14 h-14 md:w-18 md:h-18 rounded-full bg-[#FC8A06] hover:text-white flex items-center justify-center hover:scale-105 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="cursor-pointer w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button class=" w-14 h-14 md:w-18 md:h-18 rounded-full bg-[#FC8A06] hover:text-white flex items-center justify-center hover:scale-105 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="cursor-pointer w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-</div>
+          <!-- Cards Container -->
+          <div
+            class="flex flex-col xl:flex-row items-center justify-between gap-6"
+          >
+            <!-- Cards Grid-->
+            <div
+              id="reviews-grid"
+              class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full"
+            >
+              <!-- JS will inject cards here -->
+            </div>
 
-    <!-- Cards Container -->
-    <div class="flex flex-col xl:flex-row items-center justify-between gap-6">
-
-      <!-- Cards Grid-->
-<div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
-  <!-- JS will inject cards here -->
-</div>
-
-<!--Cards Grid End-->  
-    </div>
-  </div>
-</section>
-
-
+            <!--Cards Grid End-->
+          </div>
+        </div>
+      </section>
 
       <!-- ------------------------------------------------- -->
-<!-- Similar Resturants Section -->
+      <!-- Similar Resturants Section -->
 
-<section class="w-full max-h-150 2xl:min-h-150 bg-white px-4 2xl:px-25 2xl:py-30">
+<section class="w-full  2xl:min-h-150 bg-white px-4 2xl:px-25 2xl:py-30">
   <div class="w-full h-full">
-<h3 class="text-3xl font-bold font-poppins md:ml-8">Similar Resturants</h3>
+    <h3 class="text-3xl font-bold font-poppins md:ml-8">
+      Similar Resturants
+    </h3>
 
-<ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4 sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 2xl:mt-14">
-  
-  <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
-    <img src="assets/images/similarResturants/McDonalds.png" alt="" class="2xl:h-50 w-full">
-    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
-  McDonald’s London
-    </h4>
- </li>
-
- <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
-    <img src="assets/images/similarResturants/PapaJhons.png" alt="" class="2xl:h-50 w-full">
-    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
-  Papa Jhons
-    </h4>
- </li>
-
-
- <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
-    <img src="assets/images/similarResturants/KFC.png" alt="" class="2xl:h-50 w-full">
-    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
-  KFC West London
-    </h4>
- </li>
-
- <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
-    <img src="assets/images/similarResturants/TexasChicken.png" alt="" class="2xl:h-50 w-full">
-    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
-  Texas Chicken
-    </h4>
- </li>
-
- <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
-    <img src="assets/images/similarResturants/BurgerKing.png" alt="" class="2xl:h-50 w-full">
-    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
-  Burger King
-    </h4>
- </li>
-
-
- <li class="2xl:min-h-67 2xl:min-w-59.5 rounded-lg">
-    <img src="assets/images/similarResturants/ShaurmaN1.png" alt="" class="2xl:h-50 w-full">
-    <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center min-h-15 rounded-b-lg flex items-center justify-center">
-  Shaurma1
-    </h4>
- </li>
-
- 
-</ul>
-    
-  </div>
-
-</section>
-
-
-
-<!-- -----Footer Section--------- -->
-
-<section class="w-full max-h-111 2xl:min-h-111 bg-[#D9D9D9] px-20 py-25">
-  <div class="bg-amber-900 ">
-
-    
+    <ul
+      id="similar-restaurants"
+      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4 sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 2xl:mt-14"
+    >
+      <!-- Cards will be injected here by JS -->
+    </ul>
   </div>
 </section>
+
+
+<!-- ----------------------------------------------------------------------------- -->
+
+
+      <!-- -----Footer Section--------- -->
+
+      <footer class="w-full bg-[#D9D9D999] text-gray-800">
+    <div class="container mx-auto px-4 md:px-8 py-10 lg:py-16">
+        <!-- Main content area of the footer -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 lg:gap-x-16">
+
+            <!-- Section 1: Logo and Company Info -->
+            <div class="flex flex-col space-y-4">
+                <img src="assets/images/footer/LOGO 2.png" alt="">
+                <div class="flex space-x-1">
+                    <a href="#" class="w-32"><img src="https://placehold.co/128x40/000000/FFFFFF?text=App+Store" alt="Download on the App Store" class="rounded-lg"></a>
+                    <a href="#" class="w-32"><img src="https://placehold.co/128x40/000000/FFFFFF?text=Google+Play" alt="Get it on Google Play" class="rounded-lg"></a>
+                </div>
+                <p class="text-sm text-gray-600">
+                    Company # 490039-445, Registered with House of companies.
+                </p>
+            </div>
+
+            <!-- Section 2: Get Exclusive Deals and Social Media -->
+            <div class="flex flex-col space-y-4 xl:ml-10">
+                <h3 class="font-semibold text-lg text-gray-900">Get Exclusive Deals in your Inbox</h3>
+                <div class="flex flex-col space-y-2">
+                    <div class="flex">
+                        <input type="email" placeholder="youremail@gmail.com" class="flex-1 py-2 px-4 rounded-full border-2 border-r-0 border-gray-300 bg-[#D9D9D9] focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-full">
+                            Subscribe
+                        </button>
+                    </div>
+                    <p class="text-xs ">we won't spam, read our <a href="#" class="underline">email policy</a></p>
+                </div>
+                <div class="flex space-x-4 items-center mt-2">
+                    <!-- Social Media Icons (using SVG for easy styling) -->
+                    <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">
+                       <img src="assets/images/footer/Facebook.svg" alt=""> </a> </a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">
+                        <img src="assets/images/footer/Instagram.svg" alt="">
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">
+                       <img src="assets/images/footer/TikTok.svg" alt="">  </a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">
+                       <img src="assets/images/footer/Snapchat.svg" alt=""> </a>
+                </div>
+            </div>
+
+            <!-- Section 3: Legal Pages -->
+            <div class="flex flex-col space-y-4 xl:ml-30">
+                <h3 class="font-semibold text-lg text-gray-900">Legal Pages</h3>
+                <nav class="flex flex-col space-y-2 text-gray-600 text-sm">
+                    <a href="#" class="hover:text-black transition-colors">Terms and conditions</a>
+                    <a href="#" class="hover:text-black transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-black transition-colors">Cookies</a>
+                    <a href="#" class="hover:text-black transition-colors">Modern Slavery Statement</a>
+                </nav>
+            </div>
+
+            <!-- Section 4: Important Links -->
+            <div class="flex flex-col space-y-4">
+                <h3 class="font-semibold text-lg text-gray-900">Important Links</h3>
+                <nav class="flex flex-col space-y-2 text-gray-600 text-sm">
+                    <a href="#" class="hover:text-black transition-colors">Get help</a>
+                    <a href="#" class="hover:text-black transition-colors">Add your restaurant</a>
+                    <a href="#" class="hover:text-black transition-colors">Sign up to deliver</a>
+                    <a href="#" class="hover:text-black transition-colors">Create a business account</a>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bottom copyright bar -->
+    <div class="bg-[#10131A] text-white py-6 px-4 md:px-8">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center text-xs">
+            <p class="mb-4 md:mb-0">Order.uk Copyright 2025. All Rights Reserved.</p>
+            <nav class="flex flex-wrap justify-center md:justify-end space-x-4">
+                <a href="#" class="hover:text-gray-300 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-300 transition-colors">Terms</a>
+                <a href="#" class="hover:text-gray-300 transition-colors">Pricing</a>
+                <a href="#" class="hover:text-gray-300 transition-colors">Do not sell or share my personal information</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
 
     </main>
     <script src="script.js"></script>

@@ -45,20 +45,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-document.querySelectorAll(".category-link").forEach((btn) => {
-  btn.addEventListener("click", function () {
-    // Remove selected styles from all buttons
-    document.querySelectorAll(".category-link").forEach((el) => {
-      el.classList.remove("bg-[#000000]", "text-white", "px-8", "py-2");
+  document.querySelectorAll(".category-link").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      // Remove selected styles from all buttons
+      document.querySelectorAll(".category-link").forEach((el) => {
+        el.classList.remove("bg-[#000000]", "text-white", "px-8", "py-2");
+      });
+
+      // Add selected styles to the clicked button
+      this.classList.add("bg-[#000000]", "text-white", "px-8", "py-2");
     });
-
-    // Add selected styles to the clicked button
-    this.classList.add("bg-[#000000]", "text-white", "px-8", "py-2");
   });
-});
-
-
-
 
   const productCardsData = [
     // Burgers
@@ -279,14 +276,12 @@ document.querySelectorAll(".category-link").forEach((btn) => {
     },
   ];
 
-
-
   const renderCards = (type, containerId) => {
-  const container = document.getElementById(containerId);
-  const filteredCards = productCardsData.filter(card => card.type === type);
+    const container = document.getElementById(containerId);
+    const filteredCards = productCardsData.filter((card) => card.type === type);
 
-  filteredCards.forEach((card) => {
-    const cardHTML = `
+    filteredCards.forEach((card) => {
+      const cardHTML = `
       <div class="max-w-md max-h-60 2xl:min-w-md 2xl:min-h-60 flex justify-between items-start p-6 rounded-xl border-2 border-white shadow-xl bg-white">
         <!-- left text -->
         <div class="w-full sm:w-1/2 flex flex-col justify-between gap-y-1 sm:gap-y-2 md:gap-y-3 font-poppins">
@@ -300,19 +295,24 @@ document.querySelectorAll(".category-link").forEach((btn) => {
         <!-- right image -->
         <div class="w-1/2 relative ml-4">
           <img src="${card.image}" alt="Item Image" class="w-full h-full object-cover rounded-lg" />
-          <div class="absolute bottom-0 right-0 w-14 h-14 sm:w-20 sm:h-20 bg-white opacity-85 rounded-tl-[45px] rounded-br-[12px] p-2 shadow-md flex items-center justify-center">
-            <button class="w-8 h-8 sm:w-10 sm:h-10 p-0 bg-transparent border-none focus:outline-none hover:opacity-90 transition">
+          <div class="absolute bottom-0 right-0 w-10 h-10 sm:w-12 sm:h-12 md:h-16 md:w-16 xl:h-20 xl:w-20 bg-white opacity-85 rounded-tl-[25px] sm:rounded-tl-[45px] rounded-br-[12px] p-2 shadow-md flex items-center justify-center">
+            <button class="add-to-cart-btn w-8 h-8 sm:w-10 sm:h-10 p-0 bg-transparent border-none focus:outline-none hover:opacity-90 transition">
               <img src="assets/images/burgers/Plus.png" alt="Plus Icon" class="cursor-pointer w-full h-full object-contain" />
             </button>
           </div>
         </div>
       </div>
     `;
-    container.insertAdjacentHTML('beforeend', cardHTML);
-  });
-};
+      container.insertAdjacentHTML("beforeend", cardHTML);
+    });
+  };
 
+  // Render all categories
+  renderCards("burger", "burger-cards-container");
+  renderCards("fries", "fries-cards-container");
+  renderCards("drink", "drinks-cards-container");
 
+  // Reviews Slider
 
   let startIndex = 0;
   const visibleCount = 3;
@@ -370,14 +370,150 @@ document.querySelectorAll(".category-link").forEach((btn) => {
   });
 
   // Initial render
-renderReviews();
+  renderReviews();
 
+  const restaurants = [
+    {
+      name: "McDonald’s London",
+      image: "assets/images/similarResturants/McDonalds.png",
+    },
+    {
+      name: "Papa Jhons",
+      image: "assets/images/similarResturants/PapaJhons.png",
+    },
+    {
+      name: "KFC West London",
+      image: "assets/images/similarResturants/KFC.png",
+    },
+    {
+      name: "Texas Chicken",
+      image: "assets/images/similarResturants/TexasChicken.png",
+    },
+    {
+      name: "Burger King",
+      image: "assets/images/similarResturants/BurgerKing.png",
+    },
+    {
+      name: "Shaurma1",
+      image: "assets/images/similarResturants/ShaurmaN1.png",
+    },
+  ];
 
+  const restContainer = document.getElementById("similar-restaurants");
 
+  restaurants.forEach((rest) => {
+    const li = document.createElement("li");
+    li.className = "2xl:min-h-67 2xl:min-w-59.5 rounded-lg";
 
-// Render all categories
-renderCards("burger", "burger-cards-container");
-renderCards("fries", "fries-cards-container");
-renderCards("drink", "drinks-cards-container");
+    li.innerHTML = `
+      <img src="${rest.image}" alt="${rest.name}" class="2xl:h-50 w-full" />
+      <h4 class="rest-name text-white text-xl font-bold bg-[#FC8A06] text-center py-2 xl:min-h-15 rounded-b-lg flex items-center justify-center">
+        ${rest.name}
+      </h4>
+    `;
 
+    restContainer.appendChild(li);
+  });
+
+  document.addEventListener("click", function (e) {
+    const btn = e.target.closest(".add-to-cart-btn");
+    if (btn) {
+      const productId = btn.getAttribute("data-product-id");
+      addToCart(productId);
+    }
+  });
+
+  // ---------- Cart Logic ----------
+  const cart = {};
+
+  // Add to Cart
+  function addToCart(productId) {
+    const item = productCardsData.find(
+      (p) => p.title.replace(/<br\s*\/?>/g, " ").trim() === productId
+    );
+    if (!item) return;
+
+    if (!cart[productId]) {
+      cart[productId] = {
+        id: productId,
+        type: item.type,
+        title: item.title.replace(/<br\s*\/?>/g, " "),
+        price: item.price,
+        image: item.image,
+        quantity: 1,
+      };
+    } else {
+      cart[productId].quantity += 1;
+    }
+
+    renderCartModal();
+  }
+
+  // Update Quantity
+  function updateQuantity(productId, delta) {
+    if (!cart[productId]) return;
+
+    cart[productId].quantity += delta;
+    if (cart[productId].quantity <= 0) {
+      delete cart[productId];
+    }
+
+    renderCartModal();
+  }
+
+  // Render Cart Modal
+  function renderCartModal() {
+    const cartContentDiv = document.querySelector("#cart-items-container");
+    cartContentDiv.innerHTML = "";
+
+    let total = 0;
+    const grouped = { burger: [], fries: [], drink: [] };
+
+    for (const key in cart) {
+      const item = cart[key];
+      grouped[item.type].push(item);
+      total += parseFloat(item.price.slice(4)) * item.quantity;
+    }
+
+    const createItemHTML = (item) => `
+    <div class="flex items-center justify-between bg-gray-100 p-4 rounded-lg">
+      <div class="flex items-center space-x-4">
+        <img src="${item.image}" alt="${item.title}" class="w-12 h-12" />
+        <span class="font-semibold">${item.title}</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button class="text-2xl px-2" onclick="updateQuantity('${item.id}', -1)">−</button>
+        <span class="w-8 text-center">${item.quantity}</span>
+        <button class="text-2xl px-2" onclick="updateQuantity('${item.id}', 1)">+</button>
+      </div>
+    </div>
+  `;
+
+    ["burger", "fries", "drink"].forEach((type) => {
+      if (grouped[type].length > 0) {
+        cartContentDiv.insertAdjacentHTML(
+          "beforeend",
+          `<div class="text-lg font-bold text-[#FC8A06] mt-6">${
+            type[0].toUpperCase() + type.slice(1)
+          }s</div>`
+        );
+        grouped[type].forEach((item) => {
+          cartContentDiv.insertAdjacentHTML("beforeend", createItemHTML(item));
+        });
+      }
+    });
+
+    document.querySelector(
+      "#cartContent .text-xl"
+    ).textContent = `Total to pay: £${total.toFixed(2)}`;
+  }
+
+  // ---------- Event Delegation ----------
+  document.addEventListener("click", function (e) {
+    const btn = e.target.closest(".add-to-cart-btn");
+    if (btn) {
+      const productId = btn.getAttribute("data-product-id");
+      addToCart(productId);
+    }
+  });
 });
