@@ -199,6 +199,87 @@ document.querySelectorAll(".category-link").forEach((btn) => {
     },
   ];
 
+  const reviews = [
+    {
+      name: "St Glx",
+      location: "South London",
+      rating: "★★★★★",
+      date: "24th September, 2023",
+      image: "assets/images/reviews/Reviewer.png",
+      timeIcon: "assets/images/reviews/Time Span.svg",
+      verticalLine: "assets/images/reviews/vertical-line.svg",
+      review:
+        "The positive aspect was undoubtedly the efficiency of the service. The queue moved quickly, the staff was friendly, and the food was up to the usual McDonald’s standard – hot and satisfying.",
+    },
+    {
+      name: "Lara M.",
+      location: "Birmingham",
+      rating: "★★★★☆",
+      date: "12th August, 2023",
+      image: "assets/images/reviews/Reviewer.png",
+      timeIcon: "assets/images/reviews/Time Span.svg",
+      verticalLine: "assets/images/reviews/vertical-line.svg",
+      review:
+        "Great customer service and fresh food. The waiting time was a bit long, but overall it was a pleasant experience. The staff handled the rush hour well, and even offered suggestions for kids' meals. Clean environment and efficient ordering system. Would definitely visit again.",
+    },
+    {
+      name: "James R.",
+      location: "Manchester",
+      rating: "★★★☆☆",
+      date: "5th July, 2023",
+      image: "assets/images/reviews/Reviewer.png",
+      timeIcon: "assets/images/reviews/Time Span.svg",
+      verticalLine: "assets/images/reviews/vertical-line.svg",
+      review:
+        "The service was okay. Staff were polite, but the food wasn’t as hot as expected. Could improve consistency. It exceeded expectations. Definitely coming back.",
+    },
+    {
+      name: "Priya K.",
+      location: "Leeds",
+      rating: "★★★★★",
+      date: "29th June, 2023",
+      image: "assets/images/reviews/Reviewer.png",
+      timeIcon: "assets/images/reviews/Time Span.svg",
+      verticalLine: "assets/images/reviews/vertical-line.svg",
+      review:
+        "Loved everything! The staff went above and beyond, and the food quality was excellent. I especially appreciated how the staff handled my dietary preferences without any hesitation. The ambiance was clean and calm, perfect for a quick lunch or casual meetup. ",
+    },
+    {
+      name: "Tom B.",
+      location: "Liverpool",
+      rating: "★★★★☆",
+      date: "18th May, 2023",
+      image: "assets/images/reviews/Reviewer.png",
+      timeIcon: "assets/images/reviews/Time Span.svg",
+      verticalLine: "assets/images/reviews/vertical-line.svg",
+      review:
+        "Food was good and service was quick. The self-order kiosks helped speed things up and the staff was attentive. We had a minor issue with an order, but it was fixed quickly and politely. Overall, a positive experience with room for improvement.",
+    },
+    {
+      name: "Ayesha Z.",
+      location: "Glasgow",
+      rating: "★★☆☆☆",
+      date: "10th April, 2023",
+      image: "assets/images/reviews/Reviewer.png",
+      timeIcon: "assets/images/reviews/Time Span.svg",
+      verticalLine: "assets/images/reviews/vertical-line.svg",
+      review:
+        "Unfortunately, my experience wasn’t the best. The service was slow and my order was incorrect. While the manager was kind enough to fix it, the delay made it difficult to enjoy the rest of the visit.",
+    },
+    {
+      name: "Haroon T.",
+      location: "Nottingham",
+      rating: "★★★★★",
+      date: "2nd March, 2023",
+      image: "assets/images/reviews/Reviewer.png",
+      timeIcon: "assets/images/reviews/Time Span.svg",
+      verticalLine: "assets/images/reviews/vertical-line.svg",
+      review:
+        "One of the best visits I’ve had in a long time. Everything from the entrance to the checkout was seamless. The fries were perfectly salted and the burger freshly prepared. Even the staff looked genuinely happy to help. Highly recommended!",
+    },
+  ];
+
+
 
   const renderCards = (type, containerId) => {
   const container = document.getElementById(containerId);
@@ -230,6 +311,69 @@ document.querySelectorAll(".category-link").forEach((btn) => {
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
 };
+
+
+
+  let startIndex = 0;
+  const visibleCount = 3;
+  const container = document.getElementById("reviews-grid");
+
+  function renderReviews() {
+    container.innerHTML = ""; // Clear previous cards
+
+    const visibleReviews = reviews.slice(startIndex, startIndex + visibleCount);
+
+    visibleReviews.forEach((review) => {
+      const card = document.createElement("div");
+      card.className =
+        "bg-white xl:min-w-125 xl:min-h-60 p-6 rounded-md shadow-md";
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <img src="${review.image}" alt="Avatar" class="w-13.5 h-13.5 rounded-full">
+            <img src="${review.verticalLine}" alt="" class="2xl:h-12.5">
+            <div>
+              <p class="font-bold">${review.name}</p>
+              <p class="text-sm text-[#FC8A06]">${review.location}</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-end">
+            <p class="text-[#FC8A06] text-2xl">${review.rating}</p>
+            <p class="text-black text-md flex items-center gap-2">
+              <img src="${review.timeIcon}" alt="">
+              ${review.date}
+            </p>
+          </div>
+        </div>
+        <p class="text-lg">${review.review}</p>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  // Navigation
+  const leftBtn = document.querySelector("button svg path[d*='M15']");
+  const rightBtn = document.querySelector("button svg path[d*='M9']");
+
+  leftBtn.parentElement.addEventListener("click", () => {
+    if (startIndex > 0) {
+      startIndex--;
+      renderReviews();
+    }
+  });
+
+  rightBtn.parentElement.addEventListener("click", () => {
+    if (startIndex + visibleCount < reviews.length) {
+      startIndex++;
+      renderReviews();
+    }
+  });
+
+  // Initial render
+renderReviews();
+
+
+
 
 // Render all categories
 renderCards("burger", "burger-cards-container");
