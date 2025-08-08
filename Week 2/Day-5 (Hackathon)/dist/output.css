@@ -350,6 +350,9 @@
   .max-h-18 {
     max-height: calc(var(--spacing) * 18);
   }
+  .max-h-23 {
+    max-height: calc(var(--spacing) * 23);
+  }
   .max-h-39 {
     max-height: calc(var(--spacing) * 39);
   }
@@ -424,6 +427,9 @@
   }
   .max-w-80 {
     max-width: calc(var(--spacing) * 80);
+  }
+  .max-w-169 {
+    max-width: calc(var(--spacing) * 169);
   }
   .max-w-240 {
     max-width: calc(var(--spacing) * 240);
@@ -975,6 +981,16 @@
   .sm\:flex-row {
     @media (width >= 40rem) {
       flex-direction: row;
+    }
+  }
+  .sm\:gap-4 {
+    @media (width >= 40rem) {
+      gap: calc(var(--spacing) * 4);
+    }
+  }
+  .sm\:gap-6 {
+    @media (width >= 40rem) {
+      gap: calc(var(--spacing) * 6);
     }
   }
   .sm\:gap-x-3 {
