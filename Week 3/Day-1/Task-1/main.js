@@ -1,60 +1,83 @@
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-const navLinks = mobileMenu.querySelectorAll('nav a');
-const contactBtn = mobileMenu.querySelector('div > a'); // Contact Us button
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburgerBtn = document.getElementById("hamburgerBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const closeMenuBtn = document.getElementById("closeMenu"); // may be null if not present
 
-// Function to close the menu
-function closeMenu() {
-  hamburgerBtn.classList.remove('open');
-  mobileMenu.classList.add('hidden');
-}
+  // select all nav anchors (desktop + mobile)
+  const allNavLinks = document.querySelectorAll("nav a[href]");
 
-// Toggle menu open/close on hamburger click
-hamburgerBtn.addEventListener('click', () => {
-  hamburgerBtn.classList.toggle('open');
-  mobileMenu.classList.toggle('hidden');
-});
+  // classes used for the active state in your markup
+  const ACTIVE_CLASSES = [
+    "border-b-2",
+    "border-blue-400",
+    "pb-1",
+    "text-gray-900",
+    "font-semibold"
+  ];
 
-// Close menu when clicking on any nav link
-navLinks.forEach(link => {
-  link.addEventListener('click', closeMenu);
-});
-
-// Close menu when clicking on contact button
-contactBtn.addEventListener('click', closeMenu);
-
-// Close menu when clicking outside the menu content
-mobileMenu.addEventListener('click', (event) => {
-  if (event.target === mobileMenu) {
-    closeMenu();
+  // helpers
+  function openMobile() {
+    if (hamburgerBtn) hamburgerBtn.classList.add("open");
+    if (mobileMenu) mobileMenu.classList.remove("hidden");
   }
 
+  function closeMobile() {
+    if (hamburgerBtn) hamburgerBtn.classList.remove("open");
+    if (mobileMenu) mobileMenu.classList.add("hidden");
+  }
 
-  // nav links bottom-border highlight code:
-  // Common active classes
-const activeClasses = ["border-b-2", "border-blue-400", "pb-1", "text-gray-900", "font-semibold"];
+  // toggle mobile menu
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener("click", (e) => {
+      // prevent document click handler from immediately closing it
+      e.stopPropagation();
+      hamburgerBtn.classList.toggle("open");
+      if (mobileMenu) mobileMenu.classList.toggle("hidden");
+    });
+  }
 
-// Select all nav links (desktop + mobile)
-const allNavLinks = document.querySelectorAll(
-  'nav a[href]' // All anchor links inside navs
-);
+  // close button inside mobile menu
+  if (closeMenuBtn) {
+    closeMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeMobile();
+    });
+  }
 
-// Function to set active link
-function setActiveLink(link) {
-  // Remove active classes from all links
-  allNavLinks.forEach(a => {
-    activeClasses.forEach(cls => a.classList.remove(cls));
+  // click outside mobile menu to close
+  document.addEventListener("click", (e) => {
+    if (!mobileMenu || !hamburgerBtn) return;
+    const target = e.target;
+    if (!mobileMenu.contains(target) && !hamburgerBtn.contains(target)) {
+      closeMobile();
+    }
   });
 
-  // Add active classes to clicked link
-  activeClasses.forEach(cls => link.classList.add(cls));
-}
-
-// Add click event to each link
-allNavLinks.forEach(link => {
-  link.addEventListener("click", (e) => {
-    setActiveLink(link);
+  // focus shift: close when focus moves outside mobile menu + hamburger
+  document.addEventListener("focusin", (e) => {
+    if (!mobileMenu || !hamburgerBtn) return;
+    if (!mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+      closeMobile();
+    }
   });
-});
 
+  // active class handling
+  function clearActiveFromAll() {
+    allNavLinks.forEach(a => {
+      ACTIVE_CLASSES.forEach(cls => a.classList.remove(cls));
+    });
+  }
+
+  allNavLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      // set active only on the clicked link
+      clearActiveFromAll();
+      ACTIVE_CLASSES.forEach(cls => link.classList.add(cls));
+
+      // if the clicked link is inside mobileMenu, close the mobile menu
+      if (mobileMenu && mobileMenu.contains(link)) {
+        closeMobile();
+      }
+    });
+  });
 });
