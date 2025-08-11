@@ -1,18 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QuizMaster</title>
-    <link rel="stylesheet" href="dist/output.css">
-     <!-- Manrope Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="dist/output.css" />
+    <!-- Manrope Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <main class="max-w-320 font-manrope">
-<header
-        class="border-b border-gray-200  w-full flex items-center justify-between p-2 lg:px-10 lg:pt-5 lg:pb-2 dark:bg-gray-900 dark:border-gray-700"
+      <header
+        class="border-b border-gray-200 w-full flex items-center justify-between p-2 lg:px-10 lg:pt-5 lg:pb-2 dark:bg-gray-900 dark:border-gray-700"
       >
         <!-- Hamburger on mobile -->
         <button
@@ -81,439 +83,639 @@
 
         <!-- 2) Logo (left on all screens) -->
         <a
-         onclick="showSection('hero')"
+          onclick="showSection('hero')"
           href="#"
           class="flex items-center space-x-3 rtl:space-x-reverse md:mr-4"
         >
-          <img
-            src="assets/nav/logo.svg"
-            class="h-3 sm:h-5  "
-            alt=""/>
+          <img src="assets/nav/logo.svg" class="h-3 sm:h-5" alt="" />
           <p class="text-lg lg:text-xl bold">QuizMaster</p>
-          
         </a>
-<div class="flex gap-x-6">
-        <!-- 3) Nav links (hidden on mobile, centered on desktop) -->
-        <nav class="hidden md:flex flex-1 justify-center">
-          <ul
-            id="navbar-multi-level"
-            class="hidden md:flex text-xs 2xl:text-base font-medium md:space-x-3 rtl:space-x-reverse md:flex-row py-1"
+        <div class="flex gap-x-6">
+          <!-- 3) Nav links (hidden on mobile, centered on desktop) -->
+          <nav class="hidden md:flex flex-1 justify-center">
+            <ul
+              id="navbar-multi-level"
+              class="hidden md:flex text-xs 2xl:text-base font-medium md:space-x-3 rtl:space-x-reverse md:flex-row py-1"
+            >
+              <li>
+                <a
+                  onclick="showSection('hero')"
+                  href="#"
+                  class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="showSection('quiz-selection')"
+                  href="#"
+                  class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
+                >
+                  Quizes
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="nav-link block py-2 px-6 text-gray-900 bg-gray-200 rounded-full md:border-0 dark:text-white"
+                >
+                  LeaderBoard
+                </a>
+              </li>
+              <li>
+                <a
+                  onclick="showSection('profile')"
+                  href="#"
+                  class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
+                >
+                  Profile
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- 4) Profile button -->
+
+          <!-- Bell -->
+          <button
+            class="w-8 h-8 sm:w-10 sm:h-10 lg:w-10 lg:h-10 rounded-md bg-gray-200 transition-colors duration-200 cursor-pointer"
           >
+            <img
+              src="assets/nav/bell.svg"
+              alt="Profile"
+              class="h-6 w-6 md:w-6 md:h-6 mx-auto"
+            />
+          </button>
+
+          <!-- Profile -->
+          <button
+            onclick="showSection('profile')"
+            class="w-8 h-8 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full transition-colors duration-200 cursor-pointer"
+          >
+            <img
+              src="assets/nav/profile.png"
+              alt="Profile"
+              class="h-full w-full rounded-full"
+            />
+          </button>
+        </div>
+      </header>
+
+      <!-- Hero Section -->
+      <section id="hero" class="mx-auto p-7.5 max-w-240">
+        <!-- Hero img -->
+        <div
+          class="relative h-120 w-full bg-cover bg-center overflow-hidden flex items-center justify-center"
+          style="background-image: url(&quot;assets/hero/heroImg.png&quot;)"
+        >
+          <!-- Gradient overlay over the image -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-black/10 to-black/40"
+          ></div>
+
+          <!-- Content on top of gradient -->
+          <div class="relative z-10 text-white text-center px-4 mt-45">
+            <p class="text-5xl font-bold mx-auto">Welcome to QuizMaster</p>
+            <p class="text-base mt-4">
+              Test your knowledge with our engaging quizzes. Compete with
+              friends and climb the leaderboard. Start your quiz journey today!
+            </p>
+            <button
+              onclick="showSection('signup')"
+              class="mt-6 text-base cursor-pointer rounded-md px-4 py-2 bg-blue-500 hover:bg-blue-600"
+            >
+              Get Started
+            </button>
+          </div>
+        </div>
+
+        <!-- Key Features Area -->
+        <div class="w-full max-h-90 py-12">
+          <div class="space-y-4">
+            <h1 class="text-4xl font-bold">Key Features</h1>
+            <p>
+              Explore the exciting features that make QuizMaster the ultimate
+              quiz app.
+            </p>
+          </div>
+
+          <div
+            class="flex flex-col sm:flex-row pt-10 gap-y-5 sm:gap-y-0 sm:gap-x-3 pb-4"
+          >
+            <!-- Time Card -->
+            <div
+              class="flex flex-col w-full sm:w-auto max-w-72.5 max-h-39 xl:min-w-72.5 mx-auto xl:min-h-39 gap-3 bg-white opacity-100 rounded-lg p-3 border border-gray-200 shadow-md"
+            >
+              <div class="text-2xl text-gray-800">
+                <img src="assets/hero/clock.svg" alt="" />
+              </div>
+              <div class="flex flex-col gap-1">
+                <h3 class="text-base font-semibold text-gray-900">
+                  Timed Quizzes
+                </h3>
+                <p class="text-sm text-gray-600">
+                  Challenge yourself with timed quizzes to test your speed and
+                  accuracy.
+                </p>
+              </div>
+            </div>
+
+            <!-- Leaderboard Card -->
+            <div
+              class="flex flex-col w-full sm:w-auto max-w-72.5 max-h-39 xl:min-w-72.5 mx-auto xl:min-h-39 gap-3 bg-white opacity-100 rounded-lg p-3 border border-gray-200 shadow-md"
+            >
+              <div class="text-2xl text-gray-800">
+                <img src="assets/hero/trophy.svg" alt="" />
+              </div>
+              <div class="flex flex-col gap-1">
+                <h3 class="text-base font-semibold text-gray-900">
+                  Leaderboard
+                </h3>
+                <p class="text-sm text-gray-600">
+                  Compete with friends and other users to see who can achieve
+                  the highest scores.
+                </p>
+              </div>
+            </div>
+
+            <!-- Progress Card  -->
+            <div
+              class="flex flex-col w-full sm:w-auto max-w-72.5 max-h-39 xl:min-w-72.5 mx-auto xl:min-h-39 gap-3 bg-white opacity-100 rounded-lg p-3 border border-gray-200 shadow-md"
+            >
+              <div class="text-2xl text-gray-800">
+                <img src="assets/hero/progress.svg" alt="" />
+              </div>
+              <div class="flex flex-col gap-1">
+                <h3 class="text-base font-semibold text-gray-900">
+                  Progress Tracking
+                </h3>
+                <p class="text-sm text-gray-600">
+                  Track your progress and see how you improve over time with
+                  detailed performance reports.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sign Up Section -->
+      <section
+        id="signup"
+        class="max-w-240 max-h-120 lg:min-w-240 lg:min-h-120 bg-white mx-auto p-7.5 hidden"
+      >
+        <h2 class="text-3xl font-semibold text-center mb-8">
+          Create your account
+        </h2>
+        <form id="signupForm" class="space-y-4 max-w-md">
+          <input
+            type="text"
+            id="fullName"
+            placeholder="Full Name"
+            required
+            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            required
+            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+            minlength="6"
+            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            required
+            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition"
+          >
+            Sign Up
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-gray-500 mt-4">
+          Already have an account?
+          <a
+            href="#"
+            onclick="showSection('login')"
+            class="text-blue-500 hover:underline"
+            >Log In</a
+          >
+        </p>
+      </section>
+
+      <!-- Log In Section -->
+      <section
+        id="login"
+        class="max-w-240 max-h-120 lg:max-w-240 lg:min-h-120 bg-white mx-auto p-7.5 hidden"
+      >
+        <h2 class="text-3xl font-semibold text-center mb-8">Welcome Back</h2>
+        <form id="loginForm" class="space-y-4 max-w-md">
+          <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email"
+            required
+            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+            required
+            minlength="6"
+            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+
+          <p class="text-sm text-gray-500">Forgot Password?</p>
+
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition"
+          >
+            Log in
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-gray-500 mt-4">
+          Don't have an account?
+          <a
+            href="#"
+            onclick="showSection('signup')"
+            class="text-blue-500 hover:underline"
+            >Sign Up</a
+          >
+        </p>
+      </section>
+
+      <!-- Profile Section -->
+      <section id="profile" class="max-w-240 max-h-241.5 p-7.5 mx-auto hidden">
+        <!-- Profile Header -->
+        <div
+          class="flex flex-col items-center text-center xl:min-h-63 max-h-63 p-4"
+        >
+          <img
+            src="assets/profile/profileImg.png"
+            alt="Profile Picture"
+            class="w-24 h-24 rounded-full mb-4"
+          />
+          <h2 class="text-xl font-semibold">Sophia Bennett</h2>
+          <p class="text-sm text-gray-600">Quiz Enthusiast</p>
+          <p class="text-sm text-gray-500">Joined 2021</p>
+        </div>
+
+        <!-- Tabs (optional, non-functional here) -->
+        <div class="border-b border-[#DBE0E5]">
+          <ul class="flex space-x-6 text-sm font-medium text-gray-500 pb-4">
             <li>
-              <a
-              onclick="showSection('hero')"
-                href="#"
-                class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
+              <a href="#" id="" class="border-b-3 border-gray-300 pb-3"
+                >Activity</a
               >
-                Home
-              </a>
             </li>
             <li>
-              <a
-              onclick="showSection('quiz-selection')"
-                href="#"
-                class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
+              <a href="#" class="border-b-3 border-gray-300 pb-3 text-black"
+                >Profile</a
               >
-                Quizes
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="nav-link block py-2 px-6 text-gray-900  bg-gray-200 rounded-full md:border-0 dark:text-white"
-              >
-                LeaderBoard
-              </a>
-            </li>
-            <li>
-              <a
-               onclick="showSection('profile')"
-                href="#"
-                class="nav-link block py-2 px-6 text-gray-900 rounded-full md:border-0 dark:text-white"
-              >
-                Profile
-              </a>
             </li>
           </ul>
-        </nav>
-
-        
-         <!-- 4) Profile button -->
-
-
-         <!-- Bell -->
-         <button
-  class="w-8 h-8 sm:w-10 sm:h-10 lg:w-10 lg:h-10  rounded-md bg-gray-200 transition-colors duration-200 cursor-pointer">
-  <img
-    src="assets/nav/bell.svg"
-    alt="Profile"
-    class="h-6 w-6 md:w-6 md:h-6 mx-auto"
-  />
-</button>
-
-<!-- Profile -->
-<button
-onclick="showSection('profile')"
-  class="w-8 h-8 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full  transition-colors duration-200 cursor-pointer">
-  <img
-    src="assets/nav/profile.png"
-    alt="Profile"
-    class="h-full w-full rounded-full"
-  />
-</button>
-</div>
-
-</header>
-
-<!-- Hero Section -->
-<section id="hero" class="mx-auto p-7.5 max-w-240 ">
-  <!-- Hero img -->
-  <div
-    class="relative h-120 w-full bg-cover bg-center overflow-hidden flex items-center justify-center"
-    style="background-image: url('assets/hero/heroImg.png');"
-  >
-    <!-- Gradient overlay over the image -->
-    <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-black/40"></div>
-
-    <!-- Content on top of gradient -->
-    <div class="relative z-10  text-white text-center px-4 mt-45">
-      <p class="text-5xl font-bold mx-auto">Welcome to QuizMaster</p>
-      <p class="text-base mt-4">
-        Test your knowledge with our engaging quizzes. Compete with friends and climb the leaderboard. Start your quiz journey today!
-      </p>
-      <button 
-        onclick="showSection('signup')"
-        class="mt-6 text-base cursor-pointer rounded-md px-4 py-2 bg-blue-500 hover:bg-blue-600">
-        Get Started
-      </button>
-    </div>
-  </div>
-
-  <!-- Key Features Area -->
-  <div class="w-full max-h-90 py-12 ">
-    <div class="space-y-4">
-      <h1 class="text-4xl font-bold">Key Features</h1>
-      <p>Explore the exciting features that make QuizMaster the ultimate quiz app.</p>
-    </div>
-
-   <div class="flex flex-col sm:flex-row pt-10 gap-y-5 sm:gap-y-0 sm:gap-x-3 pb-4">
-  <!-- Time Card -->
-  <div class="flex flex-col w-full sm:w-auto max-w-72.5 max-h-39 xl:min-w-72.5 mx-auto xl:min-h-39 gap-3 bg-white opacity-100 rounded-lg p-3 border border-gray-200 shadow-md">
-    <div class="text-2xl text-gray-800">
-      <img src="assets/hero/clock.svg" alt="">
-    </div>
-    <div class="flex flex-col gap-1">
-      <h3 class="text-base font-semibold text-gray-900">Timed Quizzes</h3>
-      <p class="text-sm text-gray-600">Challenge yourself with timed quizzes to test your speed and accuracy.</p>
-    </div>
-  </div>
-
-  <!-- Leaderboard Card -->
-  <div class="flex flex-col w-full sm:w-auto max-w-72.5 max-h-39 xl:min-w-72.5 mx-auto xl:min-h-39 gap-3 bg-white opacity-100 rounded-lg p-3 border border-gray-200 shadow-md">
-    <div class="text-2xl text-gray-800">
-      <img src="assets/hero/trophy.svg" alt="">
-    </div>
-    <div class="flex flex-col gap-1">
-      <h3 class="text-base font-semibold text-gray-900">Leaderboard</h3>
-      <p class="text-sm text-gray-600">Compete with friends and other users to see who can achieve the highest scores.</p>
-    </div>
-  </div>
-
-  <!-- Progress Card  -->
-  <div class="flex flex-col w-full sm:w-auto max-w-72.5 max-h-39 xl:min-w-72.5 mx-auto xl:min-h-39 gap-3 bg-white opacity-100 rounded-lg p-3 border border-gray-200 shadow-md">
-    <div class="text-2xl text-gray-800">
-      <img src="assets/hero/progress.svg" alt="">
-    </div>
-    <div class="flex flex-col gap-1">
-      <h3 class="text-base font-semibold text-gray-900">Progress Tracking</h3>
-      <p class="text-sm text-gray-600">Track your progress and see how you improve over time with detailed performance reports.</p>
-    </div>
-  </div>
-</div>
-
-  </div>
-</section>
-
-<!-- Sign Up Section -->
-<section id="signup" class="max-w-240 max-h-120 lg:min-w-240 lg:min-h-120 bg-white mx-auto p-7.5 hidden">
-  
-    <h2 class="text-3xl font-semibold text-center mb-8 ">Create your account</h2>
-    <form id="signupForm" class="space-y-4 max-w-md">
-  <input type="text" id="fullName" placeholder="Full Name" required
-    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-  
-  <input type="email" id="email" placeholder="Email" required
-    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-  
-  <input type="password" id="password" placeholder="Password" required minlength="6"
-    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-  
-  <input type="password" id="confirmPassword" placeholder="Confirm Password" required
-    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-  
-  <button type="submit"
-    class="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition">
-    Sign Up
-  </button>
-</form>
-
-    <p class="text-center text-sm text-gray-500 mt-4">
-      Already have an account? <a href="#" onclick="showSection('login')" class="text-blue-500 hover:underline">Log In</a>
-    </p>
-  
-</section>
-
-
-<!-- Log In Section -->
-<section id="login" class="max-w-240 max-h-120 lg:max-w-240 lg:min-h-120 bg-white mx-auto p-7.5 hidden">
-  
-    <h2 class="text-3xl font-semibold text-center mb-8 ">Welcome Back</h2>
-  <form id="loginForm" class="space-y-4 max-w-md">
-  <input type="email" id="loginEmail" placeholder="Email" required
-    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-  
-  <input type="password" id="loginPassword" placeholder="Password" required minlength="6"
-    class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-  
-  <p class="text-sm text-gray-500">Forgot Password?</p>
-  
-  <button type="submit"
-    class="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition">
-    Log in
-  </button>
-</form>
-
-    <p class="text-center text-sm text-gray-500 mt-4">
-      Don't have an account? <a href="#" onclick="showSection('signup')" class="text-blue-500 hover:underline">Sign Up</a>
-    </p>
-  
-</section>
-
-
-<!-- Profile Section -->
-<section id="profile" class="max-w-240 max-h-241.5 p-7.5 mx-auto hidden">
-
-  <!-- Profile Header -->
-  <div class="flex flex-col items-center text-center xl:min-h-63 max-h-63 p-4">
-    <img src="assets/profile/profileImg.png" alt="Profile Picture" class="w-24 h-24 rounded-full mb-4">
-    <h2 class="text-xl font-semibold">Sophia Bennett</h2>
-    <p class="text-sm text-gray-600">Quiz Enthusiast</p>
-    <p class="text-sm text-gray-500">Joined 2021</p>
-  </div>
-
-  <!-- Tabs (optional, non-functional here) -->
-  <div class="border-b border-[#DBE0E5]">
-    <ul class="flex space-x-6 text-sm font-medium text-gray-500 pb-4">
-      <li><a href="#" id="" class=" border-b-3 border-gray-300 pb-3">Activity</a></li>
-      <li><a href="#" class="border-b-3 border-gray-300 pb-3 text-black">Profile</a></li>
-    </ul>
- 
-  </div>
-
-  <!-- Personal Info -->
-
-  <h3 class="text-lg font-semibold max-h-15 lg:min-h-15 py-5">Personal Information</h3>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-1 sm:gap-4 text-sm p-4 lg:min-h-60 max-h-60">
-      <div class="flex gap-3 sm:gap-6">
-      <div class="border-t border-gray-300 max-w-46.5 max-h-23 py-5">
-        <p class="text-gray-500">Name</p>
-        <p class="text-gray-800">Sophia Bennett</p>
-      </div>
-      <div class="border-t border-gray-300 min-h-23 max-w-169 py-5">
-        <p class="text-gray-500 ">Email</p>
-        <p class="text-gray-800">sophia.bennett@email.com</p>
-      </div>
-      </div>
-
-      <div class="md:col-span-2 min-h-23 max-w-46.5 border-t border-gray-300">
-        <p class="text-gray-500">Bio</p>
-        <p class="text-gray-800">Avid quiz taker and trivia lover. Always up for a challenge!</p>
-      </div>
-    </div>
-
-
-  <!-- Quiz History -->
-  <div>
-    <h3 class="text-lg font-semibold mb-4">Quiz History</h3>
-    <div class="overflow-x-auto rounded-lg">
-      <table class="min-w-full  text-sm border border-gray-200">
-        <thead>
-          <tr class=" text-left">
-            <th class="px-4 py-2 ">Quiz Name</th>
-            <th class="px-4 py-2 ">Score</th>
-            <th class="px-4 py-2 ">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border border-gray-200">
-            <td class="px-4 py-2">General Knowledge</td>
-            <td class="px-4 py-2">85/100</td>
-            <td class="px-4 py-2">2023-08-15</td>
-          </tr>
-          <tr class="border border-gray-200">
-            <td class="px-4 py-2">Science Trivia</td>
-            <td class="px-4 py-2">70/100</td>
-            <td class="px-4 py-2">2023-08-10</td>
-          </tr>
-          <tr class="border border-gray-200">
-            <td class="px-4 py-2">History Buff</td>
-            <td class="px-4 py-2">92/100</td>
-            <td class="px-4 py-2">2023-08-05</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- Quizzes Section -->
-<section id="quiz-selection" class="font-manrope max-h-380 max-w-240 p-7.5  mx-auto hidden">
-
-  <!-- Section Heading -->
-  <h1 class="text-3xl font-bold lg:min-h-18 max-h-18 p-4.5">Select a Quiz</h1>
-
-  <!-- Filter Buttons -->
-  <div class="flex flex-wrap gap-2 lg:min-h-14 max-h-14 p-4.5">
-    <button class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900">All</button>
-    <button class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900">Science</button>
-    <button class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900">History</button>
-    <button class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900">Literature</button>
-    <button class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900">Mathematics</button>
-  </div>
-
-  <!-- Featured Quizzes -->
-  <div>
-    <h2 class="text-xl font-semibold mb-4 lg:min-h-15 max-h-15 p-4.5">Featured Quizzes</h2>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:min-h-64 max-h-64">
-      <!-- Card -->
-      <div  onclick="showSection('quiz')" class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out px-4 py-3">
-        <img src="assets/quiz/universe.png" alt="The Universe" class="w-full h-40 object-cover rounded">
-        <div class="mt-3">
-          <h3 class="font-medium">The Universe</h3>
-          <p class="text-sm text-gray-600">Test your knowledge about the cosmos.</p>
         </div>
-      </div>
 
-      <div onclick="showSection('quiz')" class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out px-4 py-3">
-        <img src="assets/quiz/civilization.png" alt="Ancient Civilizations" class="w-full h-40 object-cover rounded">
-        <div class="mt-3">
-          <h3 class="font-medium">Ancient Civilizations</h3>
-          <p class="text-sm text-gray-600">Explore the mysteries of ancient cultures.</p>
+        <!-- Personal Info -->
+
+        <h3 class="text-lg font-semibold max-h-15 lg:min-h-15 py-5">
+          Personal Information
+        </h3>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-1 sm:gap-4 text-sm p-4 lg:min-h-60 max-h-60"
+        >
+          <div class="flex gap-3 sm:gap-6">
+            <div class="border-t border-gray-300 max-w-46.5 max-h-23 py-5">
+              <p class="text-gray-500">Name</p>
+              <p class="text-gray-800">Sophia Bennett</p>
+            </div>
+            <div class="border-t border-gray-300 min-h-23 max-w-169 py-5">
+              <p class="text-gray-500">Email</p>
+              <p class="text-gray-800">sophia.bennett@email.com</p>
+            </div>
+          </div>
+          <span> hih jkj lk </span>
+
+          <div
+            class="md:col-span-2 min-h-23 max-w-46.5 border-t border-gray-300"
+          >
+            <p class="text-gray-500">Bio</p>
+            <p class="text-gray-800">
+              Avid quiz taker and trivia lover. Always up for a challenge!
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div onclick="showSection('quiz')" class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out px-4 py-3">
-        <img src="assets/quiz/plays.png" alt="Shakespearean Plays" class="w-full h-40 object-cover rounded">
-        <div class="mt-3">
-          <h3 class="font-medium">Shakespearean Plays</h3>
-          <p class="text-sm text-gray-600">Dive into the world of the Bard.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- All Quizzes -->
-
-    <h2 class="text-lg font-semibold lg:min-h-15 max-h-15 p-5">All Quizzes</h2>
-    <div class="space-y-2">
-      <!-- Quiz 1 -->
-      <div onclick="showSection('quiz')" class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50">
-        <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
+        <!-- Quiz History -->
         <div>
-          <h3 class="font-semibold">General Knowledge</h3>
-          <p class="text-sm text-gray-600">Test your overall knowledge with a mix of questions.</p>
+          <h3 class="text-lg font-semibold mb-4">Quiz History</h3>
+          <div class="overflow-x-auto rounded-lg">
+            <table class="min-w-full text-sm border border-gray-200">
+              <thead>
+                <tr class="text-left">
+                  <th class="px-4 py-2">Quiz Name</th>
+                  <th class="px-4 py-2">Score</th>
+                  <th class="px-4 py-2">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border border-gray-200">
+                  <td class="px-4 py-2">General Knowledge</td>
+                  <td class="px-4 py-2">85/100</td>
+                  <td class="px-4 py-2">2023-08-15</td>
+                </tr>
+                <tr class="border border-gray-200">
+                  <td class="px-4 py-2">Science Trivia</td>
+                  <td class="px-4 py-2">70/100</td>
+                  <td class="px-4 py-2">2023-08-10</td>
+                </tr>
+                <tr class="border border-gray-200">
+                  <td class="px-4 py-2">History Buff</td>
+                  <td class="px-4 py-2">92/100</td>
+                  <td class="px-4 py-2">2023-08-05</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <img src="assets/quiz/general-knowledge.png" alt="General Knowledge" class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg">
-      </div>
-      </div>
+      </section>
 
-     <!-- Quiz 2 -->
-      <div onclick="showSection('quiz')" class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50">
-        <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
+      <!-- Quizzes Section -->
+      <section
+        id="quiz-selection"
+        class="font-manrope max-h-380 max-w-240 p-7.5 mx-auto hidden"
+      >
+        <!-- Section Heading -->
+        <h1 class="text-3xl font-bold lg:min-h-18 max-h-18 p-4.5">
+          Select a Quiz
+        </h1>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap gap-2 lg:min-h-14 max-h-14 p-4.5">
+          <button
+            class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900"
+          >
+            All
+          </button>
+          <button
+            class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900"
+          >
+            Science
+          </button>
+          <button
+            class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900"
+          >
+            History
+          </button>
+          <button
+            class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900"
+          >
+            Literature
+          </button>
+          <button
+            class="h-8 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-900"
+          >
+            Mathematics
+          </button>
+        </div>
+
+        <!-- Featured Quizzes -->
         <div>
-          <h3 class="font-semibold">Science</h3>
-          <p class="text-sm text-gray-600">Explore the wonders of science from biology to physics.</p>
+          <h2 class="text-xl font-semibold mb-4 lg:min-h-15 max-h-15 p-4.5">
+            Featured Quizzes
+          </h2>
+
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:min-h-64 max-h-64"
+          >
+            <!-- Card -->
+            <div
+              onclick="showSection('quiz')"
+              class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out px-4 py-3"
+            >
+              <img
+                src="assets/quiz/universe.png"
+                alt="The Universe"
+                class="w-full h-40 object-cover rounded"
+              />
+              <div class="mt-3">
+                <h3 class="font-medium">The Universe</h3>
+                <p class="text-sm text-gray-600">
+                  Test your knowledge about the cosmos.
+                </p>
+              </div>
+            </div>
+
+            <div
+              onclick="showSection('quiz')"
+              class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out px-4 py-3"
+            >
+              <img
+                src="assets/quiz/civilization.png"
+                alt="Ancient Civilizations"
+                class="w-full h-40 object-cover rounded"
+              />
+              <div class="mt-3">
+                <h3 class="font-medium">Ancient Civilizations</h3>
+                <p class="text-sm text-gray-600">
+                  Explore the mysteries of ancient cultures.
+                </p>
+              </div>
+            </div>
+
+            <div
+              onclick="showSection('quiz')"
+              class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out px-4 py-3"
+            >
+              <img
+                src="assets/quiz/plays.png"
+                alt="Shakespearean Plays"
+                class="w-full h-40 object-cover rounded"
+              />
+              <div class="mt-3">
+                <h3 class="font-medium">Shakespearean Plays</h3>
+                <p class="text-sm text-gray-600">
+                  Dive into the world of the Bard.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <img src="assets/quiz/science.png" alt="General Knowledge" class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg">
-      </div>
-      </div>
 
-      <!-- Quiz 3 -->
-      <div onclick="showSection('quiz')" class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50">
-        <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
-        <div>
-          <h3 class="font-semibold">History</h3>
-          <p class="text-sm text-gray-600">Journey through time and learn about historical events.</p>
+        <!-- All Quizzes -->
+
+        <h2 class="text-lg font-semibold lg:min-h-15 max-h-15 p-5">
+          All Quizzes
+        </h2>
+        <div class="space-y-2">
+          <!-- Quiz 1 -->
+          <div
+            onclick="showSection('quiz')"
+            class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50"
+          >
+            <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
+              <div>
+                <h3 class="font-semibold">General Knowledge</h3>
+                <p class="text-sm text-gray-600">
+                  Test your overall knowledge with a mix of questions.
+                </p>
+              </div>
+              <img
+                src="assets/quiz/general-knowledge.png"
+                alt="General Knowledge"
+                class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg"
+              />
+            </div>
+          </div>
+
+          <!-- Quiz 2 -->
+          <div
+            onclick="showSection('quiz')"
+            class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50"
+          >
+            <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
+              <div>
+                <h3 class="font-semibold">Science</h3>
+                <p class="text-sm text-gray-600">
+                  Explore the wonders of science from biology to physics.
+                </p>
+              </div>
+              <img
+                src="assets/quiz/science.png"
+                alt="General Knowledge"
+                class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg"
+              />
+            </div>
+          </div>
+
+          <!-- Quiz 3 -->
+          <div
+            onclick="showSection('quiz')"
+            class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50"
+          >
+            <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
+              <div>
+                <h3 class="font-semibold">History</h3>
+                <p class="text-sm text-gray-600">
+                  Journey through time and learn about historical events.
+                </p>
+              </div>
+              <img
+                src="assets/quiz/history.png"
+                alt="General Knowledge"
+                class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg"
+              />
+            </div>
+          </div>
+
+          <!-- Quiz 4 -->
+          <div
+            onclick="showSection('quiz')"
+            class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50"
+          >
+            <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
+              <div>
+                <h3 class="font-semibold">Literature</h3>
+                <p class="text-sm text-gray-600">
+                  Discover the world of books and authors.
+                </p>
+              </div>
+              <img
+                src="assets/quiz/literature.png"
+                alt="General Knowledge"
+                class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg"
+              />
+            </div>
+          </div>
+
+          <!-- Quiz 5 -->
+          <div
+            onclick="showSection('quiz')"
+            class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50"
+          >
+            <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
+              <div>
+                <h3 class="font-semibold">Mathematics</h3>
+                <p class="text-sm text-gray-600">
+                  Challenge your math skills with various problems.
+                </p>
+              </div>
+              <img
+                src="assets/quiz/math.png"
+                alt="General Knowledge"
+                class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg"
+              />
+            </div>
+          </div>
         </div>
-        <img src="assets/quiz/history.png" alt="General Knowledge" class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg">
-      </div>
-      </div>
+      </section>
 
-    <!-- Quiz 4 -->
-      <div onclick="showSection('quiz')" class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50">
-        <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
-        <div>
-          <h3 class="font-semibold">Literature</h3>
-          <p class="text-sm text-gray-600">Discover the world of books and authors.</p>
-        </div>
-        <img src="assets/quiz/literature.png" alt="General Knowledge" class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg">
-      </div>
-      </div>
+      <!-- Single Quiz Section -->
 
-
-      <!-- Quiz 5 -->
-      <div onclick="showSection('quiz')" class="flex items-start justify-between px-4 py-3 bg-white rounded-lg hover:bg-gray-100 hover:scale-103 transition-all duration-200 ease-in-out lg:min-h-50 max-h-50">
-        <div class="w-full lg:min-h-42 max-h-42 flex justify-between">
-        <div>
-          <h3 class="font-semibold">Mathematics</h3>
-          <p class="text-sm text-gray-600">Challenge your math skills with various problems.</p>
-        </div>
-        <img src="assets/quiz/math.png" alt="General Knowledge" class="lg:min-w-80 lg:min-h-42 max-w-80 max-h-42 object-cover rounded-lg">
-      </div>
-      </div>
-
-
-
-  </div>
-
-
-</section>
-
-<!-- Single Quiz Section -->
-
-    <section id="quiz" class="w-full max-w-240 p-6 bg-white mx-auto mt-4 hidden">
-        
+      <section
+        id="quiz"
+        class="w-full max-w-240 p-6 bg-white mx-auto mt-4 hidden"
+      >
         <!-- Progress and Question Header -->
         <div class="mb-8">
-            <div class="flex items-center justify-between text-gray-500 text-sm mb-2">
-                <span>Progress</span>
-                <span>Question 1 of 5</span>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-1.5">
-                <!-- Corrected progress bar with a black background -->
-                <div class="bg-black h-1.5 rounded-full" style="width: 25%;"></div>
-            </div>
+          <div
+            class="flex items-center justify-between text-gray-500 text-sm mb-2"
+          >
+            <span>Progress</span>
+            <span>Question 1 of 5</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-1.5">
+            <!-- Corrected progress bar with a black background -->
+            <div class="bg-black h-1.5 rounded-full" style="width: 25%"></div>
+          </div>
         </div>
 
         <!-- Timer section -->
         <div class="flex justify-between gap-4 mb-12">
-            <!-- Hours -->
-            <div class="flex-1 flex flex-col items-center p-4 bg-gray-100 rounded-xl text-center">
-                <span class="text-3xl font-bold">00</span>
-                <span class="text-xs text-gray-500">Hours</span>
-            </div>
-            <!-- Minutes -->
-            <div class="flex-1 flex flex-col items-center p-4 bg-gray-100 rounded-xl text-center">
-                <span class="text-3xl font-bold">00</span>
-                <span class="text-xs text-gray-500">Minutes</span>
-            </div>
-            <!-- Seconds -->
-            <div class="flex-1 flex flex-col items-center p-4 bg-gray-100 rounded-xl text-center">
-                <span class="text-3xl font-bold">30</span>
-                <span class="text-xs text-gray-500">Seconds</span>
-            </div>
+          <!-- Hours -->
+          <div
+            class="flex-1 flex flex-col items-center p-4 bg-gray-100 rounded-xl text-center"
+          >
+            <span class="text-3xl font-bold">00</span>
+            <span class="text-xs text-gray-500">Hours</span>
+          </div>
+          <!-- Minutes -->
+          <div
+            class="flex-1 flex flex-col items-center p-4 bg-gray-100 rounded-xl text-center"
+          >
+            <span class="text-3xl font-bold">00</span>
+            <span class="text-xs text-gray-500">Minutes</span>
+          </div>
+          <!-- Seconds -->
+          <div
+            class="flex-1 flex flex-col items-center p-4 bg-gray-100 rounded-xl text-center"
+          >
+            <span class="text-3xl font-bold">30</span>
+            <span class="text-xs text-gray-500">Seconds</span>
+          </div>
         </div>
 
         <!-- Question title -->
@@ -521,117 +723,168 @@ onclick="showSection('profile')"
 
         <!-- Answer options -->
         <div class="space-y-4">
-            <!-- Option 1 (Selected) -->
-            <label class="flex items-center gap-4 p-4 bg-blue-50 border border-blue-500 rounded-xl cursor-pointer">
-                <input type="radio" name="answer" value="London" class="form-radio text-blue-600 focus:ring-blue-500" checked>
-                <span class="text-lg font-medium">London</span>
-            </label>
-            <!-- Option 2 -->
-            <label class="flex items-center gap-4 p-4 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100">
-                <input type="radio" name="answer" value="Paris" class="form-radio text-blue-600 focus:ring-blue-500">
-                <span class="text-lg font-medium">Paris</span>
-            </label>
-            <!-- Option 3 -->
-            <label class="flex items-center gap-4 p-4 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100">
-                <input type="radio" name="answer" value="Berlin" class="form-radio text-blue-600 focus:ring-blue-500">
-                <span class="text-lg font-medium">Berlin</span>
-            </label>
-            <!-- Option 4 -->
-            <label class="flex items-center gap-4 p-4 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100">
-                <input type="radio" name="answer" value="Rome" class="form-radio text-blue-600 focus:ring-blue-500">
-                <span class="text-lg font-medium">Rome</span>
-            </label>
+          <!-- Option 1 (Selected) -->
+          <label
+            class="flex items-center gap-4 p-4 bg-blue-50 border border-blue-500 rounded-xl cursor-pointer"
+          >
+            <input
+              type="radio"
+              name="answer"
+              value="London"
+              class="form-radio text-blue-600 focus:ring-blue-500"
+              checked
+            />
+            <span class="text-lg font-medium">London</span>
+          </label>
+          <!-- Option 2 -->
+          <label
+            class="flex items-center gap-4 p-4 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100"
+          >
+            <input
+              type="radio"
+              name="answer"
+              value="Paris"
+              class="form-radio text-blue-600 focus:ring-blue-500"
+            />
+            <span class="text-lg font-medium">Paris</span>
+          </label>
+          <!-- Option 3 -->
+          <label
+            class="flex items-center gap-4 p-4 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100"
+          >
+            <input
+              type="radio"
+              name="answer"
+              value="Berlin"
+              class="form-radio text-blue-600 focus:ring-blue-500"
+            />
+            <span class="text-lg font-medium">Berlin</span>
+          </label>
+          <!-- Option 4 -->
+          <label
+            class="flex items-center gap-4 p-4 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100"
+          >
+            <input
+              type="radio"
+              name="answer"
+              value="Rome"
+              class="form-radio text-blue-600 focus:ring-blue-500"
+            />
+            <span class="text-lg font-medium">Rome</span>
+          </label>
         </div>
 
         <!-- Navigation buttons -->
         <div class="flex justify-between items-center mt-8">
-            <button class="px-6 py-3 text-gray-700 bg-gray-200 rounded-xl font-semibold hover:bg-gray-300 transition-colors">Previous</button>
-            <button onclick="showSection('quizComplete')" class="px-6 py-3 text-white bg-blue-600 rounded-xl font-semibold hover:bg-blue-700 transition-colors">Next</button>
+          <button
+            class="px-6 py-3 text-gray-700 bg-gray-200 rounded-xl font-semibold hover:bg-gray-300 transition-colors"
+          >
+            Previous
+          </button>
+          <button
+            onclick="showSection('quizComplete')"
+            class="px-6 py-3 text-white bg-blue-600 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+          >
+            Next
+          </button>
         </div>
+      </section>
 
-    </section>
-
-  
-<!-- Quiz Completion Section -->
-    <section id="quizComplete" class="mx-auto w-full max-w-240 max-h-150 p-6 mt-4 bg-white  hidden">
-        
+      <!-- Quiz Completion Section -->
+      <section
+        id="quizComplete"
+        class="mx-auto w-full max-w-240 max-h-150 p-6 mt-4 bg-white hidden"
+      >
         <!-- Quiz Results Header -->
         <h2 class="text-3xl font-bold text-center mb-8">Quiz Results</h2>
 
         <!-- Progress bar and label -->
         <div class="mb-6">
-            <div class="flex items-center justify-between text-gray-500 text-sm mb-2">
-                <span>Quiz Completed</span>
-                <span>100%</span>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-1.5">
-                <div class="bg-black h-1.5 rounded-full" style="width: 100%;"></div>
-            </div>
+          <div
+            class="flex items-center justify-between text-gray-500 text-sm mb-2"
+          >
+            <span>Quiz Completed</span>
+            <span>100%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-1.5">
+            <div class="bg-black h-1.5 rounded-full" style="width: 100%"></div>
+          </div>
         </div>
 
         <!-- Score display card -->
         <div class="bg-gray-100 p-6 rounded-xl mb-6">
-            <h3 class="text-xl font-semibold text-gray-700">Score</h3>
-            <p class="text-2xl font-bold mt-2">8/10</p>
+          <h3 class="text-xl font-semibold text-gray-700">Score</h3>
+          <p class="text-2xl font-bold mt-2">8/10</p>
         </div>
 
         <!-- Congratulatory message -->
         <p class="text-gray-700 text-lg text-center leading-relaxed mb-8 px-8">
-            Congratulations, Sarah! You've completed the quiz with a score of 8 out of 10. Your performance indicates a strong understanding of the subject matter. Keep up the excellent work!
+          Congratulations, Sarah! You've completed the quiz with a score of 8
+          out of 10. Your performance indicates a strong understanding of the
+          subject matter. Keep up the excellent work!
         </p>
 
-<!-- Action buttons -->
-<div class="flex flex-col items-center space-y-4">
-    <button onclick="showSection('review')" class="px-8 py-3 text-white bg-blue-600 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow">Review Answers</button>
-    <button onclick="showSection('quiz-selection')" class="px-8 py-3 text-gray-700 bg-gray-200 rounded-xl font-semibold hover:bg-gray-300 transition-colors">Take Another Quiz</button>
-</div>
-    </section>
+        <!-- Action buttons -->
+        <div class="flex flex-col items-center space-y-4">
+          <button
+            onclick="showSection('review')"
+            class="px-8 py-3 text-white bg-blue-600 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow"
+          >
+            Review Answers
+          </button>
+          <button
+            onclick="showSection('quiz-selection')"
+            class="px-8 py-3 text-gray-700 bg-gray-200 rounded-xl font-semibold hover:bg-gray-300 transition-colors"
+          >
+            Take Another Quiz
+          </button>
+        </div>
+      </section>
 
- 
-
-
-    <!-- The main review section container -->
-    <section id="review" class=" mx-auto w-full max-w-240 max-h-174 p-6 hidden">
-        
+      <!-- The main review section container -->
+      <section
+        id="review"
+        class="mx-auto w-full max-w-240 max-h-174 p-6 hidden"
+      >
         <!-- Section title -->
         <h2 class="text-3xl font-medium mb-8">Review Incorrect Answers</h2>
 
         <!-- Question 1 -->
         <div class="mb-6">
-            <h3 class="text-lg font-medium mb-2">Question 1</h3>
-            <p class=" mb-1">What is the capital of France?</p>
-            <p class="  mb-1">Your answer: Berlin</p>
-            <p >Correct answer:<span class="font-medium"> Paris</span></p>
+          <h3 class="text-lg font-medium mb-2">Question 1</h3>
+          <p class="mb-1">What is the capital of France?</p>
+          <p class="mb-1">Your answer: Berlin</p>
+          <p>Correct answer:<span class="font-medium"> Paris</span></p>
         </div>
 
         <!-- Question 2 -->
         <div class="mb-6">
-            <h3 class="text-lg font-medium mb-2">Question 2</h3>
-            <p class=" mb-1">Which planet is known as the Red Planet?</p>
-            <p class=" mb-1">Your answer: Jupiter</p>
-            <p >Correct answer: <span class="font-medium"> Mars</span></p>
+          <h3 class="text-lg font-medium mb-2">Question 2</h3>
+          <p class="mb-1">Which planet is known as the Red Planet?</p>
+          <p class="mb-1">Your answer: Jupiter</p>
+          <p>Correct answer: <span class="font-medium"> Mars</span></p>
         </div>
 
         <!-- Question 3 -->
         <div class="mb-6">
-            <h3 class="text-lg font-medium mb-2">Question 3</h3>
-            <p class=" mb-1">What is the largest ocean on Earth?</p>
-            <p class=" mb-1">Your answer: Indian Ocean</p>
-            <p >Correct answer: <span class="font-medium"> Pacific Ocean</span></p>
+          <h3 class="text-lg font-medium mb-2">Question 3</h3>
+          <p class="mb-1">What is the largest ocean on Earth?</p>
+          <p class="mb-1">Your answer: Indian Ocean</p>
+          <p>Correct answer: <span class="font-medium"> Pacific Ocean</span></p>
         </div>
 
         <!-- Back to Quizzes button -->
         <div class="flex justify-end mt-8">
-
-
-            <button  onclick="showSection('quiz-selection')" class="px-8 py-3 text-white bg-blue-600 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow">Back to Quizzes</button>
+          <button
+            onclick="showSection('quiz-selection')"
+            class="px-8 py-3 text-white bg-blue-600 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow"
+          >
+            Back to Quizzes
+          </button>
         </div>
+      </section>
+    </main>
 
-    
-</section>
-
-</main>
-      
-<script type="module" src="main.js"></script>
-</body>
+    <script type="module" src="main.js"></script>
+  </body>
 </html>
