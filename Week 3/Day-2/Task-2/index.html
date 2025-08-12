@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Designer Portfolio</title>
+ <link rel="stylesheet" href="dist/output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #FA709A 0%, #FEE140 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .main-container {
+      max-width: 1728px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+
+    .social-icons-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      max-width: 660px;
+      margin-bottom: 32px;
+    }
+
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 60px;
+      border: 1px solid #E5E5E5;
+      border-radius: 12px;
+    }
+
+    .dark .social-icon {
+      border-color: #404040;
+    }
+
+    @media (max-width: 1024px) {
+      .main-container {
+        padding: 0 24px;
+      }
+
+      .image-container {
+        display: none;
+      }
+
+      .content-container {
+        width: 100%;
+        max-width: none;
+      }
+
+      .social-icons-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .download-btn {
+      background: #292929;
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+
+
+      padding: 14px 24px;
+    }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-black dark:text-white">
+<header id="pageHeader"
+      class="max-w-432 max-h-25 bg-white flex items-center justify-between py-2.5 px-5 sm:px-7.5 md:px-10 lg:px-12 xl:px-15 2xl:px-25 mx-auto"
+    >
+      <!-- Logo -->
+      <div class="max-h-7 max-w-18 flex items-center gap-x-1 leading-tight">
+        <img src="images/logo-dark.svg" alt="" class="h-6 w-6 ">
+        <span class="text-xl font-bold font-poppins  leading-none align-middle">tian</span>
+
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="max-w-105 max-h-10.5 hidden md:block">
+        <ul
+          class="flex items-center gap-2.5 text-xs 2xl:text-sm font-medium text-gray-700 whitespace-nowrap"
+        >
+          <li class="py-2.5 px-1 lg:px-4">
+            <a
+              href="#"
+              class="border-b-2     border-gray-400 pb-1 text-gray-900 font-semibold"
+              >Home</a
+            >
+          </li>
+          <li class="py-2.5 px-1 lg:px-4">
+            <a href="#" class="hover:text-gray-900">Portfolio</a>
+          </li>
+          <li class="py-2.5 px-2 lg:px-4">
+            <a href="#" class="hover:text-gray-900 ">Skills</a>
+          </li>
+          <li class="py-2.5 px-1 lg:px-4">
+            <a href="#" class="hover:text-gray-900 ">About Me
+            </a>
+          </li>
+         
+        </ul>
+      </nav>
+
+      <!-- Container for Mode & Contact Btns -->
+
+      <div class="flex gap-x-4 justify-between items-center max-h-10">
+      <!-- Dark Mode button -->
+    
+    <!-- Toggle switch -->
+    <label for="theme-toggle" class="cursor-pointer block w-14 h-8 relative">
+      <!-- Hidden checkbox -->
+      <input type="checkbox" id="theme-toggle" class="sr-only peer">
+
+      <!-- Switch background -->
+      <div class="w-full h-full rounded-full transition-colors duration-300
+                  bg-yellow-400 peer-checked:bg-gray-800 
+                  dark:bg-gray-800 peer-checked:dark:bg-yellow-400">
+      </div>
+
+      <!-- Sun Icon (left inside toggle) -->
+      <img src="images/sun.svg" alt="Sun Icon"
+           class="w-5 h-5 z-0 absolute left-1 top-1/2 -translate-y-1/2" />
+
+      <!-- Moon Icon (right inside toggle) -->
+      <img src="images/moon.svg" alt="Moon Icon"
+           class="w-5 h-5 z-0 absolute right-1 top-1/2 -translate-y-1/2 dark:invert" />
+
+      <!-- Toggle knob -->
+      <div class="w-6 h-6 bg-white rounded-full shadow-md absolute top-1 left-1 
+                  transition-all duration-300 peer-checked:translate-x-6 z-10"></div>
+    </label>
+
+
+  <!-- Dark Mode Button Ends here -->
+
+      <!-- Desktop Contact Button -->
+      <div class="hidden md:block">
+        <a
+          href="#"
+          class="bg-purple-500 text-white lg:px-5 py-2 md:px-3 rounded hover:opacity-90 text-lg"
+        >
+          Contact Me
+        </a>
+      </div>
+
+      </div>
+
+      <!-- Hamburger Button -->
+      <button
+        id="hamburgerBtn"
+        class="bg-[#E7F3FA] group relative z-[60] md:hidden w-8.5 h-8.5 rounded-xl p-3 flex flex-col justify-between items-center transition-all duration-300 transform focus:outline-none"
+      >
+        <div class="flex flex-col gap-y-0.5 max-w-4 max-h-2.5">
+          <span
+            class="w-4 h-0.5 bg-black dark:bg-white rounded-full transition-all duration-300 ease-in-out group-[.open]:translate-y-[4px] group-[.open]:rotate-45"
+          ></span>
+          <span
+            class="w-4 h-0.5 bg-black dark:bg-white rounded-full transition-all duration-300 ease-in-out group-[.open]:opacity-0 "
+          ></span>
+          <span
+            class="w-4 h-0.5 bg-black dark:bg-white rounded-full transition-all duration-300 ease-in-out group-[.open]:-translate-y-[4px] group-[.open]:-rotate-45"
+          ></span>
+        </div>
+      </button>
+    </header>
+
+    <!-- Mobile Header Menu -->
+    <div
+      id="mobileMenu"
+      class="h-fit hidden fixed px-5 pb-2 top-0 left-0 w-full bg-white z-50 md:hidden"
+    >
+      <!-- Top section -->
+      <div
+        class="flex items-center justify-between py-2.5 border-b-2 border-gray-200"
+      >
+        <div class="flex flex-col leading-tight">
+          <span class="text-2xl font-extrabold tracking-widest text-gray-900"
+            >tian</span
+          >
+          <span class="text-xs text-gray-500">DESIGN STUDIO</span>
+        </div>
+      </div>
+
+      <!-- Mobile Nav Links -->
+      <nav
+        class="flex flex-col items-center py-3 space-y-4 text-lg font-medium text-gray-700"
+      >
+        <a
+          href="#"
+          class="border-b-2 border-blue-400 pb-1 text-gray-900 font-semibold text-center">Home</a>
+        <a href="#" class="">Portfolio</a>
+        <a href="#" class="">Skills</a>
+        <a href="#" class="">About Me</a>
+       
+      </nav>
+
+      <!-- Contact Button -->
+      <div class="px-5 mt-auto">
+        <a
+          href="#"
+          class="block w-full text-center bg-purple-500 text-white py-3 rounded-lg hover:opacity-90"
+        >
+          Contact Me
+        </a>
+      </div>
+    </div>
+
+
+
+
+    <section class=" max-w-432 max-h-194 flex flex-col lg:flex-row gap-5 px-25 mx-auto mt-2 md:mt-5 xl:mt-10">
+
+     
+      <!-- Left Content -->
+      <div class=" flex  max-w-205 max-h-173 ">
+         <div class="text-center lg:text-left">
+        <div class="mb-8">
+          <h1 class="text-[8rem] leading-none font-bold tracking-tight">PRODUCT<br>DESIGNER</h1>
+          <h2 class="text-[5rem] leading-tight gradient-text font-bold tracking-tighter">CRISTIAN MUÑOZ</h2>
+        </div>
+
+        <div class="social-icons-container">
+          <!-- Social Icons (reused as-is) -->
+          <a href="#" class="social-icon"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="..."/></svg></a>
+          <a href="#" class="social-icon"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="..."/></svg></a>
+          <a href="#" class="social-icon"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="..."/></svg></a>
+          <a href="#" class="social-icon"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="..."/></svg></a>
+          <a href="#" class="social-icon"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="..."/></svg></a>
+          <a href="#" class="social-icon"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="..."/></svg></a>
+        </div>
+
+        <div>
+          <button class="download-btn flex gap-4 w-full items-center text-center">
+            <p class="text-center"> Download Curriculum Vitae</p>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </button>
+
+        </div>
+      </div>
+      <div>
+        <img src="images/star.svg" alt="">
+      </div>
+    </div>
+
+      <!-- Right Content -->
+      <div class="image-container hidden lg:block max-w-173 "> <!-- style="background-image: url('/images/rightImg.jpg')"-->
+      <img src="images/rightImg.jpg" alt="" class="h-full object-cover bg-center">
+      </div>
+
+
+    </section>
+
+
+<script src="script.js"></script>  
+</body>
+</html>

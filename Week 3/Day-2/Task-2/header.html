@@ -1,0 +1,169 @@
+<header id="pageHeader"
+      class="max-w-432 max-h-25 bg-white flex items-center justify-between py-2.5 px-5 sm:px-7.5 md:px-10 lg:px-12 xl:px-15 2xl:px-25 mx-auto"
+    >
+      <!-- Logo -->
+      <div class="max-h-7 max-w-18 flex items-center gap-x-1 leading-tight">
+        <img src="images/logo-dark.svg" alt="" class="h-6 w-6 ">
+        <span class="text-xl font-bold font-poppins  leading-none align-middle">tian</span>
+
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="max-w-105 max-h-10.5 hidden md:block">
+        <ul
+          class="flex items-center gap-2.5 text-xs 2xl:text-sm font-medium text-gray-700 whitespace-nowrap"
+        >
+          <li class="py-2.5 px-1 lg:px-4">
+            <a
+              href="#"
+              class="border-b-2     border-gray-400 pb-1 text-gray-900 font-semibold"
+              >Home</a
+            >
+          </li>
+          <li class="py-2.5 px-1 lg:px-4">
+            <a href="#" class="hover:text-gray-900">Portfolio</a>
+          </li>
+          <li class="py-2.5 px-2 lg:px-4">
+            <a href="#" class="hover:text-gray-900 ">Skills</a>
+          </li>
+          <li class="py-2.5 px-1 lg:px-4">
+            <a href="#" class="hover:text-gray-900 ">About Me
+            </a>
+          </li>
+         
+        </ul>
+      </nav>
+
+      <!-- Container for Mode & Contact Btns -->
+
+      <div class="flex gap-x-4 justify-between items-center max-h-10">
+      <!-- Dark Mode button -->
+    
+    <!-- Toggle switch -->
+    <label for="theme-toggle" class="cursor-pointer block w-14 h-8 relative">
+      <!-- Hidden checkbox -->
+      <input type="checkbox" id="theme-toggle" class="sr-only peer">
+
+      <!-- Switch background -->
+      <div class="w-full h-full rounded-full transition-colors duration-300
+                  bg-yellow-400 peer-checked:bg-gray-800 
+                  dark:bg-gray-800 peer-checked:dark:bg-yellow-400">
+      </div>
+
+      <!-- Sun Icon (left inside toggle) -->
+      <img src="images/sun.svg" alt="Sun Icon"
+           class="w-5 h-5 z-0 absolute left-1 top-1/2 -translate-y-1/2" />
+
+      <!-- Moon Icon (right inside toggle) -->
+      <img src="images/moon.svg" alt="Moon Icon"
+           class="w-5 h-5 z-0 absolute right-1 top-1/2 -translate-y-1/2 dark:invert" />
+
+      <!-- Toggle knob -->
+      <div class="w-6 h-6 bg-white rounded-full shadow-md absolute top-1 left-1 
+                  transition-all duration-300 peer-checked:translate-x-6 z-10"></div>
+    </label>
+
+
+  <!-- Dark Mode Button Ends here -->
+
+      <!-- Desktop Contact Button -->
+      <div class="hidden md:block">
+        <a
+          href="#"
+          class="bg-purple-500 text-white lg:px-5 py-2 md:px-3 rounded hover:opacity-90 text-lg"
+        >
+          Contact Me
+        </a>
+      </div>
+
+      </div>
+
+      <!-- Hamburger Button -->
+      <button
+        id="hamburgerBtn"
+        class="bg-[#E7F3FA] group relative z-[60] md:hidden w-8.5 h-8.5 rounded-xl p-3 flex flex-col justify-between items-center transition-all duration-300 transform focus:outline-none"
+      >
+        <div class="flex flex-col gap-y-0.5 max-w-4 max-h-2.5">
+          <span
+            class="w-4 h-0.5 bg-black dark:bg-white rounded-full transition-all duration-300 ease-in-out group-[.open]:translate-y-[4px] group-[.open]:rotate-45"
+          ></span>
+          <span
+            class="w-4 h-0.5 bg-black dark:bg-white rounded-full transition-all duration-300 ease-in-out group-[.open]:opacity-0 "
+          ></span>
+          <span
+            class="w-4 h-0.5 bg-black dark:bg-white rounded-full transition-all duration-300 ease-in-out group-[.open]:-translate-y-[4px] group-[.open]:-rotate-45"
+          ></span>
+        </div>
+      </button>
+    </header>
+
+    <!-- Mobile Header Menu -->
+    <div
+      id="mobileMenu"
+      class="h-fit hidden fixed px-5 pb-2 top-0 left-0 w-full bg-white z-50 md:hidden"
+    >
+      <!-- Top section -->
+      <div
+        class="flex items-center justify-between py-2.5 border-b-2 border-gray-200"
+      >
+        <div class="flex flex-col leading-tight">
+          <span class="text-2xl font-extrabold tracking-widest text-gray-900"
+            >AZAIZA</span
+          >
+          <span class="text-xs text-gray-500">DESIGN STUDIO</span>
+        </div>
+      </div>
+
+      <!-- Mobile Nav Links -->
+      <nav
+        class="flex flex-col items-center py-3 space-y-4 text-lg font-medium text-gray-700"
+      >
+        <a
+          href="#"
+          class="border-b-2 border-blue-400 pb-1 text-gray-900 font-semibold text-center"
+          >Home</a
+        >
+        <a href="#" class="">About Us</a>
+        <a href="#" class="flex items-center justify-center gap-1"
+          >Features
+          <svg
+            class="w-3 h-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            /></svg
+        ></a>
+        <a href="#" class="flex items-center justify-center gap-1"
+          >Our Services
+          <svg
+            class="w-3 h-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            /></svg
+        ></a>
+        <a href="#" class="">Why ADS?</a>
+      </nav>
+
+      <!-- Contact Button -->
+      <div class="px-5 mt-auto">
+        <a
+          href="#"
+          class="block w-full text-center bg-gradient-to-r from-blue-500 to-cyan-400 text-white py-3 rounded-lg hover:opacity-90"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
