@@ -85,6 +85,6 @@ router.post(
   ],
   validateRequest,
   authController.login
-);
+);  
 
 module.exports = router;
