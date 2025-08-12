@@ -1,31 +1,29 @@
-const express = require('express');
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
+const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
 
 const app = express();
 app.use(express.json());
 
 // In-memory task storage
-let tasks = [
-  { id: 1, title: "Learn Express", completed: false }
-];
+let tasks = [{ id: 1, title: "Learn Express", completed: false }];
 
 // Swagger setup
 const swaggerOptions = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Task Manager API',
-      version: '1.0.0',
-      description: 'A simple Express Task Manager API',
+      title: "Task Manager API",
+      version: "1.0.0",
+      description: "A simple Express Task Manager API",
     },
-    servers: [{ url: 'http://localhost:3000' }],
+    servers: [{ url: "http://localhost:3000" }],
   },
-  apis: ['./index.js'], // Swagger docs in this file
+  apis: ["./index.js"], // Swagger docs in this file
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /**
  * @swagger
@@ -69,14 +67,13 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *               items:
  *                 $ref: '#/components/schemas/Task'
  */
-app.get('/api/tasks', (req, res) => {
+app.get("/api/tasks", (req, res) => {
   res.json({
     success: true,
     data: tasks,
-    message: "Tasks retrieved successfully"
+    message: "Tasks retrieved successfully",
   });
 });
-
 
 /**
  * @swagger
@@ -101,9 +98,9 @@ app.get('/api/tasks', (req, res) => {
  *       404:
  *         description: Task not found
  */
-app.get('/api/tasks/:id', (req, res) => {
+app.get("/api/tasks/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const task = tasks.find(t => t.id === id);
+  const task = tasks.find((t) => t.id === id);
   if (!task) return res.status(404).json({ message: "Task not found" });
   res.json(task);
 });
@@ -138,14 +135,37 @@ app.get('/api/tasks/:id', (req, res) => {
  *             schema:
  *               $ref: '#/components/schemas/Task'
  */
-const { title, completed = false } = req.body;
-if (!title || typeof title !== 'string') {
-  return res.status(400).json({ success: false, data: null, message: "Title is required and must be a string" });
-}
-if (typeof completed !== 'boolean') {
-  return res.status(400).json({ success: false, data: null, message: "Completed must be a boolean" });
-}
+app.post("/api/tasks", (req, res) => {
+  const { title, completed = false } = req.body;
 
+  if (!title || typeof title !== "string") {
+    return res.status(400).json({
+      success: false,
+      data: null,
+      message: "Title is required and must be a string",
+    });
+  }
+  if (typeof completed !== "boolean") {
+    return res.status(400).json({
+      success: false,
+      data: null,
+      message: "Completed must be a boolean",
+    });
+  }
+
+  const newTask = {
+    id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
+    title,
+    completed,
+  };
+  tasks.push(newTask);
+
+  res.status(201).json({
+    success: true,
+    data: newTask,
+    message: "Task created successfully",
+  });
+});
 
 /**
  * @swagger
@@ -184,11 +204,11 @@ if (typeof completed !== 'boolean') {
  *       404:
  *         description: Task not found
  */
-app.put('/api/tasks/:id', (req, res) => {
+app.put("/api/tasks/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const { title, completed } = req.body;
 
-  const taskIndex = tasks.findIndex(t => t.id === id);
+  const taskIndex = tasks.findIndex((t) => t.id === id);
   if (taskIndex === -1) return res.status(404).json({ message: "Task not found" });
 
   if (title !== undefined) tasks[taskIndex].title = title;
@@ -216,17 +236,17 @@ app.put('/api/tasks/:id', (req, res) => {
  *       404:
  *         description: Task not found
  */
-app.delete('/api/tasks/:id', (req, res) => {
+app.delete("/api/tasks/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const taskIndex = tasks.findIndex(t => t.id === id);
+  const taskIndex = tasks.findIndex((t) => t.id === id);
   if (taskIndex === -1) return res.status(404).json({ message: "Task not found" });
 
   tasks.splice(taskIndex, 1);
   res.status(204).send();
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`Swagger docs at http://localhost:${PORT}/api-docs`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
+  console.log(`📄 Swagger docs at http://localhost:${PORT}/api-docs`);
 });
