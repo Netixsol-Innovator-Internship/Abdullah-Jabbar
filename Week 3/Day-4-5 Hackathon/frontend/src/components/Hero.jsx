@@ -4,7 +4,7 @@ import heroImg from "../assets/hero.jpg";
 
 export default function Hero() {
   return (
-    <div id="hero" className="w-full flex flex-col md:flex-row max-h-157 px-18">
+    <div id="hero" className="w-full flex flex-col md:flex-row max-h-157 px-6 sm:px-10 md:px-14 lg:px-18">
       {/* This div contains the image. It is hidden on small screens and
           takes up half the width on medium screens and up. */}
       <div className="hidden md:block md:w-1/2">

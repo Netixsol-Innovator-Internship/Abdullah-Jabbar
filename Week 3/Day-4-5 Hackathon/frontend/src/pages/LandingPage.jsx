@@ -13,7 +13,7 @@ export default function LandingPage() {
       <Hero />
       <Features />
       <Collections />
-      {/* Footer should always be here */}
+
       <Footer />
     </main>
   );

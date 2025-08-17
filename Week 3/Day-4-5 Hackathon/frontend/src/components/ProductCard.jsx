@@ -1,16 +1,17 @@
 // src/components/ProductCard.jsx
 const ProductCard = ({ image, name }) => {
   return (
-    <div className="flex flex-col items-center overflow-hidden ">
+    <div className="flex flex-col items-center overflow-hidden mx-auto">
       <div className="w-full h-full">
         <img
           src={image}
           alt={name}
            className="
    object-cover 
-    w-90 h-90           /* desktop */
-    md:-w-80 md:-h-80     /* tablet */
-    sm:-w-70 sm:-h-70     /* mobile */
+    lg:w-90 lg:h-90           /* desktop */
+    md:w-80 md:h-80     /* tablet */
+    w-70 h-70     /* mobile */
+    
   "
 />
     
