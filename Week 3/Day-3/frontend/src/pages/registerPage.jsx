@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RegisterForm from '../components/registerForm.jsx';
-import api from '../services/api.js';
+import { authAPI } from "../services/api.js"; 
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function RegisterPage() {
     setLoading(true);
     setError('');
     try {
-      const data = await api.register(payload.name, payload.email, payload.password);
+      const data = await authAPI.register(payload.name, payload.email, payload.password);
       if (!data?.token) throw new Error('No token returned from API');
       localStorage.setItem('token', data.token);
       navigate('/', { replace: true });
