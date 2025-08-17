@@ -1,16 +1,18 @@
 // LandingPage.jsx
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Hero from "../components/Hero";
+import Features from "../components/Features";
+import Collections from "../components/Collections";
 
 export default function LandingPage() {
   return (
     <main className="max-w-320 mx-auto">
       <Header />
 
-      <h1 className="text-4xl font-bold text-center py-10">
-        Welcome to My Store
-      </h1>
-
+      <Hero />
+      <Features />
+      <Collections />
       {/* Footer should always be here */}
       <Footer />
     </main>

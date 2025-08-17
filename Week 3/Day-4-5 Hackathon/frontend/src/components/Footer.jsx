@@ -1,7 +1,7 @@
 // Footer.jsx
 export default function Footer() {
   return (
-    <footer className="w-full bg-gray-100 text-black py-4 px-4 sm:px-8 md:px-20">
+    <footer className="w-full bg-[#F5F5F5] text-black py-4 px-4 sm:px-8 md:px-20">
     
         <div className="flex flex-col md:flex-row">
           {/* Left Section */}
