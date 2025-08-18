@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginForm from "../components/LoginForm.jsx";
+import LoginForm from "../components/loginForm.jsx";
 import { authAPI } from "../services/api.js"; // <-- use authAPI
 
 export default function LoginPage() {
