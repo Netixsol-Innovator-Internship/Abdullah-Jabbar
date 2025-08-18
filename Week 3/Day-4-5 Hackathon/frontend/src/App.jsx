@@ -1,7 +1,7 @@
 // App.jsx
 import { Routes, Route } from "react-router-dom";
 import ProductsPage from "./pages/ProductsPage";
-import LandingPage from "./pages/landingPage";
+import LandingPage from "./pages/LandingPage";
 import SingleProductPage from "./pages/SingleProductPage";
 
 export default function App() {

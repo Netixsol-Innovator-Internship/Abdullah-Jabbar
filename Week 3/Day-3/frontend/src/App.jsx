@@ -1,7 +1,7 @@
 // App.jsx
 
 import { Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/Dashboard.jsx';
+import Dashboard from './pages/dashboard.jsx';
 import LoginPage from './pages/loginPage.jsx';
 import RegisterPage from './pages/registerPage.jsx';
 
