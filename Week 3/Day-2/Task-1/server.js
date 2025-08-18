@@ -17,6 +17,11 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+// app.use('/', (req,res,)=>{
+//   res.json({
+//     message:'working'
+//   })
+// })
 // Routes
 app.use('/api/users', require('./src/routes/authRoutes'));
 app.use('/api/tasks', require('./src/routes/taskRoutes'));
@@ -25,7 +30,6 @@ app.use('/api/tasks', require('./src/routes/taskRoutes'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // 404
-app.use((req, res) => res.status(404).json({ message: 'Not Found' }));
 
 // error handler
 app.use((err, req, res, next) => {
@@ -33,16 +37,18 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Server Error' });
 });
 
+
+app.use((req, res) => res.status(404).json({ message: 'route not found' }));
 // Start server
 const PORT = process.env.PORT || 5000;
 const start = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (err) {
     console.error('Failed to start:', err);
     process.exit(1);
   }
 };
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 start();
