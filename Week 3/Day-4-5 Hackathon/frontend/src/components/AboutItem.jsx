@@ -12,7 +12,7 @@ import React from 'react';
  */
 const AboutItem = ({ title, value }) => {
   return (
-    <div className="flex flex-col items-start px-8 py-4 border-r border-gray-200 last:border-r-0 h-full">
+    <div className="flex flex-wrap flex-col items-start px-2 sm:px-4 md:px-6 lg:px-8 py-4 border-r border-gray-200 last:border-r-0 h-full">
       <span className="text-sm font-medium text-gray-400 uppercase tracking-widest">
         {title}
       </span>
@@ -85,7 +85,7 @@ const AboutContainer = () => {
   );
 
   return (
-    <div className="flex p-8 bg-gray-100 rounded-lg shadow-md w-full h-full space-x-12 px-18">
+    <div className="flex p-8 bg-gray-100 mt-10 sm:mt-14 lg:mt-20 w-full h-full space-x-4 px-12">
       {/* Left section for Steeping instructions */}
       <div className="flex flex-col w-1/2">
         <h2 className="text-3xl  text-gray-800 mb-6">Steeping instructions</h2>
@@ -114,9 +114,9 @@ const AboutContainer = () => {
       </div>
 
       {/* Right section for About this tea */}
-      <div className="flex flex-col w-1/2">
+      <div className="flex flex-col w-1/2 ">
         <h2 className="text-3xl text-gray-800 mb-6">About this tea</h2>
-        <div className="flex justify-start items-center space-x-0">
+        <div className="flex justify-start flex-wrap items-center space-x-0">
           <AboutItem title="FLAVOR" value="Spicy" />
           <AboutItem title="QUALITIES" value="Smoothing" />
           <AboutItem title="CAFFEINE" value="Medium" />

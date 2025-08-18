@@ -50,7 +50,7 @@ const items = [
   },
   {
     image: item4,
-    name: "Chamomile Herbal Tea",
+    name: "Ceylon Ginger Cinnamon chai tea",
     weight: "50 g",
     price: "€4.85",
     description: "Soothing herbal tea made from pure chamomile flowers.",

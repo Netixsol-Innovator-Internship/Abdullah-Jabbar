@@ -1,13 +1,13 @@
 // Footer.jsx
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#F5F5F5] text-black py-4 px-4 sm:px-8 md:px-20">
+    <footer className="w-full bg-[#F5F5F5] text-black py-4 px-4 sm:px-8 md:px-20  ">
     
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col sm:flex-col-2 md:flex-row ">
           {/* Left Section */}
-          <div className="w-full md:w-1/2 flex flex-col sm:flex-row mb-6 md:mb-0">
+          <div className="w-full md:w-1/2 flex flex-col sm:flex-row mb-6 md:mb-0 ">
             {/* Block 1 */}
-            <div className="w-full sm:w-1/2 mb-6 sm:mb-0">
+            <div className="w-full sm:w-1/2 mb-6 sm:mb-0 ">
               <h3 className="text-lg font-medium mb-4 uppercase">Collections</h3>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>
