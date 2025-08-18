@@ -48,7 +48,7 @@
       return data; // created task
     },
     update: async (id, payload) => {
-      const { data } = await api.patch(`/api/tasks/${id}`, payload);
+      const { data } = await api.put(`/api/tasks/${id}`, payload);
       return data; // updated task
     },
     remove: async (id) => {
