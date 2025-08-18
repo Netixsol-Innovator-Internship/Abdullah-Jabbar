@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "./src",
     "module": "commonjs",
-    "target": "ES2022",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "target": "es2023",
+    "strict": true
   },
-  "include": ["server.ts"]
+  "include": ["src"]
 }

@@ -8,7 +8,7 @@ const App = () => {
     // Fetch tasks
     useEffect(() => {
         axios
-            .get("http://localhost:4000/api/tasks")
+            .get("https://week4-day1-backend.onrender.com/")
             .then((res) => setTasks(res.data))
             .catch((err) => console.error(err));
     }, []);
@@ -20,7 +20,7 @@ const App = () => {
         if (trimmedTitle.length > MAX_LENGTH)
             return alert(`Task title cannot exceed ${MAX_LENGTH} characters`);
         axios
-            .post("http://localhost:4000/api/tasks", { title: trimmedTitle })
+            .post("https://week4-day1-backend.onrender.com/", { title: trimmedTitle })
             .then((res) => {
             setTasks([...tasks, res.data]);
             setTitle("");
@@ -28,14 +28,14 @@ const App = () => {
     };
     // Toggle complete
     const toggleTask = (id) => {
-        axios.put(`http://localhost:4000/api/tasks/${id}`).then((res) => {
+        axios.put(`https://week4-day1-backend.onrender.com/${id}`).then((res) => {
             setTasks(tasks.map((t) => (t.id === id ? res.data : t)));
         });
     };
     // Delete task
     const deleteTask = (id) => {
         axios
-            .delete(`http://localhost:4000/api/tasks/${id}`)
+            .delete(`https://week4-day1-backend.onrender.com/${id}`)
             .then(() => setTasks(tasks.filter((t) => t.id !== id)));
     };
     // Stats

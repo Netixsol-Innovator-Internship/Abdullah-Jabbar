@@ -16,7 +16,7 @@ const App: React.FC = () => {
   // Fetch tasks
   useEffect(() => {
     axios
-      .get<Task[]>("http://localhost:4000/api/tasks")
+      .get<Task[]>("https://week4-day1-backend.onrender.com/")
       .then((res) => setTasks(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -29,7 +29,7 @@ const App: React.FC = () => {
       return alert(`Task title cannot exceed ${MAX_LENGTH} characters`);
 
     axios
-      .post<Task>("http://localhost:4000/api/tasks", { title: trimmedTitle })
+      .post<Task>("https://week4-day1-backend.onrender.com/", { title: trimmedTitle })
       .then((res) => {
         setTasks([...tasks, res.data]);
         setTitle("");
@@ -38,7 +38,7 @@ const App: React.FC = () => {
 
   // Toggle complete
   const toggleTask = (id: number) => {
-    axios.put<Task>(`http://localhost:4000/api/tasks/${id}`).then((res) => {
+    axios.put<Task>(`https://week4-day1-backend.onrender.com/${id}`).then((res) => {
       setTasks(tasks.map((t) => (t.id === id ? res.data : t)));
     });
   };
@@ -46,7 +46,7 @@ const App: React.FC = () => {
   // Delete task
   const deleteTask = (id: number) => {
     axios
-      .delete(`http://localhost:4000/api/tasks/${id}`)
+      .delete(`https://week4-day1-backend.onrender.com/${id}`)
       .then(() => setTasks(tasks.filter((t) => t.id !== id)));
   };
 
