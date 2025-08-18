@@ -7,11 +7,11 @@ import RegisterPage from './pages/registerPage.jsx';
 
 function App() {
   return (
-    <Routes>  
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/" element={<Dashboard />} />
-    </Routes>
+    <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />        
+      </Routes>
   );
 }
 
