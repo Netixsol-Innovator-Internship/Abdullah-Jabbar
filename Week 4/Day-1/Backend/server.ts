@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-// ✅ type-only import works fine with require()
+// type-only import works fine with require()
 import type { Request, Response } from "express";
 
 
@@ -40,7 +40,7 @@ app.post("/api/tasks", (req: Request, res: Response) => {
 
 // PUT update task (toggle complete/incomplete)
 app.put("/api/tasks/:id", (req: Request, res: Response) => {
-  const id = parseInt(req.params.id as string, 10); // ✅ ensure it's parsed as number
+  const id = parseInt(req.params.id as string, 10); //  ensure it's parsed as number
   const task = tasks.find((t) => t.id === id);
   if (!task) return res.status(404).json({ message: "Task not found" });
 
@@ -50,7 +50,7 @@ app.put("/api/tasks/:id", (req: Request, res: Response) => {
 
 // DELETE task
 app.delete("/api/tasks/:id", (req: Request, res: Response) => {
-  const id = parseInt(req.params.id as string, 10); // ✅ parseInt avoids type mismatch
+  const id = parseInt(req.params.id as string, 10); //  parseInt avoids type mismatch
   tasks = tasks.filter((t) => t.id !== id);
   res.json({ message: "Task deleted" });
 });
