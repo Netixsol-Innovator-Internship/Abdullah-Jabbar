@@ -12,8 +12,8 @@ interface Task {
 const MAX_LENGTH = 50;
 
 // Use environment variable in production, fallback to localhost in dev
-const API_BASE =
-  import.meta.env.VITE_API_BASE || "http://localhost:4000/api";
+const API_BASE = import.meta.env.VITE_API_BASE as string;
+
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -45,23 +45,24 @@ const App: React.FC = () => {
 
   // Toggle complete
   const toggleTask = (id: number) => {
-    axios
-      .put<Task>(`${API_BASE}/tasks/${id}`)
-      .then((res) => {
-        setTasks(tasks.map((t) => (t.id === id ? res.data : t)));
-      })
-      .catch((err) => console.error("Error toggling task:", err));
-  };
+  axios
+    .put<Task>(`${API_BASE}/tasks?id=${id}`)
+    .then((res) => {
+      setTasks(tasks.map((t) => (t.id === id ? res.data : t)));
+    })
+    .catch((err) => console.error("Error toggling task:", err));
+};
+
 
   // Delete task
   const deleteTask = (id: number) => {
-    axios
-      .delete(`${API_BASE}/tasks/${id}`)
-      .then(() => {
-        setTasks(tasks.filter((t) => t.id !== id));
-      })
-      .catch((err) => console.error("Error deleting task:", err));
-  };
+  axios
+    .delete(`${API_BASE}/tasks?id=${id}`)
+    .then(() => {
+      setTasks(tasks.filter((t) => t.id !== id));
+    })
+    .catch((err) => console.error("Error deleting task:", err));
+};
 
   // Stats
   const completed = tasks.filter((t) => t.completed).length;

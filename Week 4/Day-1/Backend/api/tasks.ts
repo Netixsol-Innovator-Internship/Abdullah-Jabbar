@@ -64,11 +64,30 @@
 //   });
 // }
 
-
 let tasks: { id: number; title: string; completed: boolean }[] = [];
 let currentId = 1;
 
 export default (req: any, res: any) => {
+  // Add CORS headers for all requests
+  res.setHeader('Access-Control-Allow-Origin', 'https://abdullah-week4-day1-frontend.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle preflight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  // Helper to get task ID from query or URL
+  let id: number | undefined;
+  if (req.query.id) {
+    id = parseInt(req.query.id as string, 10);
+  } else if (req.url) {
+    // Attempt to extract ID from /api/tasks/1 style
+    const match = req.url.match(/\/(\d+)$/);
+    if (match) id = parseInt(match[1], 10);
+  }
+
   if (req.method === "GET") {
     return res.status(200).json(tasks);
   }
@@ -83,7 +102,8 @@ export default (req: any, res: any) => {
   }
 
   if (req.method === "PUT") {
-    const id = parseInt(req.query.id as string, 10);
+    if (id === undefined) return res.status(400).json({ message: "Task ID is required" });
+
     const task = tasks.find((t) => t.id === id);
     if (!task) return res.status(404).json({ message: "Task not found" });
 
@@ -92,8 +112,12 @@ export default (req: any, res: any) => {
   }
 
   if (req.method === "DELETE") {
-    const id = parseInt(req.query.id as string, 10);
+    if (id === undefined) return res.status(400).json({ message: "Task ID is required" });
+
+    const taskExists = tasks.some((t) => t.id === id);
     tasks = tasks.filter((t) => t.id !== id);
+
+    if (!taskExists) return res.status(404).json({ message: "Task not found" });
     return res.status(200).json({ message: "Task deleted" });
   }
 
