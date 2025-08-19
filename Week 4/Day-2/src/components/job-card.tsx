@@ -17,16 +17,16 @@ export function JobCard({ job }: JobCardProps) {
 
   return (
     <div
-      className={"bg-white rounded-lg shadow-lg p-6 mb-6 relative hover:border-l-4 border-teal-500 hover:scale-102 transition-all ease-in-out duration-200"}
+      className={"bg-white rounded-lg shadow-lg p-6 mb-10 sm:mb-6 relative hover:border-l-4 border-teal-500 hover:scale-102 transition-all ease-in-out duration-200"}
     >
-      <div className="flex flex-col md:flex-row md:items-center gap-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-4 ">
         {/* Company Logo */}
-        <div className="flex-shrink-0">
-          <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-sm md:text-lg">
+        <div className="flex-shrink-0 absolute -top-6 sm:relative sm:top-0 ">
+          <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-sm md:text-lg border-4 border-white sm:border-none">
             <img
       src={job.logo.replace("./images/", "/images/")}
       alt={`${job.company} logo`}
-      className="w-full h-full object-contain"
+      className="w-full h-full object-contain  rounded-full"
     />
 
           </div>
@@ -34,7 +34,7 @@ export function JobCard({ job }: JobCardProps) {
 
         {/* Job Details */}
         <div className="flex-grow">
-          <div className="flex flex-wrap items-center gap-2 mb-2">
+          <div className="flex flex-wrap items-center gap-2 mb-2 mt-4 sm:mt-0">
             <h3 className="text-teal-600 font-semibold text-sm md:text-base">{job.company}</h3>
             
   {job.new && (
