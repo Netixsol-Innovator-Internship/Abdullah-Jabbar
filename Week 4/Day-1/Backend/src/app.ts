@@ -1,11 +1,6 @@
-// server.ts
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-
-// type-only import works fine with require()
-import type { Request, Response } from "express";
-
+import express, { Request, Response } from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
 
 interface Task {
   id: number;
@@ -13,16 +8,12 @@ interface Task {
   completed: boolean;
 }
 
-const app = express();
-const PORT = process.env.PORT || 4000;
-
-
-app.use(cors());
-app.use(bodyParser.json());
-
-// In-memory store
 let tasks: Task[] = [];
 let currentId = 1;
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
 
 // GET all tasks
 app.get("/api/tasks", (req: Request, res: Response) => {
@@ -39,9 +30,9 @@ app.post("/api/tasks", (req: Request, res: Response) => {
   res.status(201).json(newTask);
 });
 
-// PUT update task (toggle complete/incomplete)
+// PUT toggle task
 app.put("/api/tasks/:id", (req: Request, res: Response) => {
-  const id = parseInt(req.params.id as string, 10); //  ensure it's parsed as number
+  const id = parseInt(req.params.id, 10);
   const task = tasks.find((t) => t.id === id);
   if (!task) return res.status(404).json({ message: "Task not found" });
 
@@ -51,9 +42,9 @@ app.put("/api/tasks/:id", (req: Request, res: Response) => {
 
 // DELETE task
 app.delete("/api/tasks/:id", (req: Request, res: Response) => {
-  const id = parseInt(req.params.id as string, 10); //  parseInt avoids type mismatch
+  const id = parseInt(req.params.id, 10);
   tasks = tasks.filter((t) => t.id !== id);
   res.json({ message: "Task deleted" });
 });
 
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+export default app;

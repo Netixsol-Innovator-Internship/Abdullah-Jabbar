@@ -1,3 +1,5 @@
+// App.tsx
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -9,6 +11,10 @@ interface Task {
 
 const MAX_LENGTH = 50;
 
+// Use environment variable in production, fallback to localhost in dev
+const API_BASE =
+  import.meta.env.VITE_API_BASE || "http://localhost:4000/api";
+
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [title, setTitle] = useState("");
@@ -16,9 +22,9 @@ const App: React.FC = () => {
   // Fetch tasks
   useEffect(() => {
     axios
-      .get<Task[]>("https://week4-day1-backend.onrender.com/")
+      .get<Task[]>(`${API_BASE}/tasks`)
       .then((res) => setTasks(res.data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error fetching tasks:", err));
   }, []);
 
   // Add task
@@ -29,25 +35,32 @@ const App: React.FC = () => {
       return alert(`Task title cannot exceed ${MAX_LENGTH} characters`);
 
     axios
-      .post<Task>("https://week4-day1-backend.onrender.com/", { title: trimmedTitle })
+      .post<Task>(`${API_BASE}/tasks`, { title: trimmedTitle })
       .then((res) => {
         setTasks([...tasks, res.data]);
         setTitle("");
-      });
+      })
+      .catch((err) => console.error("Error adding task:", err));
   };
 
   // Toggle complete
   const toggleTask = (id: number) => {
-    axios.put<Task>(`https://week4-day1-backend.onrender.com/${id}`).then((res) => {
-      setTasks(tasks.map((t) => (t.id === id ? res.data : t)));
-    });
+    axios
+      .put<Task>(`${API_BASE}/tasks/${id}`)
+      .then((res) => {
+        setTasks(tasks.map((t) => (t.id === id ? res.data : t)));
+      })
+      .catch((err) => console.error("Error toggling task:", err));
   };
 
   // Delete task
   const deleteTask = (id: number) => {
     axios
-      .delete(`https://week4-day1-backend.onrender.com/${id}`)
-      .then(() => setTasks(tasks.filter((t) => t.id !== id)));
+      .delete(`${API_BASE}/tasks/${id}`)
+      .then(() => {
+        setTasks(tasks.filter((t) => t.id !== id));
+      })
+      .catch((err) => console.error("Error deleting task:", err));
   };
 
   // Stats
@@ -62,7 +75,7 @@ const App: React.FC = () => {
         <input
           type="text"
           value={title}
-          maxLength={MAX_LENGTH} // enforce limit in the input itself
+          maxLength={MAX_LENGTH}
           onChange={(e) => setTitle(e.target.value)}
           placeholder={`Enter task (max ${MAX_LENGTH} chars)`}
           className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
