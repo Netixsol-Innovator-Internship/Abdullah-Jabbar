@@ -1,6 +1,5 @@
 import Hero from "../components/Hero";
 import FeaturedSlider from "../components/FeaturedSlider";
-import { GamesOnSale } from "@/components/GamesOnSale";
 import { Suspense } from "react";
 
 export default function HomePage() {
@@ -12,7 +11,6 @@ export default function HomePage() {
         <Suspense fallback={<div>Loading featured…</div>}>
           <FeaturedSlider />
         </Suspense>
-        <GamesOnSale/>
       </section>
     </div>
   );
