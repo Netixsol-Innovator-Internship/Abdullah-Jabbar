@@ -127,8 +127,8 @@ export function GamesOnSale() {
   };
 
   return (
-    <section className="bg-[#121212] py-8">
-      <div className="container mx-auto px-4">
+    <section className="py-8">
+      <div className=" mx-auto px-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-white text-2xl font-bold">Games on Sale ›</h2>

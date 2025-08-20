@@ -1,19 +1,15 @@
 import Hero from "../components/Hero";
-import FeaturedSlider from "../components/FeaturedSlider";
-import { GamesOnSale } from "@/components/GamesOnSale";
-import { Suspense } from "react";
+import { GamesOnSale } from "../components/GamesOnSale";
+
 
 export default function HomePage() {
   return (
     <div className="space-y-12 pb-16 max-w-270 mx-auto bg-zinc-900 ">
       <Hero />
-      <section >
-        <h2 className="text-xl md:text-2xl font-semibold mb-4">Featured</h2>
-        <Suspense fallback={<div>Loading featured…</div>}>
-          <FeaturedSlider />
-        </Suspense>
+
+   
         <GamesOnSale/>
-      </section>
+  
     </div>
   );
 }
