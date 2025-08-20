@@ -98,7 +98,7 @@ export default function Variants() {
     
        
    
-      <div className="flex flex-wrap items-center  gap-1 sm:gap-2">
+      <div className="flex flex-wrap mt-2 items-center  gap-1 sm:gap-2">
         {variants.map((variant) => (
           <div
             key={variant.id}
@@ -106,7 +106,7 @@ export default function Variants() {
             className={`
               flex flex-col items-center justify-center text-center
               px-3 py  cursor-pointer transition-all duration-300
-              hover:bg-gray-100
+              hover:bg-gray-100 pt-2
               ${selectedVariant === variant.id ? 'outline-1 outline-yellow-500' : 'outline-1 outline-transparent'}
             `}
           >

@@ -8,13 +8,13 @@ import Collections from "../components/Collections";
 export default function LandingPage() {
   return (
     <main className="max-w-320 mx-auto">
-      <Header />
+    
 
       <Hero />
       <Features />
       <Collections />
 
-      <Footer />
+   
     </main>
   );
 }

@@ -2,20 +2,23 @@
 
 import { useNavigate } from "react-router-dom";
 
-export default function Header() {
+export default function Header({ onCartClick }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/products"); // the route you want to redirect to
   };
 
-    const handleCickLogo = () => {
+  const handleCickLogo = () => {
     navigate("/"); // the route you want to redirect to
   };
   return (
-    <header className="w-full px-4 py-4 sm:px-8 md:px-18 md:py-7.5 flex items-center justify-between">
+    <header className="w-full max-w-320 mx-auto px-4 py-4 sm:px-8 md:px-18 md:py-7.5 flex items-center justify-between">
       {/* Left: Logo */}
-      <div className="flex items-center space-x-2 cursor-pointer" onClick={handleCickLogo}>
+      <div
+        className="flex items-center space-x-2 cursor-pointer"
+        onClick={handleCickLogo}
+      >
         <svg
           width="36"
           height="36"
@@ -101,7 +104,10 @@ export default function Header() {
         </button>
 
         {/* Cart */}
-        <button className="cursor-pointer p-1 hover:opacity-70">
+        <button
+          className="cursor-pointer p-1 hover:opacity-70"
+          onClick={onCartClick}
+        >
           <svg
             width="18"
             height="21"

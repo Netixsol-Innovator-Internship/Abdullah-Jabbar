@@ -26,8 +26,7 @@ export function JobCard({ job }: JobCardProps) {
             <img
       src={job.logo.replace("./images/", "/images/")}
       alt={`${job.company} logo`}
-      className="w-full h-full object-contain  rounded-full"
-    />
+      className="w-full h-full object-contain  rounded-full"/>
 
           </div>
         </div>
