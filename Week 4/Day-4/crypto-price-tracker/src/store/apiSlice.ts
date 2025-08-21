@@ -52,7 +52,7 @@ export const api = createApi({
     >({
       query: ({
         page = 1,
-        per_page = 50,
+        per_page = 51,
         vs_currency,
         search,
         change = "7d",
