@@ -61,7 +61,7 @@ export default function Hero() {
             }}
           />
           {/* Overlay content */}
-          <div className="absolute inset-0 p-10 flex flex-col justify-end">
+          <div className="absolute inset-0 p-3 sm:p-5 md:p-7 lg:p-10 flex flex-col justify-end">
             <span className="text-xs  text-white py-1 mb-2 self-start backdrop-blur-sm">
               {featuredGame.tagText.toUpperCase()}
             </span>
