@@ -46,8 +46,8 @@ export default function Hero() {
   const [featuredGame, setFeaturedGame] = useState(gameList[0]);
 
   return (
-    <div className="bg-zinc-900 text-white py-2 font-sans antialiased flex items-center justify-center ">
-      <div className="w-full flex flex-col md:flex-row gap-6 p-4 rounded-3xl shadow-2xl">
+    <div className=" text-white py-2 font-sans antialiased flex items-center justify-center ">
+      <div className="w-full flex flex-col md:flex-row gap-6 p-4 rounded-3xl">
         {/* Main featured game section */}
         <div className="relative w-full rounded-xl overflow-hidden shadow-lg">
           {/* Background image */}
@@ -61,8 +61,8 @@ export default function Hero() {
             }}
           />
           {/* Overlay content */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent p-6 sm:p-10 flex flex-col justify-end">
-            <span className="text-xs bg-white/10 text-white px-3 py-1 mb-2 self-start backdrop-blur-sm">
+          <div className="absolute inset-0 sm:p-10 flex flex-col justify-end">
+            <span className="text-xs  text-white py-1 mb-2 self-start backdrop-blur-sm">
               {featuredGame.tagText.toUpperCase()}
             </span>
             <h2 className="text-xl sm:text-2xl font-bold mb-2">

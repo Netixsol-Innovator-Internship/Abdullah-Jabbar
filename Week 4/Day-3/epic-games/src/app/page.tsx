@@ -3,6 +3,7 @@ import { GamesOnSale } from "../components/GamesOnSale";
 import FeaturedTitles from "@/components/FeaturedTitles";
 import { TopGames } from "@/components/TopGames";
 import { MoreGames } from "@/components/MoreGames";
+import { FreeGames } from "@/components/FreeGames";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
       <Hero />
       <GamesOnSale heading="Sale" />
       <MoreGames />
+      <FreeGames/>
       <TopGames />
 
       <MoreGames />
