@@ -127,7 +127,7 @@ export function GamesOnSale({ heading }: { heading: string }) {
   };
 
   return (
-    <section className="py-1">
+    <section className=" px-4 xl-px-0 py-1">
       <div className=" mx-auto px-4 md:px-0">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
