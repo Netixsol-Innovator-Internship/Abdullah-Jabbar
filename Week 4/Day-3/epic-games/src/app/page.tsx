@@ -4,10 +4,12 @@ import FeaturedTitles from "@/components/FeaturedTitles";
 import { TopGames } from "@/components/TopGames";
 import { MoreGames } from "@/components/MoreGames";
 import { FreeGames } from "@/components/FreeGames";
+import SearchNav from "@/components/SearchNav";
 
 export default function HomePage() {
   return (
-    <div className="space-y-4 pb-8 max-w-270 mx-auto bg-zinc-900 ">
+    <div className="space-y-0 pb-8 max-w-270 mx-auto bg-zinc-900 ">
+      <SearchNav/>
       <Hero />
       <GamesOnSale heading="Sale" />
       <MoreGames />

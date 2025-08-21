@@ -41,7 +41,7 @@ const games: Game[] = [
 const FeaturedTitles: React.FC = () => {
   return (
     // The main container with a dark background and a radial gradient
-    <section className="relative text-white  py-10 px-4 sm:px-6 lg:px-8 flex items-center justify-center overflow-hidden">
+    <section className="relative text-white  py-10 px-4 sm:px-6 md:px-0 flex items-center justify-center overflow-hidden">
       {/* Absolute positioned gradient for the background effect */}
 
       {/* The content container to center everything and add padding */}

@@ -22,7 +22,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="w-full mx-auto max-w-360 sticky top-0 z-40 bg-[#202020] text-white ">
+    <header className="w-full mx-auto max-w-360 sticky top-0 z-40 bg-[#313131] text-white ">
       <div className=" mx-auto flex justify-between h-12 px-4 md:pr-0">
         <div className='flex gap-4'>
         {/* Logo */}

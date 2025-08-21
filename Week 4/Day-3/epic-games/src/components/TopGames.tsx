@@ -119,7 +119,7 @@ type GameListProps = {
 
 function GameList({ title, games, buttonText }: GameListProps) {
   return (
-    <div className="rounded-lg p-6">
+    <div className="rounded-lg p-y6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white text-xl font-bold">{title}</h3>
         <Button
