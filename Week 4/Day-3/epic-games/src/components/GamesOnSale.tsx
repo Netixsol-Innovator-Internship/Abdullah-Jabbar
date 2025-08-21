@@ -93,11 +93,11 @@ const saleGames = [
   },
 ];
 
-export function GamesOnSale() {
+export function GamesOnSale({ heading }: { heading: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(5);
 
-  // ✅ Adjust itemsPerView based on screen size
+  // Adjust itemsPerView based on screen size
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
@@ -127,11 +127,11 @@ export function GamesOnSale() {
   };
 
   return (
-    <section className="py-8">
+    <section className="py-1">
       <div className=" mx-auto px-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-white text-2xl font-bold">Games on Sale ›</h2>
+          <h2 className="text-white text-2xl font-bold">Games on {heading} ›</h2>
           <div className="flex space-x-2">
             <Button
               

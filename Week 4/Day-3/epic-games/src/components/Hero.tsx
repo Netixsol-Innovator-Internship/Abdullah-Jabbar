@@ -46,7 +46,7 @@ export default function Hero() {
   const [featuredGame, setFeaturedGame] = useState(gameList[0]);
 
   return (
-    <div className="bg-zinc-900 text-white py-2 font-sans antialiased flex items-center justify-center">
+    <div className="bg-zinc-900 text-white py-2 font-sans antialiased flex items-center justify-center ">
       <div className="w-full flex flex-col md:flex-row gap-6 p-4 rounded-3xl shadow-2xl">
         {/* Main featured game section */}
         <div className="relative w-full rounded-xl overflow-hidden shadow-lg">

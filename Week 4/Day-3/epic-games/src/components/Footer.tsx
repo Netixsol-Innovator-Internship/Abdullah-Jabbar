@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="bg-[#202020] text-gray-400 font-inter text-sm max-w-360 mx-auto p-8 ">
       <div className=" w-full mx-auto ">
         {/* Top section: Social icons and back to top */}
-        <div className="flex justify-between items-start border-b border-gray-700 pb-8 mb-8">
+        <div className="flex justify-between items-start border-gray-700 mb-6">
           {/* Social icons */}
           <div className="flex space-x-4">
             <Link href="#">
