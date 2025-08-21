@@ -38,7 +38,7 @@ const moreGames: Game[] = [
 
 export function MoreGames() {
   return (
-    <section className="w-full py-6">
+    <section className=" px-6 w-full py-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {moreGames.map((game) => (
           <div
