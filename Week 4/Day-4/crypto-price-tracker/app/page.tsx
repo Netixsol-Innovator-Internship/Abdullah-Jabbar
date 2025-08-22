@@ -22,9 +22,9 @@ export default function HomePage() {
         <CoinList />
       </Suspense>
 
-      <p className="text-xs text-gray-500" aria-live="polite">
+      {/* <p className="text-xs text-gray-500" aria-live="polite">
         Data auto-refresh time is configurable in Settings.
-      </p>
+      </p> */}
     </section>
   );
 }

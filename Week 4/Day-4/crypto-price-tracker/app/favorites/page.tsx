@@ -25,7 +25,7 @@ export default function FavoritesPage() {
 
   return (
     <section className="space-y-4">
-      <h1 className="text-2xl font-semibold">Favorites</h1>
+      <h1 className="text-2xl font-semibold dark:text-white">Favorites</h1>
       {isLoading && <Spinner label="Loading favorites..." />}
       {isError && <ErrorFallback onRetry={refetch} />}
       {!isLoading && !isError && favorites.length === 0 && (

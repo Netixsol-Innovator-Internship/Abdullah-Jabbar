@@ -91,7 +91,7 @@ function CoinCardBase({ coin }: { coin: Coin }) {
         <div className="flex items-baseline justify-between">
           <p className="text-xl font-semibold dark:text-white">
             {coin.current_price != null
-              ? `${symbol}${coin.current_price.toLocaleString()}`
+              ? `${symbol} ${coin.current_price.toLocaleString()}`
               : "—"}
           </p>
           <p className={`text-sm ${up ? "text-green-600" : "text-red-600"}`}>

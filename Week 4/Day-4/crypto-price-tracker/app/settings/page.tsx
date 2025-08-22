@@ -10,22 +10,22 @@ export default function SettingsPage() {
 
   return (
     <section className="space-y-6 max-w-xl">
-      <h1 className="text-2xl font-semibold">Settings</h1>
+      <h1 className="text-2xl font-semibold dark:text-white">Settings</h1>
 
       <div className="space-y-2">
-        <label className="block text-sm font-medium">Currency</label>
+        <label className="block text-sm font-medium dark:text-white">Currency</label>
         <select
           aria-label="Currency"
           value={currency}
           onChange={(e) => dispatch(setCurrency(e.target.value as any))}
-          className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-2"
+          className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-300 dark:bg-gray-200 p-2"
         >
           <option value="usd">USD</option>
           <option value="eur">EUR</option>
           <option value="gbp">GBP</option>
           <option value="pkr">PKR</option>
         </select>
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-gray-500 dark:text-gray-300">
           Applies across lists and charts where supported.
         </p>
       </div>
