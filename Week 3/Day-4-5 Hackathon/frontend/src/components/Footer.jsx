@@ -5,7 +5,7 @@ export default function Footer() {
     
         <div className="flex flex-col sm:flex-col-2 md:flex-row ">
           {/* Left Section */}
-          <div className="w-full md:w-1/2 flex flex-col sm:flex-row mb-6 md:mb-0 ">
+          <div className="w-full md:w-1/2 flex flex-col-2 sm:flex-row mb-6 md:mb-0 ">
             {/* Block 1 */}
             <div className="w-full sm:w-1/2 mb-6 sm:mb-0 ">
               <h3 className="text-lg font-medium mb-4 uppercase">Collections</h3>
