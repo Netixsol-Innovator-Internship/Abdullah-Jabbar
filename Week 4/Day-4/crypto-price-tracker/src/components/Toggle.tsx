@@ -18,7 +18,7 @@ export default function Toggle({ ariaLabel = "Toggle theme" }: { ariaLabel?: str
   return (
     <button
       aria-label={ariaLabel}
-      className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 text-sm"
+      className="px-3 py-1.5 rounded-lg border border-gray-700 dark:border-gray-200 dark:text-white text-sm "
       onClick={() => {
         const now = !dark;
         setDark(now);

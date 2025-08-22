@@ -30,7 +30,7 @@ export default function SettingsPage() {
         </p>
       </div>
 
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <label className="block text-sm font-medium">Coins per page</label>
         <input
           type="number"
@@ -42,9 +42,9 @@ export default function SettingsPage() {
           className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-2"
         />
         <p className="text-xs text-gray-500">Affects Home list pagination.</p>
-      </div>
+      </div> */}
 
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <label className="block text-sm font-medium">
           Polling interval (ms)
         </label>
@@ -62,7 +62,7 @@ export default function SettingsPage() {
         <p className="text-xs text-gray-500">
           RTK Query refetch interval for market data.
         </p>
-      </div>
+      </div> */}
     </section>
   );
 }

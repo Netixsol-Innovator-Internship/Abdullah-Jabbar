@@ -12,8 +12,8 @@ export default function HomePage() {
   return (
     <section className="space-y-4">
       <header className="flex flex-col sm:flex-row sm:items-center gap-3">
-        <h1 className="text-2xl font-semibold">Top Coins</h1>
-        <p className="text-sm text-gray-500">
+        <h1 className="text-2xl font-semibold dark:text-white">Top Coins</h1>
+        <p className="text-sm text-gray-400 dark:text-gray-300">
           Currency: {currency.toUpperCase()}
         </p>
       </header>

@@ -23,10 +23,10 @@ export default function NavBar() {
             <li key={l.href}>
               <Link
                 href={l.href}
-                className={`px-3 py-1.5 rounded-lg text-sm border transition
+                className={`px-3 py-1.5 rounded-lg text-sm border transition dark:text-white
                 ${active
-                  ? "border-indigo-500 text-indigo-700 dark:text-indigo-300"
-                  : "border-transparent hover:border-gray-300 dark:hover:border-gray-700"}`}
+                  ? "border-indigo-500 text-indigo-700 dark:text-indigo-400"
+                  : "border-transparent hover:border-gray-300  dark:hover:border-gray-700"}`}
                 aria-current={active ? "page" : undefined}
               >
                 {l.label}

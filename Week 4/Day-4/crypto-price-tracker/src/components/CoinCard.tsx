@@ -42,11 +42,13 @@ function CoinCardBase({ coin }: { coin: Coin }) {
   return (
     <div
       ref={ref}
-      className=" p-4 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-3 bg-white dark:bg-gray-900 hover:scale-105"
+      className=" p-4 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-3 bg-slate-100 dark:bg-gray-900 hover:scale-[1.03] transition-all ease-in-out duration-200"
     >
-      <a href={`/coin/${coin.id}`}>
+     
         <div className="flex items-center justify-between gap-3">
+          <a href={`/coin/${coin.id}`}>
           <div className="flex items-center gap-3">
+             
             <Image
               src={coin.image || "/icons/placeholder-coin.png"}
               alt={`${coin.name} logo`}
@@ -57,7 +59,7 @@ function CoinCardBase({ coin }: { coin: Coin }) {
             <div>
               <a
                 href={`/coin/${coin.id}`}
-                className="font-medium hover:underline"
+                className="font-medium hover:underline dark:text-white"
               >
                 {coin.name}
               </a>
@@ -65,14 +67,16 @@ function CoinCardBase({ coin }: { coin: Coin }) {
                 {coin.symbol?.toUpperCase()}
               </p>
             </div>
+            
           </div>
+               </a>
           <button
             aria-pressed={isFav}
             aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
-            className={`px-2 py-1 rounded-lg border text-xs ${
+            className={`px-2 py-1 rounded-lg border text-xs dark:text-white ${
               isFav
                 ? "border-yellow-500"
-                : "border-gray-300 dark:border-gray-700"
+                : "border-gray-700 dark:border-gray-300"
             }`}
             onClick={() => {
               dispatch(toggleFavorite(coin.id));
@@ -85,7 +89,7 @@ function CoinCardBase({ coin }: { coin: Coin }) {
         </div>
 
         <div className="flex items-baseline justify-between">
-          <p className="text-xl font-semibold">
+          <p className="text-xl font-semibold dark:text-white">
             {coin.current_price != null
               ? `${symbol}${coin.current_price.toLocaleString()}`
               : "—"}
@@ -115,7 +119,7 @@ function CoinCardBase({ coin }: { coin: Coin }) {
             {toast}
           </div>
         )}
-      </a>
+ 
     </div>
   );
 }
