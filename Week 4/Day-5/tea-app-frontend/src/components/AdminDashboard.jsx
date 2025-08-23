@@ -33,7 +33,7 @@ export default function AdminDashboard() {
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
 
   if (!role || (role !== "admin" && role !== "super-admin")) {
-    return <p className="text-red-500 mx-auto text-3xl">Access Denied</p>;
+    return <p className="py-10 text-red-500 text-center text-3xl ">Access Denied</p>;
   }
 
   // --- Product handlers ---
@@ -361,38 +361,47 @@ export default function AdminDashboard() {
                       )}
                     </td>
                     <td className="py-3 px-6 flex gap-2">
-                      {editingTea?.id === tea._id ? (
-                        <button
-                          onClick={() => handleUpdateTea(editingTea)}
-                          className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
-                        >
-                          Save
-                        </button>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() =>
-                              setEditingTea({
-                                id: tea._id,
-                                name: tea.name,
-                                price: tea.price,
-                              })
-                            }
-                            className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
-                          >
-                            Edit
-                          </button>
-                          {role === "super-admin" && (
-                            <button
-                              onClick={() => handleDeleteTea(tea._id)}
-                              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
-                            >
-                              Delete
-                            </button>
-                          )}
-                        </>
-                      )}
-                    </td>
+  {editingTea?.id === tea._id ? (
+    <>
+      <button
+        onClick={() => handleUpdateTea(editingTea)}
+        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
+      >
+        Save
+      </button>
+      <button
+        onClick={() => setEditingTea(null)}
+        className="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
+      >
+        Cancel
+      </button>
+    </>
+  ) : (
+    <>
+      <button
+        onClick={() =>
+          setEditingTea({
+            id: tea._id,
+            name: tea.name,
+            price: tea.price,
+          })
+        }
+        className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
+      >
+        Edit
+      </button>
+      {role === "super-admin" && (
+        <button
+          onClick={() => handleDeleteTea(tea._id)}
+          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
+        >
+          Delete
+        </button>
+      )}
+    </>
+  )}
+</td>
+
                   </tr>
                 ))}
               </tbody>
