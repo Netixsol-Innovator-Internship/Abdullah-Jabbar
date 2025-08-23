@@ -55,5 +55,5 @@ app.use("/api/auth", authRoutes);
 app.use("/api/teas", teaRoutes);
 app.use("/api/cart", cartRoutes);
 
-const PORT = process.env.PORT || 3010;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
