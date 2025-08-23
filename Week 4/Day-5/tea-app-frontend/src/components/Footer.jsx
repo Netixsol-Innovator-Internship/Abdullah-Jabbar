@@ -1,7 +1,7 @@
 // Footer.jsx
 export default function Footer() {
   return (
-    <footer className="w-full max-w-320 mx-auto bg-[#F5F5F5] text-black py-4 px-4 sm:px-8 md:px-20  ">
+    <footer className="w-full max-w-320 mx-auto bg-[#F5F5F5] text-black py-4 px-4 sm:px-8 md:px-12 lg:px-16  ">
     
         <div className="flex flex-col sm:flex-col-2 md:flex-row ">
           {/* Left Section */}
@@ -57,9 +57,9 @@ export default function Footer() {
           </div>
 
           {/* Right Section */}
-          <div className="w-full md:w-1/2 flex flex-col sm:flex-row">
+          <div className="w-full md:w-1/2 flex flex-col sm:flex-row ">
             {/* Block 3 */}
-            <div className="w-full sm:w-1/2 mb-6 sm:mb-0">
+            <div className=" sm:w-1/2 mb-6 sm:mb-0">
               <h3 className="text-lg font-medium mb-4 uppercase">CUSTOMER SERVICE</h3>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>
@@ -77,7 +77,7 @@ export default function Footer() {
               </ul>
             </div>
             {/* Block 4 */}
-            <div className="w-full sm:w-1/2">
+            <div className="sm:w-1/2">
               <h3 className="text-lg font-medium mb-4 uppercase">CONTACT US</h3>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>

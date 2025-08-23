@@ -24,7 +24,7 @@ export default function Header({ onCartClick }) {
   const role = localStorage.getItem("role"); // get role from localStorage
 
   return (
-    <header className="w-full max-w-320 mx-auto px-4 py-4 sm:px-8 md:px-18 md:py-7.5 flex items-center justify-between relative">
+    <header className="w-full max-w-320 mx-auto px-4 py-4 sm:px-8 md:px-12 lg:px-16 md:py-7.5 flex items-center justify-between relative">
       {/* Left: Logo */}
       <div
         className="flex items-center space-x-2 cursor-pointer"

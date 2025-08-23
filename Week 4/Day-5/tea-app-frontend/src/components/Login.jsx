@@ -40,55 +40,86 @@ export default function Login() {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-2 max-w-sm mx-auto">
-      <h2 className="text-xl font-bold">Login</h2>
+return (
+  <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6"
+    >
+      {/* Heading */}
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-gray-900">Login</h2>
+        <p className="mt-1 text-sm text-gray-500">Enter your credentials below</p>
+      </div>
 
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
-        onChange={handleChange}
-        className="border p-2 w-full"
-        required
-      />
+      {/* Email */}
+      <div>
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Email
+        </label>
+        <input
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full rounded-lg border border-gray-300 bg-gray-50 focus:border-black focus:ring focus:ring-gray-300 p-3 transition"
+          required
+        />
+      </div>
 
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={formData.password}
-        onChange={handleChange}
-        className="border p-2 w-full"
-        required
-      />
+      {/* Password */}
+      <div>
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Password
+        </label>
+        <input
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          value={formData.password}
+          onChange={handleChange}
+          className="w-full rounded-lg border border-gray-300 bg-gray-50 focus:border-black focus:ring focus:ring-gray-300 p-3 transition"
+          required
+        />
+      </div>
 
+      {/* Submit button */}
       <button
         type="submit"
         disabled={isLoading}
-        className="bg-green-500 text-white px-4 py-2 w-full"
+        className="w-full bg-black hover:bg-gray-800 text-white font-semibold py-3 rounded-lg shadow-md transition disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {isLoading ? "Logging in..." : "Login"}
       </button>
 
+      {/* Error message */}
       {error && (
-        <p className="text-red-500">
+        <p className="text-red-500 text-sm text-center">
           {error.data?.message || "Error logging in"}
         </p>
       )}
 
       {/* Sign up link */}
-      <p className="text-sm text-gray-600 text-center mt-3">
+      <p className="text-sm text-gray-600 text-center">
         Not registered yet?{" "}
         <button
           type="button"
           onClick={() => navigate("/signup")}
-          className="text-green-600 hover:underline"
+          className="text-gray-900 font-medium hover:underline"
         >
           Sign up
         </button>
       </p>
     </form>
-  );
+  </div>
+);
+
+
 }

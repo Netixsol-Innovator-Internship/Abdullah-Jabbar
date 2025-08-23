@@ -13,7 +13,7 @@ export default function AdminDashboard() {
   const role = localStorage.getItem("role") || "";
   const mail = localStorage.getItem("email") || "";
   console.log("Mail:", mail);
-  const [activeTab, setActiveTab] = useState("products"); // Tab state
+  const [activeTab, setActiveTab] = useState("users"); // Tab state
 
   const { data: teas, refetch: refetchTeas } = useGetTeasQuery();
   const [createTea] = useCreateTeaMutation();
@@ -26,6 +26,11 @@ export default function AdminDashboard() {
 
   const [newTea, setNewTea] = useState({ name: "", price: "" });
   const [editingTea, setEditingTea] = useState(null);
+
+  // Separate loading states
+  const [loadingBlockId, setLoadingBlockId] = useState(null);
+  const [loadingDeleteId, setLoadingDeleteId] = useState(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState(null);
 
   if (!role || (role !== "admin" && role !== "super-admin")) {
     return <p className="text-red-500 mx-auto text-3xl">Access Denied</p>;
@@ -54,27 +59,21 @@ export default function AdminDashboard() {
 
   // --- User handlers ---
   const handleRoleChange = async (user, newRole) => {
-    // Admin cannot modify admins or super-admins
     if (
       role === "admin" &&
       (user.role === "admin" || user.role === "super-admin")
     ) {
       return;
     }
-
-    // Admin cannot promote anyone to super-admin
     if (role === "admin" && newRole === "super-admin") {
       return alert("Only Super Admin can assign Super Admin role");
     }
-
     await updateUser({ id: user._id, role: newRole });
     refetchUsers();
   };
 
   const handleBlockUser = async (user) => {
-    // Admin can only block/unblock normal users
     if (role === "admin" && user.role !== "user") return;
-
     await updateUser({ id: user._id, blocked: !user.blocked });
     refetchUsers();
   };
@@ -84,6 +83,26 @@ export default function AdminDashboard() {
       return alert("Only Super Admin can delete users");
     await deleteUser(userId);
     refetchUsers();
+  };
+
+  // --- Loading + Confirmation wrappers ---
+  const handleBlockClick = async (user) => {
+    setLoadingBlockId(user._id);
+    try {
+      await handleBlockUser(user);
+    } finally {
+      setLoadingBlockId(null);
+    }
+  };
+
+  const handleDeleteClick = async (userId) => {
+    setLoadingDeleteId(userId);
+    try {
+      await handleDeleteUser(userId);
+    } finally {
+      setLoadingDeleteId(null);
+      setDeleteConfirmId(null);
+    }
   };
 
   // --- Filter users by role ---
@@ -132,6 +151,9 @@ export default function AdminDashboard() {
                   role === "admin" &&
                   (user.role === "admin" || user.role === "super-admin");
 
+                const isBlockLoading = loadingBlockId === user._id;
+                const isDeleteLoading = loadingDeleteId === user._id;
+
                 return (
                   <tr
                     key={user._id}
@@ -144,9 +166,7 @@ export default function AdminDashboard() {
                     <td className="py-3 px-6">
                       <select
                         value={user.role}
-                        onChange={(e) =>
-                          handleRoleChange(user, e.target.value)
-                        }
+                        onChange={(e) => handleRoleChange(user, e.target.value)}
                         disabled={isRowDisabled}
                         className="border rounded px-2 py-1 w-full focus:outline-none focus:ring-2 focus:ring-purple-400 transition disabled:bg-gray-100 disabled:cursor-not-allowed"
                       >
@@ -161,24 +181,34 @@ export default function AdminDashboard() {
                     <td className="py-3 px-6 flex gap-2">
                       {(role === "super-admin" || user.role === "user") && (
                         <button
-                          onClick={() => handleBlockUser(user)}
-                          disabled={isRowDisabled}
-                          className="bg-yellow-400 text-white px-3 py-1 rounded-lg transition transform
+                          onClick={() => handleBlockClick(user)}
+                          disabled={isRowDisabled || isBlockLoading}
+                          className="w-24 bg-yellow-400 text-white px-3 py-1 rounded-lg transition transform
                             hover:bg-yellow-500 hover:scale-105
-                            disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-yellow-400 disabled:hover:scale-100"
+                            disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-yellow-400 disabled:hover:scale-100 flex justify-center items-center"
                         >
-                          {user.blocked ? "Unblock" : "Block"}
+                          {isBlockLoading ? (
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          ) : user.blocked ? (
+                            "Unblock"
+                          ) : (
+                            "Block"
+                          )}
                         </button>
                       )}
                       {role === "super-admin" && (
                         <button
-                          onClick={() => handleDeleteUser(user._id)}
-                          disabled={isRowDisabled}
-                          className="bg-red-500 text-white px-3 py-1 rounded-lg transition transform
+                          onClick={() => setDeleteConfirmId(user._id)}
+                          disabled={isRowDisabled || isDeleteLoading}
+                          className="w-24 bg-red-500 text-white px-3 py-1 rounded-lg transition transform
                             hover:bg-red-600 hover:scale-105
-                            disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-red-500 disabled:hover:scale-100"
+                            disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-red-500 disabled:hover:scale-100 flex justify-center items-center"
                         >
-                          Delete
+                          {isDeleteLoading ? (
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          ) : (
+                            "Delete"
+                          )}
                         </button>
                       )}
                     </td>
@@ -188,9 +218,37 @@ export default function AdminDashboard() {
             </tbody>
           </table>
         </div>
+
+        {/* Delete Confirmation Modal */}
+        {deleteConfirmId && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-80">
+              <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
+              <p className="mb-6">
+                Are you sure you want to delete this user?
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  onClick={() => setDeleteConfirmId(null)}
+                  className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleDeleteClick(deleteConfirmId)}
+                  className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
+
+
 
   return (
     <div className="p-6 bg-gray-50 px-3 sm:px-6 md:px-10 lg:px-15 xl:px-20">
@@ -209,16 +267,7 @@ export default function AdminDashboard() {
 
       {/* Tabs */}
       <div className="flex mb-6 border-b border-gray-300">
-        <button
-          className={`px-4 py-2 -mb-px font-semibold ${
-            activeTab === "products"
-              ? "border-b-2 border-green-500 text-green-600"
-              : "text-gray-600"
-          }`}
-          onClick={() => setActiveTab("products")}
-        >
-          Products
-        </button>
+      
         <button
           className={`px-4 py-2 -mb-px font-semibold ${
             activeTab === "users"
@@ -228,6 +277,16 @@ export default function AdminDashboard() {
           onClick={() => setActiveTab("users")}
         >
           Users
+        </button>
+          <button
+          className={`px-4 py-2 -mb-px font-semibold ${
+            activeTab === "products"
+              ? "border-b-2 border-green-500 text-green-600"
+              : "text-gray-600"
+          }`}
+          onClick={() => setActiveTab("products")}
+        >
+          Products
         </button>
       </div>
 
