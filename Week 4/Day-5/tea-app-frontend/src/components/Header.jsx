@@ -1,26 +1,30 @@
 // src/components/Header.jsx
-
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Header({ onCartClick }) {
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleClick = () => {
     navigate("/products"); // route for collections/accessories/blog/contact
+    setIsMobileMenuOpen(false); // close menu on navigation
   };
 
   const handleClickUser = () => {
     navigate("/login"); // route for user login
+    setIsMobileMenuOpen(false);
   };
 
   const handleClickLogo = () => {
     navigate("/"); // route for logo click
+    setIsMobileMenuOpen(false);
   };
 
   const role = localStorage.getItem("role"); // get role from localStorage
 
   return (
-    <header className="w-full max-w-320 mx-auto px-4 py-4 sm:px-8 md:px-18 md:py-7.5 flex items-center justify-between">
+    <header className="w-full max-w-320 mx-auto px-4 py-4 sm:px-8 md:px-18 md:py-7.5 flex items-center justify-between relative">
       {/* Left: Logo */}
       <div
         className="flex items-center space-x-2 cursor-pointer"
@@ -75,7 +79,10 @@ export default function Header({ onCartClick }) {
       </nav>
 
       {/* Mobile Menu Button - Visible only on mobile */}
-      <button className="md:hidden p-2">
+      <button
+        className="md:hidden p-2"
+        onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+      >
         <svg
           width="24"
           height="24"
@@ -83,10 +90,19 @@ export default function Header({ onCartClick }) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z"
-            fill="#282828"
-          />
+          {isMobileMenuOpen ? (
+            <path
+              d="M18 6L6 18M6 6L18 18"
+              stroke="#282828"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          ) : (
+            <path
+              d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z"
+              fill="#282828"
+            />
+          )}
         </svg>
       </button>
 
@@ -102,7 +118,7 @@ export default function Header({ onCartClick }) {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M16.6 18L10.3 11.7C9.8 12.1 9.225 12.4167 8.575 12.65C7.925 12.8833 7.23333 13 6.5 13C4.68333 13 3.146 12.371 1.888 11.113C0.629333 9.85433 0 8.31667 0 6.5C0 4.68333 0.629333 3.14567 1.888 1.887C3.146 0.629 4.68333 0 6.5 0C8.31667 0 9.85433 0.629 11.113 1.887C12.371 3.14567 13 4.68333 13 6.5C13 7.23333 12.8833 7.925 12.65 8.575C12.4167 9.225 12.1 9.8 11.7 10.3L18 16.6L16.6 18ZM6.5 11C7.75 11 8.81267 10.5627 9.688 9.688C10.5627 8.81267 11 7.75 11 6.5C11 5.25 10.5627 4.18733 9.688 3.312C8.81267 2.43733 7.75 2 6.5 2C5.25 2 4.18733 2.43733 3.312 3.312C2.43733 4.18733 2 5.25 2 6.5C2 7.75 2.43733 8.81267 3.312 9.688C4.18733 10.5627 5.25 11 6.5 11Z"
+              d="M16.6 18L10.3 11.7C9.8 12.1 9.225 12.4167 8.575 12.65C7.925 12.8833 7.23333 13 6.5 13C4.68333 13 3.146 12.371 1.888 11.113C0.629333 9.85433 0 8.31667 0 6.5C0 4.68333 0.629333 3.14567 1.888 1.887C3.146 0.629 4.68333 0 6.5 0C8.31667 0 9.85433 0.629 11.113 1.887C12.371 3.14567 13 4.68333 13 6.5C13 7.23333 12.8833 7.925 12.65 8.575C12.4167 9.225 12.1 9.8 11.7 10.3L18 16.6L16.6 18ZM6.5 11C7.75 11 8.81267 10.5627 9.688 9.688C10.5627 8.81267 11 7.75 11 6.5C11 5.25 10.5627 4.18733 9.688 3.312C8.81267 2.43733 7.75 2 6.5 2C5.25 2 4.18733 2.43733 3.312 3.312C2.43733 4.18733 2 5.25 2 6.5C2 7.75 2.43733 8.81267 3.312 9.688C4.18733 10.5623 5.25 11 6.5 11Z"
               fill="#282828"
             />
           </svg>
@@ -140,12 +156,49 @@ export default function Header({ onCartClick }) {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M2 21C1.45 21 0.979 20.8043 0.587 20.413C0.195667 20.021 0 19.55 0 19V7C0 6.45 0.195667 5.97933 0.587 5.588C0.979 5.196 1.45 5 2 5H4C4 3.61667 4.48767 2.43733 5.463 1.462C6.43767 0.487333 7.61667 0 9 0C10.3833 0 11.5627 0.487333 12.538 1.462C13.5127 2.43733 14 3.61667 14 5H16C16.55 5 17.021 5.196 17.413 5.588C17.8043 5.97933 18 6.45 18 7V19C18 19.55 17.8043 20.021 17.413 20.413C17.021 20.8043 16.55 21 16 21H2ZM2 19H16V7H2V19ZM9 13C10.3833 13 11.5627 12.5123 12.538 11.537C13.5127 10.5623 14 9.38333 14 8H12C12 8.83333 11.7083 9.54167 11.125 10.125C10.5417 10.7083 9.83333 11 9 11C8.16667 11 7.45833 10.7083 6.875 10.125C6.29167 9.54167 6 8.83333 6 8H4C4 9.38333 4.48767 10.5623 5.463 11.537C6.43767 12.5123 7.61667 13 9 13ZM6 5H12C12 4.16667 11.7083 3.45833 11.125 2.875C10.5417 2.29167 9.83333 2 9 2C8.16667 2 7.45833 2.29167 6.875 2.875C6.29167 3.45833 6 4.16667 6 5Z"
+              d="M2 21C1.45 21 0.979 20.8043 0.587 20.413C0.195667 20.021 0 19.55 0 19V7C0 6.45 0.195667 5.97933 0.587 5.588C0.979 5.196 1.45 5 2 5H4C4 3.61667 4.48767 2.43733 5.463 1.462C6.43767 0.487333 7.61667 0 9 0C10.3833 0 11.5627 0.487333 12.538 1.462C13.5127 2.43733 14 3.61667 14 5H16C16.55 5 17.021 5.196 17.413 5.588C17.8043 5.97933 18 6.45 18 7V19C18 19.55 17.8043 20.021 17.413 20.413C17.021 20.8043 16.55 21 16 21H2ZM2 19H16V7H2V19ZM9 13C10.3833 13 11.5627 12.5123 12.538 11.537C13.5127 10.5623 14 9.38333 14 8H12C12 8.83333 11.7083 9.54167 11.125 10.125C10.5417 10.7083 9.83333 11 9 11C8.16667 11 7.45833 10.70833 6.875 10.125C6.29167 9.54167 6 8.83333 6 8H4C4 9.38333 4.48767 10.5623 5.463 11.537C6.43767 12.5123 7.61667 13 9 13ZM6 5H12C12 4.16667 11.7083 3.45833 11.125 2.875C10.5417 2.29167 9.83333 2 9 2C8.16667 2 7.45833 2.29167 6.875 2.875C6.29167 3.45833 6 4.16667 6 5Z"
               fill="#282828"
             />
           </svg>
         </button>
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      {isMobileMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-white border-t border-gray-200 flex flex-col p-4 space-y-4 md:hidden z-50">
+          <button onClick={handleClick} className="text-left hover:underline">
+            TEA COLLECTIONS
+          </button>
+          <button onClick={handleClick} className="text-left hover:underline">
+            ACCESSORIES
+          </button>
+          <button onClick={handleClick} className="text-left hover:underline">
+            BLOG
+          </button>
+          <button onClick={handleClick} className="text-left hover:underline">
+            CONTACT US
+          </button>
+
+          {(role === "admin" || role === "super-admin") && (
+            <button
+              onClick={() => {
+                navigate("/admin");
+                setIsMobileMenuOpen(false);
+              }}
+              className="text-left hover:underline"
+            >
+              DASHBOARD
+            </button>
+          )}
+
+          <button
+            onClick={handleClickUser}
+            className="text-left hover:underline"
+          >
+            LOGIN
+          </button>
+        </div>
+      )}
     </header>
   );
 }
