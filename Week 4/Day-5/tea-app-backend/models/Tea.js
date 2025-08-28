@@ -15,12 +15,12 @@ const teaSchema = new mongoose.Schema(
         "Rooibos",
         "Tisane",
       ],
-      required: true,
+      required: false,
     },
     origin: {
       type: [String],
       enum: ["India", "Japan", "Sri Lanka", "South Africa","Iran"],
-      required: true,
+      required: false,
     },
     flavour: {
       type: [String],
@@ -46,7 +46,7 @@ const teaSchema = new mongoose.Schema(
     caffeine: {
       type: String,
       enum: ["No Caffeine", "Low Caffeine", "Medium Caffeine", "High Caffeine"],
-      required: true,
+      required: false,
     },
     allergens: {
       type: [String],
@@ -56,7 +56,7 @@ const teaSchema = new mongoose.Schema(
     organic: {
       type: String,
       enum: ["Yes", "No"],
-      required: true,
+      required: false,
     },
     name: { type: String, required: true },
     description: String,

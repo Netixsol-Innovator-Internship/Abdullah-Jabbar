@@ -22,15 +22,15 @@ exports.getTeas = async (req, res) => {
 };
 
 // Get tea by ID
-exports.getTeaById = async (req, res) => {
-  try {
-    const tea = await Tea.findById(req.params.id);
-    if (!tea) return res.status(404).json({ error: "Tea not found" });
-    res.json(tea);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+  exports.getTeaById = async (req, res) => {
+    try {
+      const tea = await Tea.findById(req.params.id);
+      if (!tea) return res.status(404).json({ error: "Tea not found" });
+      res.json(tea);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
 
 // Update tea
 exports.updateTea = async (req, res) => {

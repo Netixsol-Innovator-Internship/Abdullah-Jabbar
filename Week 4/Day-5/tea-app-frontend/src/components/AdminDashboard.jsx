@@ -33,7 +33,9 @@ export default function AdminDashboard() {
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
 
   if (!role || (role !== "admin" && role !== "super-admin")) {
-    return <p className="py-10 text-red-500 text-center text-3xl ">Access Denied</p>;
+    return (
+      <p className="py-10 text-red-500 text-center text-3xl ">Access Denied</p>
+    );
   }
 
   // --- Product handlers ---
@@ -51,10 +53,23 @@ export default function AdminDashboard() {
   };
 
   const handleDeleteTea = async (id) => {
-    if (role !== "super-admin")
+    if (role !== "super-admin") {
       return alert("Only Super Admin can delete products");
-    await deleteTea(id);
-    refetchTeas();
+    }
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await deleteTea(id); // your API call
+      refetchTeas(); // refresh the tea list
+      alert("Product deleted successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete product: " + err.message);
+    }
   };
 
   // --- User handlers ---
@@ -117,15 +132,15 @@ export default function AdminDashboard() {
       tableRole === "super-admin"
         ? "from-red-400 to-red-600"
         : tableRole === "admin"
-        ? "from-blue-400 to-blue-600"
-        : "from-purple-400 to-purple-600";
+          ? "from-blue-400 to-blue-600"
+          : "from-purple-400 to-purple-600";
 
     const title =
       tableRole === "super-admin"
         ? "Super Admins"
         : tableRole === "admin"
-        ? "Admins"
-        : "Users";
+          ? "Admins"
+          : "Users";
 
     return (
       <div key={tableRole} className="mb-6">
@@ -175,9 +190,7 @@ export default function AdminDashboard() {
                         <option value="super-admin">Super Admin</option>
                       </select>
                     </td>
-                    <td className="py-3 px-6">
-                      {user.blocked ? "Yes" : "No"}
-                    </td>
+                    <td className="py-3 px-6">{user.blocked ? "Yes" : "No"}</td>
                     <td className="py-3 px-6 flex gap-2">
                       {(role === "super-admin" || user.role === "user") && (
                         <button
@@ -224,9 +237,7 @@ export default function AdminDashboard() {
           <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg p-6 w-80">
               <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
-              <p className="mb-6">
-                Are you sure you want to delete this user?
-              </p>
+              <p className="mb-6">Are you sure you want to delete this user?</p>
               <div className="flex justify-end gap-3">
                 <button
                   onClick={() => setDeleteConfirmId(null)}
@@ -248,8 +259,6 @@ export default function AdminDashboard() {
     );
   };
 
-
-
   return (
     <div className="p-6 bg-gray-50 px-3 sm:px-6 md:px-10 lg:px-15 xl:px-20">
       <div className="flex justify-between items-center mb-6">
@@ -267,7 +276,6 @@ export default function AdminDashboard() {
 
       {/* Tabs */}
       <div className="flex mb-6 border-b border-gray-300">
-      
         <button
           className={`px-4 py-2 -mb-px font-semibold ${
             activeTab === "users"
@@ -278,7 +286,7 @@ export default function AdminDashboard() {
         >
           Users
         </button>
-          <button
+        <button
           className={`px-4 py-2 -mb-px font-semibold ${
             activeTab === "products"
               ? "border-b-2 border-green-500 text-green-600"
@@ -328,10 +336,13 @@ export default function AdminDashboard() {
                     key={tea._id}
                     className="border-b hover:bg-gray-100 transition-colors duration-200"
                   >
+                    {/* Name */}
                     <td className="py-3 px-6">
                       {editingTea?.id === tea._id ? (
                         <input
+                          type="text"
                           value={editingTea.name}
+                          maxLength={100} // ✅ enforce max 100 chars
                           onChange={(e) =>
                             setEditingTea({
                               ...editingTea,
@@ -344,64 +355,80 @@ export default function AdminDashboard() {
                         tea.name
                       )}
                     </td>
+
+                    {/* Price */}
                     <td className="py-3 px-6">
                       {editingTea?.id === tea._id ? (
                         <input
+                          type="number"
+                          max="1000" // ✅ enforce UI max = 1000
+                          step="0.01" // ✅ allow decimals
                           value={editingTea.price}
-                          onChange={(e) =>
+                          onChange={(e) => {
+                            let value = parseFloat(e.target.value);
+                            if (!isNaN(value)) {
+                              // ✅ round to 2 decimals
+                              value = parseFloat(value.toFixed(2));
+                              // ✅ enforce max 1000
+                              if (value > 1000) value = 1000;
+                              if (value < 0) value = 0; // optional: prevent negative values
+                            }
                             setEditingTea({
                               ...editingTea,
-                              price: e.target.value,
-                            })
-                          }
+                              price: isNaN(value) ? "" : value,
+                            });
+                          }}
                           className="border rounded px-2 py-1 w-full focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                         />
                       ) : (
-                        tea.price
+                        parseFloat(tea.price).toFixed(2) // ✅ show 2 decimals
                       )}
                     </td>
-                    <td className="py-3 px-6 flex gap-2">
-  {editingTea?.id === tea._id ? (
-    <>
-      <button
-        onClick={() => handleUpdateTea(editingTea)}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
-      >
-        Save
-      </button>
-      <button
-        onClick={() => setEditingTea(null)}
-        className="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
-      >
-        Cancel
-      </button>
-    </>
-  ) : (
-    <>
-      <button
-        onClick={() =>
-          setEditingTea({
-            id: tea._id,
-            name: tea.name,
-            price: tea.price,
-          })
-        }
-        className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
-      >
-        Edit
-      </button>
-      {role === "super-admin" && (
-        <button
-          onClick={() => handleDeleteTea(tea._id)}
-          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
-        >
-          Delete
-        </button>
-      )}
-    </>
-  )}
-</td>
 
+                    {/* Actions */}
+                    <td className="py-3 px-6 flex gap-2">
+                      {editingTea?.id === tea._id ? (
+                        <>
+                          <button
+                            onClick={() => handleUpdateTea(editingTea)}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => setEditingTea(null)}
+                            className="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() =>
+                              setEditingTea({
+                                id: tea._id,
+                                name: tea.name,
+                                price: tea.price,
+                              })
+                            }
+                            className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
+                          >
+                            Edit
+                          </button>
+
+                          {/* Delete button only for super-admin */}
+                          {role === "super-admin" && (
+                            <button
+                              onClick={() => handleDeleteTea(tea._id)}
+                              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition transform hover:scale-105"
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -1,3 +1,4 @@
+// app.module.js
 import { Module } from '@nestjs/common';
 import { CommentsGateway } from './comments.gateway';
 

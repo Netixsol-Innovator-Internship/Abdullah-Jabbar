@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { Toaster, toast } from "sonner"; // ✅ added for toast
+import { Toaster, toast } from "sonner";
 
 // Define the Comment type that matches what backend sends
 type Comment = {
@@ -11,7 +11,8 @@ type Comment = {
   date: string;
 };
 
-const socket = io("http://localhost:4000"); // Connect to backend
+ const socket = io("https://week5-day1-backend-production.up.railway.app/"); // Connect to backend
+// const socket = io("https://abdullah-week5-day1-backend.vercel.app/");
 
 export default function Home() {
   const [comment, setComment] = useState("");
@@ -29,7 +30,7 @@ export default function Home() {
       setComments((prev) => [newComment, ...prev]);
       setNotification("New comment received!");
 
-      // ✅ Replace inline notification with toast
+      
       toast.success("New comment received!", { duration: 1000 });
 
       setTimeout(() => setNotification(""), 1000);

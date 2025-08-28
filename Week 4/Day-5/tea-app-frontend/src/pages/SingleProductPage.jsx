@@ -7,7 +7,7 @@ import Recommended from "../components/Recommended";
 
 
 
-
+  
 
 export default function SingleProductPage() {
   return (

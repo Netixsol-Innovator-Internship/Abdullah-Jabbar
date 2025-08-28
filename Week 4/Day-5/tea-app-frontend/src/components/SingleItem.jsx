@@ -1,24 +1,39 @@
-// SingleItem.jsx
-import React, { useState } from "react";
-// import { useParams } from "react-router-dom";
-import items from "./itemsData"; // adjust path if needed
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import Variants from "./Variants";
 import QunatityAdd from "./QuantityAdd";
 import CartModal from "./CartModal";
 
 const SingleItem = () => {
-  // const { id } = useParams();
-  const id = 3;
-  const product = items[id];
-
+  const { key } = useParams(); // ✅ get id from URL
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [cartItems, setCartItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  if (!product) {
-    return <p>Product not found</p>;
-  }
+  console.log("id from singleItem ", key);
 
+  // fetch single product by id
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await axios.get(`http://localhost:4000/api/teas/${key}`);
+        console.log("res from singleItem ", res);
+        setProduct(res.data);
+      } catch (err) {
+        console.log("Error fetching product:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [key]);
+
+  if (loading) return <p>Loading...</p>;
+  console.log("product from singleItem ", product);
+  if (!product) return <p>Product not found</p>;
   /**
    * parsePrice(value)
    * - Converts various price formats to a plain number.
@@ -50,7 +65,15 @@ const SingleItem = () => {
       if (existing) {
         // If item exists, only increase quantity (price is already stored on the item)
         return prev.map((p) =>
-          p.id === productId ? { ...p, quantity: (Number.isFinite(Number(p.quantity)) ? Number(p.quantity) : 0) + Number(quantity) } : p
+          p.id === productId
+            ? {
+                ...p,
+                quantity:
+                  (Number.isFinite(Number(p.quantity))
+                    ? Number(p.quantity)
+                    : 0) + Number(quantity),
+              }
+            : p
         );
       }
       // Add a new item with numeric price and the selected quantity
@@ -129,7 +152,7 @@ const SingleItem = () => {
                   />
                 </svg>
 
-                {product.isOrganic && (
+                {product.organic && (
                   <span className=" px-3 py-1 rounded">Organic</span>
                 )}
               </div>
@@ -162,7 +185,11 @@ const SingleItem = () => {
                 <Variants />
               </div>
             </div>
-            <QunatityAdd quantity={quantity} setQuantity={setQuantity} onAddToBag={handleAddToBag} />
+            <QunatityAdd
+              quantity={quantity}
+              setQuantity={setQuantity}
+              onAddToBag={handleAddToBag}
+            />
           </div>
         </div>
       </div>
