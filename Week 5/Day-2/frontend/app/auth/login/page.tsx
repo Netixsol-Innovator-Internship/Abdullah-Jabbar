@@ -1,43 +1,71 @@
 "use client";
+
 import React, { useState } from "react";
 import API from "../../../lib/api";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    const res = await API.post("/auth/login", { email, password });
-    console.log(res.data);
-    alert("Login successful!");
-    localStorage.setItem("accessToken", res.data.accessToken);
-    router.push("/");
+    setError(""); // Clear previous errors
+    try {
+      const res = await API.post("/auth/login", { email, password });
+      console.log(res.data);
+      alert("Login successful!");
+      localStorage.setItem("accessToken", res.data.accessToken);
+      router.push("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError("Login failed. Please check your credentials.");
+    }
   }
 
   return (
-    <div className="max-w-md mx-auto mt-20">
-      <h1 className="text-xl font-semibold mb-4">Login</h1>
-      <form onSubmit={submit} className="space-y-3">
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          className="w-full p-2 border rounded"
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          type="password"
-          className="w-full p-2 border rounded"
-        />
-        <button className="px-4 py-2 bg-blue-600 text-white rounded">
-          Login
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Welcome Back</h1>
+        <p className="text-center text-gray-600 mb-6">Sign in to your account</p>
+        
+        <form onSubmit={submit} className="space-y-5">
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            type="email"
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+          />
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            type="password"
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+          />
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition duration-200"
+          >
+            Login
+          </button>
+        </form>
+
+        <div className="mt-6 text-center text-gray-600">
+          <p>Don't have an account? 
+            <Link href="/auth/register" className="text-blue-600 font-semibold hover:underline ml-1">
+              Sign Up
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Backend base URL
-// const baseUrl = "https://week4-day5-tea-app-backend.vercel.app/api";
+const baseUrl = "https://week4-day5-tea-app-backend.vercel.app/api";
 
-const baseUrl = "http://localhost:4000/api";
+// const baseUrl = "http://localhost:4000/api";
 
 export const api = createApi({
   reducerPath: "api",

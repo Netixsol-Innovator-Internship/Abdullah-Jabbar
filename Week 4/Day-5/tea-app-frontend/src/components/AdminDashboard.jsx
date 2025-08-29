@@ -304,12 +304,20 @@ export default function AdminDashboard() {
           <div className="mb-6 flex gap-3">
             <input
               placeholder="Name"
+             maxLength={100} // ✅ enforce max 100 chars
+              type="text"
               value={newTea.name}
+              required
               onChange={(e) => setNewTea({ ...newTea, name: e.target.value })}
               className="border rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 transition"
             />
             <input
               placeholder="Price"
+              required
+              type="number"
+              min="2.00"
+              max="1000.00"
+              step="0.01"
               value={newTea.price}
               onChange={(e) => setNewTea({ ...newTea, price: e.target.value })}
               className="border rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 transition"

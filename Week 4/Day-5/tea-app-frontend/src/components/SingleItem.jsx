@@ -19,7 +19,9 @@ const SingleItem = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/teas/${key}`);
+        const res = await axios.get(
+          `https://week4-day5-tea-app-backend.vercel.app/api/teas/${key}`
+        );
         console.log("res from singleItem ", res);
         setProduct(res.data);
       } catch (err) {
