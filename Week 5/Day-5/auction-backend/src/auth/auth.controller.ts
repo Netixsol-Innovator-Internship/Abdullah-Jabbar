@@ -4,12 +4,15 @@ import {
   Body,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 import { UserDocument } from '../users/schemas/user.schema';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -18,17 +21,16 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
     const validatedUser = await this.authService.validateUser(
-      loginDto.username,
+      loginDto.identifier,
       loginDto.password,
     );
     if (!validatedUser) {
-      throw new HttpException(
-        'Invalid username or password',
-        HttpStatus.UNAUTHORIZED,
-      );
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    const user = await this.authService.findUserByUsername(loginDto.username);
+    const user = await this.authService.findUserByIdentifier(
+      loginDto.identifier,
+    );
     if (!user) {
       throw new HttpException(
         'User not found',
@@ -47,9 +49,11 @@ export class AuthController {
         registerDto.username,
         registerDto.email,
         registerDto.password,
+        registerDto.fullName,
+        registerDto.mobileNumber,
       );
       // After registration, get the full user document for login
-      const fullUser = await this.authService.findUserByUsername(
+      const fullUser = await this.authService.findUserByIdentifier(
         registerDto.username,
       );
       if (!fullUser) {

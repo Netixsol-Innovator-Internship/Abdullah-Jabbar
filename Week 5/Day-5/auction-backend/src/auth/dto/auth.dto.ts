@@ -2,7 +2,7 @@ import { IsString, IsEmail, MinLength } from 'class-validator';
 
 export class LoginDto {
   @IsString()
-  username: string;
+  identifier: string; // This can be either username or email
 
   @IsString()
   @MinLength(6)
@@ -15,6 +15,12 @@ export class RegisterDto {
 
   @IsEmail()
   email: string;
+
+  @IsString()
+  fullName: string;
+
+  @IsString()
+  mobileNumber: string;
 
   @IsString()
   @MinLength(6)

@@ -11,16 +11,24 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<boolean> {
-    const user = await this.usersService.findByUsername(username);
+  async validateUser(identifier: string, password: string): Promise<boolean> {
+    const user = await this.findUserByIdentifier(identifier);
     if (user && (await bcrypt.compare(password, user.passwordHash))) {
       return true;
     }
     return false;
   }
 
-  async findUserByUsername(username: string): Promise<UserDocument | null> {
-    return this.usersService.findByUsername(username);
+  async findUserByIdentifier(identifier: string): Promise<UserDocument | null> {
+    // Try finding by username first
+    let user = await this.usersService.findByUsername(identifier);
+
+    // If not found by username, try email
+    if (!user) {
+      user = await this.usersService.findByEmail(identifier);
+    }
+
+    return user;
   }
 
   async login(user: UserDocument) {
@@ -28,6 +36,7 @@ export class AuthService {
       username: user.username,
       sub: user._id,
       email: user.email,
+      fullName: user.fullName,
     };
     return {
       access_token: this.jwtService.sign(payload),
@@ -35,6 +44,8 @@ export class AuthService {
         id: user._id,
         username: user.username,
         email: user.email,
+        fullName: user.fullName,
+        mobileNumber: user.mobileNumber,
       },
     };
   }
@@ -43,6 +54,8 @@ export class AuthService {
     username: string,
     email: string,
     password: string,
+    fullName: string,
+    mobileNumber: string,
   ): Promise<UserDocument> {
     // Check if user already exists
     const existingUser = await this.usersService.findByUsername(username);
@@ -60,6 +73,8 @@ export class AuthService {
     const userData = {
       username,
       email,
+      fullName,
+      mobileNumber,
       passwordHash: hashedPassword,
     } as UserDocument;
 

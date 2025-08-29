@@ -14,6 +14,12 @@ export class User extends Document {
   @Prop({ required: true })
   passwordHash: string;
 
+  @Prop({ required: true })
+  fullName: string;
+
+  @Prop({ required: true, unique: true })
+  mobileNumber: string;
+
   @Prop()
   profilePicture?: string;
 }

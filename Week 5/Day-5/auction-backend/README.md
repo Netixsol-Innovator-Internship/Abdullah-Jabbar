@@ -9,6 +9,8 @@ Content-Type: application/json
 {
   "username": "string",
   "email": "string",
+  "fullName": "string",
+  "mobileNumber": "string",
   "password": "string (min 6 characters)"
 }
 ```
@@ -21,6 +23,8 @@ Content-Type: application/json
 {
   "username": "johndoe",
   "email": "john@example.com",
+  "fullName": "John Doe",
+  "mobileNumber": "+1234567890",
   "password": "secure123password"
 }
 ```
@@ -30,7 +34,7 @@ POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
-  "username": "string",
+  "identifier": "string", // can be username or email
   "password": "string"
 }
 ```
@@ -41,7 +45,7 @@ POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
-  "username": "johndoe",
+  "identifier": "johndoe",  // or "john@example.com"
   "password": "secure123password"
 }
 ```
