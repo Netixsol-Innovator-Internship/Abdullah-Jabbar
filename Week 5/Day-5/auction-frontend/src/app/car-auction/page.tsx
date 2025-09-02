@@ -1,13 +1,33 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { HeroSection } from "@/components/hero-section";
+import { AuctionListingCard } from "@/components/auction-listing-card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 
-import { HeroSection } from "@/components/hero-section"
-import { AuctionListingCard } from "@/components/auction-listing-card"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
+type AuctionItem = {
+  id: string;
+  name: string;
+  image?: string;
+  price?: string;
+  totalBids?: number;
+  timeLeft?: Record<string, number>;
+  endTime?: string;
+  rating?: number;
+  description?: string;
+  status?: string | null;
+};
 
 export default function CarAuctionPage() {
-  const auctions = [
+  const [auctions, setAuctions] = useState<AuctionItem[]>(() => [
     {
       id: "1",
       name: "Kia Carnival",
@@ -138,7 +158,30 @@ export default function CarAuctionPage() {
         "Lorem ipsum dolor sit amet consectetur. Velit amet aenean sed nunc. Malesuada dignissim viverra praesent aenean nulla mattiszzxzxzxz....",
       status: "trending" as const,
     },
-  ]
+  ]);
+
+  // On mount, load user-created auctions saved to localStorage and prepend them
+  // This keeps the static demo list but shows newly posted items first.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("auctions");
+      if (!raw) return;
+      const saved = JSON.parse(raw) as AuctionItem[];
+      if (Array.isArray(saved) && saved.length) {
+        setAuctions((prev) => [...saved, ...prev]);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const isTimeLeft = (
+    t: unknown
+  ): t is { days: number; hours: number; minutes: number; seconds: number } => {
+    return (
+      !!t && typeof t === "object" && "days" in (t as Record<string, unknown>)
+    );
+  };
 
   return (
     <>
@@ -172,9 +215,37 @@ export default function CarAuctionPage() {
             </div>
 
             <div className="space-y-6">
-              {auctions.map((car) => (
-                <AuctionListingCard key={car.id} {...car} />
-              ))}
+              {auctions.map((car) => {
+                const statusAllowed =
+                  car.status &&
+                  ["trending", "ending", "new"].includes(String(car.status))
+                    ? (car.status as "trending" | "ending" | "new")
+                    : null;
+                return (
+                  <AuctionListingCard
+                    key={car.id}
+                    id={car.id}
+                    name={car.name}
+                    image={car.image ?? "/placeholder.svg"}
+                    price={car.price ?? "$0"}
+                    totalBids={car.totalBids ?? 0}
+                    timeLeft={{
+                      days: isTimeLeft(car.timeLeft) ? car.timeLeft.days : 0,
+                      hours: isTimeLeft(car.timeLeft) ? car.timeLeft.hours : 0,
+                      minutes: isTimeLeft(car.timeLeft)
+                        ? car.timeLeft.minutes
+                        : 0,
+                      seconds: isTimeLeft(car.timeLeft)
+                        ? car.timeLeft.seconds
+                        : 0,
+                    }}
+                    endTime={car.endTime ?? ""}
+                    rating={car.rating ?? 0}
+                    description={car.description ?? ""}
+                    status={statusAllowed}
+                  />
+                );
+              })}
             </div>
 
             {/* Pagination */}
@@ -284,16 +355,25 @@ export default function CarAuctionPage() {
                 {/* Price Range Slider */}
                 <div className="space-y-3">
                   <div className="w-full">
-                    <Slider defaultValue={[50]} max={100} step={1} className="w-full" />
+                    <Slider
+                      defaultValue={[50]}
+                      max={100}
+                      step={1}
+                      className="w-full"
+                    />
                   </div>
-                  <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">Filter</Button>
-                  <div className="text-center text-sm text-gray-600">Price: $50,000 - $80,000</div>
+                  <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                    Filter
+                  </Button>
+                  <div className="text-center text-sm text-gray-600">
+                    Price: $50,000 - $80,000
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
         </div>
       </div>
-   </>
-  )
+    </>
+  );
 }

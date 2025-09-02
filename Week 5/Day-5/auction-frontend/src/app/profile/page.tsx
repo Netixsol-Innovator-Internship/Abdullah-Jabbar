@@ -14,9 +14,38 @@ export default function ProfilePage() {
   >("personal");
 
   // map data to specific tabs just like we did in the example visuals
-  const myCars: Car[] = demoCars.slice(0, 2);
-  const myBids: Car[] = demoCars.slice(0, 3);
-  const wishlist: Car[] = demoCars.slice(2); // demo: rest of cars
+  // load any user-created cars from localStorage (key: myCars)
+  const [myCars, setMyCars] = useState<Car[]>(() => demoCars.slice(0, 2));
+  const [myBids] = useState<Car[]>(demoCars.slice(0, 3));
+  const [wishlist] = useState<Car[]>(demoCars.slice(2)); // demo: rest of cars
+
+  // hydrate myCars from localStorage on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("myCars");
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Car[];
+      if (Array.isArray(parsed) && parsed.length) {
+        // merge with demo: place user cars first but dedupe by id
+        const seen = new Set<string>();
+        const normalizeId = (v: unknown) => (v == null ? "" : String(v));
+        const uniqueParsed: Car[] = [];
+        for (const c of parsed) {
+          const id = normalizeId((c as Car).id);
+          if (!seen.has(id)) {
+            seen.add(id);
+            uniqueParsed.push(c);
+          }
+        }
+        setMyCars((prev) => {
+          const filteredPrev = prev.filter((p) => !seen.has(normalizeId(p.id)));
+          return [...uniqueParsed, ...filteredPrev];
+        });
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   // read user from localStorage (expected shape: { id, username, email, fullName, mobileNumber })
   type StoredUser = {
@@ -35,8 +64,8 @@ export default function ProfilePage() {
       const parsed = JSON.parse(raw);
       // some code stores an object like { user: { ... } } under the same key; handle both
       const u =
-        parsed && typeof parsed === "object" && "user" in (parsed as any)
-          ? (parsed as any).user
+        parsed && typeof parsed === "object" && "user" in parsed
+          ? (parsed.user as Record<string, unknown>)
           : parsed;
       setUser(u ?? null);
     } catch {
