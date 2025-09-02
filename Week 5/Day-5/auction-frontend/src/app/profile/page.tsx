@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Edit } from "lucide-react";
 
 import { HeroSection } from "@/components/hero-section";
@@ -17,6 +17,32 @@ export default function ProfilePage() {
   const myCars: Car[] = demoCars.slice(0, 2);
   const myBids: Car[] = demoCars.slice(0, 3);
   const wishlist: Car[] = demoCars.slice(2); // demo: rest of cars
+
+  // read user from localStorage (expected shape: { id, username, email, fullName, mobileNumber })
+  type StoredUser = {
+    id?: string;
+    username?: string;
+    email?: string;
+    fullName?: string;
+    mobileNumber?: string;
+  } | null;
+  const [user, setUser] = useState<StoredUser>(null);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("user");
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      // some code stores an object like { user: { ... } } under the same key; handle both
+      const u =
+        parsed && typeof parsed === "object" && "user" in (parsed as any)
+          ? (parsed as any).user
+          : parsed;
+      setUser(u ?? null);
+    } catch {
+      setUser(null);
+    }
+  }, []);
 
   const handleAction = (car: Car) => {
     // placeholder - wire up modals / API calls here
@@ -43,7 +69,7 @@ export default function ProfilePage() {
             <div className="lg:col-span-3 space-y-6">
               {active === "personal" && (
                 <>
-                  {/* Personal Information (kept as-is) */}
+                  {/* Personal Information */}
                   <div className="bg-white rounded-lg shadow-sm border">
                     <div className="bg-[#4A5FBF] text-white p-4 rounded-t-lg flex items-center justify-between">
                       <h2 className="text-lg font-semibold">
@@ -55,7 +81,7 @@ export default function ProfilePage() {
                       <div className="flex items-start gap-6">
                         <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-200">
                           <img
-                            src="/professional-headshot.png"
+                            src=""
                             alt="Profile"
                             className="w-full h-full object-cover"
                           />
@@ -65,19 +91,27 @@ export default function ProfilePage() {
                             <label className="block text-sm font-medium text-gray-600 mb-1">
                               Full Name
                             </label>
-                            <p className="text-gray-900">Manish Sharma</p>
+                            <p className="text-gray-900">
+                              {user?.fullName ??
+                                user?.username ??
+                                "Manish Sharma"}
+                            </p>
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-600 mb-1">
                               Email
                             </label>
-                            <p className="text-gray-900">manish@example.com</p>
+                            <p className="text-gray-900">
+                              {user?.email ?? "manish@example.com"}
+                            </p>
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-600 mb-1">
                               Mobile Number
                             </label>
-                            <p className="text-gray-900">1234567890</p>
+                            <p className="text-gray-900">
+                              {user?.mobileNumber ?? "1234567890"}
+                            </p>
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -101,8 +135,6 @@ export default function ProfilePage() {
                       </div>
                     </div>
                   </div>
-
-                  {/* other personal sections omitted for brevity (password, address, traffic) - keep your earlier code here */}
                 </>
               )}
 
@@ -171,6 +203,6 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-  </>
+    </>
   );
 }
