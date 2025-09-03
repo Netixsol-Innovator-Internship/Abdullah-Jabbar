@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, Heart } from "lucide-react"
+import { Star} from "lucide-react"
 import Link from "next/link"
 
 export interface AuctionListingCardProps {
@@ -73,7 +73,7 @@ export function AuctionListingCard({
         <div className="w-72 p-4 border-l border-gray-100 flex flex-col">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xl font-bold text-gray-900">{price}</span>
-            <Heart className="w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer" />
+            <Star className="w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer" />
           </div>
 
           <div className="text-sm text-gray-600 mb-4">

@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, Heart } from "lucide-react"
+import { Star } from "lucide-react"
 import Link from "next/link"
 
 export interface CarCardProps {
@@ -41,7 +41,7 @@ export function CarCard({ id, name, image, price, currentBid, timeRemaining, sta
             {status}
           </Badge>
         )}
-        <Heart className="absolute top-2 right-2 z-10 w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer" />
+        <Star className="absolute top-2 right-2 z-10 w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer" />
         <img src={image || "/placeholder.svg"} alt={name} className="w-full  object-cover" />
       </div>
 

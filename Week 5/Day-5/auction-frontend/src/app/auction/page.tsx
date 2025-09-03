@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Star, Heart } from "lucide-react"
+import { Star} from "lucide-react"
 import Link from "next/link"
 
 export default function AuctionPage() {
@@ -133,7 +133,7 @@ export default function AuctionPage() {
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-2">
                           <h3 className="text-xl font-semibold">{auction.name}</h3>
-                          <Heart className="w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer" />
+                          <Star className="w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer" />
                         </div>
 
                         <div className="flex items-center gap-1 mb-3">
