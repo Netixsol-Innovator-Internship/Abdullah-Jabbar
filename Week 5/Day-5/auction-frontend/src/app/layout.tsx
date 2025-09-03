@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="max-w-360 mx-auto">
         <div className="flex flex-col">
           <Header />
           <Navigation />
