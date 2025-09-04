@@ -20,7 +20,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     description:
       "This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.",
     images: [
-      "/placeholder.svg?height=400&width=400",
+      "/onelife.png",
       "/placeholder.svg?height=400&width=400",
       "/placeholder.svg?height=400&width=400",
     ],
@@ -77,7 +77,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     {
       id: "1",
       name: "Polo with Contrast Trims",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/shop/10.png",
       price: 212,
       originalPrice: 242,
       rating: 4.0,
@@ -87,7 +87,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     {
       id: "2",
       name: "Gradient Graphic T-shirt",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/shop/1.png",
       price: 145,
       rating: 3.5,
       reviewCount: 67,
@@ -95,7 +95,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     {
       id: "3",
       name: "Polo with Tipping Details",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/shop/2.png",
       price: 180,
       rating: 4.5,
       reviewCount: 89,
@@ -103,7 +103,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     {
       id: "4",
       name: "Black Striped T-shirt",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/shop/3.png",
       price: 120,
       originalPrice: 160,
       rating: 5.0,

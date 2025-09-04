@@ -1,3 +1,4 @@
+// ReviewsSlider.tsx
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -164,12 +165,13 @@ export default function ReviewsSlider() {
 
   return (
     <section
-      className="py-16 "
+      className="py-16"
       aria-label="Customer testimonials carousel"
       onKeyDown={onKeyDown}
     >
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-10">
+        {/* Header with buttons */}
+        <div className="flex items-center justify-between mb-10 relative z-20">
           <h2 className="text-3xl font-extrabold tracking-tight text-black">
             OUR HAPPY CUSTOMERS
           </h2>
@@ -199,6 +201,7 @@ export default function ReviewsSlider() {
           </div>
         </div>
 
+        {/* Carousel */}
         <div
           className="relative"
           onMouseEnter={pause}
@@ -206,12 +209,13 @@ export default function ReviewsSlider() {
           onFocus={pause}
           onBlur={resume}
         >
+          {/* Track */}
           <div
             ref={trackRef}
             role="list"
             aria-live="polite"
-            className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 pl-6 pr-6 lg:pl-12 lg:pr-12 xl:pl-28 xl:pr-28
-                       select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
+            className="relative z-0 flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 px-6 lg:px-12 xl:px-28
+          select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
             onPointerDown={(e) => {
               (e.target as HTMLElement).setPointerCapture(e.pointerId);
               startDrag(e.clientX);
@@ -229,8 +233,10 @@ export default function ReviewsSlider() {
                 role="listitem"
                 aria-label={`Testimonial ${i + 1} of ${testimonials.length}`}
                 tabIndex={0}
-                className="snap-center shrink-0 w-[85%] sm:w-[48%] md:w-[33.333%] lg:w-[20%] xl:w-[18%] bg-white p-6 rounded-xl border border-gray-200 shadow-sm
-                           transition-shadow hover:shadow-md focus-within:shadow-md"
+                className="snap-center shrink-0 
+              w-[85%] sm:w-[60%] md:w-[45%] lg:w-[30%] 
+              bg-white p-6 rounded-xl border border-gray-200 shadow-sm
+              transition-shadow hover:shadow-md focus-within:shadow-md"
               >
                 <div
                   className="flex items-center gap-1 mb-3"
@@ -255,8 +261,18 @@ export default function ReviewsSlider() {
             ))}
           </div>
 
+          {/* blur overlays */}
+          <div
+            className="pointer-events-none absolute left-0 top-0 h-full 
+                w-16 sm:w-20 md:w-28 lg:w-32 bg-white/70 z-10"
+          />
+          <div
+            className="pointer-events-none absolute right-0 top-0 h-full 
+                w-16 sm:w-20 md:w-28 lg:w-32 bg-white/70 z-10"
+          />
+
           {/* Progress dots */}
-          <div className="flex justify-center gap-2 mt-4">
+          <div className="flex justify-center gap-2 mt-4 relative z-20">
             {Array.from({
               length: Math.max(testimonials.length - visibleCount + 1, 1),
             }).map((_, dot) => {
