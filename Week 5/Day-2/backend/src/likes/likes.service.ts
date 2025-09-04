@@ -2,10 +2,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Schema } from 'mongoose';
-import {
-  NotificationService,
-  NotificationType,
-} from '../notification/notification.service';
+// import {
+//   NotificationService,
+//   NotificationType,
+// } from '../notification/notification.service'; // Disabled for Vercel
 import { Comment, CommentDocument } from '../comment/schemas/comment.schema';
 
 const LikeSchema = new Schema({
@@ -20,7 +20,7 @@ export class LikesService {
   constructor(
     @InjectModel('Like') private likeModel: Model<any>,
     @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
-    private notifications: NotificationService,
+    // private notifications: NotificationService, // Disabled for Vercel
   ) {}
 
   async like(userId: string, commentId: string) {
@@ -35,12 +35,12 @@ export class LikesService {
       const comment = await this.commentModel.findById(commentId).lean();
 
       if (comment && comment.author && comment.author.toString() !== userId) {
-        await this.notifications.createForUser(comment.author.toString(), {
-          type: NotificationType.Like,
-          actorId: userId,
-          commentId,
-          postId: comment.postId,
-        });
+        // await this.notifications.createForUser(comment.author.toString(), {
+        //   type: NotificationType.Like,
+        //   actorId: userId,
+        //   commentId,
+        //   postId: comment.postId,
+        // }); // Disabled for Vercel
       }
 
       return { liked: true };

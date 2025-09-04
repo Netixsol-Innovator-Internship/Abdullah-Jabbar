@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useSocket } from "./socket-provider";
+import { useAuth } from "./auth-context";
+import Image from "next/image";
 
 type Tab = "feed" | "profile" | "notifications";
 
@@ -11,6 +13,7 @@ interface NavbarProps {
 
 export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   const socket = useSocket();
+  const { user, logout } = useAuth();
   const [badge, setBadge] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -62,9 +65,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
         setMenuOpen(false);
       }}
       className={`relative transition-colors border-b-2 ${
-        mobile
-          ? "block w-full text-left px-3 py-2 rounded-lg"
-          : "pb-1"
+        mobile ? "block w-full text-left px-3 py-2 rounded-lg" : "pb-1"
       } ${
         activeTab === tab
           ? "text-blue-600 font-semibold border-blue-600"
@@ -101,6 +102,18 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
           />
         </div>
 
+        {/* User info and logout for desktop */}
+        <div className="hidden md:flex items-center space-x-4">
+          <span className="text-gray-700">Welcome, {user?.username}</span>
+          <button
+            onClick={logout}
+            className=" text-red-600 hover:text-red-500 hover:bg-red-50 rounded"
+            aria-label="Logout"
+          >
+            <Image src="/logout.svg" alt="Logout" width={38} height={28} />
+          </button>
+        </div>
+
         {/* Mobile Hamburger */}
         <div className="md:hidden flex items-center">
           <button
@@ -134,6 +147,13 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
       >
         <div className="px-4 pb-4 space-y-2 bg-white border-t">
           {tabs.map((t) => navButton(t.key, t.label, true))}
+          <button
+            onClick={logout}
+            className="block w-full text-left px-1 rounded-lg text-red-600 hover:text-red-500 hover:bg-red-50"
+            aria-label="Logout"
+          >
+            <img src="/logout.svg" alt="Logout" className="size-14" />
+          </button>
         </div>
       </div>
     </nav>

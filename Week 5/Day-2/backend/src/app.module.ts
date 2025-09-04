@@ -10,7 +10,6 @@ import { UserModule } from './user/user.module';
 import { FollowersModule } from './followers/followers.module';
 import { CommentModule } from './comment/comment.module';
 import { LikesModule } from './likes/likes.module';
-import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -47,7 +46,6 @@ import { NotificationModule } from './notification/notification.module';
     FollowersModule,
     CommentModule,
     LikesModule,
-    NotificationModule,
   ],
 })
 export class AppModule {

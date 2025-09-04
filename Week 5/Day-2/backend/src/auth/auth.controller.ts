@@ -5,6 +5,8 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  BadRequestException,
+  UnauthorizedException,
   // UsePipes,
   // ValidationPipe,
 } from '@nestjs/common';
@@ -21,13 +23,13 @@ export class AuthController {
     private users: UserService,
   ) {}
 
-  @Post('register') 
+  @Post('register')
   async register(@Body() dto: RegisterDto) {
     // hash password
     console.log('register route hit');
     const existing = await this.users.findByEmail(dto.email);
     if (existing) {
-      return { error: 'Email already used' };
+      throw new BadRequestException('Email already used');
     }
     const passwordHash = await bcrypt.hash(dto.password, 10);
     const user = await this.users.create({
@@ -44,9 +46,9 @@ export class AuthController {
   @Post('login')
   async login(@Body() dto: LoginDto) {
     const user = await this.users.findByEmail(dto.email);
-    if (!user) throw new Error('Invalid credentials');
+    if (!user) throw new UnauthorizedException('Invalid credentials');
     const valid = await bcrypt.compare(dto.password, user.passwordHash);
-    if (!valid) throw new Error('Invalid credentials');
+    if (!valid) throw new UnauthorizedException('Invalid credentials');
     return this.authService.login(user);
   }
 }

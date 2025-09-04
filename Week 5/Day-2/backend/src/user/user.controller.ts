@@ -14,7 +14,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as multer from 'multer';
-import { diskStorage } from 'multer';
+import { memoryStorage } from 'multer'; // Changed to memory storage for Vercel
 import { v4 as uuidv4 } from 'uuid';
 
 @Controller('users')
@@ -47,21 +47,16 @@ export class UserController {
   @Post('me/upload')
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: diskStorage({
-        destination: process.env.UPLOAD_DIR || './uploads',
-        filename: (req, file, cb) => {
-          const id = uuidv4();
-          const ext = file.originalname.split('.').pop();
-          cb(null, `${id}.${ext}`);
-        },
-      }),
+      storage: memoryStorage(), // Changed to memory storage for Vercel
     }),
   )
   async uploadProfile(
     @CurrentUser() user: any,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    const url = file.filename; // ideally serve static folder or S3
+    // For Vercel, files are in memory; in production, upload to cloud storage
+    const filename = `${uuidv4()}.${file.originalname.split('.').pop()}`;
+    const url = `/uploads/${filename}`; // Placeholder URL; implement cloud upload
     return this.users.updateProfile(user.userId, { profilePicture: url });
   }
 }

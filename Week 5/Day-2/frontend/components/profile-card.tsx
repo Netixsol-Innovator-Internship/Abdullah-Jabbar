@@ -29,6 +29,11 @@ export default function ProfileCard({ user }: ProfileCardProps) {
   const [showFollowingModal, setShowFollowingModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
+  // Local followers list copy for modal operations
+  const [followersList, setFollowersList] = useState<User[] | undefined>(
+    user?.followersList ?? []
+  );
+
   // Editable fields
   const [editBio, setEditBio] = useState(user?.bio ?? "");
   const [editProfilePicture, setEditProfilePicture] = useState(
@@ -50,7 +55,9 @@ export default function ProfileCard({ user }: ProfileCardProps) {
       );
     };
     socket.on("follow.changed", onFollowChanged);
-    return () => socket.off("follow.changed", onFollowChanged);
+    return () => {
+      socket.off("follow.changed", onFollowChanged);
+    };
   }, [socket, user?._id]);
 
   if (!user) return null;
@@ -133,9 +140,13 @@ export default function ProfileCard({ user }: ProfileCardProps) {
         </div>
 
         {/* Bio */}
-        {user.bio && (
-          <p className="mt-4 text-gray-500 px-4 md:px-0">{user.bio}</p>
-        )}
+        <p className="mt-4 text-gray-500 px-4 md:px-0">
+          {user.bio && user.bio.toString().trim() ? (
+            user.bio
+          ) : (
+            <span className="text-gray-400">No bio yet.</span>
+          )}
+        </p>
       </div>
 
       {/* Edit Modal */}
@@ -191,7 +202,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
           <div className="bg-white rounded-2xl w-full max-w-md p-6">
             <h3 className="text-2xl font-semibold mb-4">Followers</h3>
             <div className="space-y-3 max-h-80 overflow-y-auto">
-              {(user.followersList ?? []).map((f) => (
+              {(followersList ?? []).map((f) => (
                 <div
                   key={f._id}
                   className="flex items-center justify-between gap-3"
@@ -214,13 +225,11 @@ export default function ProfileCard({ user }: ProfileCardProps) {
                   </div>
                   <button
                     onClick={() => {
-                      // Toggle removal (or mark for removal)
-                      setUser((prev) => ({
-                        ...prev,
-                        followersList: prev.followersList?.filter(
-                          (u) => u._id !== f._id
-                        ),
-                      }));
+                      // Remove follower locally
+                      setFollowersList((prev) =>
+                        prev?.filter((u) => u._id !== f._id)
+                      );
+                      setFollowersCount((c) => Math.max(0, c - 1));
                     }}
                     className="px-3 py-1 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
                   >

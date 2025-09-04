@@ -10,7 +10,10 @@ import {
 import { JWT_CONSTANTS } from '../shared/constants';
 
 @WebSocketGateway({
-  cors: { origin: process.env.CORS_ORIGIN || 'http://localhost:3000' },
+  cors: {
+    origin: '*',
+    credentials: true,
+  },
   path: '/ws',
 })
 export class NotificationGateway

@@ -2,7 +2,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+  baseURL:
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://abdullah-wwek5-day23-backend.vercel.app",
+  withCredentials: true, // Send cookies with requests
 });
 
 // Attach token automatically
@@ -136,7 +139,7 @@ export const getUserByUsername = async (username: string) => {
   return res.data;
 };
 
-export const updateMe = async (data: any) => {
+export const updateMe = async (data: { username?: string; bio?: string }) => {
   const res = await API.put("/users/me", data);
   return res.data;
 };

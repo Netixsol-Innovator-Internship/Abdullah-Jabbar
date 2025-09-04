@@ -113,8 +113,8 @@ export default function SellYourCarPage() {
       const token = getToken();
       const parsed = parseJwt(token ?? undefined);
       const getStringField = (
-        obj?: Record<string, unknown>,
-        keys: string[]
+        keys: string[],
+        obj?: Record<string, unknown>
       ) => {
         if (!obj) return undefined;
         for (const k of keys) {
@@ -123,11 +123,10 @@ export default function SellYourCarPage() {
         }
         return undefined;
       };
-      const sellerId = getStringField(parsed ?? undefined, [
-        "sub",
-        "id",
-        "_id",
-      ]);
+      const sellerId = getStringField(
+        ["sub", "id", "_id"],
+        parsed ?? undefined
+      );
 
       type CreatePayload = {
         sellerId?: string | undefined;

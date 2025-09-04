@@ -168,7 +168,17 @@ export default function CarAuctionPage() {
       if (!raw) return;
       const saved = JSON.parse(raw) as AuctionItem[];
       if (Array.isArray(saved) && saved.length) {
-        setAuctions((prev) => [...saved, ...prev]);
+        setAuctions((prev) => {
+          // Merge saved auctions with the default list and dedupe by id
+          const merged = [...saved, ...prev];
+          const seen = new Set<string>();
+          return merged.filter((auction) => {
+            if (!auction || !auction.id) return false;
+            if (seen.has(auction.id)) return false;
+            seen.add(auction.id);
+            return true;
+          });
+        });
       }
     } catch {
       // ignore

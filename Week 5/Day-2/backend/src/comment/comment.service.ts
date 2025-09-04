@@ -3,14 +3,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Comment } from './schemas/comment.schema';
-import { NotificationService } from '../notification/notification.service';
-import { NotificationType } from '../notification/notification.service';
+// import { NotificationService } from '../notification/notification.service'; // Disabled for Vercel
+// import { NotificationType } from '../notification/notification.service'; // Disabled for Vercel
 
 @Injectable()
 export class CommentService {
   constructor(
     @InjectModel(Comment.name) private commentModel: Model<Comment>,
-    private notifications: NotificationService,
+    // private notifications: NotificationService, // Disabled for Vercel
   ) {}
 
   async createParent(authorId: string, postId: string, text: string) {
@@ -20,12 +20,12 @@ export class CommentService {
       text,
     });
     // broadcast notification (created) via notification service
-    await this.notifications.createBroadcast({
-      type: NotificationType.Comment,
-      actorId: authorId,
-      postId,
-      commentId: created._id.toString(),
-    });
+    // await this.notifications.createBroadcast({
+    //   type: NotificationType.Comment,
+    //   actorId: authorId,
+    //   postId,
+    //   commentId: created._id.toString(),
+    // }); // Disabled for Vercel
     return created;
   }
 
@@ -48,12 +48,12 @@ export class CommentService {
     // notify original comment author
     const parent = await this.commentModel.findById(parentCommentId).lean();
     if (parent && parent.author.toString() !== authorId) {
-      await this.notifications.createForUser(parent.author.toString(), {
-        type: NotificationType.Reply,
-        actorId: authorId,
-        postId,
-        commentId: parentCommentId,
-      });
+      // await this.notifications.createForUser(parent.author.toString(), {
+      //   type: NotificationType.Reply,
+      //   actorId: authorId,
+      //   postId,
+      //   commentId: parentCommentId,
+      // }); // Disabled for Vercel
     }
     return reply;
   }

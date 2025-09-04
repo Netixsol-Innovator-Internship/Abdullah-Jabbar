@@ -1,39 +1,69 @@
 "use client";
 
 import React, { useState } from "react";
-import API from "../../../lib/api";
-import { useRouter } from "next/navigation";
+import { register } from "../../../lib/api";
+import { useAuth } from "../../../components/auth-context";
 import Link from "next/link";
 
 export default function RegisterPage() {
-  const router = useRouter();
+  const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [bio, setBio] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function submit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError(""); // Clear previous errors
+    setError("");
+    setLoading(true);
+
     try {
-      const res = await API.post("/auth/register", { username, email, password });
-      console.log(res.data);
+      const response = await register({
+        username,
+        email,
+        password,
+        bio: bio.trim() || undefined,
+      });
+
+      console.log("Registration successful:", response);
       alert("Registration successful!");
-      localStorage.setItem("accessToken", res.data.accessToken);
-      router.push("/");
-    } catch (err) {
+
+      // After successful registration, login the user
+      await login(email, password);
+    } catch (err: unknown) {
       console.error("Registration failed:", err);
-      setError("Registration failed. Please try again.");
+
+      let errorMessage = "Registration failed. Please try again.";
+
+      // Handle axios error response
+      if (err && typeof err === "object" && "response" in err) {
+        const axiosError = err as { response: { data: { message: string } } };
+        if (axiosError.response?.data?.message) {
+          errorMessage = axiosError.response.data.message;
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Create an Account</h1>
-        <p className="text-center text-gray-600 mb-6">Get started with your new account</p>
-        
-        <form onSubmit={submit} className="space-y-5">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Create an Account
+        </h1>
+        <p className="text-center text-gray-600 mb-6">
+          Get started with your new account
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -58,18 +88,30 @@ export default function RegisterPage() {
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
           />
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            placeholder="Bio (optional)"
+            rows={3}
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"
+          />
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition duration-200"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Register
+            {loading ? "Creating Account..." : "Register"}
           </button>
         </form>
 
         <div className="mt-6 text-center text-gray-600">
-          <p>Already have an account? 
-            <Link href="/auth/login" className="text-blue-600 font-semibold hover:underline ml-1">
+          <p>
+            Already have an account?
+            <Link
+              href="/auth/login"
+              className="text-blue-600 font-semibold hover:underline ml-1"
+            >
               Log in
             </Link>
           </p>

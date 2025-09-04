@@ -1,29 +1,74 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CommentCard from "./comment-card";
-import API from "../lib/api";
+import { createComment, getCommentsForPost } from "../lib/api";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import { useSocket } from "./socket-provider";
 
 interface CommentItem {
-  _id: string | number;
-  author: { _id: string | number; username: string; profilePicture?: string };
+  _id: string;
+  author: { _id: string; username: string; profilePicture?: string };
   text: string;
   createdAt: string;
   likesCount?: number;
   repliesCount?: number;
   isLiked?: boolean;
+  postId?: string;
 }
 
 interface FeedProps {
+  postId?: string; // Optional post ID for specific post comments
   initialComments?: CommentItem[];
   currentUser: { _id: string; username: string; profilePicture?: string };
 }
 
-export default function Feed({ initialComments = [], currentUser }: FeedProps) {
+export default function Feed({
+  initialComments = [],
+  currentUser,
+  postId = "demo-post-1",
+}: FeedProps) {
   const [comments, setComments] = useState<CommentItem[]>(initialComments);
   const [newComment, setNewComment] = useState("");
   const [sending, setSending] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const socket = useSocket();
+
+  // Fetch comments for the post on component mount
+  useEffect(() => {
+    const loadComments = async () => {
+      if (postId && initialComments.length === 0) {
+        setLoading(true);
+        try {
+          const response = await getCommentsForPost(postId);
+          setComments(response || []);
+        } catch (error) {
+          console.error("Failed to fetch comments:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadComments();
+  }, [postId, initialComments.length]);
+
+  // Listen for real-time comment updates
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleNewComment = (payload: CommentItem) => {
+      if (payload.postId === postId) {
+        setComments((prev) => [payload, ...prev]);
+      }
+    };
+
+    socket.on("comment.created", handleNewComment);
+
+    return () => {
+      socket.off("comment.created", handleNewComment);
+    };
+  }, [socket, postId]);
 
   const handleEmojiClick = (emojiData: EmojiClickData) => {
     const cursorPos =
@@ -63,15 +108,16 @@ export default function Feed({ initialComments = [], currentUser }: FeedProps) {
       likesCount: 0,
       repliesCount: 0,
       isLiked: false,
+      postId,
     };
     setComments((prev) => [tempComment, ...prev]);
     setNewComment("");
 
     try {
-      const res = await API.post("/comments", { text: tempComment.text });
-      if (res?.data?.comment) {
+      const response = await createComment(postId, newComment);
+      if (response?.comment) {
         setComments((prev) =>
-          prev.map((c) => (c._id === tempComment._id ? res.data.comment : c))
+          prev.map((c) => (c._id === tempComment._id ? response.comment : c))
         );
       }
     } catch (err) {
@@ -155,15 +201,27 @@ export default function Feed({ initialComments = [], currentUser }: FeedProps) {
 
       {/* Comments List */}
       <div className="space-y-4">
-        {comments.map((c) => (
-          <CommentCard
-            key={c._id}
-            comment={c}
-            onReplyOpen={(comment) =>
-              console.log("Reply button clicked for:", comment._id)
-            }
-          />
-        ))}
+        {loading ? (
+          <div className="text-center py-4">
+            <p className="text-gray-500">Loading comments...</p>
+          </div>
+        ) : comments.length > 0 ? (
+          comments.map((c) => (
+            <CommentCard
+              key={c._id}
+              comment={c}
+              onReplyOpen={(comment) =>
+                console.log("Reply button clicked for:", comment._id)
+              }
+            />
+          ))
+        ) : (
+          <div className="text-center py-8">
+            <p className="text-gray-500">
+              No comments yet. Be the first to comment!
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
