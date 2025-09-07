@@ -10,13 +10,15 @@ export interface OrderItem {
 
 export interface ShippingAddress {
   fullName: string;
-  addressLine1: string;
+  // Support both `addressLine1` and older `street1` field used in the UI
+  addressLine1?: string;
+  street1?: string;
   addressLine2?: string;
   city: string;
   state: string;
   postalCode: string;
   country: string;
-  phone: string;
+  phone?: string;
 }
 
 export interface Order {
@@ -26,6 +28,7 @@ export interface Order {
   totalAmount: number;
   shippingAddress: ShippingAddress;
   paymentMethod: string;
+  orderNumber?: string;
   paymentStatus: "pending" | "paid" | "failed";
   orderStatus: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   createdAt: string;

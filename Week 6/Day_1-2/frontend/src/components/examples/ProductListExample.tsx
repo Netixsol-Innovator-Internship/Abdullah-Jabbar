@@ -52,7 +52,7 @@ export default function ProductListExample() {
       <h2 className="text-2xl font-bold mb-4">Products</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {productsData?.products.map((product) => (
+        {productsData?.items?.map((product) => (
           <div key={product._id} className="border rounded-lg p-4 shadow-sm">
             {product.imageUrl && (
               <img
@@ -62,7 +62,9 @@ export default function ProductListExample() {
               />
             )}
             <h3 className="font-semibold text-lg">{product.name}</h3>
-            <p className="text-gray-600 mb-2">${product.price.toFixed(2)}</p>
+            <p className="text-gray-600 mb-2">
+              ${((product.price ?? 0) as number).toFixed(2)}
+            </p>
             <button
               onClick={() => handleAddToCart(product._id)}
               disabled={isAddingToCart}
@@ -98,11 +100,14 @@ export default function ProductListExample() {
             Previous
           </button>
           <span className="px-3 py-1">
-            Page {page} of {productsData?.totalPages || 1}
+            Page {page} of {Math.ceil((productsData?.total || 0) / limit) || 1}
           </span>
           <button
             onClick={() => setPage((p) => p + 1)}
-            disabled={!productsData || page >= productsData.totalPages}
+            disabled={
+              !productsData ||
+              page >= Math.ceil((productsData?.total || 0) / limit)
+            }
             className="px-3 py-1 border rounded disabled:opacity-50"
           >
             Next

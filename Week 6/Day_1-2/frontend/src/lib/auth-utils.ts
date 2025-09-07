@@ -27,7 +27,10 @@ export const removeAuthToken = () => {
   }
 };
 
-export const setAuthData = (token: string, userData?: any) => {
+export const setAuthData = (
+  token: string,
+  userData?: Record<string, unknown>
+) => {
   setAuthToken(token);
 
   if (userData && typeof window !== "undefined") {

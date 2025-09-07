@@ -6,11 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Upload, Loader2, ArrowLeft, Save, X } from "lucide-react";
+import { Upload, Loader2, ArrowLeft, Save, X, Trash2 } from "lucide-react";
+import ImageUpload from "@/components/ui/image-upload";
 import {
   useGetProductByIdQuery,
   parsePrice,
   useUpdateProductMutation,
+  useDeleteProductMutation,
   Product,
 } from "@/lib/api/productsApiSlice";
 import { useParams, useRouter } from "next/navigation";
@@ -31,8 +33,7 @@ export default function ProductDetailsPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<Partial<ProductFormData>>({});
   const [tagInput, setTagInput] = useState("");
-  const [colorInput, setColorInput] = useState("");
-  const [sizeInput, setSizeInput] = useState("");
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const {
     data: product,
@@ -41,6 +42,7 @@ export default function ProductDetailsPage() {
   } = useGetProductByIdQuery(productId);
 
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
+  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
   useEffect(() => {
     if (product) {
@@ -102,12 +104,17 @@ export default function ProductDetailsPage() {
         data: updateData,
       }).unwrap();
       setIsEditing(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Log more details for debugging
-      if (error?.data) {
-        console.error("Failed to update product:", error.data);
-      } else if (error?.error) {
-        console.error("Failed to update product:", error.error);
+      const err = error as {
+        data?: { message?: string };
+        error?: string;
+        message?: string;
+      };
+      if (err?.data) {
+        console.error("Failed to update product:", err.data);
+      } else if (err?.error) {
+        console.error("Failed to update product:", err.error);
       } else {
         console.error("Failed to update product:", error);
       }
@@ -126,6 +133,49 @@ export default function ProductDetailsPage() {
       });
     }
     setIsEditing(false);
+  };
+
+  const handleDelete = async () => {
+    if (!showDeleteConfirm) {
+      setShowDeleteConfirm(true);
+      return;
+    }
+
+    try {
+      await deleteProduct(productId).unwrap();
+      // Redirect to products list after successful deletion
+      router.push("/dashboard/products");
+    } catch (error: unknown) {
+      console.error("Failed to delete product:", error);
+      const err = error as { data?: { message?: string }; message?: string };
+      const errorMessage =
+        err?.data?.message ||
+        err?.message ||
+        "Failed to delete product. Please try again.";
+
+      // You can add a toast notification here
+      alert(`Error: ${errorMessage}`);
+    } finally {
+      setShowDeleteConfirm(false);
+    }
+  };
+
+  const handleImagesUploaded = (
+    uploadedImages: { url: string; alt?: string; order?: number }[]
+  ) => {
+    setFormData((prev: Partial<ProductFormData>) => ({
+      ...prev,
+      images: [...(prev.images || []), ...uploadedImages],
+    }));
+  };
+
+  const handleImageRemoved = (imageUrl: string) => {
+    setFormData((prev: Partial<ProductFormData>) => ({
+      ...prev,
+      images: (prev.images || []).filter(
+        (img: { url: string }) => img.url !== imageUrl
+      ),
+    }));
   };
 
   if (isLoading) {
@@ -519,12 +569,21 @@ export default function ProductDetailsPage() {
 
         {/* Right Column - Product Images */}
         <div className="space-y-6">
-          {/* Main Image Display */}
+          {/* Product Images */}
           <Card className="p-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">
               Product Images
             </h3>
-            {product.images && product.images.length > 0 ? (
+            {isEditing ? (
+              <ImageUpload
+                onImagesUploaded={handleImagesUploaded}
+                onImageRemoved={handleImageRemoved}
+                maxImages={10}
+                existingImages={formData.images || []}
+                disabled={isUpdating}
+                productId={productId}
+              />
+            ) : product.images && product.images.length > 0 ? (
               <div className="space-y-4">
                 {/* Main Image */}
                 <div className="aspect-square sm:aspect-square bg-gray-100 rounded-lg overflow-hidden w-full">
@@ -679,9 +738,39 @@ export default function ProductDetailsPage() {
             >
               EDIT
             </Button>
-            <Button variant="destructive" className="w-full sm:w-auto">
-              DELETE
+            <Button
+              variant="destructive"
+              className="w-full sm:w-auto"
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  DELETING...
+                </>
+              ) : showDeleteConfirm ? (
+                <>
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  CONFIRM DELETE?
+                </>
+              ) : (
+                <>
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  DELETE
+                </>
+              )}
             </Button>
+            {showDeleteConfirm && (
+              <Button
+                variant="outline"
+                onClick={() => setShowDeleteConfirm(false)}
+                className="w-full sm:w-auto"
+                disabled={isDeleting}
+              >
+                CANCEL
+              </Button>
+            )}
           </>
         )}
       </div>

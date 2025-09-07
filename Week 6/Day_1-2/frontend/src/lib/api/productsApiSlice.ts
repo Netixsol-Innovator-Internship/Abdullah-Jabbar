@@ -36,6 +36,10 @@ export interface Product {
   metadata?: Record<string, unknown>;
   createdAt?: string;
   updatedAt?: string;
+  // Convenience fields used in UI components (may be derived from other fields)
+  name?: string;
+  imageUrl?: string;
+  price?: number;
 }
 
 // Helper to safely parse price values that may be strings, numbers, or
@@ -150,8 +154,18 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         slug: string;
         shortDescription?: string;
         description?: string;
+        categories?: string[];
         tags?: string[];
+        images?: ProductImage[];
         basePrice?: string;
+        salePrice?: string;
+        currency?: string;
+        stockStatus?: string;
+        ratingAverage?: number;
+        reviewCount?: number;
+        isFeatured?: boolean;
+        isNewArrival?: boolean;
+        isOnSale?: boolean;
       }
     >({
       query: (data) => ({
@@ -178,6 +192,22 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, { id }) => [
         { type: "Product" as const, id },
         { type: "Product" as const, id: "LIST" },
+      ],
+    }),
+
+    deleteProduct: builder.mutation<
+      { success: boolean; message: string },
+      string
+    >({
+      query: (id) => ({
+        url: `/products/id/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, id) => [
+        { type: "Product" as const, id },
+        { type: "Product" as const, id: "LIST" },
+        { type: "Product" as const, id: "FEATURED" },
+        { type: "Product" as const, id: "NEW_ARRIVALS" },
       ],
     }),
 
@@ -239,6 +269,7 @@ export const {
   useGetProductByIdQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
+  useDeleteProductMutation,
   useGetNewArrivalsQuery,
   useGetFeaturedProductsQuery,
 } = productsApiSlice;

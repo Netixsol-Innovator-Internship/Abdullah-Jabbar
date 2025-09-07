@@ -13,7 +13,7 @@ export default function Footer() {
               SHOP.CO
             </Link>
             <p className="text-gray-600 text-sm mb-6">
-              We have clothes that suits your style and which you're proud to
+              We have clothes that suit your style and that you will be proud to
               wear. From women to men.
             </p>
             <div className="flex space-x-4">

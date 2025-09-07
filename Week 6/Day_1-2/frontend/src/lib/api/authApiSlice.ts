@@ -2,29 +2,16 @@ import { apiSlice } from "./apiSlice";
 import { setAuthToken } from "@/lib/auth-utils";
 
 // Types from original authApi.ts
-export interface AuthSuccess {
-  access_token: string;
-}
-
-export interface AuthError {
-  error: string;
-  status?: number;
-}
-
-export interface PreRegisterSuccess {
-  success: true;
-  message: string;
-}
-
-export interface RegisterSuccessAuth extends AuthSuccess {}
-
-export interface ProfileResponse {
+export type AuthSuccess = { access_token: string };
+export type AuthError = { error: string; status?: number };
+export type PreRegisterSuccess = { success: true; message: string };
+export type RegisterSuccessAuth = AuthSuccess;
+export type ProfileResponse = {
   _id?: string;
   email?: string;
   name?: string;
   roles?: string[];
-  [k: string]: unknown;
-}
+} & Record<string, unknown>;
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

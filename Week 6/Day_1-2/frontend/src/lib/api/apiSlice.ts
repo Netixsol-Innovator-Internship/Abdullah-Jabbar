@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getAuthToken } from "@/lib/auth-utils";
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000";
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://abdullah-week6-backend.vercel.app";
 
 export const apiSlice = createApi({
   reducerPath: "api",

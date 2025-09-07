@@ -11,7 +11,7 @@ import { ChevronRight, ChevronUp, SlidersHorizontal } from "lucide-react";
 import { useGetProductsQuery } from "@/lib/api/productsApiSlice";
 
 export default function CasualPage() {
-  const [priceRange, setPriceRange] = useState([50, 200]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([50, 200]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("Most Popular");
@@ -235,7 +235,7 @@ export default function CasualPage() {
                       setPriceRange([
                         priceRange[0],
                         Number.parseInt(e.target.value),
-                      ])
+                      ] as [number, number])
                     }
                     className="w-full"
                   />

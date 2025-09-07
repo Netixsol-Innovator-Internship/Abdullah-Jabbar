@@ -1,9 +1,10 @@
 // authApi.ts
 // Small helper around fetch for auth endpoints.
-// Configure backend base URL via NEXT_PUBLIC_API_BASE_URL (defaults to http://localhost:3000)
+// Configure backend base URL via NEXT_PUBLIC_API_BASE_URL (defaults to deployed backend)
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000";
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://abdullah-week6-backend.vercel.app";
 
 export interface AuthSuccess {
   access_token: string;
@@ -16,7 +17,7 @@ export type AuthResponse = AuthSuccess | AuthError;
 
 async function request<T>(
   path: string,
-  options: RequestInit & { json?: any } = {}
+  options: RequestInit & { json?: Record<string, unknown> } = {}
 ): Promise<T> {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), 15000); // 15s safety timeout
@@ -30,21 +31,36 @@ async function request<T>(
     headers,
     body: options.json ? JSON.stringify(options.json) : options.body,
     signal: controller.signal,
-    credentials: "include", // allows cookie-based auth if added later
+    credentials: "include",
   });
   clearTimeout(id);
 
-  let data: any = null;
+  let data: unknown = null;
   try {
-    data = await res.json();
+    // parse only if response has JSON content-type
+    const contentType = res.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      data = await res.json();
+    }
   } catch {
     /* ignore parse errors */
   }
 
   if (!res.ok) {
+    const parsed = data as Record<string, unknown> | null;
     const msg =
-      data?.error || data?.message || res.statusText || "Request failed";
-    throw Object.assign(new Error(msg), { status: res.status, data });
+      (parsed && (parsed.error as string)) ||
+      (parsed && (parsed.message as string)) ||
+      res.statusText ||
+      "Request failed";
+    type ErrorWithData = Error & {
+      status?: number;
+      data?: Record<string, unknown> | null;
+    };
+    const err: ErrorWithData = new Error(msg);
+    err.status = res.status;
+    err.data = parsed;
+    throw err;
   }
   return data as T;
 }
@@ -66,7 +82,7 @@ export function preRegister(email: string) {
 }
 
 // Final register includes otp now
-export interface RegisterSuccessAuth extends AuthSuccess {}
+export type RegisterSuccessAuth = AuthSuccess;
 export type RegisterResponse = RegisterSuccessAuth | AuthError;
 export function register(
   email: string,
