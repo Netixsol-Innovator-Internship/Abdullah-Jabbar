@@ -8,7 +8,10 @@ import {
   useGetCartQuery,
   useUpdateCartItemMutation,
   useRemoveFromCartMutation,
+  useClearCartMutation,
 } from "@/lib/api/cartApiSlice";
+import { useCreateOrderMutation } from "@/lib/api/ordersApiSlice";
+import { useAuth } from "@/hooks/use-auth-rtk";
 import CartItemComponent from "@/components/CartItem";
 
 interface EnrichedCartItem {
@@ -28,6 +31,9 @@ export default function CartPage() {
     Record<string, { price: number; quantity: number }>
   >({});
 
+  // Get current user if authenticated
+  const { user, isAuthenticated } = useAuth();
+
   // Generate or get session ID for guest users
   useEffect(() => {
     let storedSessionId = localStorage.getItem("cart-session-id");
@@ -35,6 +41,7 @@ export default function CartPage() {
       storedSessionId = `guest-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       localStorage.setItem("cart-session-id", storedSessionId);
     }
+    console.log("Cart page sessionId:", storedSessionId);
     setSessionId(storedSessionId);
   }, []);
 
@@ -50,6 +57,13 @@ export default function CartPage() {
       skip: !sessionId,
     }
   );
+
+  // Log cart data for debugging
+  useEffect(() => {
+    if (cartData) {
+      console.log("Cart data received:", cartData);
+    }
+  }, [cartData]);
 
   // Transform cart items to use quantity instead of qty and enrich with product data
   useEffect(() => {
@@ -77,12 +91,77 @@ export default function CartPage() {
     useUpdateCartItemMutation();
   const [removeFromCart, { isLoading: isRemoving }] =
     useRemoveFromCartMutation();
+  const [createOrder, { isLoading: isCheckingOut }] = useCreateOrderMutation();
+  const [clearCart] = useClearCartMutation();
 
   // Calculate totals using itemPrices state
   const subtotal = Object.values(itemPrices).reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  // Checkout functionality (simplified for testing)
+  const handleCheckout = async () => {
+    if (enrichedCartItems.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+
+    try {
+      console.log("Starting checkout process...");
+      console.log("Session ID:", sessionId);
+      console.log("Cart items:", enrichedCartItems);
+      console.log("User:", user);
+      console.log("Is authenticated:", isAuthenticated);
+
+      // Create the order data
+      console.log("Attempting to create order...");
+      const orderData = {
+        // Include sessionId for guest checkout or authenticated users with session-based cart
+        sessionId,
+        paymentMethod: "cash_on_delivery",
+        shippingAddress: {
+          fullName: user?.name || "John Doe",
+          street1: "123 Default St",
+          city: "Default City",
+          state: "Default State",
+          postalCode: "12345",
+          country: "Default Country",
+        },
+      };
+
+      console.log("Order data:", orderData);
+
+      const orderResult = await createOrder(orderData).unwrap();
+      console.log("Order created successfully:", orderResult);
+
+      // Clear the cart after successful order creation
+      console.log("Attempting to clear cart...");
+      const clearResult = await clearCart({ sessionId }).unwrap();
+      console.log("Clear cart result:", clearResult);
+
+      console.log("Order placed and cart cleared successfully");
+      alert(
+        `Order placed successfully! Order number: ${orderResult.orderNumber || orderResult._id}`
+      );
+
+      // Refetch cart data to update UI
+      refetch();
+    } catch (error) {
+      console.error("Failed to place order:", error);
+      console.error("Error details:", JSON.stringify(error, null, 2));
+
+      // More specific error message
+      if (error && typeof error === "object" && "data" in error) {
+        const errorData = error.data as { message?: string };
+        alert(
+          `Failed to place order: ${errorData?.message || "Unknown error"}. Please try again.`
+        );
+      } else {
+        alert("Failed to place order. Please try again.");
+      }
+    }
+  };
 
   const handlePriceCalculated = useCallback(
     (productId: string, price: number, quantity: number) => {
@@ -114,14 +193,7 @@ export default function CartPage() {
     if (newQuantity === 0) {
       await removeItem(productId);
     } else {
-      // Optimistic update - update local state immediately
-      setEnrichedCartItems((prev) =>
-        prev.map((item) =>
-          item.productId === productId
-            ? { ...item, quantity: newQuantity }
-            : item
-        )
-      );
+      console.log(`Updating quantity for ${productId} to ${newQuantity}`);
 
       try {
         await updateCartItem({
@@ -129,11 +201,15 @@ export default function CartPage() {
           quantity: newQuantity,
           sessionId,
         }).unwrap();
-        refetch();
+
+        console.log("Cart item updated successfully");
+
+        // Force refetch to ensure we have the latest data
+        setTimeout(() => {
+          refetch();
+        }, 100);
       } catch (error) {
         console.error("Failed to update cart item:", error);
-        // Revert optimistic update on error
-        refetch();
       }
     }
   };
@@ -269,12 +345,13 @@ export default function CartPage() {
               </div>
             </div>
 
-            <Link
-              href="/checkout"
-              className="w-full bg-black text-white py-4 px-6 rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
+            <button
+              onClick={handleCheckout}
+              disabled={isCheckingOut || enrichedCartItems.length === 0}
+              className="w-full bg-black text-white py-4 px-6 rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center justify-center disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              Go to Checkout →
-            </Link>
+              {isCheckingOut ? "Processing..." : "Checkout →"}
+            </button>
           </div>
         </div>
       )}

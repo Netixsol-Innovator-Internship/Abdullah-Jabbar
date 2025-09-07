@@ -143,6 +143,29 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, id) => [{ type: "Product" as const, id }],
     }),
 
+    createProduct: builder.mutation<
+      Product,
+      {
+        title: string;
+        slug: string;
+        shortDescription?: string;
+        description?: string;
+        tags?: string[];
+        basePrice?: string;
+      }
+    >({
+      query: (data) => ({
+        url: `/products`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: [
+        { type: "Product" as const, id: "LIST" },
+        { type: "Product" as const, id: "FEATURED" },
+        { type: "Product" as const, id: "NEW_ARRIVALS" },
+      ],
+    }),
+
     updateProduct: builder.mutation<
       Product,
       { id: string; data: Partial<Product> }
@@ -214,6 +237,7 @@ export const {
   useGetProductsQuery,
   useGetProductBySlugQuery,
   useGetProductByIdQuery,
+  useCreateProductMutation,
   useUpdateProductMutation,
   useGetNewArrivalsQuery,
   useGetFeaturedProductsQuery,

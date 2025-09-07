@@ -1,4 +1,5 @@
 import { apiSlice } from "./apiSlice";
+import { setAuthToken } from "@/lib/auth-utils";
 
 // Types from original authApi.ts
 export interface AuthSuccess {
@@ -36,7 +37,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response: { access_token: string }) => {
         // Store token in localStorage for later use
         if (typeof window !== "undefined" && response.access_token) {
-          localStorage.setItem("token", response.access_token);
+          setAuthToken(response.access_token);
         }
         return response;
       },
@@ -63,7 +64,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response: { access_token: string }) => {
         // Store token in localStorage for later use
         if (typeof window !== "undefined" && response.access_token) {
-          localStorage.setItem("token", response.access_token);
+          setAuthToken(response.access_token);
         }
         return response;
       },

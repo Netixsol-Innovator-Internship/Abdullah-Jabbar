@@ -14,12 +14,14 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { motion, AnimatePresence } from "framer-motion";
+import { useGetCartQuery } from "@/lib/api/cartApiSlice";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [sessionId, setSessionId] = useState<string>("");
 
   // Global auth context
   const { isAuthenticated, logout, isAdmin, user } = useAuth();
@@ -27,6 +29,29 @@ export default function Navbar() {
 
   // track previous login state to detect fresh login
   const prevLoggedRef = useRef(false);
+
+  // Generate or get session ID for cart
+  useEffect(() => {
+    let storedSessionId = localStorage.getItem("cart-session-id");
+    if (!storedSessionId) {
+      storedSessionId = `guest-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem("cart-session-id", storedSessionId);
+    }
+    setSessionId(storedSessionId);
+  }, []);
+
+  // Fetch cart data to get item count
+  const { data: cartData } = useGetCartQuery(
+    { sessionId },
+    { skip: !sessionId }
+  );
+
+  // Calculate total items in cart
+  const cartItemCount =
+    cartData?.items?.reduce((total, item: unknown) => {
+      const cartItem = item as { qty?: number; quantity?: number };
+      return total + (cartItem.qty || cartItem.quantity || 0);
+    }, 0) || 0;
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -141,8 +166,24 @@ export default function Navbar() {
 
             {/* Right Icons */}
             <div className="flex items-center space-x-4">
-              <Link href="/cart" className="text-gray-700 hover:text-black">
+              <Link
+                href="/cart"
+                className="relative text-gray-700 hover:text-black"
+              >
                 <ShoppingCart className="w-6 h-6" />
+                <AnimatePresence>
+                  {cartItemCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium"
+                    >
+                      {cartItemCount > 99 ? "99+" : cartItemCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </Link>
 
               {/* Account dropdown */}

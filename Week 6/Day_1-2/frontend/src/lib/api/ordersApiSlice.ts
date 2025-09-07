@@ -78,14 +78,14 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
     createOrder: builder.mutation<
       Order,
       {
-        items?: OrderItem[];
+        cartId?: string;
+        sessionId?: string;
         shippingAddress: ShippingAddress;
         paymentMethod: string;
-        sessionId?: string;
       }
     >({
       query: (data) => ({
-        url: "/orders/checkout",
+        url: data.sessionId ? "/orders/guest-checkout" : "/orders/checkout",
         method: "POST",
         body: data,
       }),

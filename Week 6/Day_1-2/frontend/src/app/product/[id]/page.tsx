@@ -51,11 +51,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         sessionId,
       }).unwrap();
 
-      // Show success message (you can replace this with a toast notification)
-      alert("Product added to cart successfully!");
+      // Product added successfully - no alert needed
+      console.log("Product added to cart successfully!");
     } catch (error) {
       console.error("Failed to add item to cart:", error);
-      alert("Failed to add product to cart. Please try again.");
+      // You can replace this with a toast notification if needed
     }
   };
 

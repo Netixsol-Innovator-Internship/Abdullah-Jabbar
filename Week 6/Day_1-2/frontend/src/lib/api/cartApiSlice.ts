@@ -1,10 +1,11 @@
 import { apiSlice } from "./apiSlice";
 import { Product } from "./productsApiSlice";
 
-// Define cart interfaces
+// Define cart interfaces with backend compatibility
 export interface CartItem {
   productId: string;
   quantity: number;
+  qty?: number; // Backend uses qty field
   product?: Product;
   price?: number;
 }
