@@ -1,6 +1,7 @@
-"use client"
+// components/BrowseByStyle.tsx
+"use client";
 
-import Link from "next/link"
+import Link from "next/link";
 
 export default function BrowseByStyle() {
   return (
@@ -87,5 +88,5 @@ export default function BrowseByStyle() {
         </Link>
       </div>
     </section>
-  )
+  );
 }

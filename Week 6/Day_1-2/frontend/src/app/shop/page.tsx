@@ -1,97 +1,49 @@
+// shop/page.tsx
+
 "use client";
 
-import { useState, useMemo } from "react";
-import ProductCard from "@/components/ProductCard";
+import { useState, useMemo, useEffect, useRef } from "react";
+import ProductCard, {
+  transformProductToCardProps,
+} from "@/components/ProductCard";
+import { parsePrice } from "@/lib/api/productsApiSlice";
 import { ChevronRight, ChevronUp, SlidersHorizontal } from "lucide-react";
-
-const products = [
-  {
-    id: "1",
-    name: "Gradient Graphic T-shirt",
-    image: "/shop/1.png",
-    price: 145,
-    rating: 3.5,
-    reviewCount: 67,
-  },
-  {
-    id: "2",
-    name: "Polo with Tipping Details",
-    image: "/shop/2.png",
-    price: 180,
-    rating: 4.5,
-    reviewCount: 89,
-  },
-  {
-    id: "3",
-    name: "Black Striped T-shirt",
-    image: "/shop/3.png",
-    price: 120,
-    originalPrice: 160,
-    rating: 5.0,
-    reviewCount: 123,
-    discount: 40,
-  },
-  {
-    id: "4",
-    name: "Skinny Fit Jeans",
-    image: "/shop/4.png",
-    price: 240,
-    originalPrice: 260,
-    rating: 3.5,
-    reviewCount: 45,
-    discount: 20,
-  },
-  {
-    id: "5",
-    name: "Checkered Shirt",
-    image: "/shop/5.png",
-    price: 180,
-    rating: 4.5,
-    reviewCount: 67,
-  },
-  {
-    id: "6",
-    name: "Sleeve Striped T-shirt",
-    image: "/shop/6.png",
-    price: 130,
-    originalPrice: 160,
-    rating: 4.5,
-    reviewCount: 89,
-    discount: 30,
-  },
-  {
-    id: "7",
-    name: "Vertical Striped Shirt",
-    image: "/shop/7.png",
-    price: 212,
-    originalPrice: 232,
-    rating: 5.0,
-    reviewCount: 123,
-    discount: 20,
-  },
-  {
-    id: "8",
-    name: "Courage Graphic T-shirt",
-    image: "/shop/8.png",
-    price: 145,
-    rating: 4.0,
-    reviewCount: 78,
-  },
-  {
-    id: "9",
-    name: "Loose Fit Bermuda Shorts",
-    image: "/shop/9.png",
-    price: 80,
-    rating: 3.0,
-    reviewCount: 45,
-  },
-];
+import { useGetProductsQuery } from "@/lib/api/productsApiSlice";
 
 export default function CasualPage() {
   const [priceRange, setPriceRange] = useState([50, 200]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("Most Popular");
+  const [page, setPage] = useState(1);
+
+  // Applied filters state (used for API calls)
+  const [appliedFilters, setAppliedFilters] = useState({
+    colors: [] as string[],
+    sizes: [] as string[],
+    // priceRange is optional for API calls — if undefined we won't send price filters
+    priceRange: undefined as [number, number] | undefined,
+  });
+
+  // Apply price filter dynamically when user changes the slider.
+  // Skip applying on initial mount so the default slider doesn't trigger a filter automatically.
+  const _priceInitRef = useRef(false);
+  useEffect(() => {
+    // skip first run (initial render)
+    if (!_priceInitRef.current) {
+      _priceInitRef.current = true;
+      return;
+    }
+
+    // debounce updates while user is dragging
+    const t = setTimeout(() => {
+      setAppliedFilters((prev) => ({ ...prev, priceRange: priceRange }));
+      setPage(1);
+    }, 250);
+
+    return () => clearTimeout(t);
+  }, [priceRange]);
+
   const [expanded, setExpanded] = useState<{
     categories: boolean;
     price: boolean;
@@ -106,22 +58,72 @@ export default function CasualPage() {
     dressStyle: true,
   });
 
+  // API call to fetch products with applied filters
+  const {
+    data: productsData,
+    isLoading,
+    error,
+  } = useGetProductsQuery({
+    page,
+    limit: 20,
+    colors:
+      appliedFilters.colors.length > 0 ? appliedFilters.colors : undefined,
+    sizes: appliedFilters.sizes.length > 0 ? appliedFilters.sizes : undefined,
+    // only send price filters when a range has been applied
+    minPrice: appliedFilters.priceRange
+      ? appliedFilters.priceRange[0]
+      : undefined,
+    maxPrice: appliedFilters.priceRange
+      ? appliedFilters.priceRange[1]
+      : undefined,
+  });
+
+  const applyFilters = () => {
+    setAppliedFilters({
+      colors: selectedColors,
+      sizes: selectedSizes,
+      priceRange: priceRange,
+    });
+    setPage(1); // Reset to first page when applying filters
+  };
+
+  const clearFilters = () => {
+    setSelectedColors([]);
+    setSelectedSizes([]);
+    setPriceRange([50, 200]);
+    // reset applied filters and remove price filter so API fetches all prices
+    setAppliedFilters({ colors: [], sizes: [], priceRange: undefined });
+    setPage(1);
+  };
+
   const toggle = (key: keyof typeof expanded) =>
     setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const sortedProducts = useMemo(() => {
-    const sortableItems = [...products];
+    if (!productsData?.items) return [];
+
+    const sortableItems = [...productsData.items];
     if (sortBy === "Price: Low to High") {
-      sortableItems.sort((a, b) => a.price - b.price);
+      sortableItems.sort(
+        (a, b) => parsePrice(a.basePrice) - parsePrice(b.basePrice)
+      );
     } else if (sortBy === "Price: High to Low") {
-      sortableItems.sort((a, b) => b.price - a.price);
+      sortableItems.sort(
+        (a, b) => parsePrice(b.basePrice) - parsePrice(a.basePrice)
+      );
     } else if (sortBy === "Most Popular") {
-      sortableItems.sort((a, b) => b.rating - a.rating);
+      sortableItems.sort(
+        (a, b) => (b.ratingAverage || 0) - (a.ratingAverage || 0)
+      );
     } else if (sortBy === "Newest") {
-      sortableItems.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+      sortableItems.sort(
+        (a, b) =>
+          new Date(b.createdAt || 0).getTime() -
+          new Date(a.createdAt || 0).getTime()
+      );
     }
     return sortableItems;
-  }, [sortBy]);
+  }, [productsData?.items, sortBy]);
 
   const colors = [
     { name: "Green", value: "green", color: "bg-green-500" },
@@ -153,7 +155,7 @@ export default function CasualPage() {
       <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
         <span>Home</span>
         <span>/</span>
-        <span className="text-black font-medium">Casual</span>
+        <span className="text-black font-medium">Shop</span>
       </nav>
 
       <div className="flex flex-col lg:flex-row gap-8">
@@ -371,9 +373,36 @@ export default function CasualPage() {
               </div>
             </div>
 
-            <button className="w-full bg-black text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-              Apply Filter
-            </button>
+            <div className="space-y-3">
+              <button
+                onClick={applyFilters}
+                className="w-full bg-black text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors"
+              >
+                Apply Filter
+              </button>
+
+              <button
+                onClick={clearFilters}
+                className="w-full border border-gray-300 text-gray-700 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
+                aria-label="Clear all filters"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 6 L14 14 M14 6 L6 14"
+                  />
+                </svg>
+                <span>Clear All Filters</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -383,7 +412,10 @@ export default function CasualPage() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-2xl font-bold text-black mb-2">Casual</h1>
-              <p className="text-gray-600">Showing 1-10 of 100 Products</p>
+              <p className="text-gray-600">
+                Showing {sortedProducts.length} of {productsData?.total || 0}{" "}
+                Products
+              </p>
             </div>
             <div className="flex items-center space-x-2">
               <span className="text-gray-600">Sort by:</span>
@@ -401,33 +433,119 @@ export default function CasualPage() {
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {sortedProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="bg-gray-200 rounded-lg aspect-square mb-4"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                </div>
+              ))}
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-red-600 mb-4">Error loading products</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : sortedProducts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 mb-4">No products found</p>
+              <p className="text-gray-500">Try adjusting your filters</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {sortedProducts.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  {...transformProductToCardProps(product)}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Pagination */}
-          <div className="flex items-center justify-center space-x-2">
-            <button className="px-3 py-2 text-gray-600 hover:text-black">
-              Previous
-            </button>
-            {[1, 2, 3, "...", 8, 9, 10].map((page, index) => (
+          {productsData && productsData.total > productsData.limit && (
+            <div className="flex items-center justify-center space-x-2">
               <button
-                key={index}
-                className={`px-3 py-2 rounded ${
-                  page === 1
-                    ? "bg-black text-white"
-                    : "text-gray-600 hover:text-black"
-                }`}
+                onClick={() => setPage(Math.max(1, page - 1))}
+                disabled={page === 1}
+                className="px-3 py-2 text-gray-600 hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {page}
+                Previous
               </button>
-            ))}
-            <button className="px-3 py-2 text-gray-600 hover:text-black">
-              Next
-            </button>
-          </div>
+
+              {/* Calculate total pages */}
+              {(() => {
+                const totalPages = Math.ceil(
+                  productsData.total / productsData.limit
+                );
+                const pages = [];
+
+                for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                  pages.push(
+                    <button
+                      key={i}
+                      onClick={() => setPage(i)}
+                      className={`px-3 py-2 rounded ${
+                        page === i
+                          ? "bg-black text-white"
+                          : "text-gray-600 hover:text-black"
+                      }`}
+                    >
+                      {i}
+                    </button>
+                  );
+                }
+
+                if (totalPages > 5) {
+                  pages.push(
+                    <span key="ellipsis" className="px-3 py-2">
+                      ...
+                    </span>
+                  );
+                  pages.push(
+                    <button
+                      key={totalPages}
+                      onClick={() => setPage(totalPages)}
+                      className={`px-3 py-2 rounded ${
+                        page === totalPages
+                          ? "bg-black text-white"
+                          : "text-gray-600 hover:text-black"
+                      }`}
+                    >
+                      {totalPages}
+                    </button>
+                  );
+                }
+
+                return pages;
+              })()}
+
+              <button
+                onClick={() =>
+                  setPage(
+                    Math.min(
+                      Math.ceil(productsData.total / productsData.limit),
+                      page + 1
+                    )
+                  )
+                }
+                disabled={
+                  page >= Math.ceil(productsData.total / productsData.limit)
+                }
+                className="px-3 py-2 text-gray-600 hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

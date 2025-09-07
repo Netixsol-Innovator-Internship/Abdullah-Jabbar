@@ -1,3 +1,5 @@
+// app/page.tsx
+
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import ReviewsSlider from "@/components/ReviewsSlider";

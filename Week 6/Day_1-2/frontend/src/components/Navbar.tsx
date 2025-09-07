@@ -1,27 +1,68 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  Search,
+  ShoppingCart,
+  User,
+  Menu,
+  X,
+  LogOut,
+  ChevronDown,
+} from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { useAuth } from "@/hooks/use-auth";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
 
-  // Simulate user authentication (replace with real auth state)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Global auth context
+  const { isAuthenticated, logout, isAdmin, refreshProfile, user } = useAuth();
+  const isLoggedIn = isAuthenticated; // maintain previous variable name for minimal changes
 
+  // track previous login state to detect fresh login
+  const prevLoggedRef = useRef(false);
   useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(loggedIn);
-
-    if (loggedIn) {
+    if (isLoggedIn) {
       setShowBanner(false);
+      // fetch roles if not yet loaded (without auto opening dropdown)
+      if (!user || !user.roles) refreshProfile();
     }
+    prevLoggedRef.current = isLoggedIn;
+  }, [isLoggedIn, user, refreshProfile]);
+
+  // Close account dropdown on outside click or when focus leaves
+  const accountRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (!accountRef.current) return;
+      if (!accountRef.current.contains(e.target as Node)) {
+        setIsAccountOpen(false);
+      }
+    }
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setIsAccountOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
   }, []);
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    setIsAccountOpen(false);
+    router.push("/");
+  };
 
   const navLinks = [
     { href: "/shop", label: "Shop" },
@@ -104,9 +145,113 @@ export default function Navbar() {
               <Link href="/cart" className="text-gray-700 hover:text-black">
                 <ShoppingCart className="w-6 h-6" />
               </Link>
-              <Link href="/account" className="text-gray-700 hover:text-black">
-                <User className="w-6 h-6" />
-              </Link>
+
+              {/* Account dropdown */}
+              <div className="relative" ref={accountRef}>
+                <button
+                  onClick={() => {
+                    if (isLoggedIn && user && user.roles) {
+                      // User is fully loaded with roles
+                      setIsAccountOpen((v) => !v);
+                    } else if (isLoggedIn && user && !user.roles) {
+                      // User is logged in but roles not yet loaded, fetch them
+                      refreshProfile();
+                    } else {
+                      // Not logged in, redirect to auth form
+                      router.push("/authForm");
+                    }
+                  }}
+                  className="flex items-center text-gray-700 hover:text-black focus:outline-none"
+                  aria-expanded={isAccountOpen}
+                  aria-controls="account-menu"
+                  aria-label="Open account menu"
+                >
+                  <User className="w-6 h-6" />
+                  {/* Show loading spinner if user is logged in but roles not loaded */}
+                  {isLoggedIn && user && !user.roles ? (
+                    <div className="w-4 h-4 ml-1 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
+                  ) : (
+                    <ChevronDown
+                      className={`w-4 h-4 ml-1 transform transition-transform duration-150 ${
+                        isAccountOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  )}
+                </button>
+
+                <AnimatePresence>
+                  {isAccountOpen && isLoggedIn && user && user.roles && (
+                    <motion.div
+                      id="account-menu"
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50"
+                    >
+                      <div className="py-1">
+                        <div className="px-4 py-2 text-sm font-medium text-gray-900">
+                          Account
+                        </div>
+                        {/* Dashboard only for admin or super-admin */}
+                        {isAdmin && (
+                          <Link
+                            href="/dashboard"
+                            className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                            onClick={() => setIsAccountOpen(false)}
+                          >
+                            <svg
+                              className="w-4 h-4 mr-2 text-gray-500"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M3 7h18M3 12h18M3 17h18"
+                              ></path>
+                            </svg>
+                            Dashboard
+                          </Link>
+                        )}
+
+                        <Link
+                          href="/profile"
+                          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                          onClick={() => setIsAccountOpen(false)}
+                        >
+                          <svg
+                            className="w-4 h-4 mr-2 text-gray-500"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.61 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path>
+                          </svg>
+                          Profile
+                        </Link>
+
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 cursor-pointer flex items-center focus:outline-none"
+                        >
+                          <LogOut className="w-4 h-4 mr-2" />
+                          Logout
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </div>
         </div>

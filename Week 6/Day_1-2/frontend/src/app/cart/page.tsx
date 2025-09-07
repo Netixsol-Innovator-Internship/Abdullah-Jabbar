@@ -1,8 +1,10 @@
-"use client"
+// cart/page.tsx
 
-import { useState } from "react"
-import { Minus, Plus, Trash2 } from "lucide-react"
-import Link from "next/link"
+"use client";
+
+import { useState } from "react";
+import { Minus, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([
@@ -33,26 +35,33 @@ export default function CartPage() {
       price: 240,
       quantity: 1,
     },
-  ])
+  ]);
 
-  const [promoCode, setPromoCode] = useState("")
+  const [promoCode, setPromoCode] = useState("");
 
   const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity === 0) {
-      setCartItems(cartItems.filter((item) => item.id !== id))
+      setCartItems(cartItems.filter((item) => item.id !== id));
     } else {
-      setCartItems(cartItems.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: newQuantity } : item
+        )
+      );
     }
-  }
+  };
 
   const removeItem = (id: string) => {
-    setCartItems(cartItems.filter((item) => item.id !== id))
-  }
+    setCartItems(cartItems.filter((item) => item.id !== id));
+  };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const discount = Math.round(subtotal * 0.2) // 20% discount
-  const deliveryFee = 15
-  const total = subtotal - discount + deliveryFee
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const discount = Math.round(subtotal * 0.2); // 20% discount
+  const deliveryFee = 15;
+  const total = subtotal - discount + deliveryFee;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -71,15 +80,24 @@ export default function CartPage() {
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-6">
           {cartItems.map((item) => (
-            <div key={item.id} className="flex items-center space-x-4 p-6 border border-gray-200 rounded-lg">
+            <div
+              key={item.id}
+              className="flex items-center space-x-4 p-6 border border-gray-200 rounded-lg"
+            >
               <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                <img src={item.image || "/placeholder.svg"} alt={item.name} className="w-full h-full object-cover" />
+                <img
+                  src={item.image || "/placeholder.svg"}
+                  alt={item.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               <div className="flex-1">
                 <h3 className="font-medium text-black mb-2">{item.name}</h3>
                 <p className="text-sm text-gray-600 mb-1">Size: {item.size}</p>
-                <p className="text-sm text-gray-600 mb-3">Color: {item.color}</p>
+                <p className="text-sm text-gray-600 mb-3">
+                  Color: {item.color}
+                </p>
                 <p className="text-xl font-bold text-black">${item.price}</p>
               </div>
 
@@ -161,5 +179,5 @@ export default function CartPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
