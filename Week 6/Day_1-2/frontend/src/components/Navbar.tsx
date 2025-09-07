@@ -22,19 +22,18 @@ export default function Navbar() {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   // Global auth context
-  const { isAuthenticated, logout, isAdmin, refreshProfile, user } = useAuth();
+  const { isAuthenticated, logout, isAdmin, user } = useAuth();
   const isLoggedIn = isAuthenticated; // maintain previous variable name for minimal changes
 
   // track previous login state to detect fresh login
   const prevLoggedRef = useRef(false);
+
   useEffect(() => {
     if (isLoggedIn) {
       setShowBanner(false);
-      // fetch roles if not yet loaded (without auto opening dropdown)
-      if (!user || !user.roles) refreshProfile();
     }
     prevLoggedRef.current = isLoggedIn;
-  }, [isLoggedIn, user, refreshProfile]);
+  }, [isLoggedIn]);
 
   // Close account dropdown on outside click or when focus leaves
   const accountRef = useRef<HTMLDivElement | null>(null);
@@ -150,12 +149,9 @@ export default function Navbar() {
               <div className="relative" ref={accountRef}>
                 <button
                   onClick={() => {
-                    if (isLoggedIn && user && user.roles) {
-                      // User is fully loaded with roles
+                    if (isLoggedIn) {
+                      // Always toggle the dropdown for logged in users
                       setIsAccountOpen((v) => !v);
-                    } else if (isLoggedIn && user && !user.roles) {
-                      // User is logged in but roles not yet loaded, fetch them
-                      refreshProfile();
                     } else {
                       // Not logged in, redirect to auth form
                       router.push("/authForm");
@@ -166,21 +162,16 @@ export default function Navbar() {
                   aria-controls="account-menu"
                   aria-label="Open account menu"
                 >
-                  <User className="w-6 h-6" />
-                  {/* Show loading spinner if user is logged in but roles not loaded */}
-                  {isLoggedIn && user && !user.roles ? (
-                    <div className="w-4 h-4 ml-1 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
-                  ) : (
-                    <ChevronDown
-                      className={`w-4 h-4 ml-1 transform transition-transform duration-150 ${
-                        isAccountOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  )}
+                  <User className="w-6 h-6 cursor-pointer" />
+                  <ChevronDown
+                    className={`w-4 h-4 ml-1 transform transition-transform duration-150 ${
+                      isAccountOpen ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
 
                 <AnimatePresence>
-                  {isAccountOpen && isLoggedIn && user && user.roles && (
+                  {isAccountOpen && isLoggedIn && user && (
                     <motion.div
                       id="account-menu"
                       initial={{ opacity: 0, y: -6 }}

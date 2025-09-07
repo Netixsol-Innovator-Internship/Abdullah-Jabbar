@@ -11,7 +11,7 @@ type Theme = "black" | "white";
 
 export default function AuthPage() {
   const [mode, setMode] = React.useState<Mode>("login");
-  const [theme, setTheme] = React.useState<Theme>("black");
+  const [theme, setTheme] = React.useState<Theme>("white");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");

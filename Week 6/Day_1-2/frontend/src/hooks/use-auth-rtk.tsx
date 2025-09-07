@@ -100,16 +100,54 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [profileData]);
 
   // Auto-refresh profile if user is logged in but doesn't have complete data
+  const hasAttemptedRefresh = React.useRef(false);
+  const currentUserRef = React.useRef(user);
+  currentUserRef.current = user;
+
   React.useEffect(() => {
-    if (
-      token &&
-      user &&
-      (!user.roles || (Array.isArray(user.roles) && user.roles.length === 0))
-    ) {
-      // User is logged in but missing roles, trigger a profile refresh
-      refetch();
+    if (token && !hasAttemptedRefresh.current) {
+      // Use a timeout to check the user state after it has settled
+      const checkUserTimeout = setTimeout(() => {
+        const currentUser = currentUserRef.current;
+        if (currentUser) {
+          const needsRoleRefresh =
+            !currentUser.roles ||
+            (Array.isArray(currentUser.roles) &&
+              currentUser.roles.length === 0);
+
+          if (needsRoleRefresh) {
+            hasAttemptedRefresh.current = true;
+            // User is logged in but missing roles, trigger a profile refresh
+            refetch()
+              .catch(() => {
+                // If refetch fails, ensure we still have a valid user object with empty roles
+                const user = currentUserRef.current;
+                if (user && !user.roles) {
+                  const updatedUser = { ...user, roles: [] };
+                  setUser(updatedUser);
+                  try {
+                    localStorage.setItem(
+                      AUTH_KEYS.user,
+                      JSON.stringify(updatedUser)
+                    );
+                  } catch {
+                    /* ignore */
+                  }
+                }
+              })
+              .finally(() => {
+                // Reset the flag after some time to allow future refresh attempts if needed
+                setTimeout(() => {
+                  hasAttemptedRefresh.current = false;
+                }, 30000); // 30 seconds
+              });
+          }
+        }
+      }, 100); // Small delay to let state settle
+
+      return () => clearTimeout(checkUserTimeout);
     }
-  }, [token, user, refetch]);
+  }, [token, refetch, setUser]);
 
   // hydrate from storage once
   React.useEffect(() => {
@@ -178,7 +216,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const result = await loginMutation({ email, password }).unwrap();
         // Set a stub user immediately so UI (navbar dropdown) recognizes authenticated state
-        loginLocal(result.access_token, { email });
+        // Include empty roles array to prevent infinite loading state
+        loginLocal(result.access_token, { email, roles: [] });
         return { success: true };
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Login failed";
@@ -211,7 +250,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           name,
         }).unwrap();
         // success -> token returned
-        loginLocal(result.access_token, { email, name });
+        // Include empty roles array to prevent infinite loading state
+        loginLocal(result.access_token, { email, name, roles: [] });
         return { success: true };
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Registration failed";

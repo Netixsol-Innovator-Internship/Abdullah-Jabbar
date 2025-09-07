@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Star, Minus, Plus, Filter } from "lucide-react";
 import Image from "next/image";
 import ProductCard, {
@@ -11,12 +11,24 @@ import {
   useGetProductsQuery,
   parsePrice,
 } from "@/lib/api/productsApiSlice";
+import { useAddToCartMutation } from "@/lib/api/cartApiSlice";
 
 export default function ProductPage({ params }: { params: { id: string } }) {
   const [selectedSize, setSelectedSize] = useState("Large");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("reviews");
+  const [sessionId, setSessionId] = useState<string>("");
+
+  // Generate or get session ID for guest users
+  useEffect(() => {
+    let storedSessionId = localStorage.getItem("cart-session-id");
+    if (!storedSessionId) {
+      storedSessionId = `guest-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem("cart-session-id", storedSessionId);
+    }
+    setSessionId(storedSessionId);
+  }, []);
 
   // Fetch product data by slug
   const {
@@ -24,6 +36,28 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     isLoading,
     error,
   } = useGetProductBySlugQuery(params.id);
+
+  // Add to cart mutation
+  const [addToCart, { isLoading: isAddingToCart }] = useAddToCartMutation();
+
+  // Handle adding product to cart
+  const handleAddToCart = async () => {
+    if (!product) return;
+
+    try {
+      await addToCart({
+        productId: product._id,
+        quantity,
+        sessionId,
+      }).unwrap();
+
+      // Show success message (you can replace this with a toast notification)
+      alert("Product added to cart successfully!");
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+      alert("Failed to add product to cart. Please try again.");
+    }
+  };
 
   // Fetch related products
   const { data: relatedProductsData } = useGetProductsQuery({
@@ -252,20 +286,24 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="flex items-center border border-gray-300 rounded-full">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="p-3 hover:bg-gray-100 transition-colors"
+                className="p-3 hover:bg-gray-100 transition-colors rounded-l-full"
               >
                 <Minus className="w-4 h-4" />
               </button>
               <span className="px-4 py-3 font-medium">{quantity}</span>
               <button
                 onClick={() => setQuantity(quantity + 1)}
-                className="p-3 hover:bg-gray-100 transition-colors"
+                className="p-3 hover:bg-gray-100 transition-colors rounded-r-full"
               >
                 <Plus className="w-4 h-4" />
               </button>
             </div>
-            <button className="flex-1 bg-black text-white py-4 px-8 rounded-full font-medium hover:bg-gray-800 transition-colors">
-              Add to Cart
+            <button
+              onClick={handleAddToCart}
+              disabled={isAddingToCart}
+              className="flex-1 bg-black text-white py-4 px-8 rounded-full font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isAddingToCart ? "Adding..." : "Add to Cart"}
             </button>
           </div>
         </div>

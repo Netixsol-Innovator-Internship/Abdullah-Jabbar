@@ -1,13 +1,40 @@
 // app/page.tsx
+"use client";
 
 import Link from "next/link";
-import ProductCard from "@/components/ProductCard";
+import ProductCard, {
+  transformProductToCardProps,
+} from "@/components/ProductCard";
 import ReviewsSlider from "@/components/ReviewsSlider";
 import Hero from "@/components/Hero";
 import BrowseByStyle from "@/components/BrowseByStyle";
+import {
+  useGetNewArrivalsQuery,
+  useGetFeaturedProductsQuery,
+} from "@/lib/api/productsApiSlice";
 
 export default function HomePage() {
-  const newArrivals = [
+  // Fetch new arrivals and featured products from the database
+  const {
+    data: newArrivalsData,
+    isLoading: isLoadingNewArrivals,
+    error: newArrivalsError,
+  } = useGetNewArrivalsQuery({ limit: 4 });
+
+  const {
+    data: featuredProductsData,
+    isLoading: isLoadingFeatured,
+    error: featuredError,
+  } = useGetFeaturedProductsQuery({ limit: 4 });
+
+  // Transform API data to component props
+  const newArrivals =
+    newArrivalsData?.items?.map(transformProductToCardProps) || [];
+  const topSelling =
+    featuredProductsData?.items?.map(transformProductToCardProps) || [];
+
+  // Fallback data for when API is loading or has errors
+  const fallbackNewArrivals = [
     {
       id: "1",
       name: "T-shirt with Tape Details",
@@ -46,7 +73,7 @@ export default function HomePage() {
     },
   ];
 
-  const topSelling = [
+  const fallbackTopSelling = [
     {
       id: "5",
       name: "Vertical Striped Shirt",
@@ -83,6 +110,12 @@ export default function HomePage() {
     },
   ];
 
+  // Use dynamic data if available, otherwise fallback to static data
+  const displayNewArrivals =
+    newArrivals.length > 0 ? newArrivals : fallbackNewArrivals;
+  const displayTopSelling =
+    topSelling.length > 0 ? topSelling : fallbackTopSelling;
+
   return (
     <div>
       <Hero />
@@ -109,11 +142,26 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold text-center text-black mb-12">
             NEW ARRIVALS
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {newArrivals.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
+
+          {isLoadingNewArrivals ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="bg-gray-200 rounded-lg aspect-square mb-4"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {displayNewArrivals.map((product) => (
+                <ProductCard key={product.id} {...product} />
+              ))}
+            </div>
+          )}
+
           <div className="text-center mt-12">
             <Link
               href="/new-arrivals"
@@ -131,11 +179,26 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold text-center text-black mb-12">
             TOP SELLING
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {topSelling.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
+
+          {isLoadingFeatured ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="bg-gray-200 rounded-lg aspect-square mb-4"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {displayTopSelling.map((product) => (
+                <ProductCard key={product.id} {...product} />
+              ))}
+            </div>
+          )}
+
           <div className="text-center mt-12">
             <Link
               href="/top-selling"

@@ -77,6 +77,8 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         minPrice?: number;
         maxPrice?: number;
         isOnSale?: boolean;
+        isNewArrival?: boolean;
+        isFeatured?: boolean;
       }
     >({
       query: (params) => {
@@ -101,6 +103,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           queryParams.append("maxPrice", params.maxPrice.toString());
         if (params.isOnSale !== undefined)
           queryParams.append("isOnSale", params.isOnSale.toString());
+        if (params.isNewArrival !== undefined)
+          queryParams.append("isNewArrival", params.isNewArrival.toString());
+        if (params.isFeatured !== undefined)
+          queryParams.append("isFeatured", params.isFeatured.toString());
 
         return {
           url: `/products?${queryParams.toString()}`,
@@ -153,6 +159,53 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     }),
 
     // Add more product-related endpoints as needed
+
+    // Convenience endpoints for specific product sections
+    getNewArrivals: builder.query<ProductsResponse, { limit?: number }>({
+      query: (params) => {
+        const queryParams = new URLSearchParams();
+        queryParams.append("isNewArrival", "true");
+        if (params.limit) queryParams.append("limit", params.limit.toString());
+
+        return {
+          url: `/products?${queryParams.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.items.map(({ _id }) => ({
+                type: "Product" as const,
+                id: _id,
+              })),
+              { type: "Product" as const, id: "NEW_ARRIVALS" },
+            ]
+          : [{ type: "Product" as const, id: "NEW_ARRIVALS" }],
+    }),
+
+    getFeaturedProducts: builder.query<ProductsResponse, { limit?: number }>({
+      query: (params) => {
+        const queryParams = new URLSearchParams();
+        queryParams.append("isFeatured", "true");
+        if (params.limit) queryParams.append("limit", params.limit.toString());
+
+        return {
+          url: `/products?${queryParams.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.items.map(({ _id }) => ({
+                type: "Product" as const,
+                id: _id,
+              })),
+              { type: "Product" as const, id: "FEATURED" },
+            ]
+          : [{ type: "Product" as const, id: "FEATURED" }],
+    }),
   }),
 });
 
@@ -162,4 +215,6 @@ export const {
   useGetProductBySlugQuery,
   useGetProductByIdQuery,
   useUpdateProductMutation,
+  useGetNewArrivalsQuery,
+  useGetFeaturedProductsQuery,
 } = productsApiSlice;
