@@ -20,11 +20,32 @@ export const AUTH_KEYS = {
 export type Role = "user" | "admin" | "super-admin" | string;
 
 export interface AuthUser {
+  _id?: string;
   id?: string;
   name?: string;
   email?: string;
+  phone?: string;
+  avatarUrl?: string;
   role?: Role | Role[]; // backend might send a single value or an array
   roles?: Role[]; // some APIs may send plural 'roles'
+  addresses?: Array<{
+    label?: string;
+    fullName?: string;
+    street1?: string;
+    street2?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+    phone?: string;
+    isDefault?: boolean;
+  }>;
+  loyaltyPoints?: number;
+  loyaltyTier?: string;
+  isEmailVerified?: boolean;
+  metadata?: Record<string, unknown>;
+  createdAt?: string;
+  updatedAt?: string;
   [k: string]: unknown;
 }
 

@@ -459,7 +459,7 @@ export default function ProductDetailsPage() {
           <p className="text-red-800">{submitError}</p>
           {submitError.includes("Authentication") && (
             <Button
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/authForm")}
               variant="outline"
               size="sm"
               className="mt-2"

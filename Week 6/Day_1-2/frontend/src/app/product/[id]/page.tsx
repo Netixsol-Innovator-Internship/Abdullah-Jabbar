@@ -228,7 +228,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 <span className="text-2xl text-gray-500 line-through">
                   ${originalPrice}
                 </span>
-                {product.discountPercent && (
+                {Number(product.discountPercent) > 0 && (
                   <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
                     -{product.discountPercent}%
                   </span>

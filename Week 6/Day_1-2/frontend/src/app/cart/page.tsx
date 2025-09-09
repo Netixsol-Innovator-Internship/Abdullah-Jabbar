@@ -10,9 +10,14 @@ import {
   useRemoveFromCartMutation,
   useClearCartMutation,
 } from "@/lib/api/cartApiSlice";
-import { useCreateOrderMutation } from "@/lib/api/ordersApiSlice";
+import {
+  useCreateOrderMutation,
+  ShippingAddress,
+} from "@/lib/api/ordersApiSlice";
 import { useAuth } from "@/hooks/use-auth-rtk";
+import { getAuthToken } from "@/lib/auth-utils";
 import CartItemComponent from "@/components/CartItem";
+import { useRouter } from "next/navigation";
 
 interface EnrichedCartItem {
   productId: string;
@@ -33,6 +38,7 @@ export default function CartPage() {
 
   // Get current user if authenticated
   const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
 
   // Generate or get session ID for guest users
   useEffect(() => {
@@ -108,6 +114,23 @@ export default function CartPage() {
     }
 
     try {
+      // Enforce login before checkout
+      if (!isAuthenticated) {
+        const goLogin = confirm(
+          "You need to log in to place an order. Go to login now?"
+        );
+        if (goLogin) router.push("/authForm");
+        return;
+      }
+
+      // Check if token exists
+      const token = getAuthToken();
+      if (!token) {
+        alert("You need to log in again to place an order.");
+        router.push("/authForm");
+        return;
+      }
+
       console.log("Starting checkout process...");
       console.log("Session ID:", sessionId);
       console.log("Cart items:", enrichedCartItems);
@@ -116,19 +139,65 @@ export default function CartPage() {
 
       // Create the order data
       console.log("Attempting to create order...");
-      const orderData = {
-        // Include sessionId for guest checkout or authenticated users with session-based cart
-        sessionId,
-        paymentMethod: "cash_on_delivery",
-        shippingAddress: {
-          fullName: user?.name || "John Doe",
-          street1: "123 Default St",
-          city: "Default City",
-          state: "Default State",
-          postalCode: "12345",
-          country: "Default Country",
-        },
+
+      // Get user's default address or first available address
+      let userAddress = null;
+      if (user?.addresses && user.addresses.length > 0) {
+        // Try to find default address first
+        userAddress =
+          user.addresses.find((addr) => addr.isDefault) || user.addresses[0];
+        console.log("Using user address:", userAddress);
+      } else {
+        console.warn("No saved addresses found for user");
+        // Ask user if they want to add an address
+        const addAddress = confirm(
+          "No shipping address found. Would you like to add one now? " +
+            "(Click Cancel to proceed with default address)"
+        );
+        if (addAddress) {
+          router.push("/profile?tab=info");
+          return;
+        }
+      }
+
+      // Prefer cartId for authenticated users if available; fallback to sessionId only for server-side recalc (still requires auth now)
+      type OrderPayload = {
+        cartId?: string;
+        sessionId?: string;
+        paymentMethod: string;
+        shippingAddress: ShippingAddress;
       };
+
+      const orderData: OrderPayload = {
+        paymentMethod: "cash_on_delivery",
+        shippingAddress: userAddress
+          ? {
+              fullName: userAddress.fullName || user?.name || "Default Name",
+              street1: userAddress.street1 || "No street address provided",
+              addressLine2: userAddress.street2,
+              city: userAddress.city || "Default City",
+              state: userAddress.state || "Default State",
+              postalCode: userAddress.postalCode || "00000",
+              country: userAddress.country || "Default Country",
+              phone: userAddress.phone,
+            }
+          : {
+              fullName: user?.name || "John Doe",
+              street1: "123 Default St",
+              city: "Default City",
+              state: "Default State",
+              postalCode: "12345",
+              country: "Default Country",
+            },
+      };
+
+      // Attach identifiers
+      const cartId = cartData?._id;
+      if (cartId) {
+        orderData.cartId = cartId;
+      } else if (sessionId) {
+        orderData.sessionId = sessionId;
+      }
 
       console.log("Order data:", orderData);
 
@@ -151,12 +220,40 @@ export default function CartPage() {
       console.error("Failed to place order:", error);
       console.error("Error details:", JSON.stringify(error, null, 2));
 
-      // More specific error message
-      if (error && typeof error === "object" && "data" in error) {
-        const errorData = error.data as { message?: string };
-        alert(
-          `Failed to place order: ${errorData?.message || "Unknown error"}. Please try again.`
-        );
+      // Check for authentication errors and handle them
+      if (error && typeof error === "object") {
+        if ("data" in error) {
+          const errorData = error.data as {
+            message?: string;
+            statusCode?: number;
+          };
+
+          // If it's an authentication error, redirect to login
+          if (
+            errorData?.statusCode === 401 ||
+            (errorData?.message &&
+              errorData.message.includes("Authentication required"))
+          ) {
+            const goLogin = confirm(
+              "Your session has expired. Please log in again to continue."
+            );
+            if (goLogin) {
+              // Clear auth data and redirect to login
+              router.push("/authForm");
+              return;
+            }
+          } else {
+            // Other API errors
+            alert(
+              `Failed to place order: ${errorData?.message || "Unknown error"}. Please try again.`
+            );
+          }
+        } else {
+          // Generic error
+          alert(
+            "Failed to place order. Please check your network connection and try again."
+          );
+        }
       } else {
         alert("Failed to place order. Please try again.");
       }
@@ -296,6 +393,80 @@ export default function CartPage() {
                 isRemoving={isRemoving}
               />
             ))}
+
+            {/* Shipping Address Section */}
+            {isAuthenticated && (
+              <div className="bg-white border border-gray-200 rounded-lg p-6">
+                <h3 className="text-lg font-bold text-black mb-4">
+                  Shipping Address
+                </h3>
+                {(() => {
+                  // Get user's default address or first available address
+                  let userAddress = null;
+                  if (user?.addresses && user.addresses.length > 0) {
+                    userAddress =
+                      user.addresses.find((addr) => addr.isDefault) ||
+                      user.addresses[0];
+                  }
+
+                  if (userAddress) {
+                    return (
+                      <div className="space-y-2">
+                        <p className="font-medium text-gray-900">
+                          {userAddress.fullName ||
+                            user?.name ||
+                            "No name provided"}
+                        </p>
+                        <p className="text-gray-600">
+                          {userAddress.street1 || "No street address"}
+                          {userAddress.street2 && `, ${userAddress.street2}`}
+                        </p>
+                        <p className="text-gray-600">
+                          {userAddress.city || "No city"},{" "}
+                          {userAddress.state || "No state"}{" "}
+                          {userAddress.postalCode || "No postal code"}
+                        </p>
+                        <p className="text-gray-600">
+                          {userAddress.country || "No country"}
+                        </p>
+                        {userAddress.phone && (
+                          <p className="text-gray-900 font-medium">
+                            📞 {userAddress.phone}
+                          </p>
+                        )}
+                        {userAddress.isDefault && (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Default Address
+                          </span>
+                        )}
+                        <div className="mt-3">
+                          <Link
+                            href="/profile?tab=info"
+                            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                          >
+                            Change Address →
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div className="text-center py-4">
+                        <p className="text-gray-600 mb-3">
+                          No shipping address found
+                        </p>
+                        <Link
+                          href="/profile?tab=info"
+                          className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+                        >
+                          Add Shipping Address
+                        </Link>
+                      </div>
+                    );
+                  }
+                })()}
+              </div>
+            )}
           </div>
 
           {/* Order Summary */}

@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { Upload, X, Image as ImageIcon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { getAuthToken } from "@/lib/auth-utils";
 
 interface UploadedImage {
   url: string;
@@ -82,6 +83,12 @@ export default function ImageUpload({
 
     setUploading(true);
     try {
+      const token = getAuthToken();
+      if (!token) {
+        throw new Error(
+          "You are not authenticated. Please log in and try again."
+        );
+      }
       const formData = new FormData();
       selectedFiles.forEach((file) => {
         formData.append("images", file);
@@ -96,7 +103,7 @@ export default function ImageUpload({
         method: "POST",
         body: formData,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 

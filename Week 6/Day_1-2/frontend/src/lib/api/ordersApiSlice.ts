@@ -25,12 +25,20 @@ export interface Order {
   _id: string;
   userId: string;
   items: OrderItem[];
-  totalAmount: number;
+  total?: { $numberDecimal?: string } | number; // Decimal128 or number
+  totalAmount?: number; // Alternative field
+  subtotal?: { $numberDecimal?: string } | number;
   shippingAddress: ShippingAddress;
   paymentMethod: string;
   orderNumber?: string;
-  paymentStatus: "pending" | "paid" | "failed";
-  orderStatus: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+  paymentStatus: "pending" | "paid" | "failed" | string;
+  fulfillmentStatus:
+    | "pending"
+    | "processing"
+    | "shipped"
+    | "delivered"
+    | "cancelled"
+    | string;
   createdAt: string;
   updatedAt: string;
 }
@@ -44,31 +52,55 @@ export interface OrdersResponse {
 // Define the orders API slice
 export const ordersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getOrders: builder.query<OrdersResponse, { page?: number; limit?: number }>(
-      {
-        query: (params) => {
-          const queryParams = new URLSearchParams();
-          if (params.page) queryParams.append("page", params.page.toString());
-          if (params.limit)
-            queryParams.append("limit", params.limit.toString());
+    getOrders: builder.query<
+      OrdersResponse,
+      { page?: number; limit?: number; userId?: string }
+    >({
+      query: (params) => {
+        const queryParams = new URLSearchParams();
+        if (params.page) queryParams.append("page", params.page.toString());
+        if (params.limit) queryParams.append("limit", params.limit.toString());
+        if (params.userId) queryParams.append("userId", params.userId);
 
-          return {
-            url: `/orders?${queryParams.toString()}`,
-            method: "GET",
-          };
-        },
-        providesTags: (result) =>
-          result
-            ? [
-                ...result.orders.map(({ _id }) => ({
-                  type: "Order" as const,
-                  id: _id,
-                })),
-                { type: "Order" as const, id: "LIST" },
-              ]
-            : [{ type: "Order" as const, id: "LIST" }],
-      }
-    ),
+        return {
+          url: `/orders?${queryParams.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.orders.map(({ _id }) => ({
+                type: "Order" as const,
+                id: _id,
+              })),
+              { type: "Order" as const, id: "LIST" },
+            ]
+          : [{ type: "Order" as const, id: "LIST" }],
+    }),
+
+    // Get orders by user ID (alternative approach for better ObjectID handling)
+    getUserOrders: builder.query<
+      OrdersResponse,
+      { page?: number; limit?: number; userId: string }
+    >({
+      query: ({ userId, page = 1, limit = 10 }) => {
+        return {
+          url: `/orders/user/${userId}?page=${page}&limit=${limit}`,
+          method: "GET",
+        };
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.orders.map(({ _id }) => ({
+                type: "Order" as const,
+                id: _id,
+              })),
+              { type: "Order" as const, id: "LIST" },
+            ]
+          : [{ type: "Order" as const, id: "LIST" }],
+    }),
 
     getOrderById: builder.query<Order, string>({
       query: (id) => ({
@@ -88,7 +120,7 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
       }
     >({
       query: (data) => ({
-        url: data.sessionId ? "/orders/guest-checkout" : "/orders/checkout",
+        url: "/orders/checkout",
         method: "POST",
         body: data,
       }),
@@ -101,7 +133,10 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
 
 // Export the hooks
 export const {
-  useGetOrdersQuery,
   useGetOrderByIdQuery,
   useCreateOrderMutation,
+  useGetUserOrdersQuery,
 } = ordersApiSlice;
+
+// Export the getOrders hook separately to avoid naming conflicts
+export const { useGetOrdersQuery: useGetAllOrdersQuery } = ordersApiSlice;

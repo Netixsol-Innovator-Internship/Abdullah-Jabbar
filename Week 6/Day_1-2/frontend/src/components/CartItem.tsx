@@ -121,7 +121,7 @@ export default function CartItem({
               ${originalPrice.toFixed(2)}
             </span>
           )}
-          {product.isOnSale && product.discountPercent && (
+          {product.isOnSale && Number(product.discountPercent) > 0 && (
             <span className="ml-2 bg-red-100 text-red-600 px-2 py-1 rounded text-xs font-medium">
               -{product.discountPercent}%
             </span>

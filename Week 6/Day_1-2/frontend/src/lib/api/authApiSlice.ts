@@ -11,6 +11,26 @@ export type ProfileResponse = {
   email?: string;
   name?: string;
   roles?: string[];
+  phone?: string;
+  avatarUrl?: string;
+  addresses?: Array<{
+    label?: string;
+    fullName?: string;
+    street1?: string;
+    street2?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+    phone?: string;
+    isDefault?: boolean;
+  }>;
+  loyaltyPoints?: number;
+  loyaltyTier?: string;
+  isEmailVerified?: boolean;
+  metadata?: Record<string, unknown>;
+  createdAt?: string;
+  updatedAt?: string;
 } & Record<string, unknown>;
 
 export const authApiSlice = apiSlice.injectEndpoints({
