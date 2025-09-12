@@ -19,7 +19,7 @@ async function init() {
     : ['https://abdullah-week4-day5-tea-app-fronten.vercel.app/'];
 
   app.enableCors({
-    origin: '*',
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication Test</title>
+  </head>
+  <body>
+    <h1>Authentication Test</h1>
+
+    <div>
+      <h2>Test Login</h2>
+      <div>
+        <input
+          type="email"
+          id="email"
+          placeholder="Email"
+          value="test@example.com"
+        />
+        <input
+          type="password"
+          id="password"
+          placeholder="Password"
+          value="password123"
+        />
+        <button onclick="testLogin()">Test Login</button>
+      </div>
+      <div id="loginResult"></div>
+    </div>
+
+    <script>
+      async function testLogin() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const resultDiv = document.getElementById("loginResult");
+
+        try {
+          const response = await fetch("http://localhost:4000/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          });
+
+          console.log("Response status:", response.status);
+          console.log("Response headers:", response.headers);
+
+          if (response.ok) {
+            const data = await response.json();
+            resultDiv.innerHTML = `<p style="color: green;">Login successful! Token: ${data.access_token ? "Received" : "Missing"}</p>`;
+            console.log("Success data:", data);
+          } else {
+            const errorData = await response.json();
+            resultDiv.innerHTML = `<p style="color: red;">Login failed: ${errorData.message || errorData.error || "Unknown error"}</p>`;
+            console.log("Error data:", errorData);
+          }
+        } catch (error) {
+          resultDiv.innerHTML = `<p style="color: red;">Network error: ${error.message}</p>`;
+          console.error("Network error:", error);
+        }
+      }
+    </script>
+  </body>
+</html>
