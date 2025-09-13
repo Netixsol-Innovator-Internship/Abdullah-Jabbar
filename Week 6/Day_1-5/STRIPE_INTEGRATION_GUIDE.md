@@ -34,7 +34,7 @@ STRIPE_SECRET_KEY=sk_test_your_secret_key_here
 STRIPE_WEBHOOK_SECRET=whsec_test_your_webhook_secret_here
 
 # Frontend origin for redirect URLs
-FRONTEND_ORIGIN=http://localhost:3000
+FRONTEND_URL=http://localhost:3000
 ```
 
 #### Frontend (.env)
@@ -129,7 +129,7 @@ Stripe provides several test card numbers for different scenarios:
 1. Replace test keys with live keys
 2. Update webhook endpoint URL to production domain
 3. Ensure HTTPS is enabled
-4. Set `FRONTEND_ORIGIN` to production domain
+4. Set `FRONTEND_URL` to production domain
 5. Configure proper CORS settings
 
 ### 8. Troubleshooting

@@ -131,7 +131,7 @@ cd frontend && npm run dev
    - Update `STRIPE_WEBHOOK_SECRET` with production webhook secret
 
 3. **Environment configuration**
-   - Set `FRONTEND_ORIGIN` to production domain
+   - Set `FRONTEND_URL` to production domain
    - Enable HTTPS (required for live payments)
    - Configure proper CORS settings
 

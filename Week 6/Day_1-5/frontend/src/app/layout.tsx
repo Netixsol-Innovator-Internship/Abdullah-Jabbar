@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Shop.co - Find Clothes That Matches Your Style",
   description:
     "Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
