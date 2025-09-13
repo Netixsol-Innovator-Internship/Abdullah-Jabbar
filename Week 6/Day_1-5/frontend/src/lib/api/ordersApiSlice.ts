@@ -14,6 +14,7 @@ export interface ShippingAddress {
   addressLine1?: string;
   street1?: string;
   addressLine2?: string;
+  street2?: string; // Added missing field
   city: string;
   state: string;
   postalCode: string;
@@ -36,11 +37,14 @@ export interface PaymentMethodDetails {
 
 export interface Order {
   _id: string;
-  userId: string;
+  userId?: string; // Make optional and add customer field
   items: OrderItem[];
   total?: { $numberDecimal?: string } | number; // Decimal128 or number
   totalAmount?: number; // Alternative field
   subtotal?: { $numberDecimal?: string } | number;
+  deliveryFee?: number; // Added missing field
+  tax?: number; // Added missing field
+  discounts?: number; // Added missing field
   shippingAddress: ShippingAddress;
   paymentMethod: string;
   paymentMethodDetails?: PaymentMethodDetails; // New field for detailed payment info
@@ -48,15 +52,23 @@ export interface Order {
   stripeChargeId?: string; // Store Stripe charge ID
   orderNumber?: string;
   paymentStatus: "pending" | "paid" | "failed" | string;
-  fulfillmentStatus:
+  // Backend uses shippingStatus; keep fulfillmentStatus optional for legacy compatibility
+  shippingStatus?:
     | "pending"
     | "processing"
     | "shipped"
     | "delivered"
     | "cancelled"
     | string;
+  fulfillmentStatus?: string;
   createdAt: string;
   updatedAt: string;
+  // Add customer field that matches backend schema
+  customer?: {
+    userId?: string;
+    name?: string;
+    email?: string;
+  };
 }
 
 export interface OrdersResponse {

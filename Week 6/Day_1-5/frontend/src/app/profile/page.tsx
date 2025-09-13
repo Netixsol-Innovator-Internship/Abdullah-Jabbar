@@ -3,16 +3,14 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth-rtk";
-import {
-  useGetAllOrdersQuery,
-  useGetUserOrdersQuery,
-} from "@/lib/api/ordersApiSlice";
+import { useGetUserOrdersQuery } from "@/lib/api/ordersApiSlice";
 import {
   useUpdateUserAddressMutation,
   useDeleteUserAddressMutation,
   useTestConnectionQuery,
 } from "@/lib/api/usersApiSlice";
 import { formatCurrency } from "@/lib/utils";
+// Removed unrequested modal/summary/debug components
 
 interface AddressFormData {
   label?: string;
@@ -39,6 +37,7 @@ export default function ProfilePage() {
     null
   );
   const [addressForm, setAddressForm] = useState<AddressFormData>({});
+  // Removed order details modal state (unused)
   const limit = 5; // Orders per page
 
   // Handle tab parameter from URL
@@ -138,27 +137,15 @@ export default function ProfilePage() {
     }
   };
 
-  // Fetch orders using both methods for comparison
-  const { data: ordersData, isLoading: ordersLoading } = useGetAllOrdersQuery(
-    {
-      page: currentPage,
-      limit,
-      userId: (user?._id as string) || "", // MongoDB stores IDs as _id
-    },
-    {
-      skip: !isAuthenticated || activeTab !== "orders" || !user?._id,
-      // Re-fetch when user changes or when the tab is selected
-      refetchOnMountOrArgChange: true,
-    }
-  );
+  // Removed order details modal handlers (unused)
 
-  // Try the dedicated user orders endpoint if userId is available
+  // Fetch orders using the dedicated user orders endpoint
   const { data: userOrdersData, isLoading: userOrdersLoading } =
     useGetUserOrdersQuery(
       {
         page: currentPage,
         limit,
-        userId: (user?._id as string) || "",
+        userId: user?._id ? String(user._id) : "",
       },
       {
         skip: !isAuthenticated || activeTab !== "orders" || !user?._id,
@@ -193,10 +180,6 @@ export default function ProfilePage() {
         validFormat: isValidObjectId,
       });
     }
-    if (ordersData) {
-      console.log("Regular orders endpoint data:", ordersData);
-      console.log("Regular orders count:", ordersData.orders?.length || 0);
-    }
     if (userOrdersData) {
       console.log("User-specific orders endpoint data:", userOrdersData);
       console.log(
@@ -204,7 +187,7 @@ export default function ProfilePage() {
         userOrdersData.orders?.length || 0
       );
     }
-  }, [user, ordersData, userOrdersData]);
+  }, [user, userOrdersData]);
 
   if (!isAuthenticated) {
     return (
@@ -294,6 +277,8 @@ export default function ProfilePage() {
               </div>
             </div>
           </div>
+
+          {/* Orders Summary removed per request */}
 
           {/* Addresses Card */}
           <div className="bg-white shadow rounded-lg p-6">
@@ -606,14 +591,20 @@ export default function ProfilePage() {
       {/* Order History Tab */}
       {activeTab === "orders" && (
         <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">
-            Order History
-          </h2>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+            <h2 className="text-xl font-semibold text-gray-900">
+              Order History
+            </h2>
+            <div className="text-sm text-gray-500">
+              {userOrdersData?.totalOrders || 0} total orders
+            </div>
+          </div>
 
-          {ordersLoading && userOrdersLoading ? (
+          {/* Debug Info removed per request */}
+
+          {userOrdersLoading ? (
             <div className="py-4 text-center">Loading orders...</div>
-          ) : (userOrdersData?.orders && userOrdersData.orders.length > 0) ||
-            (ordersData?.orders && ordersData.orders.length > 0) ? (
+          ) : userOrdersData?.orders && userOrdersData.orders.length > 0 ? (
             <>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -649,53 +640,64 @@ export default function ProfilePage() {
                       >
                         Items
                       </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {/* Prefer user-specific orders, fallback to regular orders */}
-                    {(userOrdersData?.orders || ordersData?.orders || []).map(
-                      (order) => (
-                        <tr key={order._id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {order.orderNumber || order._id.substring(0, 8)}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {new Date(order.createdAt).toLocaleDateString()}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span
-                              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                order.fulfillmentStatus === "delivered"
-                                  ? "bg-green-100 text-green-800"
-                                  : order.fulfillmentStatus === "cancelled"
-                                    ? "bg-red-100 text-red-800"
-                                    : "bg-yellow-100 text-yellow-800"
-                              }`}
-                            >
-                              {(order.fulfillmentStatus &&
-                                order.fulfillmentStatus
-                                  .charAt(0)
-                                  .toUpperCase() +
-                                  order.fulfillmentStatus.slice(1)) ||
-                                "Pending"}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {formatCurrency(order.total || order.totalAmount)}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {order.items.length}
-                          </td>
-                        </tr>
-                      )
-                    )}
+                    {userOrdersData.orders.map((order) => (
+                      <tr key={order._id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {order.orderNumber || order._id.substring(0, 8)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              (order as any).shippingStatus === "delivered" ||
+                              order.fulfillmentStatus === "delivered"
+                                ? "bg-green-100 text-green-800"
+                                : (order as any).shippingStatus ===
+                                      "cancelled" ||
+                                    order.fulfillmentStatus === "cancelled"
+                                  ? "bg-red-100 text-red-800"
+                                  : "bg-yellow-100 text-yellow-800"
+                            }`}
+                          >
+                            {(() => {
+                              const status =
+                                (order as any).shippingStatus ||
+                                order.fulfillmentStatus;
+                              return status
+                                ? status.charAt(0).toUpperCase() +
+                                    status.slice(1)
+                                : "Pending";
+                            })()}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {formatCurrency(order.total || order.totalAmount)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {order.items.length}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          —
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
 
               {/* Pagination */}
-              {(userOrdersData?.totalPages || ordersData?.totalPages || 0) >
-                1 && (
+              {(userOrdersData?.totalPages || 0) > 1 && (
                 <div className="flex justify-center mt-6">
                   <nav className="flex items-center space-x-2">
                     <button
@@ -713,34 +715,20 @@ export default function ProfilePage() {
                     </button>
 
                     <span className="text-sm text-gray-700">
-                      Page {currentPage} of{" "}
-                      {userOrdersData?.totalPages ||
-                        ordersData?.totalPages ||
-                        1}
+                      Page {currentPage} of {userOrdersData?.totalPages || 1}
                     </span>
 
                     <button
                       onClick={() =>
                         setCurrentPage((prev) =>
-                          Math.min(
-                            prev + 1,
-                            userOrdersData?.totalPages ||
-                              ordersData?.totalPages ||
-                              1
-                          )
+                          Math.min(prev + 1, userOrdersData?.totalPages || 1)
                         )
                       }
                       disabled={
-                        currentPage ===
-                        (userOrdersData?.totalPages ||
-                          ordersData?.totalPages ||
-                          1)
+                        currentPage === (userOrdersData?.totalPages || 1)
                       }
                       className={`px-3 py-1 rounded-md ${
-                        currentPage ===
-                        (userOrdersData?.totalPages ||
-                          ordersData?.totalPages ||
-                          1)
+                        currentPage === (userOrdersData?.totalPages || 1)
                           ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                           : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                       }`}
@@ -759,6 +747,8 @@ export default function ProfilePage() {
           )}
         </div>
       )}
+
+      {/* Order Details Modal removed per request */}
     </div>
   );
 }
