@@ -1,0 +1,42 @@
+# Root-level gitignore for the workspace
+
+# Node modules (project-local node_modules are typically committed per package but
+# ignoring root node_modules if present)
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE
+.idea/
+.vscode/
+
+# Environment files
+.env
+.env.*.local
+
+# Build / output
+/dist
+/build
+/out
+/coverage
+
+# Next.js
+/.next/
+
+# Temporary files and caches
+/tmp
+tmp/
+.cache/
+
+# Vercel
+.vercel/
+
+# TypeScript
+*.tsbuildinfo
