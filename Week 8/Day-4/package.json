@@ -1,0 +1,19 @@
+{
+  "name": "day-4",
+  "version": "1.0.0",
+  "description": "```markdown # LangGraph Mini Chatbot with Calculator (JavaScript)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@langchain/langgraph": "^0.4.9",
+    "dotenv": "^17.2.2",
+    "mathjs": "^14.7.0"
+  }
+}
