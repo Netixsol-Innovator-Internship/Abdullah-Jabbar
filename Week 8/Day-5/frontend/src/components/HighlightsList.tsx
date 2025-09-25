@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { ChevronRight, X } from 'lucide-react';
-import type { Highlight } from '@/lib/types';
-import { escapeHtml } from '@/lib/utils';
+import React, { useState } from "react";
+import { ChevronRight, X } from "lucide-react";
+import type { Highlight } from "@/lib/types";
 
 export default function HighlightsList({
   highlights,
@@ -19,16 +18,20 @@ export default function HighlightsList({
 
   return (
     <div>
-      <h3 className="text-lg font-semibold text-gray-800 mb-3">Key Highlights</h3>
+      <h3 className="text-lg font-semibold text-gray-800 mb-3">
+        Key Highlights
+      </h3>
       <div className="space-y-2">
         {highlights.map((h, idx) => (
           <div
-            key={idx}
+            key={`${idx}-${h.slice(0, 40)}`}
             className="flex items-start cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"
             role="button"
             tabIndex={0}
             onClick={() => openModal(idx)}
-            onKeyDown={(e) => { if (e.key === 'Enter') openModal(idx); }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") openModal(idx);
+            }}
             aria-label={`Open highlight ${idx + 1}`}
           >
             <ChevronRight className="h-4 w-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
@@ -51,7 +54,7 @@ export default function HighlightsList({
               <button
                 onClick={closeModal}
                 aria-label="Close highlight details"
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 cursor-pointer"
               >
                 <X />
               </button>
@@ -63,7 +66,10 @@ export default function HighlightsList({
                   <p className="mb-2">{rawHighlights[openIndex].snippet}</p>
                   <div className="flex flex-wrap gap-2">
                     {rawHighlights[openIndex].pageNumbers.map((p) => (
-                      <span key={p} className="text-xs bg-gray-100 px-2 py-1 rounded-md">{`Page ${p}`}</span>
+                      <span
+                        key={`page-${p}`}
+                        className="text-xs bg-gray-100 px-2 py-1 rounded-md"
+                      >{`Page ${p}`}</span>
                     ))}
                   </div>
                 </>
@@ -77,7 +83,7 @@ export default function HighlightsList({
             <div className="flex justify-end">
               <button
                 onClick={closeModal}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer"
               >
                 Close
               </button>
