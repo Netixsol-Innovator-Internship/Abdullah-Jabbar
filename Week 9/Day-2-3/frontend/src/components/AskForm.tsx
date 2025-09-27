@@ -123,10 +123,15 @@ export default function AskForm({ selectedExample }: AskFormProps) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
-      <h1 className="text-2xl font-semibold mb-3">Ask Cricket Stats</h1>
+    <div className="max-w-3xl mx-auto p-4 animate-fade-in-scale">
+      <h1 className="text-2xl font-semibold mb-3 animate-slide-in-up">
+        Ask Cricket Stats
+      </h1>
       <form onSubmit={submit} className="space-y-3">
-        <label className="block">
+        <label
+          className="block animate-slide-in-up"
+          style={{ animationDelay: "100ms" }}
+        >
           <span className="text-sm font-medium">Question</span>
           <textarea
             value={q}
@@ -139,15 +144,18 @@ export default function AskForm({ selectedExample }: AskFormProps) {
             }}
             rows={3}
             placeholder="e.g. Show Australia ODI matches in 2005"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 p-2"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 p-2 transition-all duration-300 focus:shadow-lg hover:shadow-md animate-pulse-glow focus:animate-none"
           />
         </label>
 
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div
+          className="flex flex-col sm:flex-row gap-2 animate-slide-in-up"
+          style={{ animationDelay: "200ms" }}
+        >
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-sky-600 text-white hover:bg-sky-700 disabled:opacity-60"
+            className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-sky-600 text-white hover:bg-sky-700 disabled:opacity-60 transition-all duration-300 hover:scale-105 btn-press hover-lift animate-pulse-glow disabled:animate-none"
           >
             {loading && (
               <svg
@@ -188,28 +196,62 @@ export default function AskForm({ selectedExample }: AskFormProps) {
       </form>
 
       <div className="mt-6">
-        {error && <div className="text-red-600">{error}</div>}
+        {error && (
+          <div className="text-red-600 animate-slide-in-up bg-red-50 p-3 rounded-md border border-red-200 hover-lift">
+            {error}
+          </div>
+        )}
 
         {result && result.type === "text" && (
-          <div className="bg-white p-4 rounded-md shadow-sm">
-            <div className="text-sm text-slate-500 mb-2">Result (text)</div>
-            <div className="text-base">{String(result.data)}</div>
+          <div className="bg-white p-4 rounded-md shadow-sm animate-slide-in-up hover-lift transition-all duration-300 hover:shadow-md">
+            <div className="text-sm text-slate-500 mb-2 animate-fade-in-scale">
+              Result (text)
+            </div>
+            <div
+              className="text-base animate-slide-in-left"
+              style={{ animationDelay: "100ms" }}
+            >
+              {String(result.data)}
+            </div>
             {result.meta && (
-              <pre className="mt-3 text-xs text-slate-500 overflow-auto">
-                {JSON.stringify(result.meta, null, 2)}
-              </pre>
+              <details
+                className="mt-3 animate-slide-in-up"
+                style={{ animationDelay: "200ms" }}
+              >
+                <summary className="text-xs text-slate-500 cursor-pointer hover:text-slate-700 transition-colors duration-200">
+                  View metadata
+                </summary>
+                <pre className="mt-2 text-xs text-slate-500 overflow-auto bg-slate-50 p-2 rounded transition-all duration-300">
+                  {JSON.stringify(result.meta, null, 2)}
+                </pre>
+              </details>
             )}
           </div>
         )}
 
         {result && result.type === "table" && isTableData(result.data) && (
-          <div className="bg-white p-4 rounded-md shadow-sm">
-            <div className="text-sm text-slate-500 mb-2">Result (table)</div>
-            <Table columns={result.data.columns} rows={result.data.rows} />
+          <div className="bg-white p-4 rounded-md shadow-sm animate-slide-in-up hover-lift transition-all duration-300 hover:shadow-md">
+            <div className="text-sm text-slate-500 mb-2 animate-fade-in-scale">
+              Result (table)
+            </div>
+            <div
+              className="animate-fade-in-scale"
+              style={{ animationDelay: "100ms" }}
+            >
+              <Table columns={result.data.columns} rows={result.data.rows} />
+            </div>
             {result.meta && (
-              <pre className="mt-3 text-xs text-slate-500 overflow-auto">
-                {JSON.stringify(result.meta, null, 2)}
-              </pre>
+              <details
+                className="mt-3 animate-slide-in-up"
+                style={{ animationDelay: "200ms" }}
+              >
+                <summary className="text-xs text-slate-500 cursor-pointer hover:text-slate-700 transition-colors duration-200">
+                  View metadata
+                </summary>
+                <pre className="mt-2 text-xs text-slate-500 overflow-auto bg-slate-50 p-2 rounded transition-all duration-300">
+                  {JSON.stringify(result.meta, null, 2)}
+                </pre>
+              </details>
             )}
           </div>
         )}
@@ -217,8 +259,8 @@ export default function AskForm({ selectedExample }: AskFormProps) {
         {result &&
           result.type === "multi-format" &&
           isMultiFormatData(result.data) && (
-            <div className="space-y-6">
-              <div className="text-sm text-slate-500 mb-4">
+            <div className="space-y-6 animate-slide-in-up">
+              <div className="text-sm text-slate-500 mb-4 animate-fade-in-scale">
                 Results ({result.meta?.totalFormats || result.data?.length || 0}{" "}
                 formats)
               </div>
@@ -226,7 +268,8 @@ export default function AskForm({ selectedExample }: AskFormProps) {
                 (formatData: SingleFormatData, index: number) => (
                   <div
                     key={index}
-                    className="bg-white p-4 rounded-md shadow-sm"
+                    className="bg-white p-4 rounded-md shadow-sm hover-lift transition-all duration-300 hover:shadow-md animate-slide-in-up"
+                    style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div className="text-sm font-medium text-slate-700 mb-3">
                       {getFormatDisplayName(formatData)}

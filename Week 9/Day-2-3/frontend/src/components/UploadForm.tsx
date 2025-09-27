@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { uploadCsv } from "../utils/api";
+import Spinner from "./Spinner";
 
 export default function UploadForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -60,7 +61,14 @@ export default function UploadForm() {
             disabled={loading}
             className="px-4 py-2 rounded-md bg-emerald-600 text-white"
           >
-            {loading ? "Uploading..." : "Upload"}
+            {loading ? (
+              <span className="inline-flex items-center gap-2">
+                <Spinner size="sm" colorClassName="text-white" />
+                Uploading...
+              </span>
+            ) : (
+              "Upload"
+            )}
           </button>
           <button
             type="button"

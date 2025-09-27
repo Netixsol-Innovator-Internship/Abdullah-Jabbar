@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { useGetProfileQuery } from "../store/api/authApi";
 import { updateUser } from "../store/slices/authSlice";
+import FullScreenLoader from "./FullScreenLoader";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -36,11 +37,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   }, [isAuthenticated, error, router]);
 
   if (!isAuthenticated || isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
-      </div>
-    );
+    return <FullScreenLoader label="Authenticating your session" />;
   }
 
   return <>{children}</>;

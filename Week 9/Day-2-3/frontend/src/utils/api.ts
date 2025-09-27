@@ -192,6 +192,27 @@ export async function getSummary(
   }
 }
 
+export async function clearConversationHistory(userId: string): Promise<void> {
+  const token = Cookies.get("access_token");
+
+  if (!token || userId === "anonymous") {
+    return;
+  }
+
+  try {
+    await fetchWithFallback<{ success: boolean }>(`/ask/history/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to clear conversation history:", error);
+    throw error;
+  }
+}
+
 export async function uploadCsv(
   file: File,
   format: "test" | "odi" | "t20"

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import AskForm from "../components/AskForm";
 import { useAppSelector } from "../store/hooks";
 import Navigation from "../components/Navigation";
+import FullScreenLoader from "../components/FullScreenLoader";
 
 export default function Home() {
   const [selectedExample, setSelectedExample] = useState<string>("");
@@ -30,19 +31,16 @@ export default function Home() {
 
   // Don't render anything substantial during SSR to prevent hydration mismatch
   if (!isClient) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Loading...
-      </div>
-    );
+    return <FullScreenLoader label="Preparing dashboard" />;
   }
 
   // Only show this on client side after we've confirmed authentication status
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        Redirecting to login...
-      </div>
+      <FullScreenLoader
+        label="Redirecting to login"
+        subLabel="Hold tight while we verify your session."
+      />
     );
   }
 

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import Navigation from "../../components/Navigation";
 import UploadForm from "../../components/UploadForm";

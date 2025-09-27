@@ -5,6 +5,17 @@ import { useRouter } from "next/navigation";
 import { useRegisterMutation } from "../store/api/authApi";
 import { useAppDispatch } from "../store/hooks";
 import { setCredentials } from "../store/slices/authSlice";
+import Spinner from "./Spinner";
+
+// Helper function to safely render error messages
+const renderErrorMessage = (error: unknown): string => {
+  if (typeof error === "object" && error !== null && "data" in error) {
+    return (
+      (error.data as { message?: string })?.message || "Registration failed"
+    );
+  }
+  return "Registration failed";
+};
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
@@ -88,14 +99,11 @@ export default function RegisterForm() {
             </div>
           </div>
 
-          {error && (
+          {error ? (
             <div className="text-red-600 text-sm text-center">
-              {"data" in error
-                ? (error.data as { message?: string })?.message ||
-                  "Registration failed"
-                : "Registration failed"}
+              {renderErrorMessage(error)}
             </div>
-          )}
+          ) : null}
 
           <div>
             <button
@@ -103,7 +111,14 @@ export default function RegisterForm() {
               disabled={isLoading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
             >
-              {isLoading ? "Creating account..." : "Sign up"}
+              {isLoading ? (
+                <span className="inline-flex items-center gap-2">
+                  <Spinner size="sm" colorClassName="text-white" />
+                  Creating account...
+                </span>
+              ) : (
+                "Sign up"
+              )}
             </button>
           </div>
 
