@@ -38,12 +38,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (token && userData) {
       try {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
       } catch (error) {
         console.error("Error parsing user data:", error);
-        Cookies.remove("auth_token");
-        Cookies.remove("user");
+        // Clear all auth data if there's an error
+        logout();
       }
+    } else if (token || userData) {
+      // If only one of token or userData exists, clear both
+      logout();
     }
     setInitializing(false);
   }, []);
@@ -59,10 +63,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(response.user);
       toast.success("Login successful!");
     } catch (error: unknown) {
-      const message =
-        error instanceof Error && (error as any).response?.data?.message
-          ? (error as any).response.data.message
-          : "Login failed";
+      let message = "Login failed";
+      if (error && typeof error === "object" && "response" in error) {
+        const axiosError = error as {
+          response?: { data?: { message?: string } };
+        };
+        message = axiosError.response?.data?.message || "Login failed";
+      }
       toast.error(message);
       throw error;
     } finally {
@@ -86,10 +93,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(response.user);
       toast.success("Account created successfully!");
     } catch (error: unknown) {
-      const message =
-        error instanceof Error && (error as any).response?.data?.message
-          ? (error as any).response.data.message
-          : "Signup failed";
+      let message = "Signup failed";
+      if (error && typeof error === "object" && "response" in error) {
+        const axiosError = error as {
+          response?: { data?: { message?: string } };
+        };
+        message = axiosError.response?.data?.message || "Signup failed";
+      }
       toast.error(message);
       throw error;
     } finally {

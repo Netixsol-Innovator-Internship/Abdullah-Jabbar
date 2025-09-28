@@ -8,6 +8,8 @@ export default function ProductList() {
   const { products, loading, error, currentPage, totalPages, setCurrentPage } =
     useProducts();
 
+  console.log("ProductList render state:", { loading, products, error });
+
   if (loading) {
     return <LoadingSpinner />;
   }

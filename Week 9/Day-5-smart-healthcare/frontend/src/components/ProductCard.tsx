@@ -1,14 +1,13 @@
 "use client";
-import { useState } from "react";
 import { Product } from "../types";
-import ChatBot from "./ChatBot";
+import { useChatBot } from "../context/ChatBotContext";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [showChat, setShowChat] = useState(false);
+  const { openChatWithProduct } = useChatBot();
 
   return (
     <>
@@ -73,7 +72,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
           <div className="flex space-x-2 ">
             <button
-              onClick={() => setShowChat(true)}
+              onClick={() => openChatWithProduct(product.name, product._id)}
               className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors text-sm font-medium"
             >
               Ask AI
@@ -81,8 +80,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </div>
-
-      {showChat && <ChatBot productName={product.name} />}
     </>
   );
 }

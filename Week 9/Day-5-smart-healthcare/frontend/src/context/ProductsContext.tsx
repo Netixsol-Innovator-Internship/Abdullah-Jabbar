@@ -12,7 +12,7 @@ interface ProductsContextType {
   itemsPerPage: number;
   fetchProducts: (page?: number) => Promise<void>;
   searchProducts: (filters: SearchFilters) => Promise<void>;
-  aiSearch: (query: string) => Promise<AiSearchResult | null>;
+  aiSearch: (query: string) => Promise<{ products: Product[] } | null>;
   setCurrentPage: (page: number) => void;
 }
 

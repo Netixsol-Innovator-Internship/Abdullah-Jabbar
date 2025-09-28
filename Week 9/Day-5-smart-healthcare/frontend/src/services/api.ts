@@ -1,12 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import {
-  AuthResponse,
-  Product,
-  SearchFilters,
-  ChatMessage,
-  PaginatedResponse,
-} from "../types";
+import { AuthResponse, Product, SearchFilters } from "../types";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
@@ -31,7 +25,10 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    if (
+      error.response?.status === 401 &&
+      window.location.pathname !== "/login"
+    ) {
       Cookies.remove("auth_token");
       Cookies.remove("user");
       window.location.href = "/login";
@@ -61,10 +58,8 @@ export const authApi = {
 };
 
 export const productsApi = {
-  getAll: async (page = 1, limit = 12): Promise<PaginatedResponse<Product>> => {
-    const response = await api.get("/products", {
-      params: { page, limit },
-    });
+  getAll: async (): Promise<{ products: Product[]; total: number }> => {
+    const response = await api.get("/products");
     return response.data;
   },
 
@@ -75,12 +70,17 @@ export const productsApi = {
 
   search: async (
     filters: SearchFilters
-  ): Promise<PaginatedResponse<Product>> => {
-    const response = await api.get("/products/search", { params: filters });
+  ): Promise<{ products: Product[]; total: number }> => {
+    const response = await api.get("/products/search", {
+      params: {
+        ...filters,
+        // Remove pagination params since we're handling it client-side
+      },
+    });
     return response.data;
   },
 
-  aiSearch: async (query: string): Promise<any> => {
+  aiSearch: async (query: string): Promise<{ products: Product[] }> => {
     const response = await api.post("/products/ai-search", { query });
     return response.data;
   },

@@ -25,6 +25,62 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Ensure main content doesn't get affected by floating chatbot */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Prevent content from being pushed by fixed positioned elements */
+.min-h-screen {
+  overflow-x: hidden;
+}
+
+/* Natural smooth scrolling for chat containers */
+.chat-container {
+  scroll-behavior: smooth;
+  scroll-padding: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+/* Smoother scrolling with CSS custom properties */
+@media (prefers-reduced-motion: no-preference) {
+  .chat-container {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-container {
+    scroll-behavior: auto;
+  }
+}
+
+.chat-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 2px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.3);
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.5);
+}
+
+/* Additional smoothness for message animations */
+.chat-container > * {
+  transition: opacity 0.2s ease;
+}
+
 button:not(:disabled) {
   cursor: pointer !important;
 }
