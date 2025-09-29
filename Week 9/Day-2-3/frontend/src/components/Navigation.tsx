@@ -17,7 +17,9 @@ export default function Navigation() {
 
   const handleLogout = async () => {
     try {
-      await logout();
+      // Use .unwrap() so RTK Query will throw if the mutation resulted in an
+      // error. The logout mutation clears the cookie locally via queryFn.
+      await logout().unwrap();
       dispatch(logoutAction());
       router.push("/login");
     } catch (error) {

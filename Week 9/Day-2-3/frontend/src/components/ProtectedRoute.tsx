@@ -25,6 +25,14 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   // Update Redux store with profile data when loaded
   useEffect(() => {
+    console.debug("ProtectedRoute auth state", {
+      isAuthenticated,
+      isLoading,
+      error,
+      profileData,
+      user,
+    });
+
     if (profileData && !user) {
       dispatch(updateUser(profileData));
     }

@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.ts"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "MONGODB_URI": "mongodb+srv://leoplaner211_db_user:123@cluster0.eh5mgvs.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0",
+    "PORT": "4000",
+    "GEMINI_API_KEY": "AIzaSyDAnjHZf61h62co_zaApoM_bK3EoY3vhaM",
+    "GEMINI_MODEL": "gemini-2.0-flash",
+    "FRONTEND_URL": "https://abdullah-week9-day2-backend-2y1oheucv.vercel.app"
+  }
+}

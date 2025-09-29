@@ -5,6 +5,9 @@ const API_BASES = process.env.NEXT_PUBLIC_API_BASE
   ? process.env.NEXT_PUBLIC_API_BASE.split(",").map((url) => url.trim())
   : ["http://localhost:4000"];
 
+// Request timeout (ms) - configurable via NEXT_PUBLIC_API_TIMEOUT_MS
+const TIMEOUT_MS = Number(process.env.NEXT_PUBLIC_API_TIMEOUT_MS) || 60000; // default 60s
+
 export type TableData = {
   columns: string[];
   rows: (string | number | null | undefined)[][];
@@ -61,7 +64,37 @@ async function handleApiResponse<T>(response: Response): Promise<T> {
     }
     throw new Error(errorMessage);
   }
-  return response.json();
+  // Some endpoints may return 204 No Content or an empty body.
+  // Attempt to read text first and parse JSON only when present.
+  try {
+    if (response.status === 204) {
+      // No content
+      return null as unknown as T;
+    }
+
+    const text = await response.text();
+    if (!text) {
+      // Empty body
+      return null as unknown as T;
+    }
+
+    try {
+      return JSON.parse(text) as T;
+    } catch (parseError) {
+      // If JSON parsing fails, return the raw text (when T is string) or throw
+      // a descriptive error so callers can see what happened.
+      // If the caller expects JSON and parsing failed, surface a helpful message.
+      if (typeof ("" as unknown as T) === "string") {
+        return text as unknown as T;
+      }
+      throw new Error(
+        `Failed to parse JSON response: ${parseError instanceof Error ? parseError.message : String(parseError)}. Raw response: ${text}`
+      );
+    }
+  } catch (err) {
+    // Re-throw as Error to keep single error type across the API layer
+    throw err instanceof Error ? err : new Error(String(err));
+  }
 }
 
 // Function to try multiple API endpoints until one works
@@ -74,16 +107,38 @@ async function fetchWithFallback<T>(
   for (const baseUrl of API_BASES) {
     try {
       console.log(`Trying API endpoint: ${baseUrl}${endpoint}`);
+
+      // merge options but allow callers to provide their own signal
+      // Some callers may pass a partial RequestInit with a 'signal' property.
+      // Narrow it safely instead of using `any`.
+      const maybeSignal = (options as RequestInit & { signal?: AbortSignal })
+        .signal;
+      const signal = maybeSignal ?? AbortSignal.timeout(TIMEOUT_MS);
+
       const response = await fetch(`${baseUrl}${endpoint}`, {
         ...options,
-        // Add timeout to prevent hanging on unreachable endpoints
-        signal: AbortSignal.timeout(10000), // 10 second timeout
+        signal,
       });
 
       const result = await handleApiResponse<T>(response);
       console.log(`Successfully connected to: ${baseUrl}`);
       return result;
-    } catch (error) {
+    } catch (error: unknown) {
+      // Handle aborts explicitly to give clearer feedback when requests time out
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "name" in error &&
+        typeof (error as { name?: unknown }).name === "string" &&
+        (error as { name?: string }).name === "AbortError"
+      ) {
+        const msg = `Request to ${baseUrl}${endpoint} aborted after ${TIMEOUT_MS}ms`;
+        console.warn(msg, error);
+        lastError = new Error(msg);
+        // try next base URL (if any)
+        continue;
+      }
+
       console.warn(`Failed to connect to ${baseUrl}:`, error);
       lastError = error instanceof Error ? error : new Error(String(error));
       // Continue to next URL
@@ -114,6 +169,11 @@ export async function askQuestion(
   const token = Cookies.get("access_token");
 
   try {
+    // If we have a token, prefer letting the backend derive the user from the
+    // authenticated request (req.user). Only send userId when there's no token
+    // (for lightweight demo / anonymous flows).
+    const bodyPayload = token ? { question } : { question, userId };
+
     return await fetchWithFallback<AskResponse>("/ask", {
       method: "POST",
       headers: {
@@ -121,7 +181,7 @@ export async function askQuestion(
         Accept: "application/json",
         ...(token && { Authorization: `Bearer ${token}` }),
       },
-      body: JSON.stringify({ question, userId }),
+      body: JSON.stringify(bodyPayload),
     });
   } catch (error) {
     throw new Error(

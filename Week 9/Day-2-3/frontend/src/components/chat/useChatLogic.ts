@@ -22,6 +22,18 @@ export const useChatLogic = () => {
   const { user } = useAppSelector((state) => state.auth);
   const userId = user?.id || "anonymous";
 
+  // Debugging: show auth state when hook initializes
+  useEffect(() => {
+    try {
+      console.debug("useChatLogic auth user/token", {
+        user,
+        token: typeof window !== "undefined" && (document.cookie || ""),
+      });
+    } catch (e) {
+      /* ignore */
+    }
+  }, [user]);
+
   // Helper function to add messages with animation
   const addMessageWithAnimation = useCallback((message: ChatMessage) => {
     setMessages((prev) => [...prev, { ...message, isAnimating: true }]);
@@ -148,36 +160,46 @@ export const useChatLogic = () => {
     }
   }, [userId]);
 
-  const loadSummary = useCallback(async () => {
-    // Skip loading summary for anonymous users or when no token is available
-    if (userId === "anonymous") {
-      console.log("Skipping summary for anonymous user");
-      return;
-    }
-
-    try {
-      const summaryData = await getSummary(userId);
-      setSummary(summaryData);
-
-      // Add system message if summary exists
-      if (
-        summaryData &&
-        summaryData.summarizedMemory &&
-        messages.length === 0
-      ) {
-        setMessages([
-          {
-            id: "system-summary",
-            type: "system",
-            content: `💭 Memory loaded: ${summaryData.summarizedMemory}`,
-            timestamp: new Date(),
-          },
-        ]);
+  // Load summary only when there is no conversation history (unless forced)
+  const loadSummary = useCallback(
+    async (options?: { force?: boolean }) => {
+      // Skip loading summary for anonymous users
+      if (userId === "anonymous") {
+        console.log("Skipping summary for anonymous user");
+        return;
       }
-    } catch (error) {
-      console.error("Failed to load summary:", error);
-    }
-  }, [userId, messages.length]);
+
+      // If messages already exist and not forced, skip fetching summary
+      if (!options?.force && messages.length > 0) {
+        console.log("Skipping summary because conversation history exists");
+        return;
+      }
+
+      try {
+        const summaryData = await getSummary(userId);
+        setSummary(summaryData);
+
+        // Add system message if summary exists and there are no messages
+        if (
+          summaryData &&
+          summaryData.summarizedMemory &&
+          messages.length === 0
+        ) {
+          setMessages([
+            {
+              id: "system-summary",
+              type: "system",
+              content: `💭 Memory loaded: ${summaryData.summarizedMemory}`,
+              timestamp: new Date(),
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Failed to load summary:", error);
+      }
+    },
+    [userId, messages.length]
+  );
 
   const handleSubmit = async (question: string) => {
     if (!question.trim() || isLoading) return;
@@ -277,10 +299,17 @@ export const useChatLogic = () => {
 
   useEffect(() => {
     const initializeChat = async () => {
-      await loadSummary();
+      // Load conversation history first. If no history exists, then try loading summary.
       await loadConversationHistory();
+
+      // If there are no messages after history load, attempt to load summary
+      if (messages.length === 0) {
+        await loadSummary();
+      }
     };
     initializeChat();
+    // Intentionally omit messages from deps to avoid re-running init on local message changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadSummary, loadConversationHistory]);
 
   return {

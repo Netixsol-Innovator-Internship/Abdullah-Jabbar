@@ -123,7 +123,12 @@ export const authApi = createApi({
     logout: builder.mutation<void, void>({
       queryFn: () => {
         Cookies.remove("access_token");
-        return { data: undefined };
+        // RTK Query expects the returned object to contain a non-undefined
+        // `data` or `error` property. For a void mutation, return `data: null`
+        // Return a non-undefined runtime value so RTK Query treats this as a
+        // successful result, but cast to `void` so the TypeScript return type
+        // of the mutation (void) remains correct.
+        return { data: null as unknown as void };
       },
     }),
   }),

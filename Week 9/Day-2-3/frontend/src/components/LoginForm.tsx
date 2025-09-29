@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginMutation } from "../store/api/authApi";
 import { useAppDispatch } from "../store/hooks";
 import { setCredentials } from "../store/slices/authSlice";
 import Spinner from "./Spinner";
+import { useAppSelector } from "../store/hooks";
 
 // Helper function to safely render error messages
 const renderErrorMessage = (error: unknown): string => {
@@ -21,6 +22,16 @@ export default function LoginForm() {
   const [login, { isLoading, error }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { isAuthenticated } = useAppSelector((s) => s.auth);
+
+  // If already authenticated, redirect to /chat inside an effect to avoid
+  // calling router.push during render (React warns when a different
+  // component is updated during render).
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/chat");
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +42,12 @@ export default function LoginForm() {
       );
       router.push("/chat");
     } catch (err) {
-      console.error("Login failed:", err);
+      // Better error logging: show structured info when available
+      try {
+        console.error("Login failed:", JSON.stringify(err));
+      } catch {
+        console.error("Login failed:", err);
+      }
     }
   };
 
