@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { AppModule } from './app.module';
+import { AppModule } from './src/app.module';
 
 let cachedApp: any;
 
@@ -12,8 +12,15 @@ export default async function handler(req: any, res: any) {
 
     // Enable CORS
     app.enableCors({
-      origin: process.env.FRONTEND_URL || true,
+      origin: [
+        'http://localhost:3000',
+        'https://abdullah-week9-day5-frontend.vercel.app', // Your frontend domain
+        'https://abdullah-week10-day2.vercel.app', // Alternative frontend domain
+        process.env.FRONTEND_URL,
+      ].filter(Boolean),
       credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
     });
 
     // Global validation pipe
@@ -25,7 +32,7 @@ export default async function handler(req: any, res: any) {
       }),
     );
 
-    // Global prefix
+    // Global prefix for API routes
     app.setGlobalPrefix('api');
 
     await app.init();

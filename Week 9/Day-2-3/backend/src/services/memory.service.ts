@@ -123,11 +123,15 @@ export class MemoryService {
 
   async getConversationHistory(userId: string, limit: number = 50) {
     try {
-      return await this.conversationModel
+      // Get the most recent conversations and then reverse to show oldest first
+      const conversations = await this.conversationModel
         .find({ userId })
-        .sort({ timestamp: -1 })
+        .sort({ timestamp: -1 }) // Get newest first
         .limit(limit)
         .exec();
+
+      // Reverse to show in chronological order (oldest first)
+      return conversations.reverse();
     } catch (error) {
       this.logger.error('Error getting conversation history:', error);
       return [];
@@ -150,6 +154,16 @@ export class MemoryService {
       this.logger.log(`Cleared conversation history for user ${userId}`);
     } catch (error) {
       this.logger.error('Error clearing conversation history:', error);
+      throw error;
+    }
+  }
+
+  async createSummary(userId: string): Promise<any> {
+    try {
+      await this.summarizeAndCleanup(userId);
+      return await this.getSummary(userId);
+    } catch (error) {
+      this.logger.error('Error creating summary:', error);
       throw error;
     }
   }

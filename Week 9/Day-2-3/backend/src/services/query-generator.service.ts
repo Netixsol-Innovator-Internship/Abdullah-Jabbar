@@ -461,6 +461,21 @@ Question: """${question}"""
       this.logger.error(
         `Parse error: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`,
       );
+
+      // If Gemini returns text instead of JSON, it's likely saying it can't generate a query
+      // Return a special response to indicate this
+      if (
+        cleanedResp.toLowerCase().includes('cannot generate') ||
+        cleanedResp.toLowerCase().includes('not a question about')
+      ) {
+        return {
+          error: 'cannot_generate_query',
+          message: cleanedResp,
+          suggestedResponse:
+            "This question doesn't require database querying. Let me provide a general answer.",
+        };
+      }
+
       throw new Error(
         `QueryGenerator produced invalid JSON: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`,
       );

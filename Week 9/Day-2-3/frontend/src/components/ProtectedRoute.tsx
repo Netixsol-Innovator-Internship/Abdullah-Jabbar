@@ -36,13 +36,13 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     if (profileData && !user) {
       dispatch(updateUser(profileData));
     }
-  }, [profileData, user, dispatch]);
+  }, [profileData, user, dispatch, isAuthenticated, isLoading, error]);
 
   useEffect(() => {
     if (!isAuthenticated || error) {
       router.push("/login");
     }
-  }, [isAuthenticated, error, router]);
+  }, [isAuthenticated, error, router, isLoading]); // Added missing dependencies
 
   if (!isAuthenticated || isLoading) {
     return <FullScreenLoader label="Authenticating your session" />;

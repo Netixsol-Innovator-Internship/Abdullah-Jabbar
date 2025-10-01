@@ -1,0 +1,1276 @@
+[
+  {
+    "name": "CleanLiving Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "CleanLiving",
+    "description": "Premium omega-3 supplement supplement by CleanLiving. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 22.37,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "ActiveLife Multivitamin",
+    "category": "Multivitamin",
+    "brand": "ActiveLife",
+    "description": "Premium multivitamin supplement by ActiveLife. Complete daily nutrition with essential vitamins and minerals to support overall health and wellness.",
+    "price": 30.69,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "MoveWell Energy Support",
+    "category": "Energy Support",
+    "brand": "MoveWell",
+    "description": "Premium energy support supplement by MoveWell. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 10.35,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "Nature’s Remedy Sleep Support",
+    "category": "Sleep Support",
+    "brand": "Nature’s Remedy",
+    "description": "Premium sleep support supplement by Nature’s Remedy. Gentle, natural ingredients to promote restful sleep and healthy sleep cycles.",
+    "price": 12.67,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "WellnessCare Probiotics",
+    "category": "Probiotics",
+    "brand": "WellnessCare",
+    "description": "Premium probiotics supplement by WellnessCare. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 43.34,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "NutraLife Energy Support",
+    "category": "Energy Support",
+    "brand": "NutraLife",
+    "description": "Premium energy support supplement by NutraLife. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 30.55,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "ActiveLife Energy Support",
+    "category": "Energy Support",
+    "brand": "ActiveLife",
+    "description": "Premium energy support supplement by ActiveLife. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 43.58,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "Nature’s Remedy Immune Support",
+    "category": "Immune Support",
+    "brand": "Nature’s Remedy",
+    "description": "Premium immune support supplement by Nature’s Remedy. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 23.92,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "VitalChoice Energy Support",
+    "category": "Energy Support",
+    "brand": "VitalChoice",
+    "description": "Premium energy support supplement by VitalChoice. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 31.75,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "PureHealth Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "PureHealth",
+    "description": "Premium omega-3 supplement supplement by PureHealth. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 34.8,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "NutraLife Energy Support",
+    "category": "Energy Support",
+    "brand": "NutraLife",
+    "description": "Premium energy support supplement by NutraLife. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 42.16,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "VitalChoice Probiotics",
+    "category": "Probiotics",
+    "brand": "VitalChoice",
+    "description": "Premium probiotics supplement by VitalChoice. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 37.51,
+    "ingredients": [
+      "Omega-3",
+      "EPA",
+      "DHA"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "CleanLiving Detox",
+    "category": "Detox",
+    "brand": "CleanLiving",
+    "description": "Premium detox supplement by CleanLiving. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 31.53,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "Nature’s Remedy Sleep Support",
+    "category": "Sleep Support",
+    "brand": "Nature’s Remedy",
+    "description": "Premium sleep support supplement by Nature’s Remedy. Gentle, natural ingredients to promote restful sleep and healthy sleep cycles.",
+    "price": 13.03,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "PureHealth Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "PureHealth",
+    "description": "Premium omega-3 supplement supplement by PureHealth. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 10.42,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "ActiveLife Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "ActiveLife",
+    "description": "Premium omega-3 supplement supplement by ActiveLife. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 39.41,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "Nature’s Remedy Multivitamin",
+    "category": "Multivitamin",
+    "brand": "Nature’s Remedy",
+    "description": "Premium multivitamin supplement by Nature’s Remedy. Complete daily nutrition with essential vitamins and minerals to support overall health and wellness.",
+    "price": 24.62,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "NutraCore Multivitamin",
+    "category": "Multivitamin",
+    "brand": "NutraCore",
+    "description": "Premium multivitamin supplement by NutraCore. Complete daily nutrition with essential vitamins and minerals to support overall health and wellness.",
+    "price": 37.02,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "VitalChoice Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "VitalChoice",
+    "description": "Premium calcium supplement supplement by VitalChoice. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 41.75,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "VitalChoice Detox",
+    "category": "Detox",
+    "brand": "VitalChoice",
+    "description": "Premium detox supplement by VitalChoice. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 13.14,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "ActiveLife Immune Support",
+    "category": "Immune Support",
+    "brand": "ActiveLife",
+    "description": "Premium immune support supplement by ActiveLife. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 33.89,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "ActiveLife Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "ActiveLife",
+    "description": "Premium omega-3 supplement supplement by ActiveLife. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 41.75,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "Nature’s Remedy Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "Nature’s Remedy",
+    "description": "Premium calcium supplement supplement by Nature’s Remedy. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 36.48,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "ActiveLife Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "ActiveLife",
+    "description": "Premium herbal supplement supplement by ActiveLife. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 45.56,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "GutCare Joint Health",
+    "category": "Joint Health",
+    "brand": "GutCare",
+    "description": "Premium joint health supplement by GutCare. Comprehensive joint support formula to maintain mobility and reduce discomfort.",
+    "price": 16.14,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "ActiveLife Multivitamin",
+    "category": "Multivitamin",
+    "brand": "ActiveLife",
+    "description": "Premium multivitamin supplement by ActiveLife. Complete daily nutrition with essential vitamins and minerals to support overall health and wellness.",
+    "price": 21.24,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "GutCare Immune Support",
+    "category": "Immune Support",
+    "brand": "GutCare",
+    "description": "Premium immune support supplement by GutCare. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 20.61,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "ActiveLife Energy Support",
+    "category": "Energy Support",
+    "brand": "ActiveLife",
+    "description": "Premium energy support supplement by ActiveLife. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 42.43,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "MoveWell Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "MoveWell",
+    "description": "Premium calcium supplement supplement by MoveWell. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 34.85,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "NutraLife Sleep Support",
+    "category": "Sleep Support",
+    "brand": "NutraLife",
+    "description": "Premium sleep support supplement by NutraLife. Gentle, natural ingredients to promote restful sleep and healthy sleep cycles.",
+    "price": 17.81,
+    "ingredients": [
+      "Vitamin A",
+      "Vitamin C",
+      "Vitamin D3",
+      "Zinc"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "NutraLife Detox",
+    "category": "Detox",
+    "brand": "NutraLife",
+    "description": "Premium detox supplement by NutraLife. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 11.05,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "NutraCore Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "NutraCore",
+    "description": "Premium calcium supplement supplement by NutraCore. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 25.03,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "WellnessCare Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "WellnessCare",
+    "description": "Premium herbal supplement supplement by WellnessCare. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 31.72,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "NutraCore Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "NutraCore",
+    "description": "Premium omega-3 supplement supplement by NutraCore. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 20.55,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "GutCare Joint Health",
+    "category": "Joint Health",
+    "brand": "GutCare",
+    "description": "Premium joint health supplement by GutCare. Comprehensive joint support formula to maintain mobility and reduce discomfort.",
+    "price": 36.34,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "NutraLife Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "NutraLife",
+    "description": "Premium herbal supplement supplement by NutraLife. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 12.36,
+    "ingredients": [
+      "Vitamin A",
+      "Vitamin C",
+      "Vitamin D3",
+      "Zinc"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "WellnessCare Energy Support",
+    "category": "Energy Support",
+    "brand": "WellnessCare",
+    "description": "Premium energy support supplement by WellnessCare. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 37.71,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "GutCare Multivitamin",
+    "category": "Multivitamin",
+    "brand": "GutCare",
+    "description": "Premium multivitamin supplement by GutCare. Complete daily nutrition with essential vitamins and minerals to support overall health and wellness.",
+    "price": 44.44,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "PureHealth Probiotics",
+    "category": "Probiotics",
+    "brand": "PureHealth",
+    "description": "Premium probiotics supplement by PureHealth. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 32.71,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "Nature’s Remedy Energy Support",
+    "category": "Energy Support",
+    "brand": "Nature’s Remedy",
+    "description": "Premium energy support supplement by Nature’s Remedy. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 15.82,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "PureHealth Detox",
+    "category": "Detox",
+    "brand": "PureHealth",
+    "description": "Premium detox supplement by PureHealth. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 20.81,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "MoveWell Probiotics",
+    "category": "Probiotics",
+    "brand": "MoveWell",
+    "description": "Premium probiotics supplement by MoveWell. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 27.15,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "VitalChoice Multivitamin",
+    "category": "Multivitamin",
+    "brand": "VitalChoice",
+    "description": "Premium multivitamin supplement by VitalChoice. Complete daily nutrition with essential vitamins and minerals to support overall health and wellness.",
+    "price": 32.31,
+    "ingredients": [
+      "Omega-3",
+      "EPA",
+      "DHA"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "CleanLiving Joint Health",
+    "category": "Joint Health",
+    "brand": "CleanLiving",
+    "description": "Premium joint health supplement by CleanLiving. Comprehensive joint support formula to maintain mobility and reduce discomfort.",
+    "price": 36.77,
+    "ingredients": [
+      "Omega-3",
+      "EPA",
+      "DHA"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "VitalChoice Immune Support",
+    "category": "Immune Support",
+    "brand": "VitalChoice",
+    "description": "Premium immune support supplement by VitalChoice. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 49.1,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "ActiveLife Probiotics",
+    "category": "Probiotics",
+    "brand": "ActiveLife",
+    "description": "Premium probiotics supplement by ActiveLife. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 29.24,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "VitalChoice Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "VitalChoice",
+    "description": "Premium herbal supplement supplement by VitalChoice. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 49.16,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "PureHealth Probiotics",
+    "category": "Probiotics",
+    "brand": "PureHealth",
+    "description": "Premium probiotics supplement by PureHealth. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 27.14,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "NutraCore Detox",
+    "category": "Detox",
+    "brand": "NutraCore",
+    "description": "Premium detox supplement by NutraCore. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 40.09,
+    "ingredients": [
+      "Omega-3",
+      "EPA",
+      "DHA"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "NutraCore Energy Support",
+    "category": "Energy Support",
+    "brand": "NutraCore",
+    "description": "Premium energy support supplement by NutraCore. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 45.81,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "WellnessCare Joint Health",
+    "category": "Joint Health",
+    "brand": "WellnessCare",
+    "description": "Premium joint health supplement by WellnessCare. Comprehensive joint support formula to maintain mobility and reduce discomfort.",
+    "price": 33.66,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "ActiveLife Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "ActiveLife",
+    "description": "Premium calcium supplement supplement by ActiveLife. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 14.75,
+    "ingredients": [
+      "Omega-3",
+      "EPA",
+      "DHA"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "ActiveLife Detox",
+    "category": "Detox",
+    "brand": "ActiveLife",
+    "description": "Premium detox supplement by ActiveLife. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 10.95,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "NutraLife Energy Support",
+    "category": "Energy Support",
+    "brand": "NutraLife",
+    "description": "Premium energy support supplement by NutraLife. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 14.48,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "GutCare Sleep Support",
+    "category": "Sleep Support",
+    "brand": "GutCare",
+    "description": "Premium sleep support supplement by GutCare. Gentle, natural ingredients to promote restful sleep and healthy sleep cycles.",
+    "price": 27.12,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "CleanLiving Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "CleanLiving",
+    "description": "Premium calcium supplement supplement by CleanLiving. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 13.38,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "Nature’s Remedy Immune Support",
+    "category": "Immune Support",
+    "brand": "Nature’s Remedy",
+    "description": "Premium immune support supplement by Nature’s Remedy. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 47.15,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "CleanLiving Detox",
+    "category": "Detox",
+    "brand": "CleanLiving",
+    "description": "Premium detox supplement by CleanLiving. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 15.24,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "NutraCore Immune Support",
+    "category": "Immune Support",
+    "brand": "NutraCore",
+    "description": "Premium immune support supplement by NutraCore. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 20.84,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "Nature’s Remedy Immune Support",
+    "category": "Immune Support",
+    "brand": "Nature’s Remedy",
+    "description": "Premium immune support supplement by Nature’s Remedy. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 42.58,
+    "ingredients": [
+      "Omega-3",
+      "EPA",
+      "DHA"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "WellnessCare Sleep Support",
+    "category": "Sleep Support",
+    "brand": "WellnessCare",
+    "description": "Premium sleep support supplement by WellnessCare. Gentle, natural ingredients to promote restful sleep and healthy sleep cycles.",
+    "price": 15.34,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "NutraLife Energy Support",
+    "category": "Energy Support",
+    "brand": "NutraLife",
+    "description": "Premium energy support supplement by NutraLife. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 17.43,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "NutraLife Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "NutraLife",
+    "description": "Premium herbal supplement supplement by NutraLife. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 27.1,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "NutraLife Probiotics",
+    "category": "Probiotics",
+    "brand": "NutraLife",
+    "description": "Premium probiotics supplement by NutraLife. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 42.12,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "GutCare Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "GutCare",
+    "description": "Premium calcium supplement supplement by GutCare. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 31.92,
+    "ingredients": [
+      "Omega-3",
+      "EPA",
+      "DHA"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "WellnessCare Multivitamin",
+    "category": "Multivitamin",
+    "brand": "WellnessCare",
+    "description": "Premium multivitamin supplement by WellnessCare. Complete daily nutrition with essential vitamins and minerals to support overall health and wellness.",
+    "price": 33.56,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "WellnessCare Immune Support",
+    "category": "Immune Support",
+    "brand": "WellnessCare",
+    "description": "Premium immune support supplement by WellnessCare. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 21.11,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "GutCare Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "GutCare",
+    "description": "Premium herbal supplement supplement by GutCare. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 35.84,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "WellnessCare Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "WellnessCare",
+    "description": "Premium herbal supplement supplement by WellnessCare. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 28.86,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "GutCare Immune Support",
+    "category": "Immune Support",
+    "brand": "GutCare",
+    "description": "Premium immune support supplement by GutCare. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 27.85,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "MoveWell Immune Support",
+    "category": "Immune Support",
+    "brand": "MoveWell",
+    "description": "Premium immune support supplement by MoveWell. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 22.68,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "PureHealth Joint Health",
+    "category": "Joint Health",
+    "brand": "PureHealth",
+    "description": "Premium joint health supplement by PureHealth. Comprehensive joint support formula to maintain mobility and reduce discomfort.",
+    "price": 37.46,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "MoveWell Immune Support",
+    "category": "Immune Support",
+    "brand": "MoveWell",
+    "description": "Premium immune support supplement by MoveWell. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 46.3,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "CleanLiving Probiotics",
+    "category": "Probiotics",
+    "brand": "CleanLiving",
+    "description": "Premium probiotics supplement by CleanLiving. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 12.86,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "NutraCore Energy Support",
+    "category": "Energy Support",
+    "brand": "NutraCore",
+    "description": "Premium energy support supplement by NutraCore. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 13.05,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "MoveWell Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "MoveWell",
+    "description": "Premium calcium supplement supplement by MoveWell. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 12.15,
+    "ingredients": [
+      "Lactobacillus",
+      "Bifidobacterium"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "CleanLiving Joint Health",
+    "category": "Joint Health",
+    "brand": "CleanLiving",
+    "description": "Premium joint health supplement by CleanLiving. Comprehensive joint support formula to maintain mobility and reduce discomfort.",
+    "price": 36.39,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "VitalChoice Detox",
+    "category": "Detox",
+    "brand": "VitalChoice",
+    "description": "Premium detox supplement by VitalChoice. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 28.88,
+    "ingredients": [
+      "Vitamin A",
+      "Vitamin C",
+      "Vitamin D3",
+      "Zinc"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "WellnessCare Probiotics",
+    "category": "Probiotics",
+    "brand": "WellnessCare",
+    "description": "Premium probiotics supplement by WellnessCare. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 29.87,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "NutraLife Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "NutraLife",
+    "description": "Premium herbal supplement supplement by NutraLife. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 16.47,
+    "ingredients": [
+      "Vitamin A",
+      "Vitamin C",
+      "Vitamin D3",
+      "Zinc"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "ActiveLife Immune Support",
+    "category": "Immune Support",
+    "brand": "ActiveLife",
+    "description": "Premium immune support supplement by ActiveLife. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 26.97,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "VitalChoice Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "VitalChoice",
+    "description": "Premium omega-3 supplement supplement by VitalChoice. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 11.85,
+    "ingredients": [
+      "Vitamin A",
+      "Vitamin C",
+      "Vitamin D3",
+      "Zinc"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "GutCare Immune Support",
+    "category": "Immune Support",
+    "brand": "GutCare",
+    "description": "Premium immune support supplement by GutCare. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 11.7,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "NutraLife Sleep Support",
+    "category": "Sleep Support",
+    "brand": "NutraLife",
+    "description": "Premium sleep support supplement by NutraLife. Gentle, natural ingredients to promote restful sleep and healthy sleep cycles.",
+    "price": 17.99,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "MoveWell Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "MoveWell",
+    "description": "Premium calcium supplement supplement by MoveWell. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 19.02,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "NutraLife Joint Health",
+    "category": "Joint Health",
+    "brand": "NutraLife",
+    "description": "Premium joint health supplement by NutraLife. Comprehensive joint support formula to maintain mobility and reduce discomfort.",
+    "price": 36.34,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "WellnessCare Probiotics",
+    "category": "Probiotics",
+    "brand": "WellnessCare",
+    "description": "Premium probiotics supplement by WellnessCare. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 33.44,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "GutCare Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "GutCare",
+    "description": "Premium omega-3 supplement supplement by GutCare. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 47.87,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "PureHealth Detox",
+    "category": "Detox",
+    "brand": "PureHealth",
+    "description": "Premium detox supplement by PureHealth. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 16.07,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "Nature’s Remedy Probiotics",
+    "category": "Probiotics",
+    "brand": "Nature’s Remedy",
+    "description": "Premium probiotics supplement by Nature’s Remedy. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 14.13,
+    "ingredients": [
+      "Calcium Carbonate",
+      "Vitamin D3"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "GutCare Detox",
+    "category": "Detox",
+    "brand": "GutCare",
+    "description": "Premium detox supplement by GutCare. Natural detoxification support to cleanse and rejuvenate your body.",
+    "price": 29.26,
+    "ingredients": [
+      "Vitamin C",
+      "Rose Hips Extract"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "GutCare Joint Health",
+    "category": "Joint Health",
+    "brand": "GutCare",
+    "description": "Premium joint health supplement by GutCare. Comprehensive joint support formula to maintain mobility and reduce discomfort.",
+    "price": 37.69,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "VitalChoice Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "VitalChoice",
+    "description": "Premium omega-3 supplement supplement by VitalChoice. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 29.78,
+    "ingredients": [
+      "Ashwagandha",
+      "Ginseng",
+      "Turmeric"
+    ],
+    "dosage": "2 capsules per day"
+  },
+  {
+    "name": "CleanLiving Probiotics",
+    "category": "Probiotics",
+    "brand": "CleanLiving",
+    "description": "Premium probiotics supplement by CleanLiving. Live beneficial bacteria to support digestive health and boost immune system function.",
+    "price": 31.15,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 softgel daily"
+  },
+  {
+    "name": "Nature’s Remedy Immune Support",
+    "category": "Immune Support",
+    "brand": "Nature’s Remedy",
+    "description": "Premium immune support supplement by Nature’s Remedy. Powerful blend of vitamins and antioxidants to strengthen your natural defense system.",
+    "price": 18.53,
+    "ingredients": [
+      "Vitamin B1",
+      "Vitamin B6",
+      "Vitamin B12",
+      "Niacin"
+    ],
+    "dosage": "1 tablet per day"
+  },
+  {
+    "name": "PureHealth Sleep Support",
+    "category": "Sleep Support",
+    "brand": "PureHealth",
+    "description": "Premium sleep support supplement by PureHealth. Gentle, natural ingredients to promote restful sleep and healthy sleep cycles.",
+    "price": 40.67,
+    "ingredients": [
+      "Milk Thistle",
+      "Dandelion Root"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "ActiveLife Herbal Supplement",
+    "category": "Herbal Supplement",
+    "brand": "ActiveLife",
+    "description": "Premium herbal supplement supplement by ActiveLife. Traditional herbal blend crafted for natural wellness and vitality.",
+    "price": 14.7,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 chewable tablet per day"
+  },
+  {
+    "name": "VitalChoice Calcium Supplement",
+    "category": "Calcium Supplement",
+    "brand": "VitalChoice",
+    "description": "Premium calcium supplement supplement by VitalChoice. Essential calcium and supporting nutrients for strong bones and teeth.",
+    "price": 24.75,
+    "ingredients": [
+      "Glucosamine",
+      "Chondroitin",
+      "MSM"
+    ],
+    "dosage": "1 tablet twice a day"
+  },
+  {
+    "name": "NutraLife Omega-3 Supplement",
+    "category": "Omega-3 Supplement",
+    "brand": "NutraLife",
+    "description": "Premium omega-3 supplement supplement by NutraLife. High-quality omega-3 fatty acids to support heart health, brain function, and reduce inflammation.",
+    "price": 46.96,
+    "ingredients": [
+      "Omega-3",
+      "EPA",
+      "DHA"
+    ],
+    "dosage": "1 capsule before bedtime"
+  },
+  {
+    "name": "NutraCore Energy Support",
+    "category": "Energy Support",
+    "brand": "NutraCore",
+    "description": "Premium energy support supplement by NutraCore. Natural energy-boosting formula to combat fatigue and enhance daily performance.",
+    "price": 24.64,
+    "ingredients": [
+      "Valerian Root",
+      "Chamomile",
+      "Melatonin"
+    ],
+    "dosage": "1 tablet per day"
+  }
+]

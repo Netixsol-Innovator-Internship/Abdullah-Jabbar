@@ -13,7 +13,7 @@ interface ChatMessagesProps {
 const ChatMessages = forwardRef<HTMLDivElement, ChatMessagesProps>(
   ({ messages, onSuggestionClick }, ref) => {
     return (
-      <div className="px-4 py-4 space-y-4">
+      <div className="px-4 py-4 space-y-4 flex flex-col">
         {messages.length === 0 ? (
           <WelcomeMessage onSuggestionClick={onSuggestionClick} />
         ) : (

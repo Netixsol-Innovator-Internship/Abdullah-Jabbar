@@ -6,6 +6,7 @@ import { QueryValidatorService } from '../../services/query-validator.service';
 import { MongoQueryService } from '../../services/mongo-query.service';
 import { FormatterService } from '../../services/formatter.service';
 import { MemoryService } from '../../services/memory.service';
+import { GeminiAdapter } from '../../ai/gemini-adapter';
 
 @Injectable()
 export class AskService {
@@ -18,6 +19,7 @@ export class AskService {
     private readonly executor: MongoQueryService,
     private readonly formatter: FormatterService,
     private readonly memory: MemoryService,
+    private readonly gemini: GeminiAdapter,
   ) {}
 
   async handleQuestion(question: string, userId: string = 'default') {
@@ -120,6 +122,33 @@ export class AskService {
       );
     }
 
+    // Handle case where query generator can't create a MongoDB query
+    if (generated?.error === 'cannot_generate_query') {
+      this.logger.log(`Query generator cannot create query for: ${normalized}`);
+
+      // For general cricket questions, use Gemini to provide a direct answer
+      const generalAnswer = await this.gemini.generate(
+        `Answer this cricket-related question: ${normalized}
+        
+        Provide a helpful, informative answer about cricket. Keep it concise but informative.`,
+      );
+
+      // Save to memory
+      await this.memory.saveConversation(userId, normalized, {
+        type: 'text',
+        data: generalAnswer,
+      });
+
+      return {
+        type: 'text',
+        data: generalAnswer,
+        meta: {
+          source: 'general_knowledge',
+          reason: 'No database query needed',
+        },
+      };
+    }
+
     // Normalize generated queries to avoid invalid or nonsensical filters
     const normalizeGenerated = (q: any) => {
       try {
@@ -214,7 +243,11 @@ export class AskService {
 
       // meta: include sanitized query but strip anything sensitive
       const meta = { query: sanitized };
-      const result = { ...output, meta };
+      const result = {
+        ...output,
+        meta,
+        format: this.getFormatFromQuery(sanitized),
+      };
 
       // Node 7: Memory Saver
       await this.memory.saveConversation(userId, question, result);

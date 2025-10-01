@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useAppSelector } from "../../store/hooks";
 import {
   askQuestion,
   getConversationHistory,
   getSummary,
+  createSummary,
   clearConversationHistory,
   AskResponse,
   SummaryRecord,
@@ -19,33 +20,89 @@ export const useChatLogic = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const [isTypingResponse, setIsTypingResponse] = useState(false);
-  const { user } = useAppSelector((state) => state.auth);
-  const userId = user?.id || "anonymous";
+  const [isSummarizing, setIsSummarizing] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [showSummaryModal, setShowSummaryModal] = useState(false);
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+
+  // Use refs to track initialization state to prevent re-renders
+  const hasLoadedHistory = useRef(false);
+  const isInitialized = useRef(false);
+  const lastUserMessageCount = useRef(0);
+
+  // Use the proper user ID - the backend returns user._id as id
+  const userId = user?.id;
+
+  // Toast utility function
+  const showToastMessage = useCallback((message: string) => {
+    setToastMessage(message);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000); // Hide toast after 3 seconds
+  }, []);
+
+  // Auto-summarization after 5 messages (optimized)
+  const checkAutoSummarization = useCallback(
+    async (currentMessages: ChatMessage[]) => {
+      // Count user messages only (exclude system messages)
+      const userMessages = currentMessages.filter((msg) => msg.type === "user");
+      const currentUserCount = userMessages.length;
+
+      // Only trigger if we've crossed a 5-message threshold and haven't summarized yet
+      if (
+        currentUserCount >= 5 &&
+        currentUserCount % 5 === 0 &&
+        currentUserCount > lastUserMessageCount.current &&
+        !summary &&
+        userId &&
+        isAuthenticated
+      ) {
+        lastUserMessageCount.current = currentUserCount;
+        try {
+          const newSummary = await createSummary(userId);
+          if (newSummary) {
+            setSummary(newSummary);
+            showToastMessage(
+              "💭 Memory updated - Your conversation has been automatically summarized for better context!"
+            );
+          }
+        } catch (error) {
+          console.error("Auto-summarization failed:", error);
+        }
+      }
+    },
+    [summary, userId, isAuthenticated, showToastMessage]
+  );
 
   // Debugging: show auth state when hook initializes
   useEffect(() => {
     try {
-      console.debug("useChatLogic auth user/token", {
+      console.debug("useChatLogic auth state", {
         user,
+        userId,
+        isAuthenticated,
         token: typeof window !== "undefined" && (document.cookie || ""),
       });
-    } catch (e) {
+    } catch {
       /* ignore */
     }
-  }, [user]);
+  }, [user, userId, isAuthenticated]);
 
-  // Helper function to add messages with animation
+  // Helper function to add messages with animation (optimized for stability)
   const addMessageWithAnimation = useCallback((message: ChatMessage) => {
+    // Add message immediately
     setMessages((prev) => [...prev, { ...message, isAnimating: true }]);
 
-    // Remove animation flag after animation completes
+    // Remove animation flag after animation completes - only for the specific message
     setTimeout(() => {
       setMessages((prev) =>
         prev.map((msg) =>
           msg.id === message.id ? { ...msg, isAnimating: false } : msg
         )
       );
-    }, 400);
+    }, 1200); // Keep duration consistent
   }, []);
 
   // Extract answer text from response
@@ -72,19 +129,7 @@ export const useChatLogic = () => {
 
   // Clear all conversation history including persisted data
   const clearConversation = useCallback(async () => {
-    if (isClearing) return;
-
-    // Allow anonymous sessions (shouldn't happen on protected route) to clear locally
-    if (userId === "anonymous") {
-      // Add fade out animation before clearing
-      setMessages((prev) => prev.map((msg) => ({ ...msg, isAnimating: true })));
-
-      setTimeout(() => {
-        setMessages([]);
-        setSummary(null);
-      }, 300);
-      return;
-    }
+    if (isClearing || !userId || !isAuthenticated) return;
 
     setIsClearing(true);
 
@@ -97,7 +142,8 @@ export const useChatLogic = () => {
       setTimeout(() => {
         setMessages([]);
         setSummary(null);
-      }, 300);
+        hasLoadedHistory.current = false; // Reset to allow reloading
+      }, 800); // Increased from 300ms to 800ms for better visibility
     } catch (error) {
       console.error("Failed to clear conversation from server:", error);
 
@@ -119,17 +165,21 @@ export const useChatLogic = () => {
     } finally {
       setIsClearing(false);
     }
-  }, [userId, isClearing, addMessageWithAnimation]);
+  }, [userId, isAuthenticated, isClearing, addMessageWithAnimation]);
 
   // Load conversation history and convert to chat messages
   const loadConversationHistory = useCallback(async () => {
-    // Skip loading conversation history for anonymous users
-    if (userId === "anonymous") {
-      console.log("Skipping conversation history for anonymous user");
+    // Only load once and only for authenticated users with valid userId
+    if (!userId || !isAuthenticated || hasLoadedHistory.current) {
+      console.log(
+        "Skipping conversation history - already loaded or user not authenticated"
+      );
       return;
     }
 
     try {
+      hasLoadedHistory.current = true; // Mark as loaded to prevent re-loading
+
       const history = await getConversationHistory(userId);
       const chatMessages: ChatMessage[] = [];
 
@@ -157,20 +207,24 @@ export const useChatLogic = () => {
       }
     } catch (error) {
       console.error("Failed to load conversation history:", error);
+      hasLoadedHistory.current = false; // Reset on error to allow retry
     }
-  }, [userId]);
+  }, [userId, isAuthenticated]);
 
   // Load summary only when there is no conversation history (unless forced)
   const loadSummary = useCallback(
     async (options?: { force?: boolean }) => {
-      // Skip loading summary for anonymous users
-      if (userId === "anonymous") {
-        console.log("Skipping summary for anonymous user");
+      // Only load for authenticated users with valid userId
+      if (!userId || !isAuthenticated) {
+        console.log("Skipping summary - user not authenticated or no userId");
         return;
       }
 
+      // Get current messages length at call time (not as dependency)
+      const currentMessages = messages;
+
       // If messages already exist and not forced, skip fetching summary
-      if (!options?.force && messages.length > 0) {
+      if (!options?.force && currentMessages.length > 0) {
         console.log("Skipping summary because conversation history exists");
         return;
       }
@@ -179,30 +233,17 @@ export const useChatLogic = () => {
         const summaryData = await getSummary(userId);
         setSummary(summaryData);
 
-        // Add system message if summary exists and there are no messages
-        if (
-          summaryData &&
-          summaryData.summarizedMemory &&
-          messages.length === 0
-        ) {
-          setMessages([
-            {
-              id: "system-summary",
-              type: "system",
-              content: `💭 Memory loaded: ${summaryData.summarizedMemory}`,
-              timestamp: new Date(),
-            },
-          ]);
-        }
+        // Don't add any system messages to chat - summary will be shown via modal when requested
+        console.log("Summary loaded silently for user:", userId);
       } catch (error) {
         console.error("Failed to load summary:", error);
       }
     },
-    [userId, messages.length]
+    [userId, isAuthenticated, messages] // Added messages dependency back
   );
 
   const handleSubmit = async (question: string) => {
-    if (!question.trim() || isLoading) return;
+    if (!question.trim() || isLoading || !userId || !isAuthenticated) return;
 
     const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -212,11 +253,20 @@ export const useChatLogic = () => {
       isAnimating: true,
     };
 
-    // Add user message with animation
-    addMessageWithAnimation(userMessage);
+    // Add user message immediately and stabilize it
+    setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
     setIsLoading(true);
     setIsTypingResponse(true);
+
+    // Remove user message animation flag quickly to stabilize it
+    setTimeout(() => {
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === userMessage.id ? { ...msg, isAnimating: false } : msg
+        )
+      );
+    }, 400); // Slightly increased for better visual transition
 
     // Add typing indicator with delay for smoother transition
     setTimeout(() => {
@@ -229,8 +279,8 @@ export const useChatLogic = () => {
         isAnimating: true,
       };
 
-      addMessageWithAnimation(typingMessage);
-    }, 300);
+      setMessages((prev) => [...prev, typingMessage]);
+    }, 600); // Balanced delay
 
     try {
       const response = await askQuestion(userMessage.content, userId);
@@ -250,7 +300,7 @@ export const useChatLogic = () => {
         return [...filtered, assistantMessage];
       });
 
-      // Remove animation flag after animation completes
+      // Remove animation flag after animation completes (increased duration)
       setTimeout(() => {
         setMessages((prev) =>
           prev.map((msg) =>
@@ -259,10 +309,17 @@ export const useChatLogic = () => {
               : msg
           )
         );
-      }, 400);
+      }, 1200); // Increased from 400ms to 1200ms
 
-      // Refresh summary after a few seconds
-      setTimeout(loadSummary, 2000);
+      // Check for auto-summarization after successful response
+      setTimeout(() => {
+        setMessages((currentMessages) => {
+          checkAutoSummarization(currentMessages);
+          return currentMessages; // Don't modify messages, just check for summarization
+        });
+      }, 1500); // Wait for animations to complete
+
+      // Don't reload summary automatically - it causes re-renders and message flickering
     } catch (error) {
       console.error("Failed to ask question:", error);
 
@@ -281,7 +338,7 @@ export const useChatLogic = () => {
         return [...filtered, errorMessage];
       });
 
-      // Remove animation flag after animation completes
+      // Remove animation flag after animation completes (consistent timing)
       setTimeout(() => {
         setMessages((prev) =>
           prev.map((msg) =>
@@ -290,27 +347,85 @@ export const useChatLogic = () => {
               : msg
           )
         );
-      }, 400);
+      }, 1200); // Match other animation timings
     } finally {
       setIsLoading(false);
       setIsTypingResponse(false);
     }
   };
 
+  // View or create summarization
+  const viewSummarization = useCallback(async () => {
+    if (!userId || !isAuthenticated || isSummarizing) return;
+
+    setIsSummarizing(true);
+
+    try {
+      let currentSummary = summary;
+
+      // If no summary exists, create one
+      if (!currentSummary && messages.length > 0) {
+        currentSummary = await createSummary(userId);
+        if (currentSummary) {
+          setSummary(currentSummary);
+          showToastMessage("💭 New summary created!");
+        }
+      }
+
+      // Open modal to display the summary instead of adding to chat
+      if (currentSummary) {
+        setShowSummaryModal(true);
+      } else {
+        showToastMessage(
+          "⚠️ No conversation to summarize yet. Start chatting to build conversation history!"
+        );
+      }
+    } catch (error) {
+      console.error("Failed to view/create summary:", error);
+      showToastMessage(
+        "⚠️ Unable to load summary right now. Please try again shortly."
+      );
+    } finally {
+      setIsSummarizing(false);
+    }
+  }, [
+    userId,
+    isAuthenticated,
+    isSummarizing,
+    summary,
+    messages.length,
+    showToastMessage,
+  ]);
+
   useEffect(() => {
     const initializeChat = async () => {
+      // Only initialize once per session
+      if (!userId || !isAuthenticated || isInitialized.current) {
+        return;
+      }
+
+      isInitialized.current = true;
+
       // Load conversation history first. If no history exists, then try loading summary.
       await loadConversationHistory();
 
       // If there are no messages after history load, attempt to load summary
-      if (messages.length === 0) {
-        await loadSummary();
-      }
+      // Use a timeout to check after state updates
+      setTimeout(async () => {
+        if (messages.length === 0) {
+          await loadSummary();
+        }
+      }, 100);
     };
+
     initializeChat();
-    // Intentionally omit messages from deps to avoid re-running init on local message changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadSummary, loadConversationHistory]);
+  }, [
+    userId,
+    isAuthenticated,
+    loadConversationHistory,
+    loadSummary,
+    messages.length,
+  ]); // Added missing dependencies
 
   return {
     messages,
@@ -319,8 +434,15 @@ export const useChatLogic = () => {
     setInputValue,
     isLoading,
     isClearing,
+    isSummarizing,
     isTypingResponse,
+    showToast,
+    toastMessage,
+    showSummaryModal,
+    setShowSummaryModal,
     handleSubmit,
     clearConversation,
+    viewSummarization,
+    hasMessages: messages.length > 0,
   };
 };

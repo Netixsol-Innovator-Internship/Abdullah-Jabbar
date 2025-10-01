@@ -36,19 +36,6 @@ export class AskController {
     }
   }
 
-  // Temporary endpoint for testing without auth
-  @Post('test')
-  async askTest(@Body() body: { question?: string; userId?: string }) {
-    try {
-      if (!body?.question) throw new BadRequestException('question required');
-      const userId = body.userId || 'test-user';
-      return this.askService.handleQuestion(body.question, userId);
-    } catch (error) {
-      console.error('Error in ask test endpoint:', error);
-      throw error;
-    }
-  }
-
   @UseGuards(JwtAuthGuard)
   @Get('history/:userId')
   async getHistory(@Param('userId') userId: string, @Request() req) {
@@ -86,6 +73,23 @@ export class AskController {
       throw new BadRequestException('Access denied');
     }
     return this.memoryService.getSummary(userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('summarize/:userId')
+  async createSummary(@Param('userId') userId: string, @Request() req) {
+    // Ensure users can only summarize their own conversations
+    if (userId !== req.user._id.toString()) {
+      throw new BadRequestException('Access denied');
+    }
+
+    try {
+      const summary = await this.memoryService.createSummary(userId);
+      return { success: true, summary };
+    } catch (error) {
+      console.error('Error creating summary:', error);
+      throw new BadRequestException('Failed to create summary');
+    }
   }
 
   @UseGuards(JwtAuthGuard)

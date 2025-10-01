@@ -252,6 +252,37 @@ export async function getSummary(
   }
 }
 
+export async function createSummary(
+  userId: string
+): Promise<SummaryRecord | null> {
+  const token = Cookies.get("access_token");
+
+  if (!token || !userId) {
+    console.log(
+      "Skipping summary creation: User not authenticated or no userId"
+    );
+    return null;
+  }
+
+  try {
+    const response = await fetchWithFallback<{
+      success: boolean;
+      summary: SummaryRecord;
+    }>(`/ask/summarize/${userId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response?.summary || null;
+  } catch (error) {
+    console.error("Summary creation error:", error);
+    throw new Error("Failed to create summary");
+  }
+}
+
 export async function clearConversationHistory(userId: string): Promise<void> {
   const token = Cookies.get("access_token");
 

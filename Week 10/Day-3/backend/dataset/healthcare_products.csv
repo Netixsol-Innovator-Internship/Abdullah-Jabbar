@@ -1,0 +1,101 @@
+id,name,category,brand,description,price,ingredients,dosage,stock
+1,CleanLiving Omega-3 Supplement 1,Omega-3 Supplement,CleanLiving,Omega-3 Supplement supplement by CleanLiving for health support.,22.37,"Vitamin C, Rose Hips Extract",2 capsules per day,212
+2,ActiveLife Multivitamin 2,Multivitamin,ActiveLife,Multivitamin supplement by ActiveLife for health support.,30.69,"Lactobacillus, Bifidobacterium",1 chewable tablet per day,233
+3,MoveWell Energy Support 3,Energy Support,MoveWell,Energy Support supplement by MoveWell for health support.,10.35,"Calcium Carbonate, Vitamin D3",1 softgel daily,205
+4,Nature’s Remedy Sleep Support 4,Sleep Support,Nature’s Remedy,Sleep Support supplement by Nature’s Remedy for health support.,12.67,"Lactobacillus, Bifidobacterium",1 softgel daily,271
+5,WellnessCare Probiotics 5,Probiotics,WellnessCare,Probiotics supplement by WellnessCare for health support.,43.34,"Glucosamine, Chondroitin, MSM",1 capsule before bedtime,128
+6,NutraLife Energy Support 6,Energy Support,NutraLife,Energy Support supplement by NutraLife for health support.,30.55,"Glucosamine, Chondroitin, MSM",1 capsule before bedtime,202
+7,ActiveLife Energy Support 7,Energy Support,ActiveLife,Energy Support supplement by ActiveLife for health support.,43.58,"Vitamin C, Rose Hips Extract",1 softgel daily,200
+8,Nature’s Remedy Immune Support 8,Immune Support,Nature’s Remedy,Immune Support supplement by Nature’s Remedy for health support.,23.92,"Vitamin C, Rose Hips Extract",1 tablet per day,161
+9,VitalChoice Energy Support 9,Energy Support,VitalChoice,Energy Support supplement by VitalChoice for health support.,31.75,"Valerian Root, Chamomile, Melatonin",2 capsules per day,71
+10,PureHealth Omega-3 Supplement 10,Omega-3 Supplement,PureHealth,Omega-3 Supplement supplement by PureHealth for health support.,34.8,"Ashwagandha, Ginseng, Turmeric",1 softgel daily,107
+11,NutraLife Energy Support 11,Energy Support,NutraLife,Energy Support supplement by NutraLife for health support.,42.16,"Glucosamine, Chondroitin, MSM",1 chewable tablet per day,276
+12,VitalChoice Probiotics 12,Probiotics,VitalChoice,Probiotics supplement by VitalChoice for health support.,37.51,"Omega-3, EPA, DHA",1 tablet per day,199
+13,CleanLiving Detox 13,Detox,CleanLiving,Detox supplement by CleanLiving for health support.,31.53,"Lactobacillus, Bifidobacterium",1 softgel daily,278
+14,Nature’s Remedy Sleep Support 14,Sleep Support,Nature’s Remedy,Sleep Support supplement by Nature’s Remedy for health support.,13.03,"Lactobacillus, Bifidobacterium",1 capsule before bedtime,107
+15,PureHealth Omega-3 Supplement 15,Omega-3 Supplement,PureHealth,Omega-3 Supplement supplement by PureHealth for health support.,10.42,"Lactobacillus, Bifidobacterium",1 tablet per day,101
+16,ActiveLife Omega-3 Supplement 16,Omega-3 Supplement,ActiveLife,Omega-3 Supplement supplement by ActiveLife for health support.,39.41,"Glucosamine, Chondroitin, MSM",1 chewable tablet per day,89
+17,Nature’s Remedy Multivitamin 17,Multivitamin,Nature’s Remedy,Multivitamin supplement by Nature’s Remedy for health support.,24.62,"Vitamin C, Rose Hips Extract",1 tablet per day,212
+18,NutraCore Multivitamin 18,Multivitamin,NutraCore,Multivitamin supplement by NutraCore for health support.,37.02,"Valerian Root, Chamomile, Melatonin",1 softgel daily,71
+19,VitalChoice Calcium Supplement 19,Calcium Supplement,VitalChoice,Calcium Supplement supplement by VitalChoice for health support.,41.75,"Glucosamine, Chondroitin, MSM",1 chewable tablet per day,75
+20,VitalChoice Detox 20,Detox,VitalChoice,Detox supplement by VitalChoice for health support.,13.14,"Valerian Root, Chamomile, Melatonin",2 capsules per day,245
+21,ActiveLife Immune Support 21,Immune Support,ActiveLife,Immune Support supplement by ActiveLife for health support.,33.89,"Milk Thistle, Dandelion Root",1 capsule before bedtime,160
+22,ActiveLife Omega-3 Supplement 22,Omega-3 Supplement,ActiveLife,Omega-3 Supplement supplement by ActiveLife for health support.,41.75,"Lactobacillus, Bifidobacterium",1 chewable tablet per day,152
+23,Nature’s Remedy Calcium Supplement 23,Calcium Supplement,Nature’s Remedy,Calcium Supplement supplement by Nature’s Remedy for health support.,36.48,"Milk Thistle, Dandelion Root",1 capsule before bedtime,96
+24,ActiveLife Herbal Supplement 24,Herbal Supplement,ActiveLife,Herbal Supplement supplement by ActiveLife for health support.,45.56,"Glucosamine, Chondroitin, MSM",1 chewable tablet per day,272
+25,GutCare Joint Health 25,Joint Health,GutCare,Joint Health supplement by GutCare for health support.,16.14,"Ashwagandha, Ginseng, Turmeric",1 tablet twice a day,154
+26,ActiveLife Multivitamin 26,Multivitamin,ActiveLife,Multivitamin supplement by ActiveLife for health support.,21.24,"Vitamin C, Rose Hips Extract",2 capsules per day,132
+27,GutCare Immune Support 27,Immune Support,GutCare,Immune Support supplement by GutCare for health support.,20.61,"Ashwagandha, Ginseng, Turmeric",1 softgel daily,241
+28,ActiveLife Energy Support 28,Energy Support,ActiveLife,Energy Support supplement by ActiveLife for health support.,42.43,"Milk Thistle, Dandelion Root",1 tablet per day,180
+29,MoveWell Calcium Supplement 29,Calcium Supplement,MoveWell,Calcium Supplement supplement by MoveWell for health support.,34.85,"Ashwagandha, Ginseng, Turmeric",1 capsule before bedtime,103
+30,NutraLife Sleep Support 30,Sleep Support,NutraLife,Sleep Support supplement by NutraLife for health support.,17.81,"Vitamin A, Vitamin C, Vitamin D3, Zinc",1 chewable tablet per day,264
+31,NutraLife Detox 31,Detox,NutraLife,Detox supplement by NutraLife for health support.,11.05,"Glucosamine, Chondroitin, MSM",1 softgel daily,229
+32,NutraCore Calcium Supplement 32,Calcium Supplement,NutraCore,Calcium Supplement supplement by NutraCore for health support.,25.03,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",1 tablet per day,82
+33,WellnessCare Herbal Supplement 33,Herbal Supplement,WellnessCare,Herbal Supplement supplement by WellnessCare for health support.,31.72,"Lactobacillus, Bifidobacterium",2 capsules per day,79
+34,NutraCore Omega-3 Supplement 34,Omega-3 Supplement,NutraCore,Omega-3 Supplement supplement by NutraCore for health support.,20.55,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",1 capsule before bedtime,134
+35,GutCare Joint Health 35,Joint Health,GutCare,Joint Health supplement by GutCare for health support.,36.34,"Valerian Root, Chamomile, Melatonin",1 chewable tablet per day,71
+36,NutraLife Herbal Supplement 36,Herbal Supplement,NutraLife,Herbal Supplement supplement by NutraLife for health support.,12.36,"Vitamin A, Vitamin C, Vitamin D3, Zinc",1 softgel daily,52
+37,WellnessCare Energy Support 37,Energy Support,WellnessCare,Energy Support supplement by WellnessCare for health support.,37.71,"Ashwagandha, Ginseng, Turmeric",2 capsules per day,160
+38,GutCare Multivitamin 38,Multivitamin,GutCare,Multivitamin supplement by GutCare for health support.,44.44,"Ashwagandha, Ginseng, Turmeric",1 softgel daily,137
+39,PureHealth Probiotics 39,Probiotics,PureHealth,Probiotics supplement by PureHealth for health support.,32.71,"Glucosamine, Chondroitin, MSM",1 tablet twice a day,182
+40,Nature’s Remedy Energy Support 40,Energy Support,Nature’s Remedy,Energy Support supplement by Nature’s Remedy for health support.,15.82,"Calcium Carbonate, Vitamin D3",1 chewable tablet per day,230
+41,PureHealth Detox 41,Detox,PureHealth,Detox supplement by PureHealth for health support.,20.81,"Calcium Carbonate, Vitamin D3",1 capsule before bedtime,74
+42,MoveWell Probiotics 42,Probiotics,MoveWell,Probiotics supplement by MoveWell for health support.,27.15,"Glucosamine, Chondroitin, MSM",2 capsules per day,284
+43,VitalChoice Multivitamin 43,Multivitamin,VitalChoice,Multivitamin supplement by VitalChoice for health support.,32.31,"Omega-3, EPA, DHA",1 softgel daily,269
+44,CleanLiving Joint Health 44,Joint Health,CleanLiving,Joint Health supplement by CleanLiving for health support.,36.77,"Omega-3, EPA, DHA",1 capsule before bedtime,75
+45,VitalChoice Immune Support 45,Immune Support,VitalChoice,Immune Support supplement by VitalChoice for health support.,49.1,"Calcium Carbonate, Vitamin D3",1 softgel daily,270
+46,ActiveLife Probiotics 46,Probiotics,ActiveLife,Probiotics supplement by ActiveLife for health support.,29.24,"Valerian Root, Chamomile, Melatonin",2 capsules per day,272
+47,VitalChoice Herbal Supplement 47,Herbal Supplement,VitalChoice,Herbal Supplement supplement by VitalChoice for health support.,49.16,"Glucosamine, Chondroitin, MSM",1 capsule before bedtime,50
+48,PureHealth Probiotics 48,Probiotics,PureHealth,Probiotics supplement by PureHealth for health support.,27.14,"Ashwagandha, Ginseng, Turmeric",1 tablet per day,288
+49,NutraCore Detox 49,Detox,NutraCore,Detox supplement by NutraCore for health support.,40.09,"Omega-3, EPA, DHA",1 tablet per day,110
+50,NutraCore Energy Support 50,Energy Support,NutraCore,Energy Support supplement by NutraCore for health support.,45.81,"Lactobacillus, Bifidobacterium",1 tablet per day,161
+51,WellnessCare Joint Health 51,Joint Health,WellnessCare,Joint Health supplement by WellnessCare for health support.,33.66,"Milk Thistle, Dandelion Root",1 chewable tablet per day,121
+52,ActiveLife Calcium Supplement 52,Calcium Supplement,ActiveLife,Calcium Supplement supplement by ActiveLife for health support.,14.75,"Omega-3, EPA, DHA",1 tablet per day,102
+53,ActiveLife Detox 53,Detox,ActiveLife,Detox supplement by ActiveLife for health support.,10.95,"Lactobacillus, Bifidobacterium",1 chewable tablet per day,296
+54,NutraLife Energy Support 54,Energy Support,NutraLife,Energy Support supplement by NutraLife for health support.,14.48,"Valerian Root, Chamomile, Melatonin",1 capsule before bedtime,263
+55,GutCare Sleep Support 55,Sleep Support,GutCare,Sleep Support supplement by GutCare for health support.,27.12,"Lactobacillus, Bifidobacterium",1 tablet per day,126
+56,CleanLiving Calcium Supplement 56,Calcium Supplement,CleanLiving,Calcium Supplement supplement by CleanLiving for health support.,13.38,"Calcium Carbonate, Vitamin D3",1 capsule before bedtime,115
+57,Nature’s Remedy Immune Support 57,Immune Support,Nature’s Remedy,Immune Support supplement by Nature’s Remedy for health support.,47.15,"Valerian Root, Chamomile, Melatonin",1 chewable tablet per day,52
+58,CleanLiving Detox 58,Detox,CleanLiving,Detox supplement by CleanLiving for health support.,15.24,"Vitamin C, Rose Hips Extract",1 tablet per day,263
+59,NutraCore Immune Support 59,Immune Support,NutraCore,Immune Support supplement by NutraCore for health support.,20.84,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",1 chewable tablet per day,87
+60,Nature’s Remedy Immune Support 60,Immune Support,Nature’s Remedy,Immune Support supplement by Nature’s Remedy for health support.,42.58,"Omega-3, EPA, DHA",1 tablet twice a day,226
+61,WellnessCare Sleep Support 61,Sleep Support,WellnessCare,Sleep Support supplement by WellnessCare for health support.,15.34,"Lactobacillus, Bifidobacterium",1 softgel daily,282
+62,NutraLife Energy Support 62,Energy Support,NutraLife,Energy Support supplement by NutraLife for health support.,17.43,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",1 chewable tablet per day,159
+63,NutraLife Herbal Supplement 63,Herbal Supplement,NutraLife,Herbal Supplement supplement by NutraLife for health support.,27.1,"Calcium Carbonate, Vitamin D3",1 capsule before bedtime,78
+64,NutraLife Probiotics 64,Probiotics,NutraLife,Probiotics supplement by NutraLife for health support.,42.12,"Valerian Root, Chamomile, Melatonin",1 chewable tablet per day,56
+65,GutCare Calcium Supplement 65,Calcium Supplement,GutCare,Calcium Supplement supplement by GutCare for health support.,31.92,"Omega-3, EPA, DHA",2 capsules per day,222
+66,WellnessCare Multivitamin 66,Multivitamin,WellnessCare,Multivitamin supplement by WellnessCare for health support.,33.56,"Calcium Carbonate, Vitamin D3",1 tablet per day,102
+67,WellnessCare Immune Support 67,Immune Support,WellnessCare,Immune Support supplement by WellnessCare for health support.,21.11,"Milk Thistle, Dandelion Root",1 tablet twice a day,297
+68,GutCare Herbal Supplement 68,Herbal Supplement,GutCare,Herbal Supplement supplement by GutCare for health support.,35.84,"Valerian Root, Chamomile, Melatonin",1 softgel daily,86
+69,WellnessCare Herbal Supplement 69,Herbal Supplement,WellnessCare,Herbal Supplement supplement by WellnessCare for health support.,28.86,"Glucosamine, Chondroitin, MSM",1 softgel daily,107
+70,GutCare Immune Support 70,Immune Support,GutCare,Immune Support supplement by GutCare for health support.,27.85,"Vitamin C, Rose Hips Extract",1 tablet twice a day,198
+71,MoveWell Immune Support 71,Immune Support,MoveWell,Immune Support supplement by MoveWell for health support.,22.68,"Lactobacillus, Bifidobacterium",2 capsules per day,298
+72,PureHealth Joint Health 72,Joint Health,PureHealth,Joint Health supplement by PureHealth for health support.,37.46,"Glucosamine, Chondroitin, MSM",1 softgel daily,157
+73,MoveWell Immune Support 73,Immune Support,MoveWell,Immune Support supplement by MoveWell for health support.,46.3,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",2 capsules per day,104
+74,CleanLiving Probiotics 74,Probiotics,CleanLiving,Probiotics supplement by CleanLiving for health support.,12.86,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",1 tablet twice a day,74
+75,NutraCore Energy Support 75,Energy Support,NutraCore,Energy Support supplement by NutraCore for health support.,13.05,"Vitamin C, Rose Hips Extract",2 capsules per day,62
+76,MoveWell Calcium Supplement 76,Calcium Supplement,MoveWell,Calcium Supplement supplement by MoveWell for health support.,12.15,"Lactobacillus, Bifidobacterium",1 tablet per day,89
+77,CleanLiving Joint Health 77,Joint Health,CleanLiving,Joint Health supplement by CleanLiving for health support.,36.39,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",1 tablet per day,134
+78,VitalChoice Detox 78,Detox,VitalChoice,Detox supplement by VitalChoice for health support.,28.88,"Vitamin A, Vitamin C, Vitamin D3, Zinc",1 softgel daily,158
+79,WellnessCare Probiotics 79,Probiotics,WellnessCare,Probiotics supplement by WellnessCare for health support.,29.87,"Calcium Carbonate, Vitamin D3",1 capsule before bedtime,68
+80,NutraLife Herbal Supplement 80,Herbal Supplement,NutraLife,Herbal Supplement supplement by NutraLife for health support.,16.47,"Vitamin A, Vitamin C, Vitamin D3, Zinc",1 tablet twice a day,172
+81,ActiveLife Immune Support 81,Immune Support,ActiveLife,Immune Support supplement by ActiveLife for health support.,26.97,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",1 tablet twice a day,70
+82,VitalChoice Omega-3 Supplement 82,Omega-3 Supplement,VitalChoice,Omega-3 Supplement supplement by VitalChoice for health support.,11.85,"Vitamin A, Vitamin C, Vitamin D3, Zinc",2 capsules per day,247
+83,GutCare Immune Support 83,Immune Support,GutCare,Immune Support supplement by GutCare for health support.,11.7,"Milk Thistle, Dandelion Root",1 capsule before bedtime,56
+84,NutraLife Sleep Support 84,Sleep Support,NutraLife,Sleep Support supplement by NutraLife for health support.,17.99,"Ashwagandha, Ginseng, Turmeric",1 tablet per day,276
+85,MoveWell Calcium Supplement 85,Calcium Supplement,MoveWell,Calcium Supplement supplement by MoveWell for health support.,19.02,"Valerian Root, Chamomile, Melatonin",1 softgel daily,72
+86,NutraLife Joint Health 86,Joint Health,NutraLife,Joint Health supplement by NutraLife for health support.,36.34,"Calcium Carbonate, Vitamin D3",1 chewable tablet per day,177
+87,WellnessCare Probiotics 87,Probiotics,WellnessCare,Probiotics supplement by WellnessCare for health support.,33.44,"Ashwagandha, Ginseng, Turmeric",1 tablet twice a day,85
+88,GutCare Omega-3 Supplement 88,Omega-3 Supplement,GutCare,Omega-3 Supplement supplement by GutCare for health support.,47.87,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",2 capsules per day,142
+89,PureHealth Detox 89,Detox,PureHealth,Detox supplement by PureHealth for health support.,16.07,"Ashwagandha, Ginseng, Turmeric",1 tablet twice a day,288
+90,Nature’s Remedy Probiotics 90,Probiotics,Nature’s Remedy,Probiotics supplement by Nature’s Remedy for health support.,14.13,"Calcium Carbonate, Vitamin D3",1 softgel daily,164
+91,GutCare Detox 91,Detox,GutCare,Detox supplement by GutCare for health support.,29.26,"Vitamin C, Rose Hips Extract",1 capsule before bedtime,246
+92,GutCare Joint Health 92,Joint Health,GutCare,Joint Health supplement by GutCare for health support.,37.69,"Milk Thistle, Dandelion Root",1 chewable tablet per day,213
+93,VitalChoice Omega-3 Supplement 93,Omega-3 Supplement,VitalChoice,Omega-3 Supplement supplement by VitalChoice for health support.,29.78,"Ashwagandha, Ginseng, Turmeric",2 capsules per day,70
+94,CleanLiving Probiotics 94,Probiotics,CleanLiving,Probiotics supplement by CleanLiving for health support.,31.15,"Milk Thistle, Dandelion Root",1 softgel daily,193
+95,Nature’s Remedy Immune Support 95,Immune Support,Nature’s Remedy,Immune Support supplement by Nature’s Remedy for health support.,18.53,"Vitamin B1, Vitamin B6, Vitamin B12, Niacin",1 tablet per day,228
+96,PureHealth Sleep Support 96,Sleep Support,PureHealth,Sleep Support supplement by PureHealth for health support.,40.67,"Milk Thistle, Dandelion Root",1 tablet twice a day,246
+97,ActiveLife Herbal Supplement 97,Herbal Supplement,ActiveLife,Herbal Supplement supplement by ActiveLife for health support.,14.7,"Glucosamine, Chondroitin, MSM",1 chewable tablet per day,96
+98,VitalChoice Calcium Supplement 98,Calcium Supplement,VitalChoice,Calcium Supplement supplement by VitalChoice for health support.,24.75,"Glucosamine, Chondroitin, MSM",1 tablet twice a day,238
+99,NutraLife Omega-3 Supplement 99,Omega-3 Supplement,NutraLife,Omega-3 Supplement supplement by NutraLife for health support.,46.96,"Omega-3, EPA, DHA",1 capsule before bedtime,165
+100,NutraCore Energy Support 100,Energy Support,NutraCore,Energy Support supplement by NutraCore for health support.,24.64,"Valerian Root, Chamomile, Melatonin",1 tablet per day,286

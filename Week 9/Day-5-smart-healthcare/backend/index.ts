@@ -15,7 +15,7 @@ export default async function handler(req: any, res: any) {
       origin: [
         'http://localhost:3000',
         'https://abdullah-week9-day5-frontend.vercel.app', // Your frontend domain
-        'https://day-5-smart-healthcare.vercel.app', // Alternative frontend domain
+        'https://abdullah-week10-day1.vercel.app', // Alternative frontend domain
         process.env.FRONTEND_URL,
       ].filter(Boolean),
       credentials: true,

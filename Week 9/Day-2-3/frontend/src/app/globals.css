@@ -200,3 +200,23 @@ button {
 .btn-press:active {
   transform: scale(0.98);
 }
+
+/* Toast notification animation */
+.animate-fade-in-out {
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) translateX(-50%);
+  }
+  20%, 80% {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) translateX(-50%);
+  }
+}

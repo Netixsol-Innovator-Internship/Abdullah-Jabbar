@@ -136,15 +136,32 @@ export class QueryValidatorService {
               );
             }
           } else if (key === 'rpo' || key === 'inns' || key === 'runs') {
-            if (typeof v === 'string' && !isNaN(Number(v))) v = Number(v);
-            if (typeof v !== 'number')
-              throw new BadRequestException(
-                `${key} operator values must be numbers`,
+            if (typeof v === 'string') {
+              const numValue = Number(v);
+              if (!isNaN(numValue)) {
+                v = numValue;
+              } else {
+                // Log the invalid value and skip this filter instead of throwing
+                console.warn(
+                  `Invalid numeric value for ${key}: ${v}, skipping this filter`,
+                );
+                continue; // Skip this operation instead of throwing
+              }
+            }
+            if (typeof v !== 'number') {
+              console.warn(
+                `Non-numeric value for ${key}: ${v}, skipping this filter`,
               );
+              continue; // Skip this operation instead of throwing
+            }
           }
           opObj[op] = v;
         }
-        out[key] = opObj;
+
+        // Only add the field if it has valid operations
+        if (Object.keys(opObj).length > 0) {
+          out[key] = opObj;
+        }
       } else {
         // primitive
         let p = val;

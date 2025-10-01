@@ -21,6 +21,26 @@ export const renderAnswer = (answer: AskResponse): React.ReactElement => {
       columns: string[];
       rows: unknown[][];
     };
+
+    // Check if this table response has format information
+    const formatInfo = (answer as { format?: string })?.format;
+
+    if (formatInfo && formatInfo !== "Unknown") {
+      return (
+        <div className="border border-gray-300 rounded-lg p-4 transition-all duration-300 bg-gradient-to-r from-white to-gray-50/50 hover:from-gray-50 hover:to-white">
+          <h4 className="font-semibold mb-2 text-blue-600 flex items-center gap-2">
+            <span className="text-lg transition-transform duration-200 hover:scale-125">
+              {formatInfo === "Test" && "🏐"}
+              {formatInfo === "ODI" && "🏐"}
+              {formatInfo === "T20" && "🏐"}
+            </span>
+            {formatInfo} Cricket
+          </h4>
+          <PaginatedChatTable tableData={tableData} />
+        </div>
+      );
+    }
+
     return <PaginatedChatTable tableData={tableData} />;
   }
 
