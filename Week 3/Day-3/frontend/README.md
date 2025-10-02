@@ -1,12 +1,37 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Week10-Day4 Frontend Testing
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project includes end-to-end (E2E) tests using Playwright to ensure the application works correctly from the user's perspective.
 
-## Expanding the ESLint configuration
+### Test Coverage
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The E2E tests cover critical user flows including:
+
+- User authentication (login and registration)
+- Task management (create, read, update, delete tasks)
+- Navigation between pages
+- Form submissions and validations
+
+### Running Tests
+
+- **Headless mode** (default): `pnpm test`
+- **Visual mode** (with browser windows): `pnpm test:headed`
+- **Interactive UI mode** (for debugging): `pnpm test:ui`
+
+### Viewing Test Reports
+
+After running tests, view the HTML report:
+
+```bash
+pnpm exec playwright show-report
+```
+
+The report provides detailed results, screenshots, and traces for failed tests.
+
+### Test Setup
+
+- Tests run on Chromium and WebKit browsers
+- API calls are mocked to simulate backend responses
+- The Vite dev server starts automatically on port 5173
+- No backend server required for testing
