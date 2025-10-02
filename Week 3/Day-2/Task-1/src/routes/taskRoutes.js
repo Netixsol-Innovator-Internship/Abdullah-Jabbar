@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { check } = require('express-validator');
-const validateRequest = require('../middleware/validateRequest');
-const auth = require('../middleware/auth');
-const taskController = require('../controllers/taskController');
+const { check } = require("express-validator");
+const validateRequest = require("../middleware/validateRequest");
+const auth = require("../middleware/auth");
+const taskController = require("../controllers/taskController");
 
 /**
  * @swagger
@@ -24,7 +24,7 @@ const taskController = require('../controllers/taskController');
  *       200:
  *         description: Array of tasks
  */
-router.get('/', auth, taskController.getTasks);
+router.get("/", auth, taskController.getTasks);
 
 /**
  * @swagger
@@ -46,7 +46,7 @@ router.get('/', auth, taskController.getTasks);
  *       404:
  *         description: Not found
  */
-router.get('/:id', auth, taskController.getTask);
+router.get("/:id", auth, taskController.getTask);
 
 /**
  * @swagger
@@ -78,9 +78,9 @@ router.get('/:id', auth, taskController.getTask);
  *         description: Validation error
  */
 router.post(
-  '/',
+  "/",
   auth,
-  [check('title').notEmpty().withMessage('Title is required')],
+  [check("title").notEmpty().withMessage("Title is required")],
   validateRequest,
   taskController.createTask
 );
@@ -117,10 +117,13 @@ router.post(
  *         description: Updated
  */
 router.put(
-  '/:id',
+  "/:id",
   auth,
   [
-    check('title').optional().notEmpty().withMessage('Title, if provided, cannot be empty')
+    check("title")
+      .optional()
+      .notEmpty()
+      .withMessage("Title, if provided, cannot be empty"),
   ],
   validateRequest,
   taskController.updateTask
@@ -144,6 +147,21 @@ router.put(
  *       200:
  *         description: Deleted
  */
-router.delete('/:id', auth, taskController.deleteTask);
+router.delete("/:id", auth, taskController.deleteTask);
+
+// Add a route to handle the root path
+/**
+ * @swagger
+ * /api/tasks:
+ *   get:
+ *     summary: Root route for tasks
+ *     tags: [Tasks]
+ *     responses:
+ *       200:
+ *         description: Welcome message
+ */
+router.get("/", (req, res) => {
+  res.send("Welcome to the Tasks API!");
+});
 
 module.exports = router;

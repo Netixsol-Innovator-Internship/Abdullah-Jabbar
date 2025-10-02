@@ -1,24 +1,12 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ProductsService } from './products.service';
-import { SearchProductDto, AiSearchDto } from '../shared/dtos/product.dto';
-import { AiService } from '../ai/ai.service';
+import { SearchProductDto } from '../shared/dtos/product.dto';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard)
 export class ProductsController {
-  constructor(
-    private readonly productsService: ProductsService,
-    private readonly aiService: AiService,
-  ) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   @Get()
   async findAll() {
@@ -28,11 +16,6 @@ export class ProductsController {
   @Get('search')
   async search(@Query() searchDto: SearchProductDto) {
     return this.productsService.search(searchDto);
-  }
-
-  @Post('ai-search')
-  async aiSearch(@Body() aiSearchDto: AiSearchDto) {
-    return this.aiService.intentSearch(aiSearchDto.query);
   }
 
   @Get(':id')

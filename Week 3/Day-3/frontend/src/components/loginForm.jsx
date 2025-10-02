@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-export default function LoginForm({ onSubmit, loading = false, error = '' }) {
-  const [form, setForm] = useState({ email: '', password: '' });
+export default function LoginForm({ onSubmit, loading = false, error = "" }) {
+  const [form, setForm] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,7 +17,10 @@ export default function LoginForm({ onSubmit, loading = false, error = '' }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4 w-full max-w-md mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="grid gap-4 w-full max-w-md mx-auto"
+    >
       <div className="flex flex-col">
         <label htmlFor="email" className="mb-1 text-gray-700 font-medium">
           Email
@@ -50,16 +53,13 @@ export default function LoginForm({ onSubmit, loading = false, error = '' }) {
         />
       </div>
 
-      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
       <button
         type="submit"
         disabled={loading}
         className="mt-2 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
       >
-        {loading ? 'Please wait…' : 'Login'}
+        {loading ? "Please wait…" : "Login"}
       </button>
     </form>
   );
 }
-  

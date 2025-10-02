@@ -14,6 +14,7 @@ export default async function handler(req: any, res: any) {
     app.enableCors({
       origin: [
         'http://localhost:3000',
+        'https://abdullah-week10-day3-frontend.vercel.app',
         'https://abdullah-week9-day5-frontend.vercel.app', // Your frontend domain
         'https://abdullah-week10-day2.vercel.app', // Alternative frontend domain
         process.env.FRONTEND_URL,

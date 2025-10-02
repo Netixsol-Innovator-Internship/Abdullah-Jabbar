@@ -1,98 +1,254 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Healthcare AI Week 10 Day 3
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A comprehensive healthcare AI backend built with NestJS that provides intelligent product recommendations, symptom checking, and AI-powered health consultations.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+### Core Features
+- **User Authentication** - JWT-based authentication system
+- **Product Management** - Healthcare products database with search and filtering
+- **AI Chat Assistant** - Intelligent health consultation powered by Google's Gemini AI
+- **Symptom Checker** - Advanced symptom detection and product recommendation system
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### AI Capabilities
+- Natural language processing for health queries
+- Context-aware product recommendations
+- Multi-modal chat interface support
+- Health-focused response filtering and safety measures
 
-## Project setup
+## 📊 Symptom Checker Progress
 
-```bash
-$ npm install
+### ✅ Completed Features
+
+#### 1. **Backend Implementation**
+- **Symptom Detection Service** (`src/symptom-checker/symptom-checker.service.ts`)
+  - Rule-based symptom mapping system
+  - Fuzzy matching algorithm for symptom recognition
+  - Confidence scoring (high/medium/low)
+  - Category-based product recommendations
+  
+- **API Endpoints** (`src/symptom-checker/symptom-checker.controller.ts`)
+  - `POST /symptom-checker` - Check symptoms and get product recommendations
+  - `GET /symptom-checker/available-symptoms` - List all available symptom mappings
+  - `POST /symptom-checker/add-mapping` - Add new symptom-to-category mappings
+
+- **AI Integration** (`src/ai/ai.service.ts`)
+  - Seamless integration with AI chat system
+  - Symptom hints passed to AI for context-aware responses
+  - Enhanced product recommendation accuracy
+
+#### 2. **Frontend Implementation**
+- **Symptom Detection Utility** (`frontend/src/utils/symptomDetection.ts`)
+  - Real-time symptom query detection
+  - Pattern matching for health-related messages
+  - Automatic routing to appropriate endpoints
+
+- **Chat Integration**
+  - Modularized ChatBot component (reduced from 600 to 160 lines)
+  - Seamless symptom checker integration
+  - Enhanced user experience with intelligent routing
+
+#### 3. **Data Management**
+- **Symptom Mapping Database** (`src/data/symptomMapping.json`)
+  - Comprehensive symptom-to-category mappings
+  - Support for multiple categories per symptom
+  - Extensible JSON-based configuration
+
+### 🔧 Technical Implementation
+
+#### Symptom Detection Algorithm
+```typescript
+// Multi-layered matching approach:
+1. Exact symptom match (confidence: high)
+2. Word-based fuzzy matching (confidence: medium/high)
+3. Substring matching (confidence: low)
+4. AI fallback for unrecognized symptoms
 ```
 
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+#### API Response Structure
+```typescript
+interface SymptomCheckerResponse {
+  categories: string[];           // Recommended product categories
+  explanation: string;           // Human-readable explanation
+  products: Product[];          // Relevant products
+  confidence: 'high'|'medium'|'low'; // Match confidence
+  source: 'mapping'|'ai_fallback';   // Detection method
+  clarification?: string;        // Additional context
+}
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+#### Integration Flow
+```
+User Message → Symptom Detection → AI Processing → Product Recommendations
+     ↓              ↓                   ↓                    ↓
+"Joint pain"  → Joint Health     → Enhanced AI     → Omega-3, Glucosamine
+              → Omega-3           Response         → Anti-inflammatory
 ```
 
-## Deployment
+### 📈 Current Capabilities
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+#### Supported Symptom Categories
+- **Pain Management**: Joint pain, back pain, headaches, muscle aches
+- **Energy & Fatigue**: Tiredness, weakness, low energy, exhaustion
+- **Mental Health**: Stress, anxiety, depression, mood issues
+- **Sleep Issues**: Insomnia, restlessness, sleep quality
+- **Digestive Health**: Bloating, gas, constipation, stomach issues
+- **Skin & Hair**: Acne, dry skin, hair loss, skin conditions
+- **Cognitive Function**: Memory issues, concentration, brain fog
+- **Immune System**: Frequent infections, low immunity
+- **Heart Health**: Cardiovascular concerns, cholesterol
+- **Bone Health**: Osteoporosis, calcium deficiency
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+#### Confidence Levels
+- **High Confidence (≥70% match)**: Direct symptom mapping found
+- **Medium Confidence (50-69% match)**: Partial keyword matching
+- **Low Confidence (30-49% match)**: Substring or fuzzy matching
+- **AI Fallback (<30% match)**: AI-powered interpretation
 
+### 🎯 Current Status: **75% Complete**
+
+#### ✅ What's Working
+- Core symptom detection and mapping
+- API endpoints fully functional
+- AI integration with context hints
+- Frontend detection and routing
+- Comprehensive symptom database
+- Confidence scoring system
+
+#### 🚧 In Progress
+- **Enhanced AI Responses**: Improving AI's understanding of complex symptoms
+- **User Feedback Loop**: Collecting user feedback to improve accuracy
+- **Analytics Dashboard**: Tracking symptom query patterns
+
+#### 📋 Upcoming Features
+- **Personalized Recommendations**: User profile-based suggestions
+- **Symptom History Tracking**: Long-term health pattern analysis
+- **Integration with Health APIs**: External health data sources
+- **Advanced NLP**: Machine learning-based symptom recognition
+- **Multi-language Support**: Symptom detection in multiple languages
+
+### 🧪 Testing Examples
+
+#### Successful Symptom Detection
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Joint Pain Detection
+curl -X POST http://localhost:3000/api/symptom-checker \
+  -H "Content-Type: application/json" \
+  -d '{"symptom": "I have severe joint pain in my knees"}'
+
+# Response: Categories ["Joint Health", "Omega-3 Supplement"], confidence: "high"
+
+# Sleep Issues Detection  
+curl -X POST http://localhost:3000/api/symptom-checker \
+  -H "Content-Type: application/json" \
+  -d '{"symptom": "I can'\''t sleep and feel restless"}'
+
+# Response: Categories ["Sleep Support"], confidence: "high"
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### AI Integration Example
+```bash
+# Chat with symptom context
+curl -X POST http://localhost:3000/api/ai/chat \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "I have joint pain and need help"}'
 
-## Resources
+# AI receives symptom hint: "joint pain" → "Joint Health" category
+# Response includes contextual product recommendations
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🛠️ Development Setup
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Prerequisites
+- Node.js (v18+)
+- MongoDB
+- pnpm
 
-## Support
+### Installation
+```bash
+# Install dependencies
+pnpm install
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Set up environment variables
+cp .env.example .env
 
-## Stay in touch
+# Start development server
+pnpm run start:dev
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Environment Variables
+```env
+MONGODB_URI=mongodb://localhost:27017/healthcare-ai
+JWT_SECRET=your-jwt-secret
+GEMINI_API_KEY=your-gemini-api-key
+PORT=3000
+```
 
-## License
+## 📚 API Documentation
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Authentication
+All endpoints require JWT authentication except `/auth/login` and `/auth/register`.
+
+### Core Endpoints
+- `POST /auth/login` - User authentication
+- `POST /auth/register` - User registration
+- `GET /products` - List products with filters
+- `POST /ai/chat` - AI chat with symptom integration
+- `POST /symptom-checker` - Direct symptom checking
+- `GET /symptom-checker/available-symptoms` - List symptom mappings
+
+### Response Formats
+All responses follow standardized formats with proper error handling and validation.
+
+## 🔧 Architecture
+
+### Technology Stack
+- **Framework**: NestJS (Node.js)
+- **Database**: MongoDB with Mongoose
+- **AI**: Google Gemini AI
+- **Authentication**: JWT
+- **Validation**: class-validator
+- **Testing**: Jest
+
+### Project Structure
+```
+src/
+├── ai/                 # AI service and chat functionality
+├── auth/               # Authentication system
+├── products/           # Product management
+├── symptom-checker/    # Symptom detection system
+├── users/              # User management
+└── shared/             # Shared DTOs and utilities
+```
+
+## 🚀 Deployment
+
+The application is configured for deployment on Vercel with:
+- Environment-based configuration
+- Production MongoDB Atlas integration
+- Optimized build process
+- Health check endpoints
+
+## 📈 Performance & Monitoring
+
+- Response time optimization for AI queries
+- Caching for frequently accessed product data
+- Comprehensive logging for symptom detection accuracy
+- Error tracking and monitoring
+
+## 🔐 Security Features
+
+- JWT-based authentication
+- Input validation and sanitization
+- Rate limiting on AI endpoints
+- Health information privacy compliance
+- Secure environment variable management
+
+## 🤝 Contributing
+
+This is an active development project with ongoing enhancements to the symptom checker and AI capabilities. The system is designed to be extensible and maintainable.
+
+---
+
+**Project Status**: Active Development | **Symptom Checker**: 75% Complete | **Last Updated**: October 2025

@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, IsArray } from 'class-validator';
+import { IsString, IsNumber, IsOptional } from 'class-validator';
 
 export class SearchProductDto {
   @IsString()
@@ -38,4 +38,9 @@ export class ChatMessageDto {
   @IsString()
   @IsOptional()
   productId?: string;
+}
+
+export class SymptomCheckDto {
+  @IsString()
+  symptom: string;
 }

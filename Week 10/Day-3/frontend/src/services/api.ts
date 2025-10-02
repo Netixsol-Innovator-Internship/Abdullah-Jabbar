@@ -97,6 +97,20 @@ export const aiApi = {
     const response = await api.post("/ai/chat", { message, productId });
     return response.data;
   },
+
+  symptomCheck: async (
+    symptom: string
+  ): Promise<{
+    categories: string[];
+    explanation: string;
+    products: Product[];
+    clarification?: string;
+    confidence: "high" | "medium" | "low";
+    source: "mapping" | "ai_fallback";
+  }> => {
+    const response = await api.post("/symptom-checker", { symptom });
+    return response.data;
+  },
 };
 
 export default api;

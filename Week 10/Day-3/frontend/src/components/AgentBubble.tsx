@@ -50,11 +50,30 @@ const AgentBubble: React.FC<AgentBubbleProps> = ({
     ButtonIcon = Pause; // playing
   else if (isPaused) ButtonIcon = Play; // paused
 
+  // Function to format message with bold text
+  const formatMessage = (text: string) => {
+    // Split by ** to find bold text
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+
+    return parts.map((part, index) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        // Remove ** and make bold
+        const boldText = part.slice(2, -2);
+        return (
+          <strong key={index} className="font-bold">
+            {boldText}
+          </strong>
+        );
+      }
+      return part;
+    });
+  };
+
   return (
     <div className="flex justify-start mb-2">
       <div className="max-w-[85%]">
         <div className="relative rounded-t-xl rounded-br-xl rounded-bl-sm bg-gray-100 p-3 text-gray-800 shadow-sm">
-          <p>{message}</p>
+          <p>{formatMessage(message)}</p>
 
           <button
             onClick={handleClick}

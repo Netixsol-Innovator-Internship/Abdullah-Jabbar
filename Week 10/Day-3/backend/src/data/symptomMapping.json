@@ -1,0 +1,74 @@
+{
+  "tired": ["Energy Support"],
+  "fatigue": ["Energy Support"],
+  "low energy": ["Energy Support"],
+  "exhausted": ["Multivitamin"],
+  "sleepy": ["Sleep Support"],
+  "drowsy": ["Sleep Support"],
+
+  "hair fall": ["Multivitamin"],
+  "hair loss": ["Multivitamin"],
+  "thinning hair": ["Multivitamin"],
+  "balding": ["Herbal Supplement"],
+
+  "weak bones": ["Calcium Supplement"],
+  "bone pain": ["Calcium Supplement"],
+  "brittle bones": ["Calcium Supplement"],
+  "osteoporosis": ["Calcium Supplement"],
+
+  "stress": ["Herbal Supplement"],
+  "anxiety": ["Herbal Supplement"],
+  "worried": ["Herbal Supplement"],
+  "nervous": ["Herbal Supplement"],
+  "tension": ["Herbal Supplement"],
+
+  "insomnia": ["Sleep Support"],
+  "can't sleep": ["Sleep Support"],
+  "trouble sleeping": ["Sleep Support"],
+  "restless": ["Sleep Support"],
+
+  "joint pain": ["Joint Health"],
+  "arthritis": ["Joint Health"],
+  "stiff joints": ["Joint Health"],
+  "knee pain": ["Joint Health"],
+  "back pain": ["Joint Health"],
+
+  "digestive issues": ["Probiotics"],
+  "stomach problems": ["Probiotics"],
+  "bloating": ["Probiotics"],
+  "gas": ["Probiotics"],
+  "constipation": ["Probiotics"],
+  "diarrhea": ["Probiotics"],
+  "acid reflux": ["Probiotics"],
+
+  "weak immunity": ["Immune Support"],
+  "frequent colds": ["Immune Support"],
+  "sick often": ["Immune Support"],
+  "low immunity": ["Immune Support"],
+  "infections": ["Immune Support"],
+
+  "heart problems": ["Omega-3 Supplement"],
+  "cardiovascular": ["Omega-3 Supplement"],
+  "high cholesterol": ["Omega-3 Supplement"],
+  "blood pressure": ["Omega-3 Supplement"],
+
+  "skin problems": ["Multivitamin"],
+  "acne": ["Detox"],
+  "dry skin": ["Omega-3 Supplement"],
+  "eczema": ["Omega-3 Supplement"],
+
+  "memory issues": ["Omega-3 Supplement"],
+  "forgetful": ["Omega-3 Supplement"],
+  "brain fog": ["Omega-3 Supplement"],
+  "concentration": ["Energy Support"],
+
+  "detox": ["Detox"],
+  "cleanse": ["Detox"],
+  "toxins": ["Detox"],
+  "liver health": ["Detox"],
+
+  "weight gain": ["Herbal Supplement"],
+  "weight loss": ["Herbal Supplement"],
+  "metabolism": ["Energy Support"],
+  "slow metabolism": ["Energy Support"]
+}
