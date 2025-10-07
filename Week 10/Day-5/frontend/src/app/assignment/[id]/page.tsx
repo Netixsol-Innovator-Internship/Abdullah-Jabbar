@@ -599,7 +599,7 @@ export default function AssignmentDetailPage() {
             <div className="text-sm text-slate-600">
               <p>
                 <strong>Evaluate Pending:</strong> Only evaluate submissions
-                with "pending" status
+                with &quot;pending&quot; status
               </p>
               <p>
                 <strong>Reevaluate All:</strong> Re-evaluate all submissions
