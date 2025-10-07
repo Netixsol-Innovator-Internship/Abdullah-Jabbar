@@ -1,0 +1,45 @@
+# Dependencies
+node_modules
+
+# Environment files (keeping .env for deployment)
+.env.local
+.env.*.local
+
+# Development and build files - keeping src and config for Vercel build
+# src  # Commented out - Vercel needs src to build
+# tsconfig.json  # Commented out - needed for ts-node
+test
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE files
+.git
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+.tmp
+.temp
+.nyc_output
+coverage
+
+# Build artifacts - we need dist for production
+# dist
+
+# Local uploads and output (will use cloud storage in production)
+uploads/*
+output/*
+
+# Test and setup files
+test-*.js
+setup-db.js
+seed-data.js
