@@ -1,4 +1,4 @@
-**Week 11 Day1** 
+**Week 11 Day-1** 
 # Blockchain Fundamentals
 
 🎯 **Objective**
