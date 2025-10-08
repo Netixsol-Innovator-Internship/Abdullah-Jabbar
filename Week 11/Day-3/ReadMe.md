@@ -6,7 +6,7 @@ Completed Lessons:
 - **Zombies Attack Their Victims** – 100%
 - **Advanced Solidity Concepts** – 0%
 
-*(Screenshot attached: ![alt text]({27EBEC63-C74D-4EAF-9431-FB20F001D1FD}.png))*
+*Screenshot* ![alt text]({27EBEC63-C74D-4EAF-9431-FB20F001D1FD}.png)
 
 ---
 
