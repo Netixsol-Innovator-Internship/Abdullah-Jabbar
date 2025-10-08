@@ -6,7 +6,7 @@ Completed Lessons:
 - **Zombies Attack Their Victims** – 100%
 - **Advanced Solidity Concepts** – 0%
 
-*(Screenshot attached: `c:\Users\Abdullah Jabbar\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TempState\ScreenClip\{27EBEC63-C74D-4EAF-9431-FB20F001D1FD}.png`)*
+*(Screenshot attached: ![alt text]({27EBEC63-C74D-4EAF-9431-FB20F001D1FD}.png))*
 
 ---
 
@@ -21,3 +21,5 @@ Through the CryptoZombies lessons, I learned the **core fundamentals of Solidity
 2. I found challenging was understanding **how inheritance works with multiple contracts**—specifically how derived contracts access and override parent contract functions safely.
 
 ---
+
+
