@@ -1,0 +1,64 @@
+{
+  "name": "decentralized-todo-app",
+  "version": "1.0.0",
+  "description": "A decentralized todo list application built with Solidity and Next.js",
+  "author": "Abdullah Jabbar",
+  "license": "MIT",
+  "keywords": [
+    "blockchain",
+    "todo",
+    "decentralized",
+    "web3",
+    "solidity",
+    "nextjs",
+    "ethereum",
+    "dapp"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Abdullah-Jabbar/decentralized-todo-app"
+  },
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm run start",
+    "lint": "cd frontend && npm run lint",
+    "install-deps": "cd frontend && npm install",
+    "deploy": "echo 'Deploy smart contract using Remix IDE at https://remix.ethereum.org'",
+    "test": "npx hardhat test",
+    "test:coverage": "npx hardhat coverage",
+    "test:gas": "REPORT_GAS=true npx hardhat test",
+    "test:all": "node test-runner.js",
+    "test:basic": "npx hardhat test test/TodoList.test.js",
+    "test:gas-analysis": "REPORT_GAS=true npx hardhat test test/TodoList.gas.test.js",
+    "test:security": "npx hardhat test test/TodoList.security.test.js",
+    "test:integration": "npx hardhat test test/TodoList.integration.test.js",
+    "compile": "npx hardhat compile",
+    "clean": "npx hardhat clean",
+    "node": "npx hardhat node",
+    "test:verbose": "npx hardhat test --verbose",
+    "size-contracts": "npx hardhat size-contracts"
+  },
+  "directories": {
+    "contracts": "./contracts",
+    "frontend": "./frontend"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.0.0",
+    "@typechain/ethers-v6": "^0.4.0",
+    "@typechain/hardhat": "^8.0.0",
+    "@types/chai": "^4.2.0",
+    "@types/mocha": ">=9.1.0",
+    "chai": "^4.2.0",
+    "ethers": "^6.4.0",
+    "hardhat": "^2.17.1",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.8.1",
+    "typechain": "^8.3.0",
+    "hardhat-contract-sizer": "^2.10.0"
+  }
+}

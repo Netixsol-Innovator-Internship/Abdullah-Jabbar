@@ -1,0 +1,134 @@
+# 🚀 Blockchain Hackathon Challenge: Decentralized Todo List
+
+## 📋 Challenge Overview
+Build a **decentralized Todo List application** using Solidity smart contracts. Users should be able to manage their tasks on the blockchain!
+
+---
+
+## 🎯 Problem Statement
+Create a smart contract that allows users to:
+1. ✅ Add new tasks
+2. ✅ Mark tasks as complete/incomplete
+3. ✅ View all tasks
+4. ✅ View individual task details
+
+---
+
+## 📝 Required Features
+
+### Core Requirements (Must Have):
+1. **Create Task**
+   - Accept task description as input
+   - Store task with a unique ID
+   - Track task creation time
+
+2. **Toggle Task Completion**
+   - Mark tasks as completed or incomplete
+   - Update task status
+
+3. **View Tasks**
+   - Function to get all tasks
+   - Function to get a specific task by ID
+
+### Bonus Features (Optional):
+- Delete tasks
+- Edit task descriptions
+- Add task priority levels
+- Filter tasks by completion status
+- Add task categories/tags
+
+---
+
+## 🛠️ Technical Requirements
+
+### Smart Contract Specifications:
+- **Task Structure**: Each task should contain:
+  - ID (unique identifier)
+  - Content/Description
+  - Completion status (boolean)
+  - Timestamp
+
+- **Storage**: Use appropriate data structures (arrays, mappings, structs)
+- **Events**: Emit events for important actions
+- **Validation**: Handle edge cases and invalid inputs
+
+### Frontend (REQUIRED):
+- Build a simple web interface to interact with your smart contract
+- Must connect to MetaMask wallet
+- Use wagmi & viem library
+- Should have a clean, minimalist, user-friendly design
+
+**UI Must Include:**
+- Input field to add new tasks
+- Display list of all tasks
+- Button to mark tasks complete/incomplete
+- Visual distinction between completed and pending tasks
+- Connect wallet button
+
+---
+
+## 📊 Judging Criteria
+
+| Criteria | Weight | Description |
+|----------|--------|-------------|
+| **Functionality** | 40% | Does it work? All features implemented? |
+| **Code Quality** | 25% | Clean code, proper comments, good structure |
+| **User Interface** | 20% | Simple and intuitive (if frontend included) |
+| **Creativity** | 15% | Bonus features, unique approach |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites:
+- Remix IDE (https://remix.ethereum.org)
+- MetaMask wallet
+- Test network KAS (kasplex Testnet) (send me wallets ill provide some KAS)
+
+### Steps:
+1. Create a new Solidity file in Remix
+2. Write your smart contract
+3. Compile and test in Remix
+4. Deploy to a test network (Kasplex Testnet)
+5. Build a frontend to interact with it
+
+---
+
+### Submission Guidelines:
+- **Submission**: Smart contract code + deployment address + (optional) frontend
+
+---
+
+## 💡 Hints & Tips
+
+### Key Solidity Concepts You'll Need:
+- `struct` - for defining Task structure
+- `array` or `mapping` - for storing tasks
+- `public` and `view` functions
+- `require` statements for validation
+- `events` for logging actions
+
+### Common Pitfalls to Avoid:
+- Don't forget to increment task IDs
+- Use `memory` keyword for strings in functions
+- Test edge cases (empty tasks, invalid IDs)
+- Handle array index out of bounds
+
+---
+
+## 📚 Resources
+- Solidity Documentation: https://docs.soliditylang.org
+- Remix IDE: https://remix.ethereum.org
+- OpenZeppelin: https://docs.openzeppelin.com
+- Viem & Wagmi: https://wagmi.sh/docs/getting-started
+
+---
+
+## 🏆 Submission Requirements
+1. Solidity smart contract (.sol file)
+2. Deployed contract address on test network
+3. README with:
+   - How to use your contract
+   - Features implemented
+   - Any assumptions made
+4. Frontend code

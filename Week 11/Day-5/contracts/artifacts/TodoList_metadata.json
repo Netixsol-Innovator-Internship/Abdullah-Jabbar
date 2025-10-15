@@ -1,0 +1,584 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "EmptyTaskContent",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "TaskAlreadyCompleted",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "TaskNotCompleted",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "TaskNotFound",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "UnauthorizedAccess",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "taskId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "content",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "priority",
+						"type": "uint8"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "category",
+						"type": "bytes32"
+					}
+				],
+				"name": "TaskCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "taskId",
+						"type": "uint256"
+					}
+				],
+				"name": "TaskDeleted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "taskId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "isCompleted",
+						"type": "bool"
+					}
+				],
+				"name": "TaskToggled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "taskId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "newContent",
+						"type": "string"
+					}
+				],
+				"name": "TaskUpdated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "_bytes32",
+						"type": "bytes32"
+					}
+				],
+				"name": "bytes32ToString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "clearAllTasks",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_content",
+						"type": "string"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_priority",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "_category",
+						"type": "string"
+					}
+				],
+				"name": "createTask",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_taskId",
+						"type": "uint256"
+					}
+				],
+				"name": "deleteTask",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllTasks",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "content",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isCompleted",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint32",
+								"name": "createdAt",
+								"type": "uint32"
+							},
+							{
+								"internalType": "uint8",
+								"name": "priority",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "category",
+								"type": "bytes32"
+							}
+						],
+						"internalType": "struct TodoList.Task[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_taskId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTask",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "content",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isCompleted",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint32",
+								"name": "createdAt",
+								"type": "uint32"
+							},
+							{
+								"internalType": "uint8",
+								"name": "priority",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "category",
+								"type": "bytes32"
+							}
+						],
+						"internalType": "struct TodoList.Task",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTaskStats",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "total",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "completed",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pending",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "_priority",
+						"type": "uint8"
+					}
+				],
+				"name": "getTasksByPriority",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "content",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isCompleted",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint32",
+								"name": "createdAt",
+								"type": "uint32"
+							},
+							{
+								"internalType": "uint8",
+								"name": "priority",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "category",
+								"type": "bytes32"
+							}
+						],
+						"internalType": "struct TodoList.Task[]",
+						"name": "",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "_completed",
+						"type": "bool"
+					}
+				],
+				"name": "getTasksByStatus",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "content",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isCompleted",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint32",
+								"name": "createdAt",
+								"type": "uint32"
+							},
+							{
+								"internalType": "uint8",
+								"name": "priority",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "category",
+								"type": "bytes32"
+							}
+						],
+						"internalType": "struct TodoList.Task[]",
+						"name": "",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "taskCounts",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_taskId",
+						"type": "uint256"
+					}
+				],
+				"name": "toggleTask",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_taskId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_newContent",
+						"type": "string"
+					}
+				],
+				"name": "updateTask",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Abdullah Jabbar",
+			"details": "A decentralized todo list application with gas-optimized operations",
+			"kind": "dev",
+			"methods": {
+				"bytes32ToString(bytes32)": {
+					"details": "Convert bytes32 to string (for displaying categories)",
+					"params": {
+						"_bytes32": "Bytes32 to convert"
+					},
+					"returns": {
+						"_0": "String representation"
+					}
+				},
+				"clearAllTasks()": {
+					"details": "Emergency function to clear all tasks (if needed)"
+				},
+				"createTask(string,uint8,string)": {
+					"details": "Create a new task",
+					"params": {
+						"_category": "Task category as string (converted to bytes32)",
+						"_content": "Task description",
+						"_priority": "Priority level (1-5, default 3)"
+					}
+				},
+				"deleteTask(uint256)": {
+					"details": "Delete a task (marks as deleted by moving last task to deleted position)",
+					"params": {
+						"_taskId": "Task ID to delete"
+					}
+				},
+				"getAllTasks()": {
+					"details": "Get all tasks for the caller",
+					"returns": {
+						"_0": "Array of all user's tasks"
+					}
+				},
+				"getTask(uint256)": {
+					"details": "Get a specific task by ID",
+					"params": {
+						"_taskId": "Task ID to retrieve"
+					},
+					"returns": {
+						"_0": "Task details"
+					}
+				},
+				"getTaskStats()": {
+					"details": "Get task statistics for the user",
+					"returns": {
+						"completed": "Number of completed tasks",
+						"pending": "Number of pending tasks",
+						"total": "Total number of tasks"
+					}
+				},
+				"getTasksByPriority(uint8)": {
+					"details": "Get tasks by priority level",
+					"params": {
+						"_priority": "Priority level to filter by"
+					},
+					"returns": {
+						"_0": "Array of filtered tasks with their IDs"
+					}
+				},
+				"getTasksByStatus(bool)": {
+					"details": "Get tasks by completion status",
+					"params": {
+						"_completed": "Whether to get completed or pending tasks"
+					},
+					"returns": {
+						"_0": "Array of filtered tasks with their IDs"
+					}
+				},
+				"toggleTask(uint256)": {
+					"details": "Toggle task completion status",
+					"params": {
+						"_taskId": "Task ID to toggle"
+					}
+				},
+				"updateTask(uint256,string)": {
+					"details": "Update task content",
+					"params": {
+						"_newContent": "New task description",
+						"_taskId": "Task ID to update"
+					}
+				}
+			},
+			"title": "TodoList",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"TodoList.sol": "TodoList"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"TodoList.sol": {
+			"keccak256": "0x8d08e5c52e64e8f7848dd09b009b4a94da76a006e3a24141785264b8631ef5b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://24f9d1a7dde1d841635041f64e618ff67c85944af2dc44c31bfefbbc218e7c6d",
+				"dweb:/ipfs/QmbNRoFHnTcWk1GMB4MGaZLegqLJL16PejKV85NcRRU9cG"
+			]
+		}
+	},
+	"version": 1
+}

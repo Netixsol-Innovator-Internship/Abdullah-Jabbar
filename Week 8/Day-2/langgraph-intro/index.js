@@ -6,7 +6,7 @@ import { StateGraph, MessagesAnnotation } from "@langchain/langgraph";
 import readline from "readline";
 
 // === Topic/domain control ===
-const topic = "weather"; // Set topic here, e.g. "weather", "biology", or "" for unrestricted
+const topic = ""; // Set topic here, e.g. "weather", "biology", or "" for unrestricted
 
 const systemMessage = topic
   ? {
@@ -14,7 +14,7 @@ const systemMessage = topic
       content: `
 You are an expert in ${topic}.
 Prefer answering questions related to ${topic}.
-If asked something clearly not about ${topic}, kindly reply: "I am restricted to answering only ${topic}-related questions."
+If asked something clearly not about ${topic}, kindly : "I am restricted to answering only ${topic}-related questions."
 If the question is ambiguous, try to relate your answer to ${topic} if possible, or ask the user to clarify.
 `,
     }
