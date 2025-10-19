@@ -44,12 +44,12 @@ contract NFTCollection is ERC721, ERC721URIStorage, Ownable {
     /**
      * @dev Mint a new NFT
      * @param to Address to receive the NFT
-     * @param tokenURI Metadata URI (IPFS hash)
+     * @param _tokenURI Metadata URI (IPFS hash)
      * @return tokenId The newly minted token ID
      */
     function mintNFT(
         address to,
-        string memory tokenURI
+        string memory _tokenURI
     ) external onlyOwner returns (uint256) {
         require(to != address(0), "Cannot mint to zero address");
         require(_tokenIdCounter < maxSupply, "Max supply reached");
@@ -58,35 +58,35 @@ contract NFTCollection is ERC721, ERC721URIStorage, Ownable {
         _tokenIdCounter++;
 
         _safeMint(to, tokenId);
-        _setTokenURI(tokenId, tokenURI);
+        _setTokenURI(tokenId, _tokenURI);
 
-        emit NFTMinted(to, tokenId, tokenURI);
+        emit NFTMinted(to, tokenId, _tokenURI);
         return tokenId;
     }
 
     /**
      * @dev Batch mint multiple NFTs
      * @param to Address to receive NFTs
-     * @param tokenURIs Array of metadata URIs
+     * @param _tokenURIs Array of metadata URIs
      */
     function batchMint(
         address to,
-        string[] memory tokenURIs
+        string[] memory _tokenURIs
     ) external onlyOwner {
         require(to != address(0), "Cannot mint to zero address");
         require(
-            _tokenIdCounter + tokenURIs.length <= maxSupply,
+            _tokenIdCounter + _tokenURIs.length <= maxSupply,
             "Exceeds max supply"
         );
 
-        for (uint256 i = 0; i < tokenURIs.length; i++) {
+        for (uint256 i = 0; i < _tokenURIs.length; i++) {
             uint256 tokenId = _tokenIdCounter;
             _tokenIdCounter++;
 
             _safeMint(to, tokenId);
-            _setTokenURI(tokenId, tokenURIs[i]);
+            _setTokenURI(tokenId, _tokenURIs[i]);
 
-            emit NFTMinted(to, tokenId, tokenURIs[i]);
+            emit NFTMinted(to, tokenId, _tokenURIs[i]);
         }
     }
 
