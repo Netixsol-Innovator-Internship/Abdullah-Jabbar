@@ -1,0 +1,11 @@
+[
+  "function buyNFTWithPlatformToken(uint256 tokenId)",
+  "function buyNFTWithToken(uint256 tokenId, address paymentToken)",
+  "function calculatePriceInToken(address token) view returns (uint256)",
+  "function nftPrice() view returns (uint256)",
+  "function getSupportedTokens() view returns (address[])",
+  "function listNFT(uint256 tokenId, uint256 price)",
+  "function buyListedNFT(uint256 tokenId, address paymentToken)",
+  "function getActiveListings() view returns (uint256[])",
+  "function listings(uint256) view returns (uint256 tokenId, address seller, uint256 price, bool isActive)"
+]

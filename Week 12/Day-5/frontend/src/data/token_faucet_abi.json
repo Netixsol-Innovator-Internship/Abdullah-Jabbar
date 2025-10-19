@@ -1,0 +1,9 @@
+[
+  "function claimTokens()",
+  "function canClaim(address) view returns (bool)",
+  "function getTimeUntilNextClaim(address) view returns (uint256)",
+  "function getTotalClaimed(address) view returns (uint256)",
+  "function claimAmount() view returns (uint256)",
+  "function getFaucetBalance() view returns (uint256)",
+  "function cooldownTime() view returns (uint256)"
+]

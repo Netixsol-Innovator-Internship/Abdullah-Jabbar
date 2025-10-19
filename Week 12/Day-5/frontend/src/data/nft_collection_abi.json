@@ -1,0 +1,11 @@
+[
+  "function balanceOf(address owner) view returns (uint256)",
+  "function ownerOf(uint256 tokenId) view returns (address)",
+  "function tokenURI(uint256 tokenId) view returns (string)",
+  "function tokensOfOwner(address owner) view returns (uint256[])",
+  "function totalSupply() view returns (uint256)",
+  "function approve(address to, uint256 tokenId)",
+  "function setApprovalForAll(address operator, bool approved)",
+  "function getApproved(uint256 tokenId) view returns (address)",
+  "function isApprovedForAll(address owner, address operator) view returns (bool)"
+]

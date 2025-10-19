@@ -1,0 +1,27 @@
+{
+  "name": "defi-nft-ecosystem",
+  "version": "1.0.0",
+  "description": "Complete DeFi + NFT Ecosystem with Token Swaps and Marketplace",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js --network sepolia",
+    "test": "hardhat test",
+    "frontend": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "DeFi",
+    "NFT",
+    "Blockchain",
+    "Ethereum",
+    "Smart Contracts"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "hardhat": "^2.19.4",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.1"
+  }
+}

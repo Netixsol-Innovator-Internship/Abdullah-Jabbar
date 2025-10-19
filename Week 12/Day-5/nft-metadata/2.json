@@ -1,0 +1,23 @@
+{
+  "name": "DeFi Art #2",
+  "description": "Unique digital art from the DeFi ecosystem Planer's Mint collection",
+  "image": "ipfs://bafybeibvx54glhcbauqt4q67l4jgpavzsifet5w5vyipktgde3ojf3gsyi",
+  "attributes": [
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Gold"
+    },
+    {
+      "trait_type": "Style",
+      "value": "Futuristic"
+    },
+    {
+      "trait_type": "Power Level",
+      "value": "95"
+    }
+  ]
+}

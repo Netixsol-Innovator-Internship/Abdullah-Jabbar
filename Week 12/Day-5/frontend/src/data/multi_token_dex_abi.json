@@ -1,0 +1,9 @@
+[
+  "function swap(address tokenIn, address tokenOut, uint256 amountIn, uint256 minAmountOut) returns (uint256)",
+  "function getAmountOut(uint256 amountIn, uint256 reserveIn, uint256 reserveOut) pure returns (uint256)",
+  "function getReserves(address tokenA, address tokenB) view returns (uint256, uint256)",
+  "function getPrice(address tokenA, address tokenB) view returns (uint256)",
+  "function addLiquidity(address tokenA, address tokenB, uint256 amountA, uint256 amountB)",
+  "function poolExists(address tokenA, address tokenB) view returns (bool)",
+  "function fee() view returns (uint256)"
+]

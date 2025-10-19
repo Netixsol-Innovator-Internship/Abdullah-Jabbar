@@ -1,0 +1,23 @@
+node_modules/
+.env
+.DS_Store
+*.log
+
+# Hardhat files
+cache/
+artifacts/
+
+# Build files
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# Testing
+coverage/
+coverage.json
+
+# Deployment
+deployment.json

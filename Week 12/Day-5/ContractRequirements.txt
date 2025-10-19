@@ -1,0 +1,178 @@
+1. Platform Token (ERC-20)
+
+Filename: PlatformToken.sol
+Purpose: Native token of your ecosystem, used for DEX trading and NFT payments.
+
+Requirements:
+
+Fully compliant ERC-20 token
+
+Name: custom (e.g., “PlatformCoin”)
+
+Symbol: 3–4 letters (e.g., “PLAT”)
+
+Decimals: 18
+
+Initial supply: ~1,000,000 (your choice)
+
+Owner minting: only owner can mint more tokens
+
+Mint function: callable by Faucet contract for distribution
+
+Clean, commented Solidity code
+
+Core Functions:
+
+transfer(), approve(), transferFrom(), balanceOf(), etc.
+
+mint(address to, uint256 amount) (onlyOwner)
+
+2. Token Faucet
+
+Filename: TokenFaucet.sol
+Purpose: Dispense free Platform Tokens to users (for testing).
+
+Requirements:
+
+Only gives Platform Tokens
+
+Users can claim once every 24 hours
+
+Fixed claim amount (e.g., 100 tokens)
+
+Must track:
+
+Total claimed per user
+
+Time until next claim
+
+Prevent abuse (rate limit per address)
+
+Core Functions:
+
+claimTokens() → mints/sends fixed amount
+
+getTimeUntilNextClaim(address user) → returns seconds left
+
+getTotalClaimed(address user) → returns total claimed tokens
+
+Integration:
+
+Calls mint() from PlatformToken
+
+Only Faucet has mint permission
+
+3. Multi-Token DEX
+
+Filename: MultiTokenDEX.sol
+Purpose: Decentralized exchange that swaps between at least three tokens.
+
+Required Tokens:
+
+Platform Token
+
+Token A (e.g., “TestUSD”)
+
+Token B (e.g., “TestBTC”)
+
+Required Pools (at least 3):
+
+Platform Token ↔ Token A
+
+Platform Token ↔ Token B
+
+Token A ↔ Token B
+
+Required Features:
+
+Add liquidity to pools
+
+Swap between any tokens with liquidity
+
+Display reserves of pools
+
+Calculate swap previews (getAmountOut)
+
+Show current prices
+
+Core Functions:
+
+addLiquidity(address tokenA, address tokenB, uint256 amountA, uint256 amountB)
+
+swap(address tokenIn, address tokenOut, uint256 amountIn)
+
+getReserves(address tokenA, address tokenB)
+
+getAmountOut(uint256 amountIn, address tokenIn, address tokenOut)
+
+Integration:
+
+NFT Marketplace uses DEX to calculate token-to-Platform price equivalence.
+
+4. NFT Collection (ERC-721)
+
+Filename: NFTCollection.sol
+Purpose: Mint and manage NFTs for the marketplace.
+
+Requirements:
+
+ERC-721 compliant contract
+
+Name and Symbol (your choice)
+
+10–20 NFTs with IPFS metadata
+
+Owner can mint NFTs
+
+Metadata stored on IPFS (Pinata)
+
+Core Functions:
+
+mintNFT(address to) (onlyOwner)
+
+Metadata handling via tokenURI(uint256 tokenId)
+
+Integration:
+
+Marketplace queries this contract for NFT ownership and metadata
+
+5. NFT Marketplace
+
+Filename: NFTMarketplace.sol
+Purpose: Handle NFT sales using Platform Token or any supported token (via DEX).
+
+Core Features:
+
+Minting
+
+Owner can mint NFTs via NFTCollection
+
+Set price in Platform Token
+
+Buying with Platform Token
+
+buyNFTWithPlatformToken(uint256 tokenId)
+
+Buying with Other Tokens
+
+User selects any supported token (e.g., Token A)
+
+Marketplace calculates equivalent Platform Token price using DEX reserves
+
+Automatically swaps Token A → Platform Token
+
+Completes NFT purchase
+
+Price Conversion
+
+calculatePriceInToken(address token) → returns equivalent price
+
+listAllNFTs() → returns metadata of available NFTs
+
+Integration:
+
+Uses MultiTokenDEX to get conversion rates and perform swaps
+
+Transfers tokens using approve() mechanism from user wallets
+
+Sends payment in Platform Token to the seller

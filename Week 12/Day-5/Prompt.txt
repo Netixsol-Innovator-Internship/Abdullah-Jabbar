@@ -1,0 +1,681 @@
+    The Challenge
+
+Build a unified platform that combines DeFi (token swaps) and NFTs (marketplace) with a native platform token!
+
+
+
+What You'll Build:
+
+A complete blockchain ecosystem with:
+
+
+
+1. Platform Token - Your own ERC-20 token (the "currency" of your platform)
+
+2. Token Faucet - Users can claim free tokens for testing
+
+3. Multi-Token DEX - Swap between 3+ tokens with liquidity pools
+
+4. NFT Marketplace - Mint and buy NFTs using any supported token
+
+5. Frontend Interface - Unified DApp for all features
+
+
+
+Detailed Requirements
+
+
+
+Part 1: Platform Token (ERC-20)
+
+Your Native Token:
+
+- Name it something creative (e.g., "PlatformCoin", "MarketToken", "SwapToken")
+
+- Symbol: 3-4 letters (e.g., "PLAT", "MKT", "SWP")
+
+- Initial supply: Your choice (suggest 1,000,000)
+
+- Decimals: 18 (standard)
+
+
+
+Required Features:
+
+- Basic ERC-20 functions (transfer, approve, etc.)
+
+- Mint function (for faucet contract)
+
+- Owner can mint new tokens
+
+- Clean, commented code
+
+
+
+Part 2: Token Faucet
+
+
+
+Purpose:
+
+Users need your platform token to use the ecosystem. Faucet gives them free tokens for testing.
+
+
+
+Required Features:
+
+- Users can claim tokens once per day (24 hour cooldown)
+
+- Give fixed amount per claim (e.g., 100 tokens)
+
+- Show time until next claim available
+
+- Display total tokens claimed by user
+
+- Prevent abuse (rate limiting)
+
+
+
+Key Functions:
+
+- `claimTokens()` - Get free tokens
+
+- `getTimeUntilNextClaim(address user)` - Check cooldown
+
+- `getTotalClaimed(address user)` - See claim history
+
+
+
+Part 3: Multi-Token DEX
+
+
+
+Required Tokens (Minimum 3):
+
+1. Your Platform Token (from Part 1)
+
+2. Token A (create or use existing, e.g., "TestUSD")
+
+3. Token B (create or use existing, e.g., "TestBTC")
+
+
+
+Optional: Add more tokens for bonus points!
+
+
+
+Required Pools (Minimum 3):
+
+1. Platform Token ↔ Token A
+
+2. Platform Token ↔ Token B
+
+3. Token A ↔ Token B
+
+
+
+Required Features:
+
+- Add liquidity to pools
+
+- Swap tokens in any pool
+
+- Display reserves for each pool
+
+- Calculate swap amounts (preview)
+
+- Show current price for each pair
+
+
+
+User Flow:
+
+1. User gets Platform Token from faucet
+
+2. User can swap Platform Token → Token A
+
+3. User can swap Token A → Token B
+
+4. User can swap back to Platform Token
+
+
+
+Part 4: NFT Marketplace
+
+
+
+NFT Collection:
+
+- Create an ERC-721 contract
+
+- Collection name and symbol
+
+- 10-20 NFTs with metadata on IPFS
+
+- Each NFT has traits/attributes
+
+
+
+Marketplace Features:
+
+
+
+1. Minting:
+
+- Owner can mint NFTs
+
+- Set price in Platform Token
+
+- Users can buy newly minted NFTs
+
+2. Multi-Token Pricing:
+
+Users can buy NFTs with ANY supported token from your DEX!
+
+
+
+How it works:
+
+NFT Price: 100 Platform Tokens
+
+
+
+User wants to pay with Token A:
+
+1. System checks DEX pool (Platform Token ↔ Token A)
+
+2. Calculates: How much Token A = 100 Platform Tokens?
+
+3. User pays in Token A
+
+4. System swaps Token A → Platform Token
+
+5. User receives NFT
+
+
+
+Required Functions:
+
+- `mintNFT(address to)` - Mint new NFT
+
+- `setNFTPrice(uint256 price)` - Set price in Platform Token
+
+- `buyNFTWithPlatformToken(uint256 tokenId)` - Buy with platform token
+
+- `buyNFTWithToken(uint256 tokenId, address paymentToken)` - Buy with any token
+
+- `calculatePriceInToken(address token)` - Show price in any supported token
+
+- `listAllNFTs()` - Display available NFTs
+
+
+
+Part 5: Frontend Interface
+
+
+
+Must Have 4 Main Sections:
+
+
+
+1. Faucet Page:
+
+- "Claim Tokens" button
+
+- Show cooldown timer
+
+- Display user's token balance
+
+- Show total claimed
+
+
+
+2. DEX Page:
+
+- Select token pair dropdown
+
+- Input amount to swap
+
+- Show preview of output amount
+
+- Display current price
+
+- Show pool reserves
+
+- Swap button
+
+
+
+3. NFT Marketplace:
+
+- Gallery of all NFTs
+
+- Display NFT image, name, traits
+
+- Show price in Platform Token
+
+- Show price in Token A
+
+- Show price in Token B
+
+- Select payment token dropdown
+
+- Buy button
+
+
+
+4. Portfolio:
+
+- User's token balances (all tokens)
+
+- User's NFT collection
+
+
+
+🎯 Minimum Requirements (Must Have)
+
+To be eligible for judging, your project MUST have:
+
+
+
+✅ Smart Contracts (5 total):
+
+
+
+1. Platform Token (ERC-20)
+
+2. Token Faucet
+
+3. Multi-Token DEX (with 3+ pools)
+
+4. NFT Collection (ERC-721)
+
+5. NFT Marketplace
+
+
+
+✅ Frontend Features:
+
+- Connect MetaMask
+
+- Faucet claiming
+
+- Token swapping
+
+- NFT display and purchase
+
+- All features working
+
+
+
+✅ Integration:
+
+- Faucet gives Platform Token
+
+- DEX trades Platform Token + others
+
+- NFTs buyable with multiple tokens
+
+- Price conversion works
+
+
+
+✅ Deployment:
+
+- All contracts on testnet
+
+- Verified on Kaplex Explorer
+
+- Contract addresses documented
+
+
+
+
+
+🌟 Bonus Features (Extra Points)
+
+
+
+Want to stand out? Add these:
+
+DEX Bonuses (+1 pts each):
+
+ Add/remove liquidity by users
+
+ Display LP tokens
+
+ Show trading fees earned
+
+ Price charts or history
+
+ Multiple slippage options
+
+
+
+NFT Bonuses (+1 pts each):
+
+Users can list their NFTs for resale
+
+Secondary market with royalties
+
+Whitelist minting
+
+Reveal mechanism
+
+Rarity calculator
+
+Batch minting
+
+
+
+Platform Bonuses (+0.5 pts each):
+
+Staking platform token for rewards
+
+Governance voting
+
+Transaction history page
+
+Multi-language support
+
+
+
+Technical Bonuses (+2 pts each):
+
+Unit tests for contracts
+
+Gas optimization techniques
+
+Emergency pause functionality
+
+Upgradeable contracts
+
+Subgraph for data indexing
+
+
+
+📝 Submission Requirements
+
+
+
+Submit via GitHub:
+
+1. Smart Contracts:
+
+contracts/
+
+├── PlatformToken.sol
+
+├── TokenFaucet.sol
+
+├── MultiTokenDEX.sol
+
+├── NFTCollection.sol
+
+└── NFTMarketplace.sol
+
+
+
+2. Documentation (README.md):
+
+
+
+Project Name
+
+can be anything creative
+
+Description
+
+Brief overview
+
+Deployed Contracts
+
+- Platform Token: 0x...
+
+- Faucet: 0x...
+
+- DEX: 0x...
+
+- NFT Collection: 0x...
+
+- NFT Marketplace: 0x...
+
+Features Implemented
+
+ Feature 1
+
+ Feature 2
+
+      ...
+
+
+
+How to Use
+
+Step-by-step guide
+
+Technologies Used
+
+- Solidity
+
+- Ethers.js
+
+- IPFS (Pinata)
+
+
+
+4. Deployment Info:**
+
+- Network: Sepolia or Mumbai
+
+- All contracts verified on Etherscan
+
+- IPFS hashes for NFT metadata
+
+
+
+💡 Architecture Overview
+
+
+
+How Everything Connects:
+
+User Journey:
+
+┌─────────────────────────────────────────────┐
+
+│ 1. User connects wallet │
+
+│ 2. Claims Platform Token from Faucet │
+
+│ 3. Swaps some to Token A in DEX │
+
+│ 4. Sees NFT priced in Platform Token │
+
+│ 5. Chooses to pay with Token A │
+
+│ 6. Marketplace calculates Token A price │
+
+│ 7. Marketplace swaps Token A → Platform │
+
+│ 8. User receives NFT │
+
+└─────────────────────────────────────────────┘
+
+
+
+Contract Interactions:
+
+┌──────────────┐
+
+│ TokenFaucet │──→ mints → PlatformToken
+
+└──────────────┘
+
+
+
+┌──────────────┐
+
+│ MultiTokenDEX│──→ swaps between → PlatformToken, TokenA, TokenB
+
+└──────────────┘
+
+
+
+┌──────────────┐
+
+│NFTMarketplace│──→ uses prices from → MultiTokenDEX
+
+└──────────────┘──→ accepts payment in → Any DEX token
+
+──→ calls swap on → MultiTokenDEX
+
+
+
+🔧 Technical Setup Checklist
+
+
+
+Before You Start:
+
+- [ ] MetaMask installed with test KAS
+
+- [ ] Remix IDE open
+
+- [ ] Pinata account for IPFS
+
+- [ ] VS Code or editor ready
+
+- [ ] Have 5-10 images for NFTs
+
+- [ ] Reviewed all contract examples
+
+- [ ] Understand token approval flow
+
+
+
+Contracts to Deploy (in order):
+
+1. Platform Token ✓
+
+2. Token A & Token B ✓
+
+3. Token Faucet ✓
+
+4. Multi-Token DEX ✓
+
+5. NFT Collection ✓
+
+6. NFT Marketplace ✓
+
+
+
+
+
+🚨 Common Pitfalls & Solutions
+
+
+
+Problem: "Token transfer failed"
+
+- ✅ Solution: Always approve tokens before transfer
+
+- User must approve DEX before swapping
+
+- User must approve Marketplace before buying
+
+
+
+Problem: "NFT price calculation wrong"
+
+- ✅ Solution: Check DEX pool reserves
+
+- Ensure pool has liquidity
+
+- Verify formula: `(reserveOut * amountIn) / (reserveIn + amountIn)`
+
+
+
+Problem: "Faucet has no tokens"
+
+- ✅ Solution: Owner must send tokens to faucet
+
+- Or give faucet minting permission
+
+
+
+Problem: "Can't swap in DEX"
+
+- ✅ Solution: Add liquidity first
+
+- Both tokens must be in pool
+
+- Need meaningful amounts
+
+
+
+Problem: "NFTs not showing"
+
+- ✅ Solution: Check IPFS links
+
+- Verify metadata format
+
+- Wait for OpenSea indexing
+
+
+
+
+
+🎯 Success Tips
+
+
+
+Time Management:
+
+- Spend 50% on contracts
+
+- Spend 30% on frontend
+
+- Spend 20% on integration/testing
+
+
+
+Priority:
+
+1. Get core working first
+
+2. Test each part individually
+
+3. Then connect everything
+
+4. Polish UI last
+
+
+
+Testing Strategy:
+
+1. Test faucet alone
+
+2. Test DEX with manual adds
+
+3. Test NFT minting alone
+
+4. Test NFT buying with Platform Token
+
+5. Finally test multi-token NFT buying
+
+
+
+📸 Final Deliverables
+
+
+
+By End of Day:
+
+1. All contracts deployed & verified
+
+2. Frontend hosted (GitHub Pages or local)
+
+3. README with all details
+
+4. Code pushed to repository
