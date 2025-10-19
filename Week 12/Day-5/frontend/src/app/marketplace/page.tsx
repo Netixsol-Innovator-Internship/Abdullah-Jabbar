@@ -18,11 +18,23 @@ const TOKENS = [
   { address: CONTRACT_ADDRESSES.TestBTC, symbol: "TBTC" },
 ];
 
+interface NFTMetadata {
+  name: string;
+  description: string;
+  image: string;
+  attributes: Array<{
+    trait_type: string;
+    value: string | number;
+  }>;
+}
+
 interface NFT {
   tokenId: number;
   owner: string;
   tokenURI: string;
   isAvailable: boolean;
+  metadata?: NFTMetadata;
+  metadataLoading?: boolean;
 }
 
 export default function Marketplace() {
@@ -78,6 +90,108 @@ export default function Marketplace() {
     }
   };
 
+  const fetchNFTMetadata = async (
+    tokenURI: string
+  ): Promise<NFTMetadata | null> => {
+    try {
+      console.log("Fetching metadata for tokenURI:", tokenURI);
+
+      // Handle empty or invalid URIs
+      if (!tokenURI || tokenURI.trim() === "") {
+        console.log("Empty tokenURI, skipping metadata fetch");
+        return null;
+      }
+
+      // Fix malformed URIs with double ipfs:// or concatenated hashes
+      let cleanedURI = tokenURI;
+
+      // Check if URI contains multiple ipfs:// instances
+      const ipfsCount = (tokenURI.match(/ipfs:\/\//g) || []).length;
+      if (ipfsCount > 1) {
+        console.log("Detected malformed URI with multiple ipfs:// instances");
+        // Extract the last ipfs:// occurrence
+        const lastIpfsIndex = tokenURI.lastIndexOf("ipfs://");
+        cleanedURI = tokenURI.substring(lastIpfsIndex);
+        console.log("Cleaned URI:", cleanedURI);
+      }
+
+      // Convert IPFS URI to HTTP gateway URL
+      let metadataUrl = cleanedURI;
+      if (cleanedURI.startsWith("ipfs://")) {
+        let ipfsHash = cleanedURI.replace("ipfs://", "");
+
+        // Fix missing slash between CID and filename
+        // If the hash looks like "CIDfilename.json", split it properly
+        if (ipfsHash.includes(".json") && !ipfsHash.includes("/")) {
+          // Find where the filename starts (assumes CID is before the filename)
+          const match = ipfsHash.match(/^([a-zA-Z0-9]+)(\d+\.json)$/);
+          if (match) {
+            ipfsHash = `${match[1]}/${match[2]}`;
+            console.log("Fixed missing slash in URI:", ipfsHash);
+          }
+        }
+
+        // Use Pinata gateway - more reliable than ipfs.io
+        metadataUrl = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
+      }
+
+      console.log("Fetching from URL:", metadataUrl);
+
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
+      const response = await fetch(metadataUrl, {
+        signal: controller.signal,
+        mode: "cors",
+      });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.warn(
+          `Failed to fetch metadata (HTTP ${response.status}): ${metadataUrl}`
+        );
+        return null;
+      }
+
+      const contentType = response.headers.get("content-type");
+
+      // If the response is an image/video, the tokenURI points directly to media
+      if (
+        contentType &&
+        (contentType.includes("image/") || contentType.includes("video/"))
+      ) {
+        console.log("TokenURI points to media file directly, using as image");
+        return {
+          name: `NFT`,
+          description: `NFT from collection`,
+          image: cleanedURI, // Use the original URI as image
+          attributes: [],
+        };
+      }
+
+      if (!contentType || !contentType.includes("application/json")) {
+        console.warn("Response is not JSON, content-type:", contentType);
+        return null;
+      }
+
+      const metadata: NFTMetadata = await response.json();
+      console.log("Metadata fetched successfully:", metadata);
+      return metadata;
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.name === "AbortError") {
+          console.warn("Metadata fetch timeout for:", tokenURI);
+        } else {
+          console.warn("Error fetching NFT metadata:", error.message);
+        }
+      } else {
+        console.warn("Error fetching NFT metadata:", error);
+      }
+      return null;
+    }
+  };
+
   const loadMarketplace = async () => {
     try {
       setLoading(true);
@@ -126,6 +240,7 @@ export default function Marketplace() {
             isAvailable:
               owner.toLowerCase() ===
               CONTRACT_ADDRESSES.NFTMarketplace.toLowerCase(),
+            metadataLoading: true,
           });
         } catch (error) {
           console.error(`Error loading NFT ${i}:`, error);
@@ -133,6 +248,28 @@ export default function Marketplace() {
       }
 
       setNfts(nftData);
+
+      // Fetch metadata for each NFT
+      const nftsWithMetadata = await Promise.all(
+        nftData.map(async (nft) => {
+          try {
+            const metadata = await fetchNFTMetadata(nft.tokenURI);
+            return {
+              ...nft,
+              metadata: metadata || undefined,
+              metadataLoading: false,
+            };
+          } catch (error) {
+            console.error(
+              `Error fetching metadata for NFT ${nft.tokenId}:`,
+              error
+            );
+            return { ...nft, metadata: undefined, metadataLoading: false };
+          }
+        })
+      );
+
+      setNfts(nftsWithMetadata);
     } catch (error) {
       console.error("Error loading marketplace:", error);
     } finally {
@@ -197,6 +334,14 @@ export default function Marketplace() {
     if (!contractsAvailable) return "N/A";
     const token = TOKENS.find((t) => t.address === address);
     return token ? token.symbol : "N/A";
+  };
+
+  const getImageUrl = (imageUri: string) => {
+    if (imageUri.startsWith("ipfs://")) {
+      const ipfsHash = imageUri.replace("ipfs://", "");
+      return `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
+    }
+    return imageUri;
   };
 
   if (!isConnected) {
@@ -272,11 +417,44 @@ export default function Marketplace() {
             nfts.map((nft) => (
               <div key={nft.tokenId} className="nft-card">
                 <div className="nft-image-placeholder">
-                  <span className="nft-id">#{nft.tokenId}</span>
+                  {nft.metadataLoading ? (
+                    <div className="loading-spinner">Loading...</div>
+                  ) : nft.metadata?.image ? (
+                    <Image
+                      src={getImageUrl(nft.metadata.image)}
+                      alt={nft.metadata.name || `NFT #${nft.tokenId}`}
+                      width={300}
+                      height={300}
+                      className="nft-image"
+                      unoptimized
+                    />
+                  ) : (
+                    <span className="nft-id">#{nft.tokenId}</span>
+                  )}
                 </div>
 
                 <div className="nft-info">
-                  <h3>DeFi Art #{nft.tokenId}</h3>
+                  <h3>{nft.metadata?.name || `DeFi Art #${nft.tokenId}`}</h3>
+
+                  {nft.metadata?.description && (
+                    <p className="nft-description">
+                      {nft.metadata.description}
+                    </p>
+                  )}
+
+                  {nft.metadata?.attributes &&
+                    nft.metadata.attributes.length > 0 && (
+                      <div className="nft-attributes">
+                        {nft.metadata.attributes.map((attr, idx) => (
+                          <div key={idx} className="attribute-badge">
+                            <span className="attr-type">
+                              {attr.trait_type}:
+                            </span>
+                            <span className="attr-value">{attr.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                   <div className="nft-metadata">
                     <div className="metadata-item">

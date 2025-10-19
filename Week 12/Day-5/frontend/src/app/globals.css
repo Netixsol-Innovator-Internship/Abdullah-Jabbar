@@ -807,6 +807,29 @@ body {
   font-size: 3rem;
   font-weight: bold;
   color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.nft-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loading-spinner {
+  color: white;
+  font-size: 1rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .nft-info {
@@ -814,7 +837,42 @@ body {
 }
 
 .nft-info h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.nft-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
   margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.nft-attributes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.attribute-badge {
+  background: var(--background);
+  border: 1px solid var(--card-border);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.attr-type {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.attr-value {
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
 .nft-metadata {

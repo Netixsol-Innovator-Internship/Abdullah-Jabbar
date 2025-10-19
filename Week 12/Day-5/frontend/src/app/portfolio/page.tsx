@@ -15,8 +15,21 @@ import {
 import { useRefreshBalances } from "@/hooks/useTokenData";
 import { isContractAvailable, formatValueOrNA } from "@/utils/contractUtils";
 
+interface NFTMetadata {
+  name: string;
+  description: string;
+  image: string;
+  attributes: Array<{
+    trait_type: string;
+    value: string | number;
+  }>;
+}
+
 interface NFT {
   tokenId: number;
+  tokenURI?: string;
+  metadata?: NFTMetadata;
+  metadataLoading?: boolean;
 }
 
 export default function Portfolio() {
@@ -59,6 +72,97 @@ export default function Portfolio() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signer, account, contractsAvailable]);
 
+  const fetchNFTMetadata = async (
+    tokenURI: string
+  ): Promise<NFTMetadata | null> => {
+    try {
+      console.log("Fetching metadata for tokenURI:", tokenURI);
+
+      if (!tokenURI || tokenURI.trim() === "") {
+        console.log("Empty tokenURI, skipping metadata fetch");
+        return null;
+      }
+
+      // Fix malformed URIs with double ipfs://
+      let cleanedURI = tokenURI;
+      const ipfsCount = (tokenURI.match(/ipfs:\/\//g) || []).length;
+      if (ipfsCount > 1) {
+        const lastIpfsIndex = tokenURI.lastIndexOf("ipfs://");
+        cleanedURI = tokenURI.substring(lastIpfsIndex);
+        console.log("Cleaned URI:", cleanedURI);
+      }
+
+      // Convert IPFS URI to HTTP gateway URL
+      let metadataUrl = cleanedURI;
+      if (cleanedURI.startsWith("ipfs://")) {
+        let ipfsHash = cleanedURI.replace("ipfs://", "");
+
+        // Fix missing slash between CID and filename
+        if (ipfsHash.includes(".json") && !ipfsHash.includes("/")) {
+          const match = ipfsHash.match(/^([a-zA-Z0-9]+)(\d+\.json)$/);
+          if (match) {
+            ipfsHash = `${match[1]}/${match[2]}`;
+            console.log("Fixed missing slash in URI:", ipfsHash);
+          }
+        }
+
+        metadataUrl = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
+      }
+
+      console.log("Fetching from URL:", metadataUrl);
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+      const response = await fetch(metadataUrl, {
+        signal: controller.signal,
+        mode: "cors",
+      });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.warn(`Failed to fetch metadata (HTTP ${response.status})`);
+        return null;
+      }
+
+      const contentType = response.headers.get("content-type");
+
+      // If response is an image, use it directly
+      if (
+        contentType &&
+        (contentType.includes("image/") || contentType.includes("video/"))
+      ) {
+        console.log("TokenURI points to media file directly");
+        return {
+          name: `NFT`,
+          description: `NFT from collection`,
+          image: cleanedURI,
+          attributes: [],
+        };
+      }
+
+      if (!contentType || !contentType.includes("application/json")) {
+        console.warn("Response is not JSON, content-type:", contentType);
+        return null;
+      }
+
+      const metadata: NFTMetadata = await response.json();
+      console.log("Metadata fetched successfully:", metadata);
+      return metadata;
+    } catch (error) {
+      console.warn("Error fetching NFT metadata:", error);
+      return null;
+    }
+  };
+
+  const getImageUrl = (imageUri: string) => {
+    if (imageUri.startsWith("ipfs://")) {
+      const ipfsHash = imageUri.replace("ipfs://", "");
+      return `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
+    }
+    return imageUri;
+  };
+
   const loadNFTs = async () => {
     try {
       setNftsLoading(true);
@@ -74,8 +178,11 @@ export default function Portfolio() {
 
       for (const tokenId of tokenIds) {
         try {
+          const tokenURI = await nftContract.tokenURI(tokenId);
           nftData.push({
             tokenId: Number(tokenId),
+            tokenURI: tokenURI,
+            metadataLoading: true,
           });
         } catch (error) {
           console.error(`Error loading NFT ${tokenId}:`, error);
@@ -83,6 +190,28 @@ export default function Portfolio() {
       }
 
       setNfts(nftData);
+
+      // Fetch metadata for each NFT
+      const nftsWithMetadata = await Promise.all(
+        nftData.map(async (nft) => {
+          try {
+            const metadata = await fetchNFTMetadata(nft.tokenURI || "");
+            return {
+              ...nft,
+              metadata: metadata || undefined,
+              metadataLoading: false,
+            };
+          } catch (error) {
+            console.error(
+              `Error fetching metadata for NFT ${nft.tokenId}:`,
+              error
+            );
+            return { ...nft, metadata: undefined, metadataLoading: false };
+          }
+        })
+      );
+
+      setNfts(nftsWithMetadata);
     } catch (error) {
       console.error("Error loading NFTs:", error);
     } finally {
@@ -213,10 +342,25 @@ export default function Portfolio() {
                 {nfts.map((nft) => (
                   <div key={nft.tokenId} className="nft-card owned">
                     <div className="nft-image-placeholder">
-                      <span className="nft-id">#{nft.tokenId}</span>
+                      {nft.metadataLoading ? (
+                        <div className="loading-spinner">Loading...</div>
+                      ) : nft.metadata?.image ? (
+                        <Image
+                          src={getImageUrl(nft.metadata.image)}
+                          alt={nft.metadata.name || `NFT #${nft.tokenId}`}
+                          width={300}
+                          height={300}
+                          className="nft-image"
+                          unoptimized
+                        />
+                      ) : (
+                        <span className="nft-id">#{nft.tokenId}</span>
+                      )}
                     </div>
                     <div className="nft-info">
-                      <h3>DeFi Art #{nft.tokenId}</h3>
+                      <h3>
+                        {nft.metadata?.name || `DeFi Art #${nft.tokenId}`}
+                      </h3>
                       <div className="owned-badge">✅ Owned</div>
                     </div>
                   </div>
