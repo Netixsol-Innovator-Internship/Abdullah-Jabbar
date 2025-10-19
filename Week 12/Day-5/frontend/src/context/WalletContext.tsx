@@ -36,24 +36,24 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    checkIfWalletIsConnected();
-  }, []);
+    const checkIfWalletIsConnected = async () => {
+      try {
+        if (typeof window !== "undefined" && window.ethereum) {
+          const accounts = await window.ethereum.request({
+            method: "eth_accounts",
+          });
 
-  const checkIfWalletIsConnected = async () => {
-    try {
-      if (typeof window !== "undefined" && window.ethereum) {
-        const accounts = await window.ethereum.request({
-          method: "eth_accounts",
-        });
-
-        if (accounts.length > 0) {
-          connectWallet();
+          if (accounts.length > 0) {
+            void connectWallet();
+          }
         }
+      } catch (error) {
+        console.error("Error checking wallet connection:", error);
       }
-    } catch (error) {
-      console.error("Error checking wallet connection:", error);
-    }
-  };
+    };
+
+    void checkIfWalletIsConnected();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const connectWallet = async () => {
     try {

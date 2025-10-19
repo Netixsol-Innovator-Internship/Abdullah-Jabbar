@@ -10,7 +10,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="nav-container">
         <div className="nav-brand">
-          <h2 className="nav-brand-title">Planer's Mint</h2>
+          <h2 className="nav-brand-title">Planer&apos;s Mint</h2>
         </div>
 
         <div className="nav-links">

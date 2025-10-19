@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,7 +11,7 @@ export default function Footer() {
       <div className="footer-content">
         {/* Brand Section */}
         <div className="footer-section">
-          <h3 className="footer-brand">Planer's Mint</h3>
+          <h3 className="footer-brand">Planer&apos;s Mint</h3>
           <p className="footer-tagline">
             Mint, Swap, Create — All in One Place.
           </p>
@@ -30,7 +31,7 @@ export default function Footer() {
               <a href="/portfolio">Portfolio</a>
             </li>
             <li>
-              <a href="/">Faucet</a>
+              <Link href="/">Faucet</Link>
             </li>
           </ul>
         </div>
@@ -73,7 +74,7 @@ export default function Footer() {
       {/* Bottom Section */}
       <div className="footer-bottom">
         <p className="footer-text">
-          © {currentYear} Planer's Mint. All rights reserved.
+          © {currentYear} Planer&apos;s Mint. All rights reserved.
         </p>
         <div className="footer-credits">
           <a href="#" className="footer-link-small">
