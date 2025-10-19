@@ -17,7 +17,7 @@ async function main() {
   // ============================================
   console.log("📝 Deploying Platform Token...");
   const PlatformToken = await hre.ethers.getContractFactory("PlatformToken");
-  const platformToken = await PlatformToken.deploy("SwapCoin", "SWAP");
+  const platformToken = await PlatformToken.deploy();
   await platformToken.waitForDeployment();
   const platformTokenAddress = await platformToken.getAddress();
   console.log("✅ Platform Token deployed to:", platformTokenAddress, "\n");
