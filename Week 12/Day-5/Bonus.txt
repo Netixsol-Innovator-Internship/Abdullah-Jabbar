@@ -1,0 +1,53 @@
+DEX Bonuses (+1 pts each):
+
+ Add/remove liquidity by users
+
+ Display LP tokens
+
+ Show trading fees earned
+
+ Price charts or history
+
+ Multiple slippage options
+
+
+
+NFT Bonuses (+1 pts each):
+
+Users can list their NFTs for resale
+
+Secondary market with royalties
+
+Whitelist minting
+
+Reveal mechanism
+
+Rarity calculator
+
+Batch minting
+
+
+
+Platform Bonuses (+0.5 pts each):
+
+Staking platform token for rewards
+
+Governance voting
+
+Transaction history page
+
+Multi-language support
+
+
+
+Technical Bonuses (+2 pts each):
+
+Unit tests for contracts
+
+Gas optimization techniques
+
+Emergency pause functionality
+
+Upgradeable contracts
+
+Subgraph for data indexing

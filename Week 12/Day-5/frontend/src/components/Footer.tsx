@@ -61,7 +61,7 @@ export default function Footer() {
         {/* Network Info */}
         <div className="footer-section">
           <h4 className="footer-heading">Network</h4>
-          <p className="footer-text">Built on Ethereum Sepolia</p>
+          <p className="footer-text">Built on Ethereum Kasplex</p>
           <p className="footer-text text-small">
             Testnet only - For development
           </p>

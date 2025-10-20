@@ -7,10 +7,10 @@ import {
   CONTRACT_ADDRESSES,
   NFT_MARKETPLACE_ABI,
   NFT_COLLECTION_ABI,
-  PLATFORM_TOKEN_ABI,
 } from "@/config/contract";
 import { useWallet } from "@/context/WalletContext";
-import { isContractAvailable, formatValueOrNA } from "@/utils/contractUtils";
+import { isContractAvailable } from "@/utils/contractUtils";
+import NFTCardMarketplace from "@/components/NFTCardMarketplace";
 
 const TOKENS = [
   { address: CONTRACT_ADDRESSES.PlatformToken, symbol: "CLAW" },
@@ -35,13 +35,16 @@ interface NFT {
   isAvailable: boolean;
   metadata?: NFTMetadata;
   metadataLoading?: boolean;
+  listingPrice?: string; // Price in platform tokens if listed by user
+  isListed?: boolean; // Whether this is a user listing
+  seller?: string; // Seller address for user listings
+  priceInSelectedToken?: string; // Calculated price in currently selected payment token
 }
 
 export default function Marketplace() {
   const { signer, account, isConnected } = useWallet();
   const [nfts, setNfts] = useState<NFT[]>([]);
   const [loading, setLoading] = useState(true);
-  const [buying, setBuying] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(
     CONTRACT_ADDRESSES.PlatformToken
@@ -74,6 +77,27 @@ export default function Marketplace() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signer, account, contractsAvailable]);
+
+  // Update prices when selected payment token changes
+  useEffect(() => {
+    const updatePrices = async () => {
+      const updatedNfts = await Promise.all(
+        nfts.map(async (nft) => {
+          const price = await getNFTPrice(nft, selectedPayment);
+          return {
+            ...nft,
+            priceInSelectedToken: price,
+          };
+        })
+      );
+      setNfts(updatedNfts);
+    };
+
+    if (nfts.length > 0 && contractsAvailable) {
+      void updatePrices();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPayment, nftPrice, pricesInTokens]);
 
   const handleRefresh = async () => {
     if (!isConnected) return;
@@ -233,14 +257,38 @@ export default function Marketplace() {
           const owner = await nftContract.ownerOf(i);
           const tokenURI = await nftContract.tokenURI(i);
 
+          const isOwnedByMarketplace =
+            owner.toLowerCase() ===
+            CONTRACT_ADDRESSES.NFTMarketplace.toLowerCase();
+
+          let listingPrice: string | undefined;
+          let isListed = false;
+          let seller: string | undefined;
+
+          // Check if this NFT has a listing
+          if (isOwnedByMarketplace) {
+            try {
+              const listing = await marketplaceContract.listings(i);
+              // listing returns: tokenId, seller, price, isActive
+              if (listing.isActive) {
+                isListed = true;
+                listingPrice = ethers.formatEther(listing.price);
+                seller = listing.seller;
+              }
+            } catch (error) {
+              console.error(`Error fetching listing for NFT ${i}:`, error);
+            }
+          }
+
           nftData.push({
             tokenId: i,
             owner: owner,
             tokenURI: tokenURI,
-            isAvailable:
-              owner.toLowerCase() ===
-              CONTRACT_ADDRESSES.NFTMarketplace.toLowerCase(),
+            isAvailable: isOwnedByMarketplace,
             metadataLoading: true,
+            listingPrice: listingPrice,
+            isListed: isListed,
+            seller: seller,
           });
         } catch (error) {
           console.error(`Error loading NFT ${i}:`, error);
@@ -270,63 +318,23 @@ export default function Marketplace() {
       );
 
       setNfts(nftsWithMetadata);
+
+      // Calculate initial prices for all NFTs
+      const nftsWithPrices = await Promise.all(
+        nftsWithMetadata.map(async (nft) => {
+          const price = await getNFTPrice(nft, selectedPayment);
+          return {
+            ...nft,
+            priceInSelectedToken: price,
+          };
+        })
+      );
+
+      setNfts(nftsWithPrices);
     } catch (error) {
       console.error("Error loading marketplace:", error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleBuyNFT = async (tokenId: number) => {
-    try {
-      setBuying(true);
-
-      const marketplaceContract = new ethers.Contract(
-        CONTRACT_ADDRESSES.NFTMarketplace,
-        NFT_MARKETPLACE_ABI,
-        signer!
-      );
-
-      const paymentTokenContract = new ethers.Contract(
-        selectedPayment,
-        PLATFORM_TOKEN_ABI,
-        signer!
-      );
-
-      const paymentAmount = ethers.parseEther(
-        pricesInTokens[selectedPayment] || nftPrice
-      );
-
-      console.log("Approving tokens...");
-      const approveTx = await paymentTokenContract.approve(
-        CONTRACT_ADDRESSES.NFTMarketplace,
-        paymentAmount
-      );
-      await approveTx.wait();
-      console.log("Tokens approved");
-
-      console.log("Buying NFT...");
-      let buyTx;
-      if (selectedPayment === CONTRACT_ADDRESSES.PlatformToken) {
-        buyTx = await marketplaceContract.buyNFTWithPlatformToken(tokenId);
-      } else {
-        buyTx = await marketplaceContract.buyNFTWithToken(
-          tokenId,
-          selectedPayment
-        );
-      }
-      await buyTx.wait();
-      console.log("NFT purchased!");
-
-      alert("NFT purchased successfully! 🎉");
-      await loadMarketplace();
-    } catch (error) {
-      console.error("Error buying NFT:", error);
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      alert("Failed to buy NFT: " + errorMessage);
-    } finally {
-      setBuying(false);
     }
   };
 
@@ -336,12 +344,45 @@ export default function Marketplace() {
     return token ? token.symbol : "N/A";
   };
 
-  const getImageUrl = (imageUri: string) => {
-    if (imageUri.startsWith("ipfs://")) {
-      const ipfsHash = imageUri.replace("ipfs://", "");
-      return `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
+  const getNFTPrice = async (
+    nft: NFT,
+    paymentToken: string
+  ): Promise<string> => {
+    try {
+      // If it's a user listing, use the listing price
+      if (nft.isListed && nft.listingPrice) {
+        const priceInPlatformTokens = parseFloat(nft.listingPrice);
+
+        // If paying with platform token, return listing price directly
+        if (paymentToken === CONTRACT_ADDRESSES.PlatformToken) {
+          return priceInPlatformTokens.toFixed(2);
+        }
+
+        // Otherwise, calculate the price in the selected token
+        // Use the same ratio as the global price conversion
+        const globalPriceInPlatformTokens = parseFloat(nftPrice);
+        const globalPriceInSelectedToken = parseFloat(
+          pricesInTokens[paymentToken] || "0"
+        );
+
+        if (globalPriceInPlatformTokens > 0) {
+          const ratio =
+            globalPriceInSelectedToken / globalPriceInPlatformTokens;
+          const priceInSelectedToken = priceInPlatformTokens * ratio;
+          return priceInSelectedToken.toFixed(2);
+        }
+      }
+
+      // For primary sales (not user listings), use the global price
+      if (paymentToken === CONTRACT_ADDRESSES.PlatformToken) {
+        return parseFloat(nftPrice).toFixed(2);
+      }
+
+      return parseFloat(pricesInTokens[paymentToken] || nftPrice).toFixed(2);
+    } catch (error) {
+      console.error("Error calculating NFT price:", error);
+      return "0";
     }
-    return imageUri;
   };
 
   if (!isConnected) {
@@ -390,16 +431,9 @@ export default function Marketplace() {
               <span className="token-symbol">
                 {contractsAvailable ? token.symbol : "N/A"}
               </span>
-              <span className="token-price">
-                {formatValueOrNA(
-                  pricesInTokens[token.address]
-                    ? parseFloat(pricesInTokens[token.address]).toFixed(2)
-                    : nftPrice,
-                  2,
-                  contractsAvailable
-                )}{" "}
-                {contractsAvailable ? token.symbol : "N/A"}
-              </span>
+              {selectedPayment === token.address && (
+                <span className="selected-indicator">✓</span>
+              )}
             </button>
           ))}
         </div>
@@ -415,89 +449,23 @@ export default function Marketplace() {
             </div>
           ) : (
             nfts.map((nft) => (
-              <div key={nft.tokenId} className="nft-card">
-                <div className="nft-image-placeholder">
-                  {nft.metadataLoading ? (
-                    <div className="loading-spinner">Loading...</div>
-                  ) : nft.metadata?.image ? (
-                    <Image
-                      src={getImageUrl(nft.metadata.image)}
-                      alt={nft.metadata.name || `NFT #${nft.tokenId}`}
-                      width={300}
-                      height={300}
-                      className="nft-image"
-                      unoptimized
-                    />
-                  ) : (
-                    <span className="nft-id">#{nft.tokenId}</span>
-                  )}
-                </div>
-
-                <div className="nft-info">
-                  <h3>{nft.metadata?.name || `DeFi Art #${nft.tokenId}`}</h3>
-
-                  {nft.metadata?.description && (
-                    <p className="nft-description">
-                      {nft.metadata.description}
-                    </p>
-                  )}
-
-                  {nft.metadata?.attributes &&
-                    nft.metadata.attributes.length > 0 && (
-                      <div className="nft-attributes">
-                        {nft.metadata.attributes.map((attr, idx) => (
-                          <div key={idx} className="attribute-badge">
-                            <span className="attr-type">
-                              {attr.trait_type}:
-                            </span>
-                            <span className="attr-value">{attr.value}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                  <div className="nft-metadata">
-                    <div className="metadata-item">
-                      <span className="label">Owner:</span>
-                      <span className="value">
-                        {nft.owner.substring(0, 6)}...{nft.owner.substring(38)}
-                      </span>
-                    </div>
-
-                    {nft.isAvailable && (
-                      <div className="metadata-item">
-                        <span className="label">Price:</span>
-                        <span className="value price">
-                          {formatValueOrNA(
-                            pricesInTokens[selectedPayment]
-                              ? parseFloat(
-                                  pricesInTokens[selectedPayment]
-                                ).toFixed(2)
-                              : nftPrice,
-                            2,
-                            contractsAvailable
-                          )}{" "}
-                          {getTokenSymbol(selectedPayment)}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {nft.isAvailable ? (
-                    <button
-                      onClick={() => handleBuyNFT(nft.tokenId)}
-                      disabled={buying || !contractsAvailable}
-                      className="btn-primary btn-buy"
-                    >
-                      {buying ? "Buying..." : "🛒 Buy NFT"}
-                    </button>
-                  ) : nft.owner.toLowerCase() === account.toLowerCase() ? (
-                    <div className="owned-badge">✅ You own this</div>
-                  ) : (
-                    <div className="sold-badge">❌ Sold</div>
-                  )}
-                </div>
-              </div>
+              <NFTCardMarketplace
+                key={nft.tokenId}
+                tokenId={nft.tokenId}
+                owner={nft.owner}
+                metadata={nft.metadata}
+                metadataLoading={nft.metadataLoading}
+                isAvailable={nft.isAvailable}
+                isListed={nft.isListed}
+                seller={nft.seller}
+                priceInSelectedToken={nft.priceInSelectedToken}
+                selectedPayment={selectedPayment}
+                account={account}
+                signer={signer!}
+                contractsAvailable={contractsAvailable}
+                getTokenSymbol={getTokenSymbol}
+                onBuySuccess={loadMarketplace}
+              />
             ))
           )}
         </div>

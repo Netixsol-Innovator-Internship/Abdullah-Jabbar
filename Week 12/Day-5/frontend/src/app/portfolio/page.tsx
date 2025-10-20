@@ -4,7 +4,11 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ethers } from "ethers";
-import { CONTRACT_ADDRESSES, NFT_COLLECTION_ABI } from "@/config/contract";
+import {
+  CONTRACT_ADDRESSES,
+  NFT_COLLECTION_ABI,
+  NFT_MARKETPLACE_ABI,
+} from "@/config/contract";
 import { useWallet } from "@/context/WalletContext";
 import { useAppSelector } from "@/store/hooks";
 import {
@@ -14,6 +18,7 @@ import {
 } from "@/store/selectors";
 import { useRefreshBalances } from "@/hooks/useTokenData";
 import { isContractAvailable, formatValueOrNA } from "@/utils/contractUtils";
+import NFTCardPortfolio from "@/components/NFTCardPortfolio";
 
 interface NFTMetadata {
   name: string;
@@ -30,6 +35,8 @@ interface NFT {
   tokenURI?: string;
   metadata?: NFTMetadata;
   metadataLoading?: boolean;
+  isListed?: boolean;
+  listingPrice?: string;
 }
 
 export default function Portfolio() {
@@ -155,14 +162,6 @@ export default function Portfolio() {
     }
   };
 
-  const getImageUrl = (imageUri: string) => {
-    if (imageUri.startsWith("ipfs://")) {
-      const ipfsHash = imageUri.replace("ipfs://", "");
-      return `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
-    }
-    return imageUri;
-  };
-
   const loadNFTs = async () => {
     try {
       setNftsLoading(true);
@@ -173,6 +172,13 @@ export default function Portfolio() {
         signer!
       );
 
+      const marketplaceContract = new ethers.Contract(
+        CONTRACT_ADDRESSES.NFTMarketplace,
+        NFT_MARKETPLACE_ABI,
+        signer!
+      );
+
+      // Get NFTs owned directly by the user
       const tokenIds = await nftContract.tokensOfOwner(account);
       const nftData: NFT[] = [];
 
@@ -183,9 +189,45 @@ export default function Portfolio() {
             tokenId: Number(tokenId),
             tokenURI: tokenURI,
             metadataLoading: true,
+            isListed: false,
           });
         } catch (error) {
           console.error(`Error loading NFT ${tokenId}:`, error);
+        }
+      }
+
+      // Get total supply to check for listed NFTs
+      const totalSupply = await nftContract.totalSupply();
+
+      // Check each NFT in the collection for listings by this user
+      for (let i = 0; i < Number(totalSupply); i++) {
+        try {
+          const owner = await nftContract.ownerOf(i);
+
+          // If NFT is owned by marketplace, check if it's listed by this user
+          if (
+            owner.toLowerCase() ===
+            CONTRACT_ADDRESSES.NFTMarketplace.toLowerCase()
+          ) {
+            const listing = await marketplaceContract.listings(i);
+
+            // Check if this NFT is listed and the seller is the current user
+            if (
+              listing.isActive &&
+              listing.seller.toLowerCase() === account.toLowerCase()
+            ) {
+              const tokenURI = await nftContract.tokenURI(i);
+              nftData.push({
+                tokenId: i,
+                tokenURI: tokenURI,
+                metadataLoading: true,
+                isListed: true,
+                listingPrice: ethers.formatEther(listing.price),
+              });
+            }
+          }
+        } catch (error) {
+          console.error(`Error checking NFT ${i} for listings:`, error);
         }
       }
 
@@ -340,30 +382,16 @@ export default function Portfolio() {
             ) : (
               <div className="nft-grid">
                 {nfts.map((nft) => (
-                  <div key={nft.tokenId} className="nft-card owned">
-                    <div className="nft-image-placeholder">
-                      {nft.metadataLoading ? (
-                        <div className="loading-spinner">Loading...</div>
-                      ) : nft.metadata?.image ? (
-                        <Image
-                          src={getImageUrl(nft.metadata.image)}
-                          alt={nft.metadata.name || `NFT #${nft.tokenId}`}
-                          width={300}
-                          height={300}
-                          className="nft-image"
-                          unoptimized
-                        />
-                      ) : (
-                        <span className="nft-id">#{nft.tokenId}</span>
-                      )}
-                    </div>
-                    <div className="nft-info">
-                      <h3>
-                        {nft.metadata?.name || `DeFi Art #${nft.tokenId}`}
-                      </h3>
-                      <div className="owned-badge">✅ Owned</div>
-                    </div>
-                  </div>
+                  <NFTCardPortfolio
+                    key={nft.tokenId}
+                    tokenId={nft.tokenId}
+                    metadata={nft.metadata}
+                    metadataLoading={nft.metadataLoading}
+                    isListed={nft.isListed}
+                    listingPrice={nft.listingPrice}
+                    signer={signer!}
+                    onUpdate={loadNFTs}
+                  />
                 ))}
               </div>
             )}

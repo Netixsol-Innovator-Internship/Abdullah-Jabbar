@@ -755,9 +755,12 @@ body {
   cursor: pointer;
   transition: all 0.3s;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+  min-height: 60px;
+  position: relative;
 }
 
 .payment-option:hover {
@@ -772,6 +775,27 @@ body {
 .token-symbol {
   font-weight: 700;
   font-size: 1.2rem;
+}
+
+.selected-indicator {
+  font-size: 1.4rem;
+  color: var(--primary-color);
+  font-weight: bold;
+  animation: checkmark-appear 0.3s ease-in-out;
+}
+
+@keyframes checkmark-appear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .token-price {
@@ -792,6 +816,9 @@ body {
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .nft-card:hover {
@@ -800,7 +827,7 @@ body {
 
 .nft-image-placeholder {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  height: 250px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -834,35 +861,76 @@ body {
 
 .nft-info {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.nft-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.nft-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .nft-info h3 {
-  margin-bottom: 0.75rem;
+  margin: 0;
   font-size: 1.25rem;
+  flex: 1;
+}
+
+.listing-badge {
+  font-size: 1.1rem;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid var(--success);
+  color: var(--success);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  cursor: help;
+  flex-shrink: 0;
+  font-weight: 600;
 }
 
 .nft-description {
   color: var(--text-secondary);
   font-size: 0.9rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .nft-attributes {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  max-height: 7.8rem;
+  overflow: hidden;
+  align-content: flex-start;
 }
 
 .attribute-badge {
   background: var(--background);
   border: 1px solid var(--card-border);
-  padding: 0.4rem 0.8rem;
+  padding: 0.3rem 0.65rem;
   border-radius: 6px;
   font-size: 0.85rem;
   display: flex;
   gap: 0.4rem;
+  line-height: 1.3;
+  height: fit-content;
 }
 
 .attr-type {
@@ -876,14 +944,18 @@ body {
 }
 
 .nft-metadata {
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 }
 
 .metadata-item {
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 0;
+  padding: 0.3rem 0;
   font-size: 0.9rem;
+}
+
+.metadata-item:first-child {
+  padding-top: 0;
 }
 
 .metadata-item .label {
@@ -896,17 +968,22 @@ body {
   font-size: 1.1rem;
 }
 
+.nft-actions {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
 .btn-buy {
-  margin-top: 1rem;
+  width: 100%;
 }
 
 .owned-badge,
-.sold-badge {
+.sold-badge,
+.listed-badge {
   text-align: center;
   padding: 0.75rem;
   border-radius: 8px;
   font-weight: 600;
-  margin-top: 1rem;
 }
 
 .owned-badge {
@@ -917,6 +994,115 @@ body {
 .sold-badge {
   background: rgba(239, 68, 68, 0.1);
   color: var(--danger-color);
+}
+
+.listed-badge {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+  border: 1px solid var(--warning-color);
+}
+
+.listing-badge-portfolio {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  cursor: help;
+}
+
+/* Portfolio Price Label in Upper Right */
+.portfolio-price-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  background: rgba(99, 102, 241, 0.15);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Price Section for Portfolio */
+.price-section {
+  margin-top: 0.75rem;
+}
+
+.price-label-portfolio {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Listing Price Value */
+.listing-price-value {
+  text-align: center;
+  padding: 0.75rem 0.5rem;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Listed NFT Info Section */
+.listed-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.listing-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.price-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.price-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  letter-spacing: 0.5px;
+}
+
+.info-message {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid var(--primary-color);
+  color: var(--text-secondary);
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.modal-warning {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid var(--warning-color);
+  color: var(--warning-color);
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
 }
 
 .no-nfts {
@@ -1290,16 +1476,191 @@ body {
   .footer-bottom {
     gap: 0.75rem;
   }
-
-  .footer-credits {
-    gap: 0.3rem;
-  }
-
-  .footer-link-small {
-    font-size: 0.75rem;
-  }
 }
 
-button{
-  cursor:pointer;
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--background);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.form-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.nft-actions-portfolio {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Owned Section - No gap between badge and button */
+.owned-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.owned-section .owned-badge {
+  margin-bottom: 0;
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.btn-secondary {
+  background: var(--background);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-color);
+  color: white;
+}
+
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.footer-credits {
+  gap: 0.3rem;
+}
+
+.footer-link-small {
+  font-size: 0.75rem;
+}
+
+button {
+  cursor: pointer;
 }
