@@ -9,6 +9,7 @@ import {
   PLATFORM_TOKEN_ABI,
 } from "@/config/contract";
 import { useWallet } from "@/context/WalletContext";
+import { useI18n } from "@/i18n/i18nContext";
 import { useAppSelector } from "@/store/hooks";
 import {
   selectAllBalances,
@@ -18,9 +19,14 @@ import {
 import { useRefreshBalances, useRefreshPools } from "@/hooks/useTokenData";
 import { calculateSwapOutput } from "@/utils/dexService";
 import { isContractAvailable, formatValueOrNA } from "@/utils/contractUtils";
+import { sanitizeNumericInput } from "@/utils/validation";
+import LPTokenDisplay from "@/components/LPTokenDisplay";
+import PriceChart from "@/components/PriceChart";
+import SlippageSelector from "@/components/SlippageSelector";
 
 export default function DEX() {
   const { signer, account, isConnected } = useWallet();
+  const { t } = useI18n();
   const { refreshBalances } = useRefreshBalances();
   const { refreshPools } = useRefreshPools();
 
@@ -31,8 +37,10 @@ export default function DEX() {
   const [tokenIn, setTokenIn] = useState("");
   const [tokenOut, setTokenOut] = useState("");
   const [amountIn, setAmountIn] = useState("");
+  const [slippage, setSlippage] = useState(1.0); // Default 1% slippage
   const [swapping, setSwapping] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [amountError, setAmountError] = useState("");
 
   // Get pool reserve from Redux
   const poolReserve = useAppSelector(selectPoolReserve(tokenIn, tokenOut));
@@ -69,19 +77,81 @@ export default function DEX() {
     }
   };
 
+  // Input validation and handling
+  const handleAmountChange = (value: string) => {
+    // Sanitize input
+    const sanitized = sanitizeNumericInput(value);
+
+    // Get token info and balance
+    const tokenInInfo = tokens.find((t) => t.address === tokenIn);
+    const tokenInBalance = balances[tokenIn];
+
+    // Auto-reduce if exceeds balance
+    let finalAmount = sanitized;
+    if (
+      tokenInBalance &&
+      sanitized &&
+      parseFloat(sanitized) > parseFloat(tokenInBalance.formattedBalance)
+    ) {
+      finalAmount = tokenInBalance.formattedBalance;
+    }
+
+    setAmountIn(finalAmount);
+
+    // Clear previous error
+    setAmountError("");
+
+    // Show warnings but don't block input for minor issues
+    if (finalAmount) {
+      if (tokenInInfo && tokenInBalance) {
+        const amountNum = parseFloat(finalAmount);
+        const balanceNum = parseFloat(tokenInBalance.formattedBalance);
+
+        // Only show warnings, don't block input
+        if (amountNum <= 0) {
+          setAmountError(t("validation.mustBeGreaterThanZero"));
+        } else if (amountNum < 0.000001) {
+          setAmountError(t("dex.minimumAmount"));
+        } else if (amountNum > balanceNum) {
+          setAmountError(
+            t("validation.insufficientBalance")
+              .replace("{token}", tokenInInfo.symbol)
+              .replace("{balance}", balanceNum.toFixed(6))
+          );
+        }
+      }
+    }
+  };
+
+  const canSwap = (): boolean => {
+    if (!amountIn || !tokenIn || !tokenOut) return false;
+
+    const tokenInBalance = balances[tokenIn];
+    if (!tokenInBalance) return false;
+
+    const amountNum = parseFloat(amountIn);
+    const balanceNum = parseFloat(tokenInBalance.formattedBalance);
+
+    // Only prevent swap for critical issues
+    return amountNum > 0 && amountNum >= 0.000001 && amountNum <= balanceNum;
+  };
+
   const handleSwap = async () => {
     try {
-      if (!amountIn || parseFloat(amountIn) <= 0) {
-        alert("Please enter a valid amount");
+      // Final validation before swap
+      if (!canSwap()) {
+        alert(t("dex.enterValidAmount"));
         return;
       }
 
       if (!signer || !account) {
-        alert("Please connect your wallet");
+        alert(t("dex.connectWalletFirst"));
         return;
       }
 
       setSwapping(true);
+
+      console.log(`Using slippage tolerance: ${slippage}%`);
 
       const tokenInContract = new ethers.Contract(
         tokenIn,
@@ -91,24 +161,26 @@ export default function DEX() {
 
       const amountInWei = ethers.parseEther(amountIn);
 
-      console.log("Approving tokens...");
+      console.log(t("dex.approving"));
       const approveTx = await tokenInContract.approve(
         CONTRACT_ADDRESSES.MultiTokenDEX,
         amountInWei
       );
       await approveTx.wait();
 
-      console.log("Performing swap...");
+      console.log(t("dex.performing"));
       const dexContract = new ethers.Contract(
         CONTRACT_ADDRESSES.MultiTokenDEX,
         MULTI_TOKEN_DEX_ABI,
         signer
       );
 
+      // Use the slippage tolerance set by the user for minimum output
       const minAmountOut = ethers.parseEther(
-        (parseFloat(amountOut) * 0.95).toFixed(18)
+        (parseFloat(amountOut) * (1 - slippage / 100)).toFixed(18)
       );
 
+      console.log(`Swapping with ${slippage}% slippage tolerance`);
       const swapTx = await dexContract.swap(
         tokenIn,
         tokenOut,
@@ -117,7 +189,7 @@ export default function DEX() {
       );
       await swapTx.wait();
 
-      alert("Swap successful!");
+      alert(t("dex.swapSuccess"));
       setAmountIn("");
 
       // Refresh data after swap
@@ -125,7 +197,7 @@ export default function DEX() {
       await refreshPools();
     } catch (error) {
       console.error("Error swapping:", error);
-      alert("Swap failed. Please try again.");
+      alert(t("dex.swapFailed"));
     } finally {
       setSwapping(false);
     }
@@ -147,8 +219,8 @@ export default function DEX() {
     return (
       <div className="connect-prompt">
         <div className="connect-card">
-          <h1>👋 Connect your wallet</h1>
-          <p>Please connect MetaMask to use the DEX</p>
+          <h1>{t("dex.connectWallet")}</h1>
+          <p>{t("dex.connectMessage")}</p>
         </div>
       </div>
     );
@@ -163,23 +235,23 @@ export default function DEX() {
     <div className="page-container">
       <div className="page-header">
         <div className="page-title-row">
-          <h1>🔄 Token Swap</h1>
+          <h1>{t("dex.tokenSwap")}</h1>
           <button
             onClick={handleRefresh}
             disabled={refreshing || !isConnected}
             className="btn-refresh-page"
-            title="Refresh data"
+            title={t("dex.refresh")}
           >
             <Image
               src="/refresh.svg"
-              alt="Refresh"
+              alt={t("common.refresh")}
               width={24}
               height={24}
               className={refreshing ? "spinning" : ""}
             />
           </button>
         </div>
-        <p>Trade tokens instantly</p>
+        <p>{t("dex.tradeInstantly")}</p>
       </div>
 
       <div className="card swap-card">
@@ -187,9 +259,9 @@ export default function DEX() {
           {/* Token In Section */}
           <div className="swap-section">
             <div className="swap-header">
-              <span>From</span>
+              <span>{t("dex.from")}</span>
               <span className="balance">
-                Balance:{" "}
+                {t("dex.balance")}:{" "}
                 {formatValueOrNA(
                   tokenInBalance
                     ? parseFloat(tokenInBalance.formattedBalance)
@@ -203,13 +275,15 @@ export default function DEX() {
               <input
                 type="number"
                 value={amountIn}
-                onChange={(e) => setAmountIn(e.target.value)}
-                placeholder="0.0"
-                className="swap-input"
+                onChange={(e) => handleAmountChange(e.target.value)}
+                placeholder={t("dex.placeholder")}
+                className={`swap-input ${amountError ? "warning" : ""}`}
+                min="0"
+                step="0.000001"
               />
               <div className="token-select-row">
                 <button onClick={handleMaxAmount} className="max-btn">
-                  MAX
+                  {t("dex.max")}
                 </button>
                 <select
                   value={tokenIn}
@@ -221,12 +295,17 @@ export default function DEX() {
                       key={`${token.address}-${token.symbol}`}
                       value={token.address}
                     >
-                      {contractsAvailable ? token.symbol : "N/A"}
+                      {contractsAvailable
+                        ? token.symbol
+                        : t("dex.notAvailable")}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
+            {amountError && (
+              <div className="input-warning-message">⚠️ {amountError}</div>
+            )}
           </div>
 
           {/* Switch Button */}
@@ -243,9 +322,9 @@ export default function DEX() {
           {/* Token Out Section */}
           <div className="swap-section">
             <div className="swap-header">
-              <span>To</span>
+              <span>{t("dex.to")}</span>
               <span className="balance">
-                Balance:{" "}
+                {t("dex.balance")}:{" "}
                 {formatValueOrNA(
                   tokenOutBalance
                     ? parseFloat(tokenOutBalance.formattedBalance)
@@ -260,7 +339,7 @@ export default function DEX() {
                 type="number"
                 value={amountOut}
                 readOnly
-                placeholder="0.0"
+                placeholder={t("dex.placeholder")}
                 className="swap-input"
               />
               <select
@@ -273,40 +352,60 @@ export default function DEX() {
                     key={`${token.address}-${token.symbol}`}
                     value={token.address}
                   >
-                    {contractsAvailable ? token.symbol : "N/A"}
+                    {contractsAvailable ? token.symbol : t("dex.notAvailable")}
                   </option>
                 ))}
               </select>
             </div>
           </div>
 
+          {/* Slippage Selector */}
+          <SlippageSelector
+            slippage={slippage}
+            onSlippageChange={setSlippage}
+          />
+
           {/* Swap Details */}
           {amountIn && parseFloat(amountIn) > 0 && (
             <div className="swap-details">
               <div className="detail-row">
-                <span>Price</span>
+                <span>{t("dex.price")}</span>
                 <span>
-                  1 {contractsAvailable ? tokenInInfo?.symbol : "N/A"} ={" "}
-                  {contractsAvailable ? price : "N/A"}{" "}
-                  {contractsAvailable ? tokenOutInfo?.symbol : "N/A"}
+                  1{" "}
+                  {contractsAvailable
+                    ? tokenInInfo?.symbol
+                    : t("dex.notAvailable")}{" "}
+                  = {contractsAvailable ? price : t("dex.notAvailable")}{" "}
+                  {contractsAvailable
+                    ? tokenOutInfo?.symbol
+                    : t("dex.notAvailable")}
                 </span>
               </div>
               <div className="detail-row">
-                <span>Pool Liquidity</span>
+                <span>{t("dex.liquidityPool")}</span>
                 <span>
                   {formatValueOrNA(
                     parseFloat(reserveIn),
                     2,
                     contractsAvailable
                   )}{" "}
-                  {contractsAvailable ? tokenInInfo?.symbol : "N/A"} /{" "}
+                  {contractsAvailable
+                    ? tokenInInfo?.symbol
+                    : t("dex.notAvailable")}{" "}
+                  /{" "}
                   {formatValueOrNA(
                     parseFloat(reserveOut),
                     2,
                     contractsAvailable
                   )}{" "}
-                  {contractsAvailable ? tokenOutInfo?.symbol : "N/A"}
+                  {contractsAvailable
+                    ? tokenOutInfo?.symbol
+                    : t("dex.notAvailable")}
                 </span>
+              </div>
+              <div className="detail-row">
+                <span>{t("dex.slippage")}</span>
+                <span>{slippage}%</span>
               </div>
             </div>
           )}
@@ -317,29 +416,42 @@ export default function DEX() {
             disabled={
               !contractsAvailable ||
               swapping ||
-              !amountIn ||
-              parseFloat(amountIn) <= 0 ||
+              !canSwap() ||
               parseFloat(amountOut) <= 0
             }
             className="swap-btn"
           >
-            {swapping ? "Swapping..." : "Swap"}
+            {swapping ? t("common.loading") : t("dex.swapTokens")}
           </button>
         </div>
       </div>
 
+      {/* Price Chart */}
+      <div className="card mt-8">
+        <PriceChart
+          tokenA={
+            contractsAvailable ? tokenInInfo?.symbol || "Token A" : "Token A"
+          }
+          tokenB={
+            contractsAvailable ? tokenOutInfo?.symbol || "Token B" : "Token B"
+          }
+          currentPrice={price ? parseFloat(price) : 0}
+        />
+      </div>
+
       {/* Pool Information */}
       <div className="card info-card">
-        <h3>💧 Liquidity Pools</h3>
+        <h3>{t("dex.liquidityPools")}</h3>
         <p className="info-text">
-          Current pool reserves for{" "}
-          {contractsAvailable ? tokenInInfo?.symbol : "N/A"} /{" "}
-          {contractsAvailable ? tokenOutInfo?.symbol : "N/A"}
+          {t("dex.currentPoolReserves")}{" "}
+          {contractsAvailable ? tokenInInfo?.symbol : t("dex.notAvailable")} /{" "}
+          {contractsAvailable ? tokenOutInfo?.symbol : t("dex.notAvailable")}
         </p>
         <div className="pool-stats">
           <div className="pool-stat">
             <span className="stat-label">
-              {contractsAvailable ? tokenInInfo?.symbol : "N/A"} Reserve
+              {contractsAvailable ? tokenInInfo?.symbol : t("dex.notAvailable")}{" "}
+              {t("dex.reserve")}
             </span>
             <span className="stat-value">
               {formatValueOrNA(parseFloat(reserveIn), 2, contractsAvailable)}
@@ -347,7 +459,10 @@ export default function DEX() {
           </div>
           <div className="pool-stat">
             <span className="stat-label">
-              {contractsAvailable ? tokenOutInfo?.symbol : "N/A"} Reserve
+              {contractsAvailable
+                ? tokenOutInfo?.symbol
+                : t("dex.notAvailable")}{" "}
+              {t("dex.reserve")}
             </span>
             <span className="stat-value">
               {formatValueOrNA(parseFloat(reserveOut), 2, contractsAvailable)}
@@ -355,6 +470,13 @@ export default function DEX() {
           </div>
         </div>
       </div>
+
+      {/* LP Tokens Display */}
+      {isConnected && (
+        <div className="mt-8">
+          <LPTokenDisplay />
+        </div>
+      )}
     </div>
   );
 }

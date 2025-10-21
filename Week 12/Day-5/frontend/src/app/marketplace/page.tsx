@@ -11,6 +11,7 @@ import {
 import { useWallet } from "@/context/WalletContext";
 import { isContractAvailable } from "@/utils/contractUtils";
 import NFTCardMarketplace from "@/components/NFTCardMarketplace";
+import { useI18n } from "@/i18n/i18nContext";
 
 const TOKENS = [
   { address: CONTRACT_ADDRESSES.PlatformToken, symbol: "CLAW" },
@@ -43,6 +44,7 @@ interface NFT {
 
 export default function Marketplace() {
   const { signer, account, isConnected } = useWallet();
+  const { t } = useI18n();
   const [nfts, setNfts] = useState<NFT[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -252,6 +254,7 @@ export default function Marketplace() {
       const totalSupply = await nftContract.totalSupply();
 
       const nftData: NFT[] = [];
+
       for (let i = 0; i < Number(totalSupply); i++) {
         try {
           const owner = await nftContract.ownerOf(i);
@@ -265,7 +268,7 @@ export default function Marketplace() {
           let isListed = false;
           let seller: string | undefined;
 
-          // Check if this NFT has a listing
+          // Only check for listings if NFT is owned by marketplace
           if (isOwnedByMarketplace) {
             try {
               const listing = await marketplaceContract.listings(i);
@@ -280,16 +283,19 @@ export default function Marketplace() {
             }
           }
 
-          nftData.push({
-            tokenId: i,
-            owner: owner,
-            tokenURI: tokenURI,
-            isAvailable: isOwnedByMarketplace,
-            metadataLoading: true,
-            listingPrice: listingPrice,
-            isListed: isListed,
-            seller: seller,
-          });
+          // Only show NFTs that are actively listed (secondary market only)
+          if (isListed) {
+            nftData.push({
+              tokenId: i,
+              owner: owner,
+              tokenURI: tokenURI,
+              isAvailable: true, // Listed NFTs are always available for purchase
+              metadataLoading: true,
+              listingPrice: listingPrice,
+              isListed: isListed,
+              seller: seller,
+            });
+          }
         } catch (error) {
           console.error(`Error loading NFT ${i}:`, error);
         }
@@ -349,8 +355,8 @@ export default function Marketplace() {
     paymentToken: string
   ): Promise<string> => {
     try {
-      // If it's a user listing, use the listing price
-      if (nft.isListed && nft.listingPrice) {
+      // Since we only show listed NFTs, always use listing price
+      if (nft.listingPrice) {
         const priceInPlatformTokens = parseFloat(nft.listingPrice);
 
         // If paying with platform token, return listing price directly
@@ -358,27 +364,43 @@ export default function Marketplace() {
           return priceInPlatformTokens.toFixed(2);
         }
 
-        // Otherwise, calculate the price in the selected token
-        // Use the same ratio as the global price conversion
-        const globalPriceInPlatformTokens = parseFloat(nftPrice);
-        const globalPriceInSelectedToken = parseFloat(
-          pricesInTokens[paymentToken] || "0"
-        );
+        // Calculate price in selected token using marketplace DEX rates
+        try {
+          const marketplaceContract = new ethers.Contract(
+            CONTRACT_ADDRESSES.NFTMarketplace,
+            NFT_MARKETPLACE_ABI,
+            signer!
+          );
 
-        if (globalPriceInPlatformTokens > 0) {
-          const ratio =
-            globalPriceInSelectedToken / globalPriceInPlatformTokens;
-          const priceInSelectedToken = priceInPlatformTokens * ratio;
-          return priceInSelectedToken.toFixed(2);
+          const listingPriceWei = ethers.parseEther(nft.listingPrice);
+          const tokenPrice =
+            await marketplaceContract.calculatePriceInToken(paymentToken);
+
+          // Scale the token price based on the listing price vs default NFT price
+          const defaultPriceWei = await marketplaceContract.nftPrice();
+          const scalingFactor =
+            Number(listingPriceWei) / Number(defaultPriceWei);
+          const scaledPrice = Number(tokenPrice) * scalingFactor;
+
+          return ethers.formatEther(scaledPrice.toString()).slice(0, 10);
+        } catch (error) {
+          console.error("Error calculating token price:", error);
+          // Fallback: use ratio from global prices
+          const globalPriceInPlatformTokens = parseFloat(nftPrice);
+          const globalPriceInSelectedToken = parseFloat(
+            pricesInTokens[paymentToken] || "0"
+          );
+
+          if (globalPriceInPlatformTokens > 0) {
+            const ratio =
+              globalPriceInSelectedToken / globalPriceInPlatformTokens;
+            const priceInSelectedToken = priceInPlatformTokens * ratio;
+            return priceInSelectedToken.toFixed(2);
+          }
         }
       }
 
-      // For primary sales (not user listings), use the global price
-      if (paymentToken === CONTRACT_ADDRESSES.PlatformToken) {
-        return parseFloat(nftPrice).toFixed(2);
-      }
-
-      return parseFloat(pricesInTokens[paymentToken] || nftPrice).toFixed(2);
+      return "0";
     } catch (error) {
       console.error("Error calculating NFT price:", error);
       return "0";
@@ -389,8 +411,8 @@ export default function Marketplace() {
     return (
       <div className="connect-prompt">
         <div className="connect-card">
-          <h1>👋 Connect your wallet</h1>
-          <p>Please connect MetaMask to view the marketplace</p>
+          <h1>👋 {t("marketplace.connectWallet")}</h1>
+          <p>{t("marketplace.connectWalletMessage")}</p>
         </div>
       </div>
     );
@@ -400,27 +422,27 @@ export default function Marketplace() {
     <div className="page-container">
       <div className="page-header">
         <div className="page-title-row">
-          <h1>🖼️ NFT Marketplace</h1>
+          <h1>🖼️ {t("marketplace.title")}</h1>
           <button
             onClick={handleRefresh}
             disabled={refreshing || !isConnected}
             className="btn-refresh-page"
-            title="Refresh data"
+            title={t("marketplace.refreshData")}
           >
             <Image
               src="/refresh.svg"
-              alt="Refresh"
+              alt={t("marketplace.refreshData")}
               width={24}
               height={24}
               className={refreshing ? "spinning" : ""}
             />
           </button>
         </div>
-        <p>Buy unique NFTs with multiple token options</p>
+        <p>{t("marketplace.subtitle")}</p>
       </div>
 
       <div className="card payment-selector">
-        <h3>Select Payment Token</h3>
+        <h3>{t("marketplace.selectPaymentToken")}</h3>
         <div className="payment-options">
           {TOKENS.map((token) => (
             <button
@@ -440,12 +462,12 @@ export default function Marketplace() {
       </div>
 
       {loading ? (
-        <div className="loading">Loading NFTs...</div>
+        <div className="loading">{t("marketplace.loadingNFTs")}</div>
       ) : (
         <div className="nft-grid">
           {nfts.length === 0 ? (
             <div className="no-nfts">
-              <p>No NFTs available yet</p>
+              <p>{t("marketplace.noNFTsYet")}</p>
             </div>
           ) : (
             nfts.map((nft) => (
@@ -472,13 +494,13 @@ export default function Marketplace() {
       )}
 
       <div className="info-section">
-        <h3>💡 How to Buy</h3>
+        <h3>💡 {t("marketplace.buyingGuide.title")}</h3>
         <ul>
-          <li>Select your preferred payment token (CLAW, TUSD, or TBTC)</li>
-          <li>Click &quot;Buy NFT&quot; on any available NFT</li>
-          <li>Approve the token transaction in MetaMask</li>
-          <li>Confirm the purchase transaction</li>
-          <li>The NFT will be transferred to your wallet!</li>
+          <li>{t("marketplace.buyingGuide.step1")}</li>
+          <li>{t("marketplace.buyingGuide.step2")}</li>
+          <li>{t("marketplace.buyingGuide.step3")}</li>
+          <li>{t("marketplace.buyingGuide.step4")}</li>
+          <li>{t("marketplace.buyingGuide.step5")}</li>
         </ul>
       </div>
     </div>

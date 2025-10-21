@@ -1,3 +1,4 @@
+import { createSelector } from "@reduxjs/toolkit";
 import type { RootState } from "./index";
 import type { TokenInfo, TokenBalance, PoolReserve } from "@/types/token";
 import { createPoolKey } from "@/utils/dexService";
@@ -47,26 +48,33 @@ export const selectDexLoading = (state: RootState): boolean =>
 export const selectDexError = (state: RootState): string | null =>
   state.dex.error;
 
-// Computed Selectors
-export const selectTokensList = (state: RootState): TokenInfo[] =>
-  Object.values(state.token.tokens);
+// Computed Selectors (Memoized)
+export const selectTokensList = createSelector(
+  [selectAllTokens],
+  (tokens): TokenInfo[] => Object.values(tokens)
+);
 
-export const selectBalancesList = (state: RootState): TokenBalance[] =>
-  Object.values(state.token.balances);
+export const selectBalancesList = createSelector(
+  [selectAllBalances],
+  (balances): TokenBalance[] => Object.values(balances)
+);
 
-export const selectTotalPortfolioValue = (state: RootState): string => {
-  // This is a simple sum - in production you'd want to convert to USD or another base currency
-  const balances = Object.values(state.token.balances);
-  const total = balances.reduce(
-    (sum, balance) => sum + parseFloat(balance.formattedBalance || "0"),
-    0
-  );
-  return total.toFixed(4);
-};
+export const selectTotalPortfolioValue = createSelector(
+  [selectAllBalances],
+  (balances): string => {
+    // This is a simple sum - in production you'd want to convert to USD or another base currency
+    const balanceValues = Object.values(balances);
+    const total = balanceValues.reduce(
+      (sum, balance) => sum + parseFloat(balance.formattedBalance || "0"),
+      0
+    );
+    return total.toFixed(4);
+  }
+);
 
-export const selectIsDataLoaded = (state: RootState): boolean => {
-  return (
-    Object.keys(state.token.tokens).length > 0 &&
-    state.token.lastUpdated !== null
-  );
-};
+export const selectIsDataLoaded = createSelector(
+  [selectAllTokens, selectTokensLastUpdated],
+  (tokens, lastUpdated): boolean => {
+    return Object.keys(tokens).length > 0 && lastUpdated !== null;
+  }
+);

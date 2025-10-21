@@ -2,9 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
+import { useI18n } from "@/i18n/i18nContext";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useI18n();
 
   return (
     <footer className="footer-container">
@@ -12,47 +14,45 @@ export default function Footer() {
         {/* Brand Section */}
         <div className="footer-section">
           <h3 className="footer-brand">Planer&apos;s Mint</h3>
-          <p className="footer-tagline">
-            Mint, Swap, Create — All in One Place.
-          </p>
+          <p className="footer-tagline">{t("footer.tagline")}</p>
         </div>
 
         {/* Quick Links */}
         <div className="footer-section">
-          <h4 className="footer-heading">Quick Links</h4>
+          <h4 className="footer-heading">{t("footer.quickLinks")}</h4>
           <ul className="footer-links">
             <li>
-              <a href="/dex">DEX Trading</a>
+              <a href="/dex">{t("navbar.dex")}</a>
             </li>
             <li>
-              <a href="/marketplace">NFT Marketplace</a>
+              <a href="/marketplace">{t("navbar.marketplace")}</a>
             </li>
             <li>
-              <a href="/portfolio">Portfolio</a>
+              <a href="/portfolio">{t("navbar.portfolio")}</a>
             </li>
             <li>
-              <Link href="/">Faucet</Link>
+              <Link href="/">{t("navbar.faucet")}</Link>
             </li>
           </ul>
         </div>
 
         {/* Resources */}
         <div className="footer-section">
-          <h4 className="footer-heading">Resources</h4>
+          <h4 className="footer-heading">{t("footer.resources")}</h4>
           <ul className="footer-links">
             <li>
               <a href="#" target="_blank" rel="noopener noreferrer">
-                Documentation
+                {t("footer.documentation")}
               </a>
             </li>
             <li>
               <a href="#" target="_blank" rel="noopener noreferrer">
-                GitHub
+                {t("footer.github")}
               </a>
             </li>
             <li>
               <a href="#" target="_blank" rel="noopener noreferrer">
-                Support
+                {t("footer.support")}
               </a>
             </li>
           </ul>
@@ -60,11 +60,9 @@ export default function Footer() {
 
         {/* Network Info */}
         <div className="footer-section">
-          <h4 className="footer-heading">Network</h4>
-          <p className="footer-text">Built on Ethereum Kasplex</p>
-          <p className="footer-text text-small">
-            Testnet only - For development
-          </p>
+          <h4 className="footer-heading">{t("footer.network")}</h4>
+          <p className="footer-text">{t("footer.networkInfo")}</p>
+          <p className="footer-text text-small">{t("footer.testnetInfo")}</p>
         </div>
       </div>
 
@@ -74,19 +72,19 @@ export default function Footer() {
       {/* Bottom Section */}
       <div className="footer-bottom">
         <p className="footer-text">
-          © {currentYear} Planer&apos;s Mint. All rights reserved.
+          © {currentYear} {t("footer.copyright")}
         </p>
         <div className="footer-credits">
           <a href="#" className="footer-link-small">
-            Privacy Policy
+            {t("footer.privacy")}
           </a>
           <span className="footer-separator">•</span>
           <a href="#" className="footer-link-small">
-            Terms of Service
+            {t("footer.terms")}
           </a>
           <span className="footer-separator">•</span>
           <a href="#" className="footer-link-small">
-            Contact
+            {t("footer.contact")}
           </a>
         </div>
       </div>

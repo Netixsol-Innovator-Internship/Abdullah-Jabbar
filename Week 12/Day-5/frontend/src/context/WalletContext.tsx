@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
   useEffect,
+  useCallback,
   ReactNode,
 } from "react";
 import { ethers } from "ethers";
@@ -35,27 +36,14 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  useEffect(() => {
-    const checkIfWalletIsConnected = async () => {
-      try {
-        if (typeof window !== "undefined" && window.ethereum) {
-          const accounts = await window.ethereum.request({
-            method: "eth_accounts",
-          });
+  const disconnectWallet = () => {
+    setAccount("");
+    setProvider(null);
+    setSigner(null);
+    setIsConnected(false);
+  };
 
-          if (accounts.length > 0) {
-            void connectWallet();
-          }
-        }
-      } catch (error) {
-        console.error("Error checking wallet connection:", error);
-      }
-    };
-
-    void checkIfWalletIsConnected();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const connectWallet = async () => {
+  const connectWallet = useCallback(async () => {
     try {
       if (typeof window === "undefined" || !window.ethereum) {
         alert("Please install MetaMask!");
@@ -91,14 +79,27 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       console.error("Error connecting wallet:", error);
       alert("Failed to connect wallet");
     }
-  };
+  }, []);
 
-  const disconnectWallet = () => {
-    setAccount("");
-    setProvider(null);
-    setSigner(null);
-    setIsConnected(false);
-  };
+  useEffect(() => {
+    const checkIfWalletIsConnected = async () => {
+      try {
+        if (typeof window !== "undefined" && window.ethereum) {
+          const accounts = await window.ethereum.request({
+            method: "eth_accounts",
+          });
+
+          if (accounts.length > 0) {
+            void connectWallet();
+          }
+        }
+      } catch (error) {
+        console.error("Error checking wallet connection:", error);
+      }
+    };
+
+    void checkIfWalletIsConnected();
+  }, [connectWallet]);
 
   return (
     <WalletContext.Provider

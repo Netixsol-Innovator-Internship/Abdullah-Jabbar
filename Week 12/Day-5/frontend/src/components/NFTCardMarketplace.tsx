@@ -9,6 +9,7 @@ import {
   PLATFORM_TOKEN_ABI,
 } from "@/config/contract";
 import { formatValueOrNA } from "@/utils/contractUtils";
+import { useI18n } from "@/i18n/i18nContext";
 
 interface NFTMetadata {
   name: string;
@@ -53,6 +54,7 @@ export default function NFTCardMarketplace({
   getTokenSymbol,
   onBuySuccess,
 }: NFTCardMarketplaceProps) {
+  const { t } = useI18n();
   const [buying, setBuying] = useState(false);
 
   const getImageUrl = (imageUri: string) => {
@@ -82,7 +84,7 @@ export default function NFTCardMarketplace({
       // Use the calculated price from props
       const paymentAmount = ethers.parseEther(priceInSelectedToken || "0");
 
-      console.log("Approving tokens...");
+      console.log(t("marketplace.approveTokens"));
       const approveTx = await paymentTokenContract.approve(
         CONTRACT_ADDRESSES.NFTMarketplace,
         paymentAmount
@@ -90,37 +92,24 @@ export default function NFTCardMarketplace({
       await approveTx.wait();
       console.log("Tokens approved");
 
-      console.log("Buying NFT...");
-      let buyTx;
+      console.log(t("marketplace.buyingNFT"));
 
-      if (isListed) {
-        // Buy from user listing
-        buyTx = await marketplaceContract.buyListedNFT(
-          tokenId,
-          selectedPayment
-        );
-      } else {
-        // Buy from primary sale
-        if (selectedPayment === CONTRACT_ADDRESSES.PlatformToken) {
-          buyTx = await marketplaceContract.buyNFTWithPlatformToken(tokenId);
-        } else {
-          buyTx = await marketplaceContract.buyNFTWithToken(
-            tokenId,
-            selectedPayment
-          );
-        }
-      }
+      // Since marketplace only shows listed NFTs, always use buyListedNFT
+      const buyTx = await marketplaceContract.buyListedNFT(
+        tokenId,
+        selectedPayment
+      );
 
       await buyTx.wait();
       console.log("NFT purchased!");
 
-      alert("NFT purchased successfully! 🎉");
+      alert(t("marketplace.purchaseSuccess"));
       onBuySuccess();
     } catch (error) {
       console.error("Error buying NFT:", error);
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      alert("Failed to buy NFT: " + errorMessage);
+      alert(t("marketplace.purchaseFailed") + ": " + errorMessage);
     } finally {
       setBuying(false);
     }
@@ -130,7 +119,7 @@ export default function NFTCardMarketplace({
     <div className="nft-card">
       <div className="nft-image-placeholder">
         {metadataLoading ? (
-          <div className="loading-spinner">Loading...</div>
+          <div className="loading-spinner">{t("common.loading")}</div>
         ) : metadata?.image ? (
           <Image
             src={getImageUrl(metadata.image)}
@@ -148,9 +137,15 @@ export default function NFTCardMarketplace({
       <div className="nft-info">
         <div className="nft-content">
           <div className="nft-title-row">
-            <h3>{metadata?.name || `DeFi Art #${tokenId}`}</h3>
+            <h3>
+              {metadata?.name ||
+                `${t("marketplace.nftDetails.name")} #${tokenId}`}
+            </h3>
             {isListed && (
-              <span className="listing-badge" title="Listed by user">
+              <span
+                className="listing-badge"
+                title={t("marketplace.badges.listedByUser")}
+              >
                 ✓
               </span>
             )}
@@ -173,7 +168,9 @@ export default function NFTCardMarketplace({
 
           <div className="nft-metadata">
             <div className="metadata-item">
-              <span className="label">Owner:</span>
+              <span className="label">
+                {t("marketplace.nftDetails.owner")}:
+              </span>
               <span className="value">
                 {owner.substring(0, 6)}...{owner.substring(38)}
               </span>
@@ -181,7 +178,9 @@ export default function NFTCardMarketplace({
 
             {isAvailable && priceInSelectedToken && (
               <div className="metadata-item">
-                <span className="label">Price:</span>
+                <span className="label">
+                  {t("marketplace.nftDetails.price")}:
+                </span>
                 <span className="value price">
                   {formatValueOrNA(priceInSelectedToken, 2, contractsAvailable)}{" "}
                   {getTokenSymbol(selectedPayment)}
@@ -192,22 +191,17 @@ export default function NFTCardMarketplace({
         </div>
 
         <div className="nft-actions">
-          {isAvailable ? (
+          {/* Check if user is trying to buy their own listed NFT */}
+          {seller?.toLowerCase() === account.toLowerCase() ? (
+            <div className="owned-badge">✅ {t("marketplace.youOwnThis")}</div>
+          ) : (
             <button
               onClick={handleBuyNFT}
-              disabled={
-                buying ||
-                !contractsAvailable ||
-                (isListed && seller?.toLowerCase() === account.toLowerCase())
-              }
+              disabled={buying || !contractsAvailable}
               className="btn-primary btn-buy"
             >
-              {buying ? "Buying..." : "🛒 Buy NFT"}
+              {buying ? t("marketplace.buying") : `🛒 Buy Listed NFT`}
             </button>
-          ) : owner.toLowerCase() === account.toLowerCase() ? (
-            <div className="owned-badge">✅ You own this</div>
-          ) : (
-            <div className="sold-badge">❌ Sold</div>
           )}
         </div>
       </div>

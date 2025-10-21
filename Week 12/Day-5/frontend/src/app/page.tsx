@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import Image from "next/image";
 import { CONTRACT_ADDRESSES, TOKEN_FAUCET_ABI } from "@/config/contract";
 import { useWallet } from "@/context/WalletContext";
+import { useI18n } from "@/i18n/i18nContext";
 import { useAppSelector } from "@/store/hooks";
 import { selectBalanceByAddress } from "@/store/selectors";
 import { useRefreshBalances } from "@/hooks/useTokenData";
@@ -12,6 +13,7 @@ import { isContractAvailable, formatValueOrNA } from "@/utils/contractUtils";
 
 export default function Home() {
   const { signer, account, isConnected } = useWallet();
+  const { t } = useI18n();
   const { refreshBalances } = useRefreshBalances();
 
   // Get platform token balance from Redux
@@ -109,7 +111,7 @@ export default function Home() {
       await tx.wait();
       console.log("Transaction confirmed!");
 
-      alert("Tokens claimed successfully! 🎉");
+      alert(t("faucet.claimSuccess"));
 
       // Refresh balance from Redux store
       await refreshBalances();
@@ -117,8 +119,8 @@ export default function Home() {
     } catch (error) {
       console.error("Error claiming tokens:", error);
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      alert("Failed to claim tokens: " + errorMessage);
+        error instanceof Error ? error.message : t("common.error");
+      alert(t("faucet.claimError") + ": " + errorMessage);
     } finally {
       setClaiming(false);
     }
@@ -135,8 +137,8 @@ export default function Home() {
     return (
       <div className="connect-prompt">
         <div className="connect-card">
-          <h1>👋 Welcome to DeFi + NFT Ecosystem</h1>
-          <p>Connect your MetaMask wallet to get started</p>
+          <h1>{t("home.title")}</h1>
+          <p>{t("home.connectWallet")}</p>
         </div>
       </div>
     );
@@ -146,28 +148,28 @@ export default function Home() {
     <div className="page-container">
       <div className="page-header">
         <div className="page-title-row">
-          <h1>💧 Token Faucet</h1>
+          <h1>💧 {t("faucet.title")}</h1>
           <button
             onClick={handleRefresh}
             disabled={refreshing || !isConnected}
             className="btn-refresh-page"
-            title="Refresh data"
+            title={t("common.refresh")}
           >
             <Image
               src="/refresh.svg"
-              alt="Refresh"
+              alt={t("common.refresh")}
               width={24}
               height={24}
               className={refreshing ? "spinning" : ""}
             />
           </button>
         </div>
-        <p>Claim free CLAW tokens every 24 hours</p>
+        <p>{t("faucet.subtitle")}</p>
       </div>
 
       <div className="card-grid">
         <div className="card claim-card">
-          <h2>Claim Tokens</h2>
+          <h2>{t("faucet.claimTokens")}</h2>
           <div className="claim-amount">
             <span className="amount">
               {formatValueOrNA(claimAmount, 2, contractsAvailable)}
@@ -183,11 +185,11 @@ export default function Home() {
               disabled={claiming}
               className="btn-primary btn-large"
             >
-              {claiming ? "Claiming..." : "🎁 Claim Tokens"}
+              {claiming ? t("common.loading") : `🎁 ${t("faucet.claimTokens")}`}
             </button>
           ) : (
             <div className="cooldown-info">
-              <p className="cooldown-text">⏰ Next claim available in:</p>
+              <p className="cooldown-text">⏰ {t("faucet.cooldownMessage")}:</p>
               {contractsAvailable && (
                 <p className="cooldown-timer">{formatTime(timeUntilClaim)}</p>
               )}
@@ -196,9 +198,9 @@ export default function Home() {
         </div>
 
         <div className="card stats-card">
-          <h2>Your Statistics</h2>
+          <h2>{t("faucet.statistics")}</h2>
           <div className="stat-row">
-            <span className="stat-label">Your Balance:</span>
+            <span className="stat-label">{t("faucet.tokenBalance")}:</span>
             <span className="stat-value">
               {formatValueOrNA(
                 platformBalance
@@ -211,7 +213,7 @@ export default function Home() {
             </span>
           </div>
           <div className="stat-row">
-            <span className="stat-label">Total Claimed:</span>
+            <span className="stat-label">{t("faucet.totalClaimed")}:</span>
             <span className="stat-value">
               {formatValueOrNA(
                 parseFloat(totalClaimed).toFixed(2),
@@ -222,7 +224,7 @@ export default function Home() {
             </span>
           </div>
           <div className="stat-row">
-            <span className="stat-label">Faucet Balance:</span>
+            <span className="stat-label">{t("faucet.faucetBalance")}:</span>
             <span className="stat-value">
               {formatValueOrNA(
                 parseFloat(faucetBalance).toFixed(2),
@@ -236,16 +238,18 @@ export default function Home() {
       </div>
 
       <div className="info-section">
-        <h3>ℹ️ How it works</h3>
+        <h3>ℹ️ {t("faucet.howItWorks")}</h3>
         <ul>
           <li>
-            Click &quot;Claim Tokens&quot; to receive{" "}
-            {formatValueOrNA(claimAmount, 2, contractsAvailable)}{" "}
-            {contractsAvailable ? "CLAW" : "N/A"} tokens
+            {t("faucet.howToClaimText").replace(
+              "{amount}",
+              formatValueOrNA(claimAmount, 2, contractsAvailable)
+            )}{" "}
+            {contractsAvailable ? "CLAW" : "N/A"} {t("faucet.tokens")}
           </li>
-          <li>You can claim once every 24 hours</li>
-          <li>Use CLAW tokens to trade on the DEX or buy NFTs</li>
-          <li>Free tokens for testing the platform!</li>
+          <li>{t("faucet.claimFrequency")}</li>
+          <li>{t("faucet.tokenUsage")}</li>
+          <li>{t("faucet.freeTokens")}</li>
         </ul>
       </div>
     </div>

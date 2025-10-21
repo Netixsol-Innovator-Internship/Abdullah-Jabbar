@@ -19,16 +19,7 @@ import {
 import { useRefreshBalances } from "@/hooks/useTokenData";
 import { isContractAvailable, formatValueOrNA } from "@/utils/contractUtils";
 import NFTCardPortfolio from "@/components/NFTCardPortfolio";
-
-interface NFTMetadata {
-  name: string;
-  description: string;
-  image: string;
-  attributes: Array<{
-    trait_type: string;
-    value: string | number;
-  }>;
-}
+import { NFTMetadata } from "@/types/nft";
 
 interface NFT {
   tokenId: number;
@@ -294,6 +285,9 @@ export default function Portfolio() {
       <div className="page-header">
         <div className="page-title-row">
           <h1>👛 Your Portfolio</h1>
+          <Link href="/history" className="history-link">
+            📜 NFT History
+          </Link>
           <button
             onClick={handleRefresh}
             disabled={refreshing}

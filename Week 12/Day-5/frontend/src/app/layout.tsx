@@ -3,6 +3,8 @@ import "./globals.css";
 import { WalletProvider } from "@/context/WalletContext";
 import { ReduxProvider } from "@/store/ReduxProvider";
 import { TokenDataLoader } from "@/components/TokenDataLoader";
+import { I18nProvider } from "@/i18n/i18nContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -22,13 +24,17 @@ export default function RootLayout({
       <body>
         <ReduxProvider>
           <WalletProvider>
-            <TokenDataLoader>
-              <div className="App">
-                <Navbar />
-                <main className="main-content">{children}</main>
-                <Footer />
-              </div>
-            </TokenDataLoader>
+            <I18nProvider>
+              <ThemeProvider>
+                <TokenDataLoader>
+                  <div className="App">
+                    <Navbar />
+                    <main className="main-content">{children}</main>
+                    <Footer />
+                  </div>
+                </TokenDataLoader>
+              </ThemeProvider>
+            </I18nProvider>
           </WalletProvider>
         </ReduxProvider>
       </body>

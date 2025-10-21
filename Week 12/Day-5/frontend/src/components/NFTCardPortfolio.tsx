@@ -8,16 +8,9 @@ import {
   NFT_MARKETPLACE_ABI,
   NFT_COLLECTION_ABI,
 } from "@/config/contract";
-
-interface NFTMetadata {
-  name: string;
-  description: string;
-  image: string;
-  attributes: Array<{
-    trait_type: string;
-    value: string | number;
-  }>;
-}
+import { NFTMetadata } from "@/types/nft";
+import { useI18n } from "@/i18n/i18nContext";
+import { validateNFTPrice, sanitizeNumericInput } from "@/utils/validation";
 
 interface NFTCardPortfolioProps {
   tokenId: number;
@@ -38,9 +31,11 @@ export default function NFTCardPortfolio({
   signer,
   onUpdate,
 }: NFTCardPortfolioProps) {
+  const { t } = useI18n();
   const [showListModal, setShowListModal] = useState(false);
   const [price, setPrice] = useState(listingPrice || "");
   const [processing, setProcessing] = useState(false);
+  const [priceError, setPriceError] = useState("");
 
   const getImageUrl = (imageUri: string) => {
     if (imageUri.startsWith("ipfs://")) {
@@ -50,9 +45,43 @@ export default function NFTCardPortfolio({
     return imageUri;
   };
 
+  // Price validation and handling
+  const handlePriceChange = (value: string) => {
+    // Sanitize input
+    const sanitized = sanitizeNumericInput(value);
+    setPrice(sanitized);
+
+    // Clear previous error
+    setPriceError("");
+
+    // Validate if there's a value
+    if (sanitized) {
+      const validation = validateNFTPrice(sanitized);
+      if (!validation.isValid) {
+        setPriceError(validation.error || "");
+      }
+    }
+  };
+
+  const validateListing = (): boolean => {
+    if (!price) {
+      setPriceError(t("validation.required"));
+      return false;
+    }
+
+    const validation = validateNFTPrice(price);
+    if (!validation.isValid) {
+      setPriceError(validation.error || "");
+      return false;
+    }
+
+    setPriceError("");
+    return true;
+  };
+
   const handleListNFT = async () => {
-    if (!price || parseFloat(price) <= 0) {
-      alert("Please enter a valid price");
+    // Validate inputs first
+    if (!validateListing()) {
       return;
     }
 
@@ -72,13 +101,36 @@ export default function NFTCardPortfolio({
       );
 
       // Approve marketplace to transfer NFT
-      console.log("Approving marketplace...");
-      const approveTx = await nftContract.approve(
-        CONTRACT_ADDRESSES.NFTMarketplace,
-        tokenId
-      );
-      await approveTx.wait();
-      console.log("Approved");
+      console.log("Approving marketplace for NFT #", tokenId);
+      try {
+        const approveTx = await nftContract.approve(
+          CONTRACT_ADDRESSES.NFTMarketplace,
+          tokenId
+        );
+        await approveTx.wait();
+        console.log("Approved");
+      } catch (approveError) {
+        console.error("Approval error:", approveError);
+        // Check if it's because we don't own the NFT
+        try {
+          const currentOwner = await nftContract.ownerOf(tokenId);
+          const userAddress = await signer.getAddress();
+          console.log("Current owner:", currentOwner);
+          console.log("User address:", userAddress);
+
+          if (currentOwner.toLowerCase() !== userAddress.toLowerCase()) {
+            alert(
+              `You don't own this NFT!\nNFT Owner: ${currentOwner}\nYour Address: ${userAddress}`
+            );
+            setProcessing(false);
+            onUpdate();
+            return;
+          }
+        } catch (ownerError) {
+          console.error("Could not verify ownership:", ownerError);
+        }
+        throw approveError; // Re-throw the original error
+      }
 
       // List NFT
       console.log("Listing NFT...");
@@ -101,6 +153,9 @@ export default function NFTCardPortfolio({
     }
   };
 
+  // Note: Since the contract doesn't have a delistNFT function,
+  // we're showing a message to the user about this limitation
+
   return (
     <>
       <div className="nft-card owned">
@@ -108,23 +163,31 @@ export default function NFTCardPortfolio({
           {metadataLoading ? (
             <div className="loading-spinner">Loading...</div>
           ) : metadata?.image ? (
-            <Image
-              src={getImageUrl(metadata.image)}
-              alt={metadata.name || `NFT #${tokenId}`}
-              width={300}
-              height={300}
-              className="nft-image"
-              unoptimized
-            />
+            <>
+              <Image
+                src={getImageUrl(metadata.image)}
+                alt={metadata.name || `NFT #${tokenId}`}
+                width={300}
+                height={300}
+                className="nft-image"
+                unoptimized
+              />
+            </>
           ) : (
             <span className="nft-id">#{tokenId}</span>
           )}
         </div>
         <div className="nft-info">
           <div className="nft-title-row">
-            <h3>{metadata?.name || `DeFi Art #${tokenId}`}</h3>
+            <h3>
+              {metadata?.name ||
+                `${t("marketplace.nftDetails.name")} #${tokenId}`}
+            </h3>
             {isListed && (
-              <span className="listing-badge-portfolio" title="Listed for sale">
+              <span
+                className="listing-badge-portfolio"
+                title={t("marketplace.badges.listedOnMarket")}
+              >
                 🏷️
               </span>
             )}
@@ -132,9 +195,13 @@ export default function NFTCardPortfolio({
 
           {isListed ? (
             <>
-              <div className="listed-badge">📋 Listed on Market</div>
+              <div className="listed-badge">
+                📋 {t("marketplace.badges.listedOnMarket")}
+              </div>
               <div className="price-section">
-                <span className="price-label-portfolio">Price</span>
+                <span className="price-label-portfolio">
+                  {t("marketplace.nftDetails.price")}
+                </span>
                 <div className="listing-price-value" title={listingPrice}>
                   <span className="price-amount cursor-help">
                     {(listingPrice ?? "").length > 15
@@ -147,7 +214,9 @@ export default function NFTCardPortfolio({
             </>
           ) : (
             <div className="owned-section">
-              <div className="owned-badge">✅ Owned</div>
+              <div className="owned-badge">
+                ✅ {t("marketplace.badges.owned")}
+              </div>
               <div style={{ height: "0.5rem" }} />
               <button
                 onClick={() => setShowListModal(true)}
@@ -155,7 +224,7 @@ export default function NFTCardPortfolio({
                 className="btn-primary btn-small list-for-sale-btn"
                 style={{ paddingTop: "0.75rem", paddingBottom: "0.75rem" }}
               >
-                🏷️ List for Sale
+                🏷️ {t("marketplace.modal.listForSaleBtn")}
               </button>
             </div>
           )}
@@ -167,7 +236,7 @@ export default function NFTCardPortfolio({
         <div className="modal-overlay" onClick={() => setShowListModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h3>List NFT for Sale</h3>
+              <h3>{t("marketplace.modal.listForSale")}</h3>
               <button
                 className="modal-close"
                 onClick={() => setShowListModal(false)}
@@ -177,24 +246,34 @@ export default function NFTCardPortfolio({
             </div>
             <div className="modal-body">
               <p className="modal-description">
-                Set a price for your NFT in CLAW tokens
+                {t("marketplace.modal.setPriceDescription")}
               </p>
               <div className="modal-warning">
-                ⚠️ Note: Once listed, you cannot unlist or change the price.
+                {t("marketplace.modal.listingWarning")}
               </div>
               <div className="form-group">
-                <label htmlFor="list-price">Price (CLAW)</label>
+                <label htmlFor="list-price">
+                  {t("marketplace.modal.priceLabel")}
+                </label>
                 <input
                   id="list-price"
                   type="number"
-                  min="0"
-                  step="0.01"
+                  min="0.001"
+                  max="1000000"
+                  step="0.001"
                   value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  placeholder="Enter price..."
-                  className="form-input"
+                  onChange={(e) => handlePriceChange(e.target.value)}
+                  placeholder={t("marketplace.listingPrice")}
+                  className={`form-input ${priceError ? "error" : ""}`}
                   disabled={processing}
                 />
+                {priceError && (
+                  <div className="input-error-message">{priceError}</div>
+                )}
+                <div className="input-hint">
+                  {t("validation.minimumPrice").replace("{min}", "0.001")} -{" "}
+                  {t("validation.maximumPrice").replace("{max}", "1,000,000")}
+                </div>
               </div>
             </div>
             <div className="modal-footer">
@@ -203,14 +282,16 @@ export default function NFTCardPortfolio({
                 className="btn-secondary"
                 disabled={processing}
               >
-                Cancel
+                {t("common.cancel")}
               </button>
               <button
                 onClick={handleListNFT}
                 className="btn-primary"
-                disabled={processing || !price}
+                disabled={processing || !price || !!priceError}
               >
-                {processing ? "Listing..." : "List NFT"}
+                {processing
+                  ? t("marketplace.listing")
+                  : t("marketplace.listNFT")}
               </button>
             </div>
           </div>
