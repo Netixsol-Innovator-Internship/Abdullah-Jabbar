@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ethers } from "ethers";
 import {
   CONTRACT_ADDRESSES,
@@ -10,6 +9,7 @@ import {
   NFT_MARKETPLACE_ABI,
 } from "@/config/contract";
 import { useWallet } from "@/context/WalletContext";
+import { useI18n } from "@/i18n/i18nContext";
 import { useAppSelector } from "@/store/hooks";
 import {
   selectAllBalances,
@@ -20,6 +20,7 @@ import { useRefreshBalances } from "@/hooks/useTokenData";
 import { isContractAvailable, formatValueOrNA } from "@/utils/contractUtils";
 import NFTCardPortfolio from "@/components/NFTCardPortfolio";
 import { NFTMetadata } from "@/types/nft";
+import RefreshButton from "@/components/RefreshButton";
 
 interface NFT {
   tokenId: number;
@@ -32,6 +33,7 @@ interface NFT {
 
 export default function Portfolio() {
   const { signer, account, isConnected } = useWallet();
+  const { t } = useI18n();
   const { refreshBalances } = useRefreshBalances();
 
   // Get data from Redux store
@@ -41,7 +43,6 @@ export default function Portfolio() {
 
   const [nfts, setNfts] = useState<NFT[]>([]);
   const [nftsLoading, setNftsLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
 
   // Memoize contract availability checks
   const contractsAvailable = useMemo(() => {
@@ -253,17 +254,9 @@ export default function Portfolio() {
   };
 
   const handleRefresh = async () => {
-    setRefreshing(true);
-    try {
-      await refreshBalances();
-      if (contractsAvailable) {
-        await loadNFTs();
-      }
-    } catch (error) {
-      console.error("Error refreshing portfolio:", error);
-    } finally {
-      // Delay to allow animation to complete (1.5s for 3 spins)
-      setTimeout(() => setRefreshing(false), 1500);
+    await refreshBalances();
+    if (contractsAvailable) {
+      await loadNFTs();
     }
   };
 
@@ -271,8 +264,8 @@ export default function Portfolio() {
     return (
       <div className="connect-prompt">
         <div className="connect-card">
-          <h1>👋 Connect your wallet</h1>
-          <p>Please connect MetaMask to view your portfolio</p>
+          <h1>👋 {t("portfolio.connectWallet")}</h1>
+          <p>{t("portfolio.connectWalletMessage")}</p>
         </div>
       </div>
     );
@@ -284,54 +277,49 @@ export default function Portfolio() {
     <div className="page-container">
       <div className="page-header">
         <div className="page-title-row">
-          <h1>👛 Your Portfolio</h1>
+          <h1>👛 {t("portfolio.title")}</h1>
           <Link href="/history" className="history-link">
-            📜 NFT History
+            {t("portfolio.nftHistory")}
           </Link>
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing}
-            className="btn-refresh-page"
-            title="Refresh data"
-          >
-            <Image
-              src="/refresh.svg"
-              alt="Refresh"
-              width={24}
-              height={24}
-              className={refreshing ? "spinning" : ""}
-            />
-          </button>
+          <RefreshButton
+            onRefresh={handleRefresh}
+            title={t("portfolio.refreshData")}
+          />
         </div>
-        <p>View all your tokens and NFTs</p>
+        <p>{t("portfolio.subtitle")}</p>
       </div>
 
       {loading ? (
-        <div className="loading">Loading portfolio...</div>
+        <div className="loading">{t("portfolio.loadingPortfolio")}</div>
       ) : (
         <>
           <div className="card summary-card">
-            <h2>Portfolio Summary</h2>
+            <h2>{t("portfolio.summary")}</h2>
             <div className="summary-stats">
               <div className="summary-item">
-                <span className="summary-label">Total Value</span>
+                <span className="summary-label">
+                  {t("portfolio.totalValue")}
+                </span>
                 <span className="summary-value">
-                  {formatValueOrNA(totalValue, 2, contractsAvailable)} tokens
+                  {formatValueOrNA(totalValue, 2, contractsAvailable)}{" "}
+                  {t("portfolio.tokens").toLowerCase()}
                 </span>
               </div>
               <div className="summary-item">
-                <span className="summary-label">NFTs Owned</span>
+                <span className="summary-label">
+                  {t("portfolio.nftsOwned")}
+                </span>
                 <span className="summary-value">{nfts.length}</span>
               </div>
               <div className="summary-item">
-                <span className="summary-label">Tokens</span>
+                <span className="summary-label">{t("portfolio.tokens")}</span>
                 <span className="summary-value">{tokens.length}</span>
               </div>
             </div>
           </div>
 
           <div className="section">
-            <h2>💰 Token Balances</h2>
+            <h2>💰 {t("portfolio.tokenBalances")}</h2>
             <div className="token-list">
               {tokens.map((token) => {
                 const balance = balances[token.address];
@@ -367,11 +355,13 @@ export default function Portfolio() {
           </div>
 
           <div className="section">
-            <h2>🖼️ Your NFTs ({nfts.length})</h2>
+            <h2>
+              🖼️ {t("portfolio.yourNFTs")} ({nfts.length})
+            </h2>
             {nfts.length === 0 ? (
               <div className="empty-state">
-                <p>You don&apos;t own any NFTs yet</p>
-                <p>Visit the marketplace to buy some!</p>
+                <p>{t("portfolio.noNFTs")}</p>
+                <p>{t("portfolio.noNFTsMessage")}</p>
               </div>
             ) : (
               <div className="nft-grid">
@@ -392,16 +382,16 @@ export default function Portfolio() {
           </div>
 
           <div className="card actions-card">
-            <h3>⚡ Quick Actions</h3>
+            <h3>⚡ {t("portfolio.quickActions")}</h3>
             <div className="action-buttons">
               <Link href="/" className="action-btn">
-                💧 Get More Tokens
+                💧 {t("portfolio.getMoreTokens")}
               </Link>
               <Link href="/dex" className="action-btn">
-                🔄 Swap Tokens
+                🔄 {t("portfolio.swapTokens")}
               </Link>
               <Link href="/marketplace" className="action-btn">
-                🛒 Buy NFTs
+                🛒 {t("portfolio.buyNFTs")}
               </Link>
             </div>
           </div>

@@ -47,14 +47,18 @@ export default function SlippageSelector({
   };
 
   return (
-    <div className="slippage-selector">
-      <div className="slippage-label">{t("dex.slippage")}</div>
-      <div className="slippage-options">
+    <div className="bg-[var(--background)] border border-[var(--card-border)] rounded-xl p-4 mt-4">
+      <div className="text-[var(--text-secondary)] mb-3 text-sm font-medium">
+        {t("dex.slippage")}
+      </div>
+      <div className="flex gap-2 flex-wrap">
         {slippageOptions.map((option) => (
           <button
             key={option.value}
-            className={`slippage-option ${
-              slippage === option.value && !showCustomInput ? "active" : ""
+            className={`bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--text-secondary)] px-4 py-2 rounded-lg cursor-pointer font-medium text-sm transition-all duration-200 min-w-[60px] text-center hover:border-[var(--primary-color)] hover:text-[var(--primary-color)] ${
+              slippage === option.value && !showCustomInput
+                ? "bg-[rgba(99,102,241,0.1)] border-[var(--primary-color)] text-[var(--primary-color)]"
+                : ""
             }`}
             onClick={() => handleOptionClick(option.value)}
           >
@@ -62,7 +66,7 @@ export default function SlippageSelector({
           </button>
         ))}
         <button
-          className={`slippage-option ${showCustomInput ? "active" : ""}`}
+          className={`bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--text-secondary)] px-4 py-2 rounded-lg cursor-pointer font-medium text-sm transition-all duration-200 min-w-[60px] text-center hover:border-[var(--primary-color)] hover:text-[var(--primary-color)] ${showCustomInput ? "bg-[rgba(99,102,241,0.1)] border-[var(--primary-color)] text-[var(--primary-color)]" : ""}`}
           onClick={handleCustomClick}
         >
           {showCustomInput ? (
@@ -70,7 +74,7 @@ export default function SlippageSelector({
               type="text"
               value={customValue}
               onChange={handleCustomChange}
-              className="slippage-custom-input"
+              className="bg-transparent border-none text-[var(--primary-color)] w-full text-center font-medium text-sm p-0 focus:outline-none"
               placeholder={t("dex.custom")}
               autoFocus
               onBlur={() => {
@@ -86,7 +90,7 @@ export default function SlippageSelector({
         </button>
       </div>
       {parseFloat(customValue) > 5 && (
-        <div className="slippage-warning">
+        <div className="mt-3 text-[var(--warning-color)] text-sm flex items-center gap-1">
           ⚠️ {t("dex.highSlippageWarning")}
         </div>
       )}

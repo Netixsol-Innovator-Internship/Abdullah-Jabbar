@@ -19,7 +19,7 @@ export default function ThemeSwitcher() {
 
   return (
     <button
-      className="theme-switcher"
+      className="mr-2 bg-transparent border border-[var(--card-border)] text-[var(--text-secondary)] rounded-full w-10 h-10 flex items-center justify-center cursor-pointer transition-all duration-300 hover:border-[var(--primary-color)] hover:bg-[rgba(99,102,241,0.1)] hover:text-[var(--primary-color)] hover:rotate-[15deg]"
       onClick={toggleTheme}
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       aria-label={
@@ -27,9 +27,9 @@ export default function ThemeSwitcher() {
       }
     >
       {theme === "dark" ? (
-        <FiSun className="theme-icon" />
+        <FiSun className="text-xl" />
       ) : (
-        <FiMoon className="theme-icon" />
+        <FiMoon className="text-xl" />
       )}
     </button>
   );

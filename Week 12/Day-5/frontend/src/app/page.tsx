@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import Image from "next/image";
 import { CONTRACT_ADDRESSES, TOKEN_FAUCET_ABI } from "@/config/contract";
 import { useWallet } from "@/context/WalletContext";
 import { useI18n } from "@/i18n/i18nContext";
@@ -10,6 +9,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectBalanceByAddress } from "@/store/selectors";
 import { useRefreshBalances } from "@/hooks/useTokenData";
 import { isContractAvailable, formatValueOrNA } from "@/utils/contractUtils";
+import RefreshButton from "@/components/RefreshButton";
 
 export default function Home() {
   const { signer, account, isConnected } = useWallet();
@@ -28,7 +28,6 @@ export default function Home() {
   const [claimAmount, setClaimAmount] = useState("0");
   const [faucetBalance, setFaucetBalance] = useState("0");
   const [contractsAvailable, setContractsAvailable] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
 
   const isFaucetDeployed = isContractAvailable(CONTRACT_ADDRESSES.TokenFaucet);
   const isPlatformTokenDeployed = isContractAvailable(
@@ -81,17 +80,9 @@ export default function Home() {
 
   const handleRefresh = async () => {
     if (!isConnected) return;
-    setRefreshing(true);
-    try {
-      await refreshBalances();
-      if (contractsAvailable) {
-        await loadFaucetData();
-      }
-    } catch (error) {
-      console.error("Error refreshing data:", error);
-    } finally {
-      // Delay to allow animation to complete (1.5s for 3 spins)
-      setTimeout(() => setRefreshing(false), 1500);
+    await refreshBalances();
+    if (contractsAvailable) {
+      await loadFaucetData();
     }
   };
 
@@ -135,46 +126,45 @@ export default function Home() {
 
   if (!isConnected) {
     return (
-      <div className="connect-prompt">
-        <div className="connect-card">
-          <h1>{t("home.title")}</h1>
-          <p>{t("home.connectWallet")}</p>
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="bg-[var(--card-bg)] p-12 rounded-2xl text-center border border-[var(--card-border)]">
+          <h1 className="mb-4 text-[var(--primary-color)]">
+            {t("home.title")}
+          </h1>
+          <p className="text-[var(--text-secondary)] mb-8">
+            {t("home.connectWallet")}
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="page-container">
-      <div className="page-header">
-        <div className="page-title-row">
-          <h1>💧 {t("faucet.title")}</h1>
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing || !isConnected}
-            className="btn-refresh-page"
+    <div className="animate-fadeIn">
+      <div className="text-center mb-12 relative">
+        <div className="flex justify-center items-center mb-2 relative w-full">
+          <h1 className="text-[2.5rem] mb-0 bg-gradient-to-br from-[var(--primary-color)] to-[var(--secondary-color)] bg-clip-text text-transparent">
+            💧 {t("faucet.title")}
+          </h1>
+          <RefreshButton
+            onRefresh={handleRefresh}
+            disabled={!isConnected}
             title={t("common.refresh")}
-          >
-            <Image
-              src="/refresh.svg"
-              alt={t("common.refresh")}
-              width={24}
-              height={24}
-              className={refreshing ? "spinning" : ""}
-            />
-          </button>
+          />
         </div>
-        <p>{t("faucet.subtitle")}</p>
+        <p className="text-[var(--text-secondary)] text-lg">
+          {t("faucet.subtitle")}
+        </p>
       </div>
 
-      <div className="card-grid">
-        <div className="card claim-card">
-          <h2>{t("faucet.claimTokens")}</h2>
-          <div className="claim-amount">
-            <span className="amount">
-              {formatValueOrNA(claimAmount, 2, contractsAvailable)}
-            </span>
-            <span className="token-symbol">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-8">
+        <div className="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl p-8 mb-8 text-center">
+          <h2 className="mb-6 text-[var(--text-primary)]">
+            {t("faucet.claimTokens")}
+          </h2>
+          <div className="text-5xl font-bold my-8 text-[var(--primary-color)]">
+            <span>{formatValueOrNA(claimAmount, 2, contractsAvailable)}</span>
+            <span className="text-2xl text-[var(--text-secondary)] ml-2">
               {contractsAvailable ? "CLAW" : "N/A"}
             </span>
           </div>
@@ -183,25 +173,33 @@ export default function Home() {
             <button
               onClick={handleClaimTokens}
               disabled={claiming}
-              className="btn-primary btn-large"
+              className="w-full p-4 text-lg mt-4 bg-[var(--primary-color)] text-white border-none px-6 py-3 rounded-lg cursor-pointer font-semibold transition-all duration-300 hover:bg-[var(--primary-dark)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {claiming ? t("common.loading") : `🎁 ${t("faucet.claimTokens")}`}
             </button>
           ) : (
-            <div className="cooldown-info">
-              <p className="cooldown-text">⏰ {t("faucet.cooldownMessage")}:</p>
+            <div className="my-8">
+              <p className="text-[var(--text-secondary)] mb-2">
+                ⏰ {t("faucet.cooldownMessage")}:
+              </p>
               {contractsAvailable && (
-                <p className="cooldown-timer">{formatTime(timeUntilClaim)}</p>
+                <p className="text-3xl font-bold text-[var(--warning-color)] font-mono">
+                  {formatTime(timeUntilClaim)}
+                </p>
               )}
             </div>
           )}
         </div>
 
-        <div className="card stats-card">
-          <h2>{t("faucet.statistics")}</h2>
-          <div className="stat-row">
-            <span className="stat-label">{t("faucet.tokenBalance")}:</span>
-            <span className="stat-value">
+        <div className="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl p-8 mb-8">
+          <h2 className="mb-6 text-[var(--text-primary)]">
+            {t("faucet.statistics")}
+          </h2>
+          <div className="flex justify-between p-4 border-b border-[var(--card-border)] last:border-b-0">
+            <span className="text-[var(--text-secondary)]">
+              {t("faucet.tokenBalance")}:
+            </span>
+            <span className="font-semibold text-[var(--primary-color)]">
               {formatValueOrNA(
                 platformBalance
                   ? parseFloat(platformBalance.formattedBalance)
@@ -212,9 +210,11 @@ export default function Home() {
               {contractsAvailable ? "CLAW" : "N/A"}
             </span>
           </div>
-          <div className="stat-row">
-            <span className="stat-label">{t("faucet.totalClaimed")}:</span>
-            <span className="stat-value">
+          <div className="flex justify-between p-4 border-b border-[var(--card-border)] last:border-b-0">
+            <span className="text-[var(--text-secondary)]">
+              {t("faucet.totalClaimed")}:
+            </span>
+            <span className="font-semibold text-[var(--primary-color)]">
               {formatValueOrNA(
                 parseFloat(totalClaimed).toFixed(2),
                 2,
@@ -223,9 +223,11 @@ export default function Home() {
               {contractsAvailable ? "CLAW" : "N/A"}
             </span>
           </div>
-          <div className="stat-row">
-            <span className="stat-label">{t("faucet.faucetBalance")}:</span>
-            <span className="stat-value">
+          <div className="flex justify-between p-4 border-b border-[var(--card-border)] last:border-b-0">
+            <span className="text-[var(--text-secondary)]">
+              {t("faucet.faucetBalance")}:
+            </span>
+            <span className="font-semibold text-[var(--primary-color)]">
               {formatValueOrNA(
                 parseFloat(faucetBalance).toFixed(2),
                 2,
@@ -237,19 +239,19 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="info-section">
-        <h3>ℹ️ {t("faucet.howItWorks")}</h3>
-        <ul>
-          <li>
+      <div className="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-xl p-8 mt-8">
+        <h3 className="mb-4">ℹ️ {t("faucet.howItWorks")}</h3>
+        <ul className="list-inside text-[var(--text-secondary)]">
+          <li className="py-2">
             {t("faucet.howToClaimText").replace(
               "{amount}",
               formatValueOrNA(claimAmount, 2, contractsAvailable)
             )}{" "}
             {contractsAvailable ? "CLAW" : "N/A"} {t("faucet.tokens")}
           </li>
-          <li>{t("faucet.claimFrequency")}</li>
-          <li>{t("faucet.tokenUsage")}</li>
-          <li>{t("faucet.freeTokens")}</li>
+          <li className="py-2">{t("faucet.claimFrequency")}</li>
+          <li className="py-2">{t("faucet.tokenUsage")}</li>
+          <li className="py-2">{t("faucet.freeTokens")}</li>
         </ul>
       </div>
     </div>

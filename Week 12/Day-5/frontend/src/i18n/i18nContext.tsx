@@ -12,12 +12,23 @@ import {
 import enTranslations from "./en.json";
 import esTranslations from "./es.json";
 import frTranslations from "./fr.json";
+import urTranslations from "./ur.json";
+import arTranslations from "./ar.json";
+import zhTranslations from "./zh.json";
 
 // Available languages
 export const languages = {
-  en: { name: "English", flag: "🇺🇸", translations: enTranslations },
-  es: { name: "Español", flag: "🇪🇸", translations: esTranslations },
-  fr: { name: "Français", flag: "🇫🇷", translations: frTranslations },
+  en: { name: "English", flag: "🇺🇸", translations: enTranslations, dir: "ltr" },
+  ur: { name: "اردو", flag: "🇵🇰", translations: urTranslations, dir: "rtl" },
+  ar: { name: "العربية", flag: "🇸🇦", translations: arTranslations, dir: "rtl" },
+  es: { name: "Español", flag: "🇪🇸", translations: esTranslations, dir: "ltr" },
+  fr: {
+    name: "Français",
+    flag: "🇫🇷",
+    translations: frTranslations,
+    dir: "ltr",
+  },
+  zh: { name: "中文", flag: "🇨🇳", translations: zhTranslations, dir: "ltr" },
 };
 
 export type Language = keyof typeof languages;
@@ -29,6 +40,7 @@ interface I18nContextType {
   changeLanguage: (lang: Language) => void;
   getLanguageName: (lang: Language) => string;
   getLanguageFlag: (lang: Language) => string;
+  getLanguageDir: (lang: Language) => string;
   availableLanguages: Language[];
 }
 
@@ -50,6 +62,11 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     const storedLanguage = localStorage.getItem("language") as Language | null;
     if (storedLanguage && Object.keys(languages).includes(storedLanguage)) {
       setLanguage(storedLanguage);
+      // Set initial direction
+      document.documentElement.dir = languages[storedLanguage].dir;
+    } else {
+      // Set default direction for English
+      document.documentElement.dir = languages["en"].dir;
     }
 
     // Add event listener to sync language changes across tabs/windows
@@ -59,7 +76,9 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
         e.newValue &&
         Object.keys(languages).includes(e.newValue as Language)
       ) {
-        setLanguage(e.newValue as Language);
+        const newLang = e.newValue as Language;
+        setLanguage(newLang);
+        document.documentElement.dir = languages[newLang].dir;
       }
     };
 
@@ -112,12 +131,17 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem("language", lang);
       // Update HTML lang attribute
       document.documentElement.lang = lang;
+      // Update HTML dir attribute for RTL support
+      document.documentElement.dir = languages[lang].dir;
     }
   }; // Get language name
   const getLanguageName = (lang: Language) => languages[lang].name;
 
   // Get language flag
   const getLanguageFlag = (lang: Language) => languages[lang].flag;
+
+  // Get language direction
+  const getLanguageDir = (lang: Language) => languages[lang].dir;
 
   // Get available languages
   const availableLanguages = Object.keys(languages) as Language[];
@@ -129,6 +153,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     changeLanguage,
     getLanguageName,
     getLanguageFlag,
+    getLanguageDir,
     availableLanguages,
   };
 

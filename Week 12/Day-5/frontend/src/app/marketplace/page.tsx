@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import Image from "next/image";
 import {
   CONTRACT_ADDRESSES,
   NFT_MARKETPLACE_ABI,
@@ -12,6 +11,7 @@ import { useWallet } from "@/context/WalletContext";
 import { isContractAvailable } from "@/utils/contractUtils";
 import NFTCardMarketplace from "@/components/NFTCardMarketplace";
 import { useI18n } from "@/i18n/i18nContext";
+import RefreshButton from "@/components/RefreshButton";
 
 const TOKENS = [
   { address: CONTRACT_ADDRESSES.PlatformToken, symbol: "CLAW" },
@@ -47,7 +47,6 @@ export default function Marketplace() {
   const { t } = useI18n();
   const [nfts, setNfts] = useState<NFT[]>([]);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(
     CONTRACT_ADDRESSES.PlatformToken
   );
@@ -103,16 +102,8 @@ export default function Marketplace() {
 
   const handleRefresh = async () => {
     if (!isConnected) return;
-    setRefreshing(true);
-    try {
-      if (contractsAvailable) {
-        await loadMarketplace();
-      }
-    } catch (error) {
-      console.error("Error refreshing marketplace:", error);
-    } finally {
-      // Delay to allow animation to complete (1.5s for 3 spins)
-      setTimeout(() => setRefreshing(false), 1500);
+    if (contractsAvailable) {
+      await loadMarketplace();
     }
   };
 
@@ -423,20 +414,11 @@ export default function Marketplace() {
       <div className="page-header">
         <div className="page-title-row">
           <h1>🖼️ {t("marketplace.title")}</h1>
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing || !isConnected}
-            className="btn-refresh-page"
+          <RefreshButton
+            onRefresh={handleRefresh}
+            disabled={!isConnected}
             title={t("marketplace.refreshData")}
-          >
-            <Image
-              src="/refresh.svg"
-              alt={t("marketplace.refreshData")}
-              width={24}
-              height={24}
-              className={refreshing ? "spinning" : ""}
-            />
-          </button>
+          />
         </div>
         <p>{t("marketplace.subtitle")}</p>
       </div>

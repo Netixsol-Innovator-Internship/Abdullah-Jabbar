@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   title: "Planer's Mint",
   description:
     "Complete DeFi + NFT platform with token swaps, NFT marketplace, and multi-token payments",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -20,16 +27,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+              })();
+            `,
+          }}
+        />
+      </head>
       <body>
         <ReduxProvider>
           <WalletProvider>
             <I18nProvider>
               <ThemeProvider>
                 <TokenDataLoader>
-                  <div className="App">
+                  <div className="min-h-screen flex flex-col">
                     <Navbar />
-                    <main className="main-content">{children}</main>
+                    <main className="flex-1 max-w-[1400px] w-full mx-auto p-8">
+                      {children}
+                    </main>
                     <Footer />
                   </div>
                 </TokenDataLoader>

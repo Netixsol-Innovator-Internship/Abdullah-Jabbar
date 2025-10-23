@@ -11,6 +11,7 @@ import {
 } from "@/store/tokenSlice";
 import { loadAllPoolReserves } from "@/store/dexSlice";
 import { selectIsDataLoaded } from "@/store/selectors";
+import { KASPLEX_TESTNET_RPC } from "@/config/addresses";
 
 /**
  * Custom hook to automatically load and sync token data with the blockchain
@@ -25,12 +26,25 @@ export function useTokenData() {
   useEffect(() => {
     const loadInitialData = async () => {
       if (!isDataLoaded && typeof window !== "undefined") {
+        // Only try to load if wallet is available
+        if (!window.ethereum) {
+          // No wallet provider available - skip loading to avoid RPC errors
+          return;
+        }
+
         try {
           const provider = new ethers.BrowserProvider(window.ethereum);
+          // Verify we can actually use this provider
+          await provider.getNetwork();
+
           await dispatch(loadTokensInfo(provider));
           await dispatch(loadAllPoolReserves(provider));
         } catch (error) {
-          console.error("Error loading initial token data:", error);
+          // Silently fail - data will load when user connects wallet
+          console.warn(
+            "Unable to load initial data:",
+            error instanceof Error ? error.message : error
+          );
         }
       }
     };
@@ -59,16 +73,17 @@ export function useTokenData() {
 
   // Refresh pool reserves periodically (every 30 seconds)
   useEffect(() => {
-    if (!isConnected) return;
+    if (!isConnected || !window.ethereum) return;
 
     const intervalId = setInterval(async () => {
-      if (typeof window !== "undefined") {
-        try {
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          await dispatch(loadAllPoolReserves(provider));
-        } catch (error) {
-          console.error("Error refreshing pool reserves:", error);
-        }
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await dispatch(loadAllPoolReserves(provider));
+      } catch (error) {
+        console.warn(
+          "Error refreshing pool reserves:",
+          error instanceof Error ? error.message : error
+        );
       }
     }, 30000); // 30 seconds
 
@@ -109,13 +124,19 @@ export function useRefreshPools() {
   const dispatch = useAppDispatch();
 
   const refreshPools = async () => {
-    if (typeof window !== "undefined") {
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        await dispatch(loadAllPoolReserves(provider));
-      } catch (error) {
-        console.error("Error refreshing pools:", error);
-      }
+    if (typeof window === "undefined" || !window.ethereum) {
+      console.warn("Wallet not available - cannot refresh pools");
+      return;
+    }
+
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      await dispatch(loadAllPoolReserves(provider));
+    } catch (error) {
+      console.warn(
+        "Error refreshing pools:",
+        error instanceof Error ? error.message : error
+      );
     }
   };
 

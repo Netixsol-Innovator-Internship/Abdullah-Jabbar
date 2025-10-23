@@ -158,10 +158,10 @@ export default function NFTCardPortfolio({
 
   return (
     <>
-      <div className="nft-card owned">
-        <div className="nft-image-placeholder">
+      <div className="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-xl overflow-hidden transition-transform duration-300 flex flex-col h-full hover:-translate-y-1">
+        <div className="bg-gradient-to-br from-[var(--primary-color)] to-[var(--secondary-color)] h-[300px] flex items-center justify-center text-5xl font-bold text-white relative overflow-hidden">
           {metadataLoading ? (
-            <div className="loading-spinner">Loading...</div>
+            <div className="text-white text-base animate-pulse">Loading...</div>
           ) : metadata?.image ? (
             <>
               <Image
@@ -169,23 +169,23 @@ export default function NFTCardPortfolio({
                 alt={metadata.name || `NFT #${tokenId}`}
                 width={300}
                 height={300}
-                className="nft-image"
+                className="w-full h-full object-cover"
                 unoptimized
               />
             </>
           ) : (
-            <span className="nft-id">#{tokenId}</span>
+            <span>#{tokenId}</span>
           )}
         </div>
-        <div className="nft-info">
-          <div className="nft-title-row">
-            <h3>
+        <div className="p-6 flex flex-col flex-1 min-h-0">
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="m-0 text-xl flex-1">
               {metadata?.name ||
                 `${t("marketplace.nftDetails.name")} #${tokenId}`}
             </h3>
             {isListed && (
               <span
-                className="listing-badge-portfolio"
+                className="text-xl flex-shrink-0 cursor-help"
                 title={t("marketplace.badges.listedOnMarket")}
               >
                 🏷️
@@ -195,33 +195,36 @@ export default function NFTCardPortfolio({
 
           {isListed ? (
             <>
-              <div className="listed-badge">
+              <div className="text-center p-3 rounded-lg font-semibold bg-[rgba(245,158,11,0.1)] text-[var(--warning-color)] border border-[var(--warning-color)]">
                 📋 {t("marketplace.badges.listedOnMarket")}
               </div>
-              <div className="price-section">
-                <span className="price-label-portfolio">
+              <div className="mt-3">
+                <span className="block text-sm text-[var(--text-secondary)] font-semibold mb-2 uppercase tracking-wide">
                   {t("marketplace.nftDetails.price")}
                 </span>
-                <div className="listing-price-value" title={listingPrice}>
-                  <span className="price-amount cursor-help">
+                <div
+                  className="text-center py-3 px-2 bg-[rgba(99,102,241,0.1)] border border-[var(--primary-color)] rounded-lg text-base font-bold text-[var(--primary-color)] tracking-wide whitespace-nowrap overflow-hidden text-ellipsis"
+                  title={listingPrice}
+                >
+                  <span className="cursor-help">
                     {(listingPrice ?? "").length > 15
                       ? `${(listingPrice ?? "").slice(0, 15)}...`
                       : (listingPrice ?? "")}
                   </span>
-                  <span className="price-currency"> CLAW</span>
+                  <span> CLAW</span>
                 </div>
               </div>
             </>
           ) : (
-            <div className="owned-section">
-              <div className="owned-badge">
+            <div className="flex flex-col gap-3">
+              <div className="text-center p-3 rounded-lg font-semibold bg-[rgba(34,197,94,0.1)] text-[var(--success)] mb-0">
                 ✅ {t("marketplace.badges.owned")}
               </div>
               <div style={{ height: "0.5rem" }} />
               <button
                 onClick={() => setShowListModal(true)}
                 disabled={processing}
-                className="btn-primary btn-small list-for-sale-btn"
+                className="px-4 py-3 text-sm w-full bg-[var(--primary-color)] text-white border-none rounded-lg cursor-pointer font-semibold transition-all duration-300 hover:bg-[var(--primary-dark)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 style={{ paddingTop: "0.75rem", paddingBottom: "0.75rem" }}
               >
                 🏷️ {t("marketplace.modal.listForSaleBtn")}
@@ -233,26 +236,37 @@ export default function NFTCardPortfolio({
 
       {/* List NFT Modal */}
       {showListModal && (
-        <div className="modal-overlay" onClick={() => setShowListModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3>{t("marketplace.modal.listForSale")}</h3>
+        <div
+          className="fixed top-0 left-0 right-0 bottom-0 bg-black/75 flex items-center justify-center z-[2000] p-4 backdrop-blur-sm"
+          onClick={() => setShowListModal(false)}
+        >
+          <div
+            className="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-xl max-w-[500px] w-full max-h-[90vh] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 border-b border-[var(--card-border)] flex justify-between items-center">
+              <h3 className="m-0 text-xl">
+                {t("marketplace.modal.listForSale")}
+              </h3>
               <button
-                className="modal-close"
+                className="bg-transparent border-none text-[var(--text-secondary)] text-4xl cursor-pointer leading-none p-0 w-8 h-8 flex items-center justify-center transition-colors duration-300 hover:text-[var(--text-primary)]"
                 onClick={() => setShowListModal(false)}
               >
                 ×
               </button>
             </div>
-            <div className="modal-body">
-              <p className="modal-description">
+            <div className="p-6">
+              <p className="text-[var(--text-secondary)] mb-6 text-sm">
                 {t("marketplace.modal.setPriceDescription")}
               </p>
-              <div className="modal-warning">
+              <div className="bg-[rgba(245,158,11,0.1)] border border-[var(--warning-color)] text-[var(--warning-color)] p-4 rounded-lg text-sm mb-6 leading-relaxed">
                 {t("marketplace.modal.listingWarning")}
               </div>
-              <div className="form-group">
-                <label htmlFor="list-price">
+              <div className="mb-4">
+                <label
+                  htmlFor="list-price"
+                  className="block mb-2 font-medium text-[var(--text-primary)]"
+                >
                   {t("marketplace.modal.priceLabel")}
                 </label>
                 <input
@@ -264,29 +278,31 @@ export default function NFTCardPortfolio({
                   value={price}
                   onChange={(e) => handlePriceChange(e.target.value)}
                   placeholder={t("marketplace.listingPrice")}
-                  className={`form-input ${priceError ? "error" : ""}`}
+                  className={`w-full p-3 bg-[var(--background)] border border-[var(--card-border)] rounded-lg text-[var(--text-primary)] text-base transition-colors duration-300 focus:outline-none focus:border-[var(--primary-color)] disabled:opacity-60 disabled:cursor-not-allowed ${priceError ? "!border-[var(--danger-color)] !shadow-[0_0_0_2px_rgba(239,68,68,0.1)]" : ""}`}
                   disabled={processing}
                 />
                 {priceError && (
-                  <div className="input-error-message">{priceError}</div>
+                  <div className="text-[var(--danger-color)] text-sm mt-1 block">
+                    {priceError}
+                  </div>
                 )}
-                <div className="input-hint">
+                <div className="text-[var(--text-secondary)] text-xs mt-1 block">
                   {t("validation.minimumPrice").replace("{min}", "0.001")} -{" "}
                   {t("validation.maximumPrice").replace("{max}", "1,000,000")}
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="p-6 border-t border-[var(--card-border)] flex gap-4 justify-end">
               <button
                 onClick={() => setShowListModal(false)}
-                className="btn-secondary"
+                className="bg-[var(--background)] text-[var(--text-primary)] border border-[var(--card-border)] px-6 py-3 rounded-lg font-semibold cursor-pointer transition-all duration-300 hover:border-[var(--primary-color)] hover:text-[var(--primary-color)] disabled:opacity-60 disabled:cursor-not-allowed"
                 disabled={processing}
               >
                 {t("common.cancel")}
               </button>
               <button
                 onClick={handleListNFT}
-                className="btn-primary"
+                className="bg-[var(--primary-color)] text-white border-none px-6 py-3 rounded-lg font-semibold cursor-pointer transition-all duration-300 hover:bg-[var(--primary-dark)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 disabled={processing || !price || !!priceError}
               >
                 {processing

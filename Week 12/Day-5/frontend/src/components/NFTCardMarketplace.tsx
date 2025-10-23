@@ -116,34 +116,36 @@ export default function NFTCardMarketplace({
   };
 
   return (
-    <div className="nft-card">
-      <div className="nft-image-placeholder">
+    <div className="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-xl overflow-hidden transition-transform duration-300 flex flex-col h-full hover:-translate-y-1">
+      <div className="bg-gradient-to-br from-[var(--primary-color)] to-[var(--secondary-color)] h-[300px] flex items-center justify-center text-5xl font-bold text-white relative overflow-hidden">
         {metadataLoading ? (
-          <div className="loading-spinner">{t("common.loading")}</div>
+          <div className="text-white text-base animate-pulse">
+            {t("common.loading")}
+          </div>
         ) : metadata?.image ? (
           <Image
             src={getImageUrl(metadata.image)}
             alt={metadata.name || `NFT #${tokenId}`}
             width={300}
             height={300}
-            className="nft-image"
+            className="w-full h-full object-cover"
             unoptimized
           />
         ) : (
-          <span className="nft-id">#{tokenId}</span>
+          <span>#{tokenId}</span>
         )}
       </div>
 
-      <div className="nft-info">
-        <div className="nft-content">
-          <div className="nft-title-row">
-            <h3>
+      <div className="p-6 flex flex-col flex-1 min-h-0">
+        <div className="flex-1 flex flex-col min-h-0">
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="m-0 text-xl flex-1">
               {metadata?.name ||
                 `${t("marketplace.nftDetails.name")} #${tokenId}`}
             </h3>
             {isListed && (
               <span
-                className="listing-badge"
+                className="text-lg bg-[rgba(34,197,94,0.1)] border border-[var(--success)] text-[var(--success)] px-2 py-1 rounded-md cursor-help flex-shrink-0 font-semibold"
                 title={t("marketplace.badges.listedByUser")}
               >
                 ✓
@@ -152,36 +154,45 @@ export default function NFTCardMarketplace({
           </div>
 
           {metadata?.description && (
-            <p className="nft-description">{metadata.description}</p>
+            <p className="text-[var(--text-secondary)] text-sm mb-2 leading-relaxed line-clamp-2">
+              {metadata.description}
+            </p>
           )}
 
           {metadata?.attributes && metadata.attributes.length > 0 && (
-            <div className="nft-attributes">
+            <div className="flex flex-wrap gap-1.5 mb-3 max-h-[7.8rem] overflow-hidden content-start">
               {metadata.attributes.map((attr, idx) => (
-                <div key={idx} className="attribute-badge">
-                  <span className="attr-type">{attr.trait_type}:</span>
-                  <span className="attr-value">{attr.value}</span>
+                <div
+                  key={idx}
+                  className="bg-[var(--background)] border border-[var(--card-border)] px-2.5 py-1.5 rounded-md text-sm flex gap-1.5 leading-tight h-fit"
+                >
+                  <span className="text-[var(--text-secondary)] font-medium">
+                    {attr.trait_type}:
+                  </span>
+                  <span className="text-[var(--primary-color)] font-semibold">
+                    {attr.value}
+                  </span>
                 </div>
               ))}
             </div>
           )}
 
-          <div className="nft-metadata">
-            <div className="metadata-item">
-              <span className="label">
+          <div className="my-2">
+            <div className="flex justify-between py-1.5 text-sm">
+              <span className="text-[var(--text-secondary)]">
                 {t("marketplace.nftDetails.owner")}:
               </span>
-              <span className="value">
+              <span>
                 {owner.substring(0, 6)}...{owner.substring(38)}
               </span>
             </div>
 
             {isAvailable && priceInSelectedToken && (
-              <div className="metadata-item">
-                <span className="label">
+              <div className="flex justify-between py-1.5 text-sm">
+                <span className="text-[var(--text-secondary)]">
                   {t("marketplace.nftDetails.price")}:
                 </span>
-                <span className="value price">
+                <span className="text-[var(--primary-color)] font-bold text-lg">
                   {formatValueOrNA(priceInSelectedToken, 2, contractsAvailable)}{" "}
                   {getTokenSymbol(selectedPayment)}
                 </span>
@@ -190,17 +201,19 @@ export default function NFTCardMarketplace({
           </div>
         </div>
 
-        <div className="nft-actions">
+        <div className="mt-auto pt-4">
           {/* Check if user is trying to buy their own listed NFT */}
           {seller?.toLowerCase() === account.toLowerCase() ? (
-            <div className="owned-badge">✅ {t("marketplace.youOwnThis")}</div>
+            <div className="text-center p-3 rounded-lg font-semibold bg-[rgba(34,197,94,0.1)] text-[var(--success)]">
+              ✅ {t("marketplace.youOwnThis")}
+            </div>
           ) : (
             <button
               onClick={handleBuyNFT}
               disabled={buying || !contractsAvailable}
-              className="btn-primary btn-buy"
+              className="w-full bg-[var(--primary-color)] text-white border-none px-6 py-3 rounded-lg cursor-pointer font-semibold transition-all duration-300 hover:bg-[var(--primary-dark)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
-              {buying ? t("marketplace.buying") : `🛒 Buy Listed NFT`}
+              {buying ? t("marketplace.buying") : `🛒 Buy NFT`}
             </button>
           )}
         </div>

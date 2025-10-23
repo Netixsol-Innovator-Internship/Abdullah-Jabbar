@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { useWallet } from "@/context/WalletContext";
+import { useI18n } from "@/i18n/i18nContext";
 import {
   CONTRACT_ADDRESSES,
   NFT_MARKETPLACE_ABI,
   NFT_COLLECTION_ABI,
 } from "@/config/contract";
+import RefreshButton from "@/components/RefreshButton";
 
 interface Transaction {
   id: string; // txHash + index
@@ -31,6 +33,7 @@ interface Transaction {
 
 export default function NFTTransactionHistory() {
   const { signer, account, isConnected } = useWallet();
+  const { t } = useI18n();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -129,7 +132,7 @@ export default function NFTTransactionHistory() {
         const block = await event.getBlock();
         allTransactions.push({
           id: `${event.transactionHash}-${event.index}`,
-          type: "Buy NFT",
+          type: "buyNFT",
           timestamp: block.timestamp,
           txHash: event.transactionHash,
           details: {
@@ -154,7 +157,7 @@ export default function NFTTransactionHistory() {
         const block = await event.getBlock();
         allTransactions.push({
           id: `${event.transactionHash}-${event.index}`,
-          type: "List NFT",
+          type: "listNFT",
           timestamp: block.timestamp,
           txHash: event.transactionHash,
           details: {
@@ -180,7 +183,7 @@ export default function NFTTransactionHistory() {
         ) {
           allTransactions.push({
             id: `${event.transactionHash}-${event.index}`,
-            type: "Receive NFT",
+            type: "receiveNFT",
             timestamp: block.timestamp,
             txHash: event.transactionHash,
             details: {
@@ -199,7 +202,7 @@ export default function NFTTransactionHistory() {
         const block = await event.getBlock();
         allTransactions.push({
           id: `${event.transactionHash}-${event.index}`,
-          type: "Delist NFT",
+          type: "delistNFT",
           timestamp: block.timestamp,
           txHash: event.transactionHash,
           details: {
@@ -220,7 +223,7 @@ export default function NFTTransactionHistory() {
         ) {
           allTransactions.push({
             id: `${event.transactionHash}-${event.index}`,
-            type: "Send NFT",
+            type: "sendNFT",
             timestamp: block.timestamp,
             txHash: event.transactionHash,
             details: {
@@ -266,80 +269,96 @@ export default function NFTTransactionHistory() {
 
   const getTransactionDetails = (tx: Transaction) => {
     switch (tx.type) {
-      case "Swap":
+      case "swap":
         return (
           <div className="tx-details">
             <p>
-              Swapped {parseFloat(tx.details.amountIn || "0").toFixed(6)} tokens
-              for {parseFloat(tx.details.amountOut || "0").toFixed(6)} tokens
+              {t("history.swappedTokens")}{" "}
+              {parseFloat(tx.details.amountIn || "0").toFixed(6)}{" "}
+              {t("history.tokensFor")}{" "}
+              {parseFloat(tx.details.amountOut || "0").toFixed(6)}{" "}
+              {t("history.tokens")}
             </p>
           </div>
         );
-      case "Add Liquidity":
+      case "addLiquidity":
         return (
           <div className="tx-details">
             <p>
-              Added {parseFloat(tx.details.amountA || "0").toFixed(4)} and{" "}
-              {parseFloat(tx.details.amountB || "0").toFixed(4)} tokens to a
-              liquidity pool
+              {t("history.addedLiquidity")}{" "}
+              {parseFloat(tx.details.amountA || "0").toFixed(4)}{" "}
+              {t("history.and")}{" "}
+              {parseFloat(tx.details.amountB || "0").toFixed(4)}{" "}
+              {t("history.tokensToPool")}
             </p>
             <p>
-              Received {parseFloat(tx.details.liquidity || "0").toFixed(6)} LP
-              tokens
+              {t("history.receivedLP")}{" "}
+              {parseFloat(tx.details.liquidity || "0").toFixed(6)}{" "}
+              {t("history.lpTokens")}
             </p>
           </div>
         );
-      case "Remove Liquidity":
+      case "removeLiquidity":
         return (
           <div className="tx-details">
             <p>
-              Removed {parseFloat(tx.details.liquidity || "0").toFixed(6)} LP
-              tokens from a pool
+              {t("history.removedLP")}{" "}
+              {parseFloat(tx.details.liquidity || "0").toFixed(6)}{" "}
+              {t("history.lpTokensFromPool")}
             </p>
             <p>
-              Received {parseFloat(tx.details.amountA || "0").toFixed(4)} and{" "}
-              {parseFloat(tx.details.amountB || "0").toFixed(4)} tokens
-            </p>
-          </div>
-        );
-      case "Buy NFT":
-        return (
-          <div className="tx-details">
-            <p>
-              Purchased NFT #{tx.details.tokenId} for{" "}
-              {parseFloat(tx.details.amount || "0").toFixed(4)} tokens
+              {t("history.receivedTokens")}{" "}
+              {parseFloat(tx.details.amountA || "0").toFixed(4)}{" "}
+              {t("history.and")}{" "}
+              {parseFloat(tx.details.amountB || "0").toFixed(4)}{" "}
+              {t("history.tokens")}
             </p>
           </div>
         );
-      case "List NFT":
+      case "buyNFT":
         return (
           <div className="tx-details">
             <p>
-              Listed NFT #{tx.details.tokenId} for sale at{" "}
+              {t("history.purchasedNFT")} #{tx.details.tokenId}{" "}
+              {t("history.for")}{" "}
+              {parseFloat(tx.details.amount || "0").toFixed(4)}{" "}
+              {t("history.tokens")}
+            </p>
+          </div>
+        );
+      case "listNFT":
+        return (
+          <div className="tx-details">
+            <p>
+              {t("history.listedNFT")} #{tx.details.tokenId}{" "}
+              {t("history.forSaleAt")}{" "}
               {parseFloat(tx.details.price || "0").toFixed(4)} CLAW
             </p>
           </div>
         );
-      case "Delist NFT":
-        return (
-          <div className="tx-details">
-            <p>Removed NFT #{tx.details.tokenId} from marketplace</p>
-          </div>
-        );
-      case "Receive NFT":
+      case "delistNFT":
         return (
           <div className="tx-details">
             <p>
-              Received NFT #{tx.details.tokenId} from{" "}
-              {formatAddress(tx.details.from || "")}
+              {t("history.removedNFT")} #{tx.details.tokenId}{" "}
+              {t("history.fromMarketplace")}
             </p>
           </div>
         );
-      case "Send NFT":
+      case "receiveNFT":
         return (
           <div className="tx-details">
             <p>
-              Sent NFT #{tx.details.tokenId} to{" "}
+              {t("history.receivedNFT")} #{tx.details.tokenId}{" "}
+              {t("history.from")} {formatAddress(tx.details.from || "")}
+            </p>
+          </div>
+        );
+      case "sendNFT":
+        return (
+          <div className="tx-details">
+            <p>
+              {t("history.sentNFT")} #{tx.details.tokenId} {t("history.to")}{" "}
               {formatAddress(tx.details.to || "")}
             </p>
           </div>
@@ -347,7 +366,7 @@ export default function NFTTransactionHistory() {
       default:
         return (
           <div className="tx-details">
-            <p>Transaction details not available</p>
+            <p>{t("history.transactionDetailsNotAvailable")}</p>
           </div>
         );
     }
@@ -357,8 +376,8 @@ export default function NFTTransactionHistory() {
     return (
       <div className="container py-8">
         <div className="empty-state">
-          <h2>Transaction History</h2>
-          <p>Connect your wallet to view your transaction history.</p>
+          <h2>{t("history.title")}</h2>
+          <p>{t("history.connectWalletMessage")}</p>
         </div>
       </div>
     );
@@ -368,39 +387,34 @@ export default function NFTTransactionHistory() {
     <div className="container py-8">
       <div className="page-header">
         <div className="page-title-row">
-          <h1>📜 NFT Transaction History</h1>
-          <button
-            onClick={fetchTransactionHistory}
+          <h1>📜 {t("history.title")}</h1>
+          <RefreshButton
+            onRefresh={fetchTransactionHistory}
             disabled={loading}
-            className="btn-refresh-page"
-            title="Refresh data"
-          >
-            {loading ? (
-              <span>Loading...</span>
-            ) : (
-              <span className="refresh-icon">↻</span>
-            )}
-          </button>
+            title={t("common.refresh")}
+          />
         </div>
-        <p>View your NFT transaction history</p>
+        <p>{t("history.subtitle")}</p>
       </div>
 
       <div className="mb-6 flex justify-between items-center">
         <p className="text-secondary">
-          {account && <>Connected: {formatAddress(account)}</>}
+          {account && (
+            <>
+              {t("history.connected")}: {formatAddress(account)}
+            </>
+          )}
         </p>
       </div>
 
       {loading ? (
         <div className="loading-container">
-          <div className="loading-spinner">Loading transaction history...</div>
+          <div className="loading-spinner">{t("history.loadingHistory")}</div>
         </div>
       ) : transactions.length === 0 ? (
         <div className="empty-state">
-          <p>No transactions found for this address.</p>
-          <p className="hint">
-            Transactions from the last 10,000 blocks are shown.
-          </p>
+          <p>{t("history.noTransactions")}</p>
+          <p className="hint">{t("history.recentBlocksInfo")}</p>
         </div>
       ) : (
         <div className="transaction-list">
@@ -411,7 +425,7 @@ export default function NFTTransactionHistory() {
                   <span
                     className={`tx-badge ${tx.type.toLowerCase().replace(" ", "-")}`}
                   >
-                    {tx.type}
+                    {t(`history.types.${tx.type}`)}
                   </span>
                 </div>
                 <div className="tx-time">{formatDate(tx.timestamp)}</div>
@@ -426,7 +440,7 @@ export default function NFTTransactionHistory() {
                   rel="noopener noreferrer"
                   className="tx-link"
                 >
-                  View on Etherscan: {formatHash(tx.txHash)} ↗
+                  {t("history.viewOnExplorer")}: {formatHash(tx.txHash)} ↗
                 </a>
               </div>
             </div>

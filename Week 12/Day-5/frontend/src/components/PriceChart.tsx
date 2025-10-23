@@ -149,21 +149,25 @@ export default function PriceChart({
 
   if (priceHistory.length === 0) {
     return (
-      <div className="price-chart-container loading">
-        <div className="loading-spinner">{t("dex.loadingPriceData")}</div>
+      <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--card-border)] p-6 my-4 relative min-h-[300px] flex items-center justify-center">
+        <div className="text-[var(--text-secondary)] text-xl animate-pulse">
+          {t("dex.loadingPriceData")}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="price-chart-container">
-      <div className="chart-header">
-        <h3 className="chart-title">
+    <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--card-border)] p-6 my-4 relative min-h-[300px]">
+      <div className="flex justify-between items-center mb-5">
+        <h3 className="text-lg font-semibold text-[var(--text-primary)]">
           {tokenA}/{tokenB} {t("dex.priceChart")}
         </h3>
-        <div className="chart-price">
-          <span className="current-price">{currentPrice.toFixed(6)}</span>
-          <span className="price-change">
+        <div className="flex flex-col items-end">
+          <span className="text-xl font-semibold text-[var(--text-primary)]">
+            {currentPrice.toFixed(6)}
+          </span>
+          <span className="text-sm text-[var(--secondary-color)]">
             {(
               ((currentPrice - priceHistory[0]) / priceHistory[0]) *
               100
@@ -172,7 +176,7 @@ export default function PriceChart({
           </span>
         </div>
       </div>
-      <div className="chart-wrapper">
+      <div className="h-[240px]">
         <Line data={data} options={options} height={240} />
       </div>
     </div>

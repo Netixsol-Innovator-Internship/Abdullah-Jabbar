@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import Image from "next/image";
 import {
   CONTRACT_ADDRESSES,
   MULTI_TOKEN_DEX_ABI,
@@ -23,6 +22,7 @@ import { sanitizeNumericInput } from "@/utils/validation";
 import LPTokenDisplay from "@/components/LPTokenDisplay";
 import PriceChart from "@/components/PriceChart";
 import SlippageSelector from "@/components/SlippageSelector";
+import RefreshButton from "@/components/RefreshButton";
 
 export default function DEX() {
   const { signer, account, isConnected } = useWallet();
@@ -39,7 +39,6 @@ export default function DEX() {
   const [amountIn, setAmountIn] = useState("");
   const [slippage, setSlippage] = useState(1.0); // Default 1% slippage
   const [swapping, setSwapping] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const [amountError, setAmountError] = useState("");
 
   // Get pool reserve from Redux
@@ -66,15 +65,7 @@ export default function DEX() {
 
   const handleRefresh = async () => {
     if (!isConnected) return;
-    setRefreshing(true);
-    try {
-      await Promise.all([refreshBalances(), refreshPools()]);
-    } catch (error) {
-      console.error("Error refreshing data:", error);
-    } finally {
-      // Delay to allow animation to complete (1.5s for 3 spins)
-      setTimeout(() => setRefreshing(false), 1500);
-    }
+    await Promise.all([refreshBalances(), refreshPools()]);
   };
 
   // Input validation and handling
@@ -236,20 +227,11 @@ export default function DEX() {
       <div className="page-header">
         <div className="page-title-row">
           <h1>{t("dex.tokenSwap")}</h1>
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing || !isConnected}
-            className="btn-refresh-page"
+          <RefreshButton
+            onRefresh={handleRefresh}
+            disabled={!isConnected}
             title={t("dex.refresh")}
-          >
-            <Image
-              src="/refresh.svg"
-              alt={t("common.refresh")}
-              width={24}
-              height={24}
-              className={refreshing ? "spinning" : ""}
-            />
-          </button>
+          />
         </div>
         <p>{t("dex.tradeInstantly")}</p>
       </div>

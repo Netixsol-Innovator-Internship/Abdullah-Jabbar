@@ -184,10 +184,16 @@
     "yourNFTs": "Vos NFT",
     "noTokens": "Vous ne possédez pas encore de tokens",
     "noNFTs": "Vous ne possédez pas encore de NFT",
+    "noNFTsMessage": "Visitez le marché pour en acheter!",
     "quickActions": "Actions Rapides",
     "getMoreTokens": "Obtenir Plus de Tokens",
     "swapTokens": "Échanger des Tokens",
-    "buyNFTs": "Acheter des NFT"
+    "buyNFTs": "Acheter des NFT",
+    "nftHistory": "Historique NFT",
+    "connectWallet": "Connectez votre portefeuille",
+    "connectWalletMessage": "Veuillez connecter MetaMask pour voir votre portefeuille",
+    "loadingPortfolio": "Chargement du portefeuille...",
+    "refreshData": "Actualiser les données"
   },
   "nft": {
     "owned": "Possédé",

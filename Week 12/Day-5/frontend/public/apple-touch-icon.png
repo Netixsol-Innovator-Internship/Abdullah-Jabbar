@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Gradient definitions with green enhancement -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#5b6fd9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Green glow background -->
+  <rect width="180" height="180" rx="40" fill="url(#glow)"/>
+  
+  <!-- Rounded background for iOS with indigo to green gradient -->
+  <rect width="180" height="180" rx="40" fill="#1e293b"/>
+  <rect x="10" y="10" width="160" height="160" rx="35" fill="url(#grad1)"/>
+  
+  <!-- NFT Frame with green accents -->
+  <rect x="40" y="40" width="55" height="55" rx="5" fill="none" stroke="#f1f5f9" stroke-width="7"/>
+  <circle cx="53" cy="57" r="6" fill="#10b981"/>
+  <path d="M 40 88 L 53 67 L 67 76 L 95 52" stroke="#10b981" stroke-width="6" fill="none" stroke-linecap="round"/>
+  
+  <!-- DeFi Swap Symbol with green gradient -->
+  <g transform="translate(110, 110)">
+    <!-- Top arrow -->
+    <path d="M -22 -22 A 22 22 0 0 1 0 -33 L 0 -22 L 8 -30 Z" fill="url(#grad2)" stroke="#f1f5f9" stroke-width="3"/>
+    <!-- Bottom arrow -->
+    <path d="M 22 22 A 22 22 0 0 1 0 33 L 0 22 L -8 30 Z" fill="url(#grad2)" stroke="#f1f5f9" stroke-width="3"/>
+    <!-- Side connecting curves with green -->
+    <path d="M -22 -14 A 28 28 0 0 0 -28 0 A 28 28 0 0 0 -22 14" stroke="#10b981" stroke-width="6" fill="none"/>
+    <path d="M 22 -14 A 28 28 0 0 1 28 0 A 28 28 0 0 1 22 14" stroke="#10b981" stroke-width="6" fill="none"/>
+  </g>
+  
+  <!-- Enhanced green accent dots -->
+  <circle cx="135" cy="45" r="6" fill="#10b981" opacity="1"/>
+  <circle cx="145" cy="60" r="5" fill="#22c55e" opacity="0.95"/>
+  <circle cx="150" cy="52" r="3.5" fill="#34d399" opacity="0.9"/>
+  <circle cx="45" cy="135" r="6" fill="#22c55e" opacity="1"/>
+  <circle cx="35" cy="145" r="5" fill="#10b981" opacity="0.95"/>
+  <circle cx="30" cy="150" r="3.5" fill="#34d399" opacity="0.9"/>
+</svg>
