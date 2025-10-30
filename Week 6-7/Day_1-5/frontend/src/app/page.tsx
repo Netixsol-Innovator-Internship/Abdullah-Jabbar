@@ -117,7 +117,7 @@ export default function HomePage() {
     topSelling.length > 0 ? topSelling : fallbackTopSelling;
 
   return (
-    <div>
+    <div className="max-w-360 mx-auto">
       <Hero />
       {/* Brand Logos */}
       <section className="bg-black py-8">

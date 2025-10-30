@@ -1,0 +1,51 @@
+# Node
+node_modules/
+dist/
+build/
+/.parcel-cache
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Env
+.env
+.env.*.local
+.env.local
+
+# Nest / TypeScript
+*.tsbuildinfo
+coverage/
+/.nyc_output
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel / deployment
+.vercel
+
+# Lockfiles (optional to ignore)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Misc
+.temp
+.tmp
+*.tgz
