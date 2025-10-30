@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Comprehensive CV Template</title>
+    <link rel="stylesheet" href="template.css" />
+  </head>
+  <body>
+    <div class="page" role="document" aria-label="Curriculum Vitae">
+      <header class="header">
+  <h1>{{fullName}}</h1>
+  <p class="title">{{jobTitle}}</p>
+  <div class="info-row">
+    <span>{{email}}</span>
+    <span>{{phone}}</span>
+    {{#if website}}
+    <span>{{website}}</span>
+    {{/if}}
+    {{#if linkedin}}
+    <span>{{linkedin}}</span>
+    {{/if}}
+  </div>
+</header>
+
+
+      <section class="summary">
+        <h3>Professional Summary</h3>
+        <p>{{{summary}}}</p>
+      </section>
+      {{#if experience}}
+      <section class="experience">
+        <h3>Experience</h3>
+        {{#each experience}}
+        <div class="exp-item">
+          <div class="exp-head">
+            <div class="role"><strong>{{role}}</strong> — {{company}}</div>
+            <div class="period">{{period}}</div>
+          </div>
+          {{#if bullets}}
+          <ul class="bullets">
+            {{#each bullets}}
+            <li>{{this}}</li>
+            {{/each}}
+          </ul>
+          {{/if}}
+        </div>
+        {{/each}}
+      </section>
+      {{/if}} {{#if education}}
+      <section class="education">
+        <h3>Education</h3>
+        <ul>
+          {{#each education}}
+          <li>
+            <strong>{{degree}}</strong>, {{institution}}
+            <span class="edu-year">{{year}}</span>
+          </li>
+          {{/each}}
+        </ul>
+      </section>
+      {{/if}} {{#if projects}}
+      <section class="projects">
+        <h3>Selected Projects</h3>
+        {{#each projects}}
+        <div class="project">
+          <div class="proj-head"><strong>{{title}}</strong> — {{role}}</div>
+          <p class="proj-desc">{{{description}}}</p>
+        </div>
+        {{/each}}
+      </section>
+      {{/if}}
+      <section class="skills">
+        <h3>Skills</h3>
+        <p>{{skills}}</p>
+      </section>
+    </div>
+  </body>
+</html>

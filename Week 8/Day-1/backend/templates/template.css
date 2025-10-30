@@ -1,0 +1,200 @@
+/* Font setup */
+@font-face {
+  font-family: 'InterVar';
+  src: url('assets/InterVar.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --accent: #0ea5a4;
+  --muted: #6b7280;
+  --heading: #0f172a;
+  --page-width: 210mm;   /* exact A4 width */
+  --page-height: 297mm;  /* exact A4 height */
+}
+
+/* Reset */
+body {
+  margin: 0;
+  padding: 0;
+  color: #111;
+  background: #fff;
+  font-family: InterVar, Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+/* Core page */
+.page {
+  width: var(--page-width);
+  min-height: var(--page-height);
+  margin: 0 auto;           /* center horizontally when previewing */
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* Add visual padding + shadow only in screen mode */
+@media screen {
+  .page {
+    margin: 20px auto;
+    padding: 40px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+}
+
+/* Print rules */
+@media print {
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+  body {
+    background: none;
+    color: #000;
+  }
+  .page {
+    border: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  a {
+    color: black;
+    text-decoration: none;
+  }
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 16px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.header .title {
+  margin: 4px 0 12px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* Info row */
+.info-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 14px;
+  color: #374151;
+}
+
+.info-row span {
+  display: inline-block;
+  margin: 0 8px;
+  position: relative;
+}
+
+.info-row span:not(:first-child)::before {
+  content: "•";
+  margin-right: 8px;
+  color: var(--muted);
+}
+
+/* Sections */
+section {
+  margin-bottom: 28px;
+}
+
+section h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading);
+  text-transform: uppercase;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.summary p {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Experience */
+.exp-item {
+  margin-bottom: 16px;
+}
+
+.exp-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.exp-head .period {
+  font-weight: normal;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.bullets {
+  margin: 6px 0 0 20px;
+  padding: 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+.bullets li {
+  margin-bottom: 4px;
+}
+
+/* Education */
+.education ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.edu-year {
+  color: var(--muted);
+  font-size: 13px;
+  margin-left: 6px;
+}
+
+/* Projects */
+.project {
+  margin-bottom: 16px;
+}
+
+.proj-head {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.proj-desc {
+  font-size: 14px;
+  margin: 4px 0 0;
+  color: #374151;
+}
+
+/* Skills */
+.skills p {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
+}

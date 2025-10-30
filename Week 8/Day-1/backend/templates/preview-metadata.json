@@ -1,0 +1,47 @@
+{
+  "templateId": "template",
+  "version": "1.0.0",
+  "title": "CV Template (one-column print-first)",
+  "paperSize": "A4",
+  "placeholders": [
+    { "name": "fullName", "type": "string", "required": true },
+    { "name": "jobTitle", "type": "string", "required": true },
+    { "name": "email", "type": "string", "required": true },
+    { "name": "phone", "type": "string", "required": true },
+    { "name": "website", "type": "string", "required": true },
+    { "name": "linkedin", "type": "string", "required": true },
+    { "name": "summary", "type": "html", "required": true },
+    {
+      "name": "experience",
+      "type": "list",
+      "required": true,
+      "itemSchema": {
+        "role": { "type": "string", "required": true },
+        "company": { "type": "string", "required": true },
+        "period": { "type": "string", "required": true },
+        "bullets": { "type": "string[]", "required": true }
+      }
+    },
+    {
+      "name": "education",
+      "type": "list",
+      "required": true,
+      "itemSchema": {
+        "degree": { "type": "string", "required": true },
+        "institution": { "type": "string", "required": true },
+        "year": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "projects",
+      "type": "list",
+      "required": true,
+      "itemSchema": {
+        "title": { "type": "string", "required": true },
+        "role": { "type": "string", "required": true },
+        "description": { "type": "html", "required": true }
+      }
+    },
+    { "name": "skills", "type": "string", "required": true }
+  ]
+}
