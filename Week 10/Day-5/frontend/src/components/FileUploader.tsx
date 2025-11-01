@@ -35,8 +35,13 @@ export function FileUploader() {
           ? "border-blue-400 bg-blue-50 shadow-lg scale-[1.02]"
           : isDragReject
             ? "border-red-400 bg-red-50"
-            : "border-slate-300 bg-white hover:border-blue-300 hover:bg-blue-50/50"
+            : "hover:border-blue-300 hover:bg-blue-50/50"
       }`}
+      style={{
+        backgroundColor:
+          isDragActive || isDragReject ? undefined : "var(--card-bg)",
+        borderColor: isDragActive || isDragReject ? undefined : "var(--border)",
+      }}
     >
       <input {...getInputProps()} />
 
@@ -48,8 +53,12 @@ export function FileUploader() {
               ? "bg-blue-100 scale-110"
               : isDragReject
                 ? "bg-red-100"
-                : "bg-slate-100 group-hover:bg-blue-100 group-hover:scale-110"
+                : "group-hover:bg-blue-100 group-hover:scale-110"
           }`}
+          style={{
+            backgroundColor:
+              isDragActive || isDragReject ? undefined : "var(--background)",
+          }}
         >
           {isDragReject ? (
             <svg
@@ -68,10 +77,11 @@ export function FileUploader() {
           ) : (
             <svg
               className={`h-10 w-10 transition-colors ${
-                isDragActive
-                  ? "text-blue-500"
-                  : "text-slate-400 group-hover:text-blue-500"
+                isDragActive ? "text-blue-500" : "group-hover:text-blue-500"
               }`}
+              style={{
+                color: isDragActive ? undefined : "var(--text-muted)",
+              }}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -108,10 +118,16 @@ export function FileUploader() {
             </>
           ) : (
             <>
-              <p className="text-lg font-semibold text-slate-700 mb-1">
+              <p
+                className="text-lg font-semibold mb-1"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 Drag & drop PDF files here
               </p>
-              <p className="text-sm text-slate-500 mb-4">
+              <p
+                className="text-sm mb-4"
+                style={{ color: "var(--text-muted)" }}
+              >
                 or click to browse from your computer
               </p>
               <div className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 transition-colors">

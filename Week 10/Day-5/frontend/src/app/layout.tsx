@@ -8,10 +8,16 @@ import { AssignmentProvider } from "@/context/AssignmentContext";
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <body
+        className="min-h-screen"
+        style={{ background: "var(--background)" }}
+      >
         <AssignmentProvider>
           {/* Navigation Header */}
-          <nav className="border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+          <nav
+            className="border-b bg-theme-nav backdrop-blur-md sticky top-0 z-50 shadow-sm"
+            style={{ borderColor: "var(--border)" }}
+          >
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -34,7 +40,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                       Assignment Evaluator
                     </h1>
-                    <p className="text-xs text-slate-500">
+                    <p
+                      className="text-xs"
+                      style={{ color: "var(--text-muted)" }}
+                    >
                       AI-Powered Grading System
                     </p>
                   </div>
@@ -42,7 +51,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
                 <Link
                   href="/"
-                  className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition-all hover:border-blue-300 hover:shadow-md hover:text-blue-600"
+                  className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium shadow-sm transition-all hover:border-blue-300 hover:shadow-md hover:text-blue-600"
+                  style={{
+                    backgroundColor: "var(--card-bg)",
+                    borderColor: "var(--border)",
+                    color: "var(--text-secondary)",
+                  }}
                 >
                   <svg
                     className="h-4 w-4"
@@ -69,9 +83,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </main>
 
           {/* Footer */}
-          <footer className="mt-12 border-t border-slate-200 bg-white/50 backdrop-blur-sm">
+          <footer
+            className="mt-12 border-t backdrop-blur-sm"
+            style={{
+              borderColor: "var(--border)",
+              backgroundColor: "var(--nav-bg)",
+            }}
+          >
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-              <p className="text-center text-sm text-slate-500">
+              <p
+                className="text-center text-sm"
+                style={{ color: "var(--text-muted)" }}
+              >
                 Powered by AI • Made with ❤️ for educators
               </p>
             </div>

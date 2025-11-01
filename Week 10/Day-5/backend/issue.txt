@@ -1,0 +1,152 @@
+Root Issue Summary
+
+The deployed endpoint is returning a JavaScript file instead of executing the API function — meaning Vercel is serving a static asset or not invoking the serverless function.
+
+Detailed Causes to Check
+1. Static asset conflict (most common)
+
+A file named index.js exists at the root or inside .vercel/output/static/.
+
+Vercel prioritizes static files over serverless functions, so requests to / return that static file instead of triggering the function at /api/index.js.
+
+Check:
+
+Look for /index.js, /public/index.js, or /api/index.js being copied to .vercel/output/static/.
+
+Inspect .vercel/output/static/ after build.
+
+2. Function not bundled with compiled code
+
+The serverless function (api/index.js) references ../dist/main.server.js, but dist/ isn’t included in the deployed function bundle.
+
+On Vercel, each function runs in isolation — only files inside its bundle are accessible.
+
+If dist/ isn’t copied or declared in includeFiles, the require('../dist/main.server.js') fails silently and may trigger a fallback route (serving a static file).
+
+Check:
+
+Inside function runtime logs, list available files (fs.readdirSync(__dirname)).
+
+Verify dist/ exists in the bundle.
+
+3. Wrong routing configuration in vercel.json
+
+Routes may point directly to a static file or root ("/(.*)" -> "/index.js") instead of your API function.
+
+If routing points incorrectly, Vercel bypasses the function.
+
+Check:
+
+Ensure "routes": [{ "src": "/(.*)", "dest": "/api/index.js" }] (or /api/server.js if renamed).
+
+Verify there are no conflicting route definitions.
+
+4. Function misplacement
+
+If the function file is not located in /api/, Vercel doesn’t treat it as a serverless function.
+
+Files in root or /src/ aren’t executed — they are uploaded as static files.
+
+Check:
+
+Ensure your entry file is at api/index.js (or renamed version).
+
+Avoid placing index.js in the project root.
+
+5. NestJS static serving misconfiguration
+
+The app might use ServeStaticModule or app.useStaticAssets() in main.ts that serves from the wrong directory (e.g., dist/ or project root).
+
+That exposes your compiled files publicly, causing the browser to receive JS code instead of API responses.
+
+Check:
+
+Search for ServeStaticModule.forRoot or app.useStaticAssets in your codebase.
+
+Ensure it only serves specific client build directories (not the backend dist/ folder).
+
+6. Missing createServer export or failed import
+
+The function requires ../dist/main.server.js and expects a createServer export.
+
+If the compiled file doesn’t export it correctly, the serverless function initialization may throw and exit silently, and Vercel returns fallback static content.
+
+Check:
+
+Inspect dist/main.server.js to confirm exports.createServer exists.
+
+Log Object.keys(require('../dist/main.server.js')) before usage.
+
+7. Build artifact shadowing function
+
+The NestJS build or pnpm vercel-build script may output files into api/ or the root directory, overwriting the intended index.js function file.
+
+The wrong file is then deployed as a static artifact.
+
+Check:
+
+After pnpm vercel-build, verify what files exist at the project root and inside /api/.
+
+8. Cached deployment or old static output
+
+Vercel caching can serve outdated static builds (X-Vercel-Cache: HIT).
+
+If previous deployments produced a static index.js, the cache might still serve it even after code changes.
+
+Check:
+
+Redeploy with cache invalidation (vercel --force or by editing build command slightly).
+
+Confirm new deployment IDs differ.
+
+9. Incorrect outputDirectory or framework autodetection
+
+If outputDirectory or framework fields in vercel.json mislead Vercel into thinking your app is static (e.g., Next.js or plain Node), it generates a static build output.
+
+Vercel then serves that static output instead of a function.
+
+Check:
+
+Ensure "framework": null and "outputDirectory": ".".
+
+Confirm Vercel detects “Other” framework in the dashboard, not “Next.js”.
+
+10. File path resolution failure
+
+On some environments, require('../dist/main.server.js') may resolve incorrectly depending on the runtime folder structure inside Vercel’s lambda environment.
+
+Check:
+
+Add logging:
+
+console.log('__dirname:', __dirname);
+console.log('resolved path:', path.resolve(__dirname, '../dist/main.server.js'));
+console.log('exists:', fs.existsSync(path.resolve(__dirname, '../dist/main.server.js')));
+
+11. Uncaught initialization error
+
+If the NestJS initialization throws and is caught by the outer wrapper, your function might not send a valid response, allowing Vercel to respond with a fallback static resource.
+
+Check:
+
+Review function logs for “❌ Failed to initialize Nest server” messages.
+
+Ensure your wrapper always returns a proper HTTP response, even on init failure.
+
+12. Static file serving precedence (Vercel rule)
+
+On Vercel, static files always take precedence over serverless functions.
+So if any file exists at the same path as your API route, it will be served first.
+
+Check:
+
+No index.js, index.html, or any file at / path in project root or /public.
+
+Recommended Actions
+Step	What to Do
+1	Rename your function file to /api/server.js to avoid static conflicts.
+2	Add "includeFiles": ["dist/**"] under your function in vercel.json.
+3	Delete any root index.js or static output from previous builds.
+4	Confirm no ServeStaticModule exposes backend files.
+5	Redeploy using vercel --force to clear cached static artifacts.
+6	Verify function logs show 📨 Incoming request on each request.

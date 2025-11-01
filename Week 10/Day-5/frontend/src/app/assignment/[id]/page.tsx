@@ -4,7 +4,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import * as api from "@/lib/api";
-import { ResultsTable } from "@/components/ResultsTable";
 import { DownloadButton } from "@/components/DownloadButton";
 import { SubmissionUploader } from "@/components/SubmissionUploader";
 
@@ -21,7 +20,6 @@ export default function AssignmentDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
-  const [isEditingMode, setIsEditingMode] = useState(true);
   const [newMode, setNewMode] = useState<"strict" | "loose">("strict");
   const [showUploader, setShowUploader] = useState(false);
 
@@ -43,7 +41,7 @@ export default function AssignmentDetailPage() {
           "submissions" in response
         ) {
           const { assignment: assignmentData, submissions: submissionsData } =
-            response as any;
+            response as { assignment: Assignment; submissions: Submission[] };
           setAssignment(assignmentData);
           setSubmissions(submissionsData);
           setNewMode(assignmentData.mode);
@@ -636,13 +634,6 @@ function AssignmentResultsTable({
   submissions: Submission[];
   onDeleteSubmission: (submissionId: string) => void;
 }) {
-  // Adapt submissions to match the expected format for existing components
-  const adaptedSubmissions = submissions.map((sub) => ({
-    ...sub,
-    rollNo: sub.rollNumber, // Map rollNumber to rollNo for compatibility
-    remarks: sub.feedback || sub.remarks, // Use feedback if available, fallback to remarks
-  }));
-
   const getScoreColor = (score?: number) => {
     if (!score) return "text-slate-600";
     if (score >= 85) return "text-green-600";

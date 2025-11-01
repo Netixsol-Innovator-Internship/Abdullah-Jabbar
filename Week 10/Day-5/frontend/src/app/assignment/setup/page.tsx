@@ -25,17 +25,23 @@ export default function AssignmentSetupPage() {
           </svg>
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-slate-900">
+          <h2
+            className="text-2xl font-bold"
+            style={{ color: "var(--text-primary)" }}
+          >
             Create Assignment
           </h2>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>
             Set up your assignment parameters and evaluation criteria
           </p>
         </div>
       </div>
 
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-slate-600">
+      <nav
+        className="flex items-center gap-2 text-sm"
+        style={{ color: "var(--text-muted)" }}
+      >
         <Link href="/" className="hover:text-blue-600 transition-colors">
           Dashboard
         </Link>

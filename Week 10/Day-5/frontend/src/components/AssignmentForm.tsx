@@ -51,20 +51,32 @@ export function AssignmentForm() {
 
   return (
     <form
-      className="space-y-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-xl animate-scale-in"
+      className="space-y-6 rounded-2xl border p-8 shadow-xl animate-scale-in"
+      style={{
+        backgroundColor: "var(--card-bg)",
+        borderColor: "var(--border)",
+      }}
       onSubmit={onSubmit}
     >
       <div className="space-y-6">
         {/* Title Field */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label
+            className="block text-sm font-semibold mb-2"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Assignment Title
           </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-slate-900 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+            className="w-full rounded-xl border-2 px-4 py-3 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+            style={{
+              backgroundColor: "var(--input-bg)",
+              borderColor: "var(--input-border)",
+              color: "var(--text-primary)",
+            }}
             placeholder="e.g., Essay on Mental Health Awareness"
             required
           />
@@ -72,13 +84,21 @@ export function AssignmentForm() {
 
         {/* Instructions Field */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label
+            className="block text-sm font-semibold mb-2"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Assignment Instructions
           </label>
           <textarea
             value={instructions}
             onChange={(e) => setInstructions(e.target.value)}
-            className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-slate-900 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+            className="w-full rounded-xl border-2 px-4 py-3 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+            style={{
+              backgroundColor: "var(--input-bg)",
+              borderColor: "var(--input-border)",
+              color: "var(--text-primary)",
+            }}
             rows={6}
             placeholder='e.g., "Write a comprehensive essay on mental health awareness, covering causes, effects, and solutions. Include relevant statistics and examples."'
             required
@@ -87,7 +107,10 @@ export function AssignmentForm() {
 
         {/* Word Count Field */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label
+            className="block text-sm font-semibold mb-2"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Expected Word Count
           </label>
           <div className="relative">
@@ -97,11 +120,19 @@ export function AssignmentForm() {
               onChange={(e) => setWordCount(parseInt(e.target.value) || 500)}
               min="100"
               max="10000"
-              className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-slate-900 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+              className="w-full rounded-xl border-2 px-4 py-3 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+              style={{
+                backgroundColor: "var(--input-bg)",
+                borderColor: "var(--input-border)",
+                color: "var(--text-primary)",
+              }}
               placeholder="500"
               required
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-500">
+            <span
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-sm"
+              style={{ color: "var(--text-muted)" }}
+            >
               words
             </span>
           </div>
@@ -109,19 +140,24 @@ export function AssignmentForm() {
 
         {/* Evaluation Mode */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-3">
+          <label
+            className="block text-sm font-semibold mb-3"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Evaluation Mode
           </label>
           <div className="grid grid-cols-2 gap-4">
             <label
-              className={`
-              relative flex cursor-pointer flex-col rounded-xl border-2 p-4 transition-all
-              ${
+              className={`relative flex cursor-pointer flex-col rounded-xl border-2 p-4 transition-all ${
                 mode === "strict"
                   ? "border-indigo-600 bg-indigo-50 ring-4 ring-indigo-600/10"
-                  : "border-slate-200 bg-white hover:border-slate-300"
-              }
-            `}
+                  : "border-slate-200 hover:border-slate-300"
+              }`}
+              style={{
+                backgroundColor:
+                  mode === "strict" ? "#eef2ff" : "var(--card-bg)",
+                borderColor: mode === "strict" ? "#4f46e5" : "var(--border)",
+              }}
             >
               <input
                 type="radio"
@@ -154,11 +190,18 @@ export function AssignmentForm() {
                 </div>
                 <div>
                   <div
-                    className={`font-semibold ${mode === "strict" ? "text-indigo-900" : "text-slate-900"}`}
+                    className={`font-semibold ${mode === "strict" ? "text-indigo-900" : ""}`}
+                    style={{
+                      color:
+                        mode === "strict" ? "#312e81" : "var(--text-primary)",
+                    }}
                   >
                     Strict Mode
                   </div>
-                  <div className="text-xs text-slate-600">
+                  <div
+                    className="text-xs"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     Rigorous evaluation
                   </div>
                 </div>
@@ -166,14 +209,16 @@ export function AssignmentForm() {
             </label>
 
             <label
-              className={`
-              relative flex cursor-pointer flex-col rounded-xl border-2 p-4 transition-all
-              ${
+              className={`relative flex cursor-pointer flex-col rounded-xl border-2 p-4 transition-all ${
                 mode === "loose"
                   ? "border-indigo-600 bg-indigo-50 ring-4 ring-indigo-600/10"
-                  : "border-slate-200 bg-white hover:border-slate-300"
-              }
-            `}
+                  : "border-slate-200 hover:border-slate-300"
+              }`}
+              style={{
+                backgroundColor:
+                  mode === "loose" ? "#eef2ff" : "var(--card-bg)",
+                borderColor: mode === "loose" ? "#4f46e5" : "var(--border)",
+              }}
             >
               <input
                 type="radio"
@@ -206,11 +251,18 @@ export function AssignmentForm() {
                 </div>
                 <div>
                   <div
-                    className={`font-semibold ${mode === "loose" ? "text-indigo-900" : "text-slate-900"}`}
+                    className={`font-semibold ${mode === "loose" ? "text-indigo-900" : ""}`}
+                    style={{
+                      color:
+                        mode === "loose" ? "#312e81" : "var(--text-primary)",
+                    }}
                   >
                     Loose Mode
                   </div>
-                  <div className="text-xs text-slate-600">
+                  <div
+                    className="text-xs"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     Lenient evaluation
                   </div>
                 </div>

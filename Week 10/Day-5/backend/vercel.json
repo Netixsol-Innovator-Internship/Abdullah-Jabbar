@@ -3,14 +3,16 @@
   "buildCommand": "pnpm vercel-build",
   "installCommand": "pnpm install",
   "functions": {
-    "api/index.js": {
-      "runtime": "@vercel/node@3.0.0",
-      "maxDuration": 60
+    "api/server.js": {
+      "maxDuration": 60,
+      "memory": 1024,
+      "includeFiles": "dist/**"
     }
   },
-  "routes": [
-    { "src": "/(.*)", "dest": "/api/index.js" }
-  ],
-  "outputDirectory": ".",
-  "framework": null
+  "routes": [{ "src": "/(.*)", "dest": "/api/server.js" }],
+  "outputDirectory": "public",
+  "framework": null,
+  "env": {
+    "NODE_ENV": "production"
+  }
 }

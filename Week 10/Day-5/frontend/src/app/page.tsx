@@ -11,7 +11,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* Hero Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 p-8 text-white shadow-2xl">
+      <div className="relative overflow-hidden rounded-2xl p-8 text-white shadow-2xl hero-gradient">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
           <div className="flex items-start justify-between">
@@ -23,7 +23,11 @@ export default function DashboardPage() {
               </p>
               <Link
                 href="/assignment/setup"
-                className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-semibold text-blue-600 shadow-lg transition-all hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-xl px-6 py-3 font-semibold shadow-lg transition-all hover:shadow-xl hover:scale-105"
+                style={{
+                  backgroundColor: "var(--card-bg)",
+                  color: "var(--primary)",
+                }}
               >
                 <svg
                   className="h-5 w-5"
@@ -66,7 +70,13 @@ export default function DashboardPage() {
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link href="/assignment/setup" className="group">
-          <div className="card-hover rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all">
+          <div
+            className="card-hover rounded-xl border p-6 shadow-sm transition-all"
+            style={{
+              backgroundColor: "var(--card-bg)",
+              borderColor: "var(--border)",
+            }}
+          >
             <div className="flex items-center gap-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                 <svg
@@ -84,14 +94,27 @@ export default function DashboardPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900">New Assignment</h3>
-                <p className="text-sm text-slate-500">Create and setup</p>
+                <h3
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  New Assignment
+                </h3>
+                <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                  Create and setup
+                </p>
               </div>
             </div>
           </div>
         </Link>
 
-        <div className="card-hover rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div
+          className="card-hover rounded-xl border p-6 shadow-sm"
+          style={{
+            backgroundColor: "var(--card-bg)",
+            borderColor: "var(--border)",
+          }}
+        >
           <div className="flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-600">
               <svg
@@ -109,8 +132,13 @@ export default function DashboardPage() {
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold text-slate-900">Completed</h3>
-              <p className="text-sm text-slate-500">
+              <h3
+                className="font-semibold"
+                style={{ color: "var(--text-primary)" }}
+              >
+                Completed
+              </h3>
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
                 {history.filter((h) => h.status === "completed").length}{" "}
                 assignments
               </p>
@@ -118,7 +146,13 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="card-hover rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div
+          className="card-hover rounded-xl border p-6 shadow-sm"
+          style={{
+            backgroundColor: "var(--card-bg)",
+            borderColor: "var(--border)",
+          }}
+        >
           <div className="flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
               <svg
@@ -136,8 +170,13 @@ export default function DashboardPage() {
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold text-slate-900">In Progress</h3>
-              <p className="text-sm text-slate-500">
+              <h3
+                className="font-semibold"
+                style={{ color: "var(--text-primary)" }}
+              >
+                In Progress
+              </h3>
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
                 {history.filter((h) => h.status === "pending").length}{" "}
                 assignments
               </p>
@@ -147,14 +186,29 @@ export default function DashboardPage() {
       </div>
 
       {/* Assignment History */}
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <div className="border-b border-slate-200 bg-slate-50 px-6 py-4">
+      <div
+        className="rounded-xl border shadow-sm overflow-hidden"
+        style={{
+          backgroundColor: "var(--card-bg)",
+          borderColor: "var(--border)",
+        }}
+      >
+        <div
+          className="border-b px-6 py-4"
+          style={{
+            borderColor: "var(--border)",
+            backgroundColor: "var(--background)",
+          }}
+        >
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-slate-900">
+              <h3
+                className="text-lg font-semibold"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Assignment History
               </h3>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
                 All your previous assignments and evaluations
               </p>
             </div>
@@ -183,16 +237,26 @@ export default function DashboardPage() {
                 />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-slate-900 mb-2">
+            <h3
+              className="text-lg font-medium mb-2"
+              style={{ color: "var(--text-primary)" }}
+            >
               No assignments yet
             </h3>
-            <p className="text-sm text-slate-500 mb-6 max-w-md">
+            <p
+              className="text-sm mb-6 max-w-md"
+              style={{ color: "var(--text-muted)" }}
+            >
               Get started by creating your first assignment. It only takes a
               minute!
             </p>
             <Link
               href="/assignment/setup"
-              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700"
+              className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:opacity-90"
+              style={{
+                backgroundColor: "var(--primary)",
+                color: "white",
+              }}
             >
               <svg
                 className="h-4 w-4"
@@ -213,25 +277,49 @@ export default function DashboardPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-50 border-b border-slate-200">
+              <thead
+                className="border-b"
+                style={{
+                  backgroundColor: "var(--background)",
+                  borderColor: "var(--border)",
+                }}
+              >
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-600">
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     Assignment
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-600">
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     Created Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-600">
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     Status
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 bg-white">
+              <tbody
+                className="divide-y"
+                style={{
+                  backgroundColor: "var(--card-bg)",
+                  borderColor: "var(--border)",
+                }}
+              >
                 {history.map((h, index) => (
                   <tr
                     key={h.id}
-                    className="transition-colors hover:bg-slate-50 animate-slide-in cursor-pointer"
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    className="transition-colors animate-slide-in cursor-pointer table-row-hover"
+                    style={{
+                      animationDelay: `${index * 50}ms`,
+                      backgroundColor: "var(--card-bg)",
+                    }}
                     onClick={() => router.push(`/assignment/${h.id}`)}
                   >
                     <td className="px-6 py-4">
@@ -252,16 +340,25 @@ export default function DashboardPage() {
                           </svg>
                         </div>
                         <div>
-                          <div className="font-medium text-slate-900">
+                          <div
+                            className="font-medium"
+                            style={{ color: "var(--text-primary)" }}
+                          >
                             {h.title}
                           </div>
-                          <div className="text-sm text-slate-500">
+                          <div
+                            className="text-sm"
+                            style={{ color: "var(--text-muted)" }}
+                          >
                             Assignment #{h.id.slice(0, 8)}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-slate-600">
+                    <td
+                      className="px-6 py-4 text-sm"
+                      style={{ color: "var(--text-muted)" }}
+                    >
                       {new Date(h.createdAt).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
