@@ -271,7 +271,7 @@ export default function Footer() {
             color: "#EBEBEB",
           }}
         >
-          Made With Love by Abdullah Jabbar
+          Made with Love by Abdullah Jabbar
         </Typography>
       </Box>
     </Box>
