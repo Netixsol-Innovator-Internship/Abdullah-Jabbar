@@ -35,8 +35,8 @@ export default function RootLayout({
                 position: "relative",
                 minHeight: "100vh",
                 width: "100%",
-                bgcolor: "#051139", // Secondary/Navy from Figma
-                // overflowX: "hidden", // Prevent horizontal scroll
+                bgcolor: "#051139",
+                overflowX: "hidden", // Prevent horizontal scroll
               }}
             >
               <Container
@@ -46,7 +46,8 @@ export default function RootLayout({
                   maxWidth: "1280px",
                   margin: "0 auto",
                   position: "relative",
-                  overflowX: "hidden", // Prevent horizontal scroll in container
+                  bgcolor: "#051139", // Secondary/Navy from Figma
+                  // overflowX: "hidden", // Prevent horizontal scroll in container
                 }}
               >
                 {children}

@@ -15,7 +15,8 @@ export default function Collaborations({ sx }: CollaborationsProps) {
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        py: 8,
+        py: { xs: 4, sm: 6, md: 8 },
+        px: { xs: 2, sm: 3, md: 0 },
         ...sx,
       }}
     >
@@ -26,8 +27,9 @@ export default function Collaborations({ sx }: CollaborationsProps) {
           flexDirection: "column",
           alignItems: "center",
           padding: "0px",
-          gap: "40px",
-          width: "1136px",
+          gap: { xs: "24px", sm: "32px", md: "40px" },
+          width: "100%",
+          maxWidth: "1136px",
         }}
       >
         {/* Heading Section */}
@@ -38,7 +40,8 @@ export default function Collaborations({ sx }: CollaborationsProps) {
             alignItems: "center",
             padding: "0px",
             gap: "16px",
-            width: "752px",
+            width: "100%",
+            maxWidth: "752px",
           }}
         >
           {/* Collaboration Tag */}
@@ -47,8 +50,8 @@ export default function Collaborations({ sx }: CollaborationsProps) {
               fontFamily: "Poppins",
               fontStyle: "normal",
               fontWeight: 700,
-              fontSize: "16px",
-              lineHeight: "32px",
+              fontSize: { xs: "14px", sm: "16px" },
+              lineHeight: { xs: "24px", sm: "32px" },
               textAlign: "center",
               color: "#5699FF",
               alignSelf: "stretch",
@@ -63,8 +66,8 @@ export default function Collaborations({ sx }: CollaborationsProps) {
               fontFamily: "Poppins",
               fontStyle: "normal",
               fontWeight: 700,
-              fontSize: "56px",
-              lineHeight: "72px",
+              fontSize: { xs: "32px", sm: "48px", md: "56px" },
+              lineHeight: { xs: "40px", sm: "60px", md: "72px" },
               textAlign: "center",
               color: "#FFFFFF",
               alignSelf: "stretch",
@@ -78,50 +81,83 @@ export default function Collaborations({ sx }: CollaborationsProps) {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: { xs: "column", sm: "row" },
             justifyContent: "center",
             alignItems: "center",
             padding: "0px",
-            gap: "58px",
-            width: "1136px",
-            height: "48px",
+            gap: { xs: "32px", sm: "40px", md: "58px" },
+            width: "100%",
+            maxWidth: "1136px",
+            flexWrap: { xs: "nowrap", sm: "wrap" },
           }}
         >
           {/* Logo 1 */}
-          <Image
-            src="/colab1.svg"
-            alt="Partner Logo 1"
-            width={240}
-            height={48}
-            priority
-          />
+          <Box
+            sx={{
+              width: { xs: "180px", sm: "200px", md: "240px" },
+              height: "auto",
+            }}
+          >
+            <Image
+              src="/colab1.svg"
+              alt="Partner Logo 1"
+              width={240}
+              height={48}
+              style={{ width: "100%", height: "auto" }}
+              priority
+            />
+          </Box>
 
           {/* Logo 2 */}
-          <Image
-            src="/colab2.svg"
-            alt="Partner Logo 2"
-            width={256}
-            height={48}
-            priority
-          />
+          <Box
+            sx={{
+              width: { xs: "180px", sm: "200px", md: "256px" },
+              height: "auto",
+            }}
+          >
+            <Image
+              src="/colab2.svg"
+              alt="Partner Logo 2"
+              width={256}
+              height={48}
+              style={{ width: "100%", height: "auto" }}
+              priority
+            />
+          </Box>
 
           {/* Logo 3 */}
-          <Image
-            src="/colab3.svg"
-            alt="Partner Logo 3"
-            width={272}
-            height={48}
-            priority
-          />
+          <Box
+            sx={{
+              width: { xs: "180px", sm: "200px", md: "272px" },
+              height: "auto",
+            }}
+          >
+            <Image
+              src="/colab3.svg"
+              alt="Partner Logo 3"
+              width={272}
+              height={48}
+              style={{ width: "100%", height: "auto" }}
+              priority
+            />
+          </Box>
 
           {/* Logo 4 */}
-          <Image
-            src="/colab4.svg"
-            alt="Partner Logo 4"
-            width={192}
-            height={48}
-            priority
-          />
+          <Box
+            sx={{
+              width: { xs: "180px", sm: "200px", md: "192px" },
+              height: "auto",
+            }}
+          >
+            <Image
+              src="/colab4.svg"
+              alt="Partner Logo 4"
+              width={192}
+              height={48}
+              style={{ width: "100%", height: "auto" }}
+              priority
+            />
+          </Box>
         </Box>
       </Box>
     </Box>

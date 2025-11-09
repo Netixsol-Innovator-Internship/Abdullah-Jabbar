@@ -25,11 +25,11 @@ export default function Footer() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "40px 72px",
-        gap: "24px",
+        padding: { xs: "32px 20px", sm: "36px 32px", md: "40px 72px" },
+        gap: { xs: "20px", md: "24px" },
         width: "100%",
         maxWidth: "1280px",
-        minHeight: "200px",
+        minHeight: { xs: "auto", md: "200px" },
         backgroundColor: "#051139",
         margin: "0 auto",
       }}
@@ -38,13 +38,13 @@ export default function Footer() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-start",
+          flexDirection: { xs: "column", sm: "row" },
+          alignItems: { xs: "center", sm: "flex-start" },
+          justifyContent: { xs: "center", sm: "space-between" },
           padding: "0px",
-          gap: "16px",
+          gap: { xs: "20px", sm: "16px" },
           width: "100%",
           maxWidth: "1136px",
-          height: "40px",
         }}
       >
         {/* Logo */}
@@ -55,8 +55,8 @@ export default function Footer() {
             alignItems: "flex-start",
             padding: "0px",
             gap: "8px",
-            flex: "1 1 auto",
-            height: "40px",
+            flex: { xs: "none", sm: "1 1 auto" },
+            height: { xs: "32px", md: "40px" },
           }}
         >
           <Image
@@ -64,7 +64,7 @@ export default function Footer() {
             alt="YORFY Logo"
             width={128}
             height={40}
-            style={{ width: "128px", height: "40px" }}
+            style={{ width: "auto", height: "100%", maxWidth: "128px" }}
           />
         </Box>
 
@@ -75,7 +75,7 @@ export default function Footer() {
             flexDirection: "row",
             alignItems: "flex-start",
             padding: "0px",
-            gap: "16px",
+            gap: { xs: "12px", sm: "16px" },
             height: "40px",
           }}
         >
@@ -239,13 +239,13 @@ export default function Footer() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
+          flexDirection: { xs: "column", sm: "row" },
+          justifyContent: { xs: "center", sm: "space-between" },
+          alignItems: { xs: "center", sm: "flex-start" },
           padding: "0px",
+          gap: { xs: "12px", sm: "0" },
           width: "100%",
           maxWidth: "1136px",
-          height: "32px",
         }}
       >
         <Typography
@@ -253,9 +253,10 @@ export default function Footer() {
             fontFamily: "Poppins",
             fontStyle: "normal",
             fontWeight: 400,
-            fontSize: "16px",
-            lineHeight: "32px",
+            fontSize: { xs: "14px", sm: "16px" },
+            lineHeight: { xs: "24px", sm: "32px" },
             color: "#EBEBEB",
+            textAlign: { xs: "center", sm: "left" },
           }}
         >
           © 2025 Yorfy Template • All Rights Reserved
@@ -266,9 +267,10 @@ export default function Footer() {
             fontFamily: "Poppins",
             fontStyle: "normal",
             fontWeight: 400,
-            fontSize: "16px",
-            lineHeight: "32px",
+            fontSize: { xs: "14px", sm: "16px" },
+            lineHeight: { xs: "24px", sm: "32px" },
             color: "#EBEBEB",
+            textAlign: { xs: "center", sm: "right" },
           }}
         >
           Made with Love by Abdullah Jabbar

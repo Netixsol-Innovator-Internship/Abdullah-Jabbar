@@ -31,7 +31,7 @@ export default function Newsletter({ sx }: NewsletterProps) {
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        padding: "80px 0",
+        padding: { xs: "40px 20px", sm: "60px 32px", md: "80px 0" },
         ...sx,
       }}
     >
@@ -41,10 +41,11 @@ export default function Newsletter({ sx }: NewsletterProps) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "80px",
-          gap: "40px",
-          width: "1136px",
-          background: "#081956", // Primary/Dark Blue
+          padding: { xs: "40px 24px", sm: "60px 40px", md: "80px" },
+          gap: { xs: "32px", md: "40px" },
+          width: "100%",
+          maxWidth: "1136px",
+          background: "#081956",
           borderRadius: "16px",
         }}
       >
@@ -56,7 +57,8 @@ export default function Newsletter({ sx }: NewsletterProps) {
             alignItems: "flex-start",
             padding: "0px",
             gap: "16px",
-            width: "752px",
+            width: "100%",
+            maxWidth: "752px",
           }}
         >
           {/* Newsletter Label */}
@@ -64,10 +66,10 @@ export default function Newsletter({ sx }: NewsletterProps) {
             sx={{
               fontFamily: "Poppins",
               fontWeight: 700,
-              fontSize: "16px",
-              lineHeight: "32px",
+              fontSize: { xs: "14px", sm: "16px" },
+              lineHeight: { xs: "24px", sm: "32px" },
               textAlign: "center",
-              color: "#5699FF", // Accent/Cyan
+              color: "#5699FF",
               alignSelf: "stretch",
             }}
           >
@@ -79,8 +81,8 @@ export default function Newsletter({ sx }: NewsletterProps) {
             sx={{
               fontFamily: "Poppins",
               fontWeight: 700,
-              fontSize: "40px",
-              lineHeight: "56px",
+              fontSize: { xs: "28px", sm: "36px", md: "40px" },
+              lineHeight: { xs: "36px", sm: "48px", md: "56px" },
               textAlign: "center",
               color: "#FFFFFF",
               alignSelf: "stretch",
@@ -94,10 +96,10 @@ export default function Newsletter({ sx }: NewsletterProps) {
             sx={{
               fontFamily: "Poppins",
               fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "32px",
+              fontSize: { xs: "14px", sm: "16px" },
+              lineHeight: { xs: "24px", sm: "32px" },
               textAlign: "center",
-              color: "#EBEBEB", // Text/Disable
+              color: "#EBEBEB",
               alignSelf: "stretch",
             }}
           >
@@ -112,12 +114,12 @@ export default function Newsletter({ sx }: NewsletterProps) {
           onSubmit={handleSubmit}
           sx={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: { xs: "column", sm: "row" },
             alignItems: "flex-start",
             padding: "0px",
             gap: "16px",
-            width: "635px",
-            height: "48px",
+            width: "100%",
+            maxWidth: "635px",
           }}
         >
           {/* Input Field */}
@@ -128,14 +130,15 @@ export default function Newsletter({ sx }: NewsletterProps) {
             onChange={(e) => setEmail(e.target.value)}
             required
             sx={{
-              width: "480px",
+              width: { xs: "100%", sm: "480px" },
               height: "48px",
+              flex: { xs: "none", sm: 1 },
               "& .MuiOutlinedInput-root": {
                 height: "48px",
                 padding: "8px 16px",
                 fontFamily: "Poppins",
                 fontWeight: 400,
-                fontSize: "16px",
+                fontSize: { xs: "14px", sm: "16px" },
                 lineHeight: "32px",
                 color: "#FFFFFF",
                 border: "1px solid #FFFFFF",
@@ -170,15 +173,15 @@ export default function Newsletter({ sx }: NewsletterProps) {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              padding: "8px 40px",
+              padding: { xs: "8px 32px", sm: "8px 40px" },
               gap: "8px",
-              width: "139px",
+              width: { xs: "100%", sm: "139px" },
               height: "48px",
-              background: "#1E50FF", // Primary/Blue
+              background: "#1E50FF",
               borderRadius: "8px",
               fontFamily: "Poppins",
               fontWeight: 600,
-              fontSize: "16px",
+              fontSize: { xs: "14px", sm: "16px" },
               lineHeight: "32px",
               color: "#FFFFFF",
               textTransform: "none",

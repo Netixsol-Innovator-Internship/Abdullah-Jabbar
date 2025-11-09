@@ -14,29 +14,31 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        padding: "24px 72px",
-        gap: "16px",
+        padding: { xs: "16px 20px", sm: "20px 32px", md: "24px 92px" },
+
+        gap: { xs: "8%", sm: "5%", md: "1.5%" },
         width: "100%",
         maxWidth: "1280px",
-        height: "96px",
+        minHeight: { xs: "64px", sm: "80px", md: "96px" },
         background: "#AA00FF",
+        overflow: "hidden",
         ...sx,
       }}
     >
       {/* Discount Sale - First */}
       <Typography
         sx={{
-          width: "272px",
-          height: "48px",
+          width: { xs: "auto", md: "272px" },
           fontFamily: "Poppins",
           fontWeight: 700,
-          fontSize: "32px",
-          lineHeight: "48px",
+          fontSize: { xs: "18px", sm: "24px", md: "32px" },
+          lineHeight: { xs: "28px", sm: "36px", md: "48px" },
           textAlign: "center",
           color: "#FFFFFF",
-          flex: "none",
+          flex: { xs: "none", md: "none" },
           order: 0,
-          flexGrow: 1,
+          flexGrow: { xs: 0, md: 0, lg: 1 },
+          whiteSpace: { xs: "nowrap", md: "normal" },
         }}
       >
         Discount Sale
@@ -45,19 +47,19 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
       {/* Up to 40% - First */}
       <Typography
         sx={{
-          width: "272px",
-          height: "48px",
+          width: { xs: "auto", md: "272px" },
           fontFamily: "Poppins",
           fontWeight: 700,
-          fontSize: "32px",
-          lineHeight: "48px",
+          fontSize: { xs: "18px", sm: "24px", md: "32px" },
+          lineHeight: { xs: "28px", sm: "36px", md: "48px" },
           textAlign: "center",
           color: "transparent",
-          WebkitTextStroke: "1.2px #FFFFFF",
-          textStroke: "2px #FFFFFF",
-          flex: "none",
+          WebkitTextStroke: { xs: "0.8px #FFFFFF", md: "1.2px #FFFFFF" },
+          textStroke: { xs: "0.8px #FFFFFF", md: "2px #FFFFFF" },
+          flex: { xs: "none", md: "none" },
           order: 1,
-          flexGrow: 1,
+          flexGrow: { xs: 0, md: 0, lg: 1 },
+          whiteSpace: { xs: "nowrap", md: "normal" },
         }}
       >
         Up to 40%
@@ -66,17 +68,18 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
       {/* Discount Sale - Second */}
       <Typography
         sx={{
-          width: "272px",
-          height: "48px",
+          display: { xs: "none", sm: "block" },
+          width: { xs: "auto", md: "272px" },
           fontFamily: "Poppins",
           fontWeight: 700,
-          fontSize: "32px",
-          lineHeight: "48px",
+          fontSize: { xs: "18px", sm: "24px", md: "32px" },
+          lineHeight: { xs: "28px", sm: "36px", md: "48px" },
           textAlign: "center",
           color: "#FFFFFF",
-          flex: "none",
+          flex: { xs: "none", md: "none" },
           order: 2,
-          flexGrow: 1,
+          flexGrow: { xs: 0, md: 0, lg: 1 },
+          whiteSpace: { xs: "nowrap", md: "normal" },
         }}
       >
         Discount Sale
@@ -85,8 +88,8 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
       {/* Up to 40% - Second */}
       <Typography
         sx={{
+          display: { xs: "none", md: "block" },
           width: "272px",
-          height: "48px",
           fontFamily: "Poppins",
           fontWeight: 700,
           fontSize: "32px",
@@ -97,7 +100,7 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
           textStroke: "2px #FFFFFF",
           flex: "none",
           order: 3,
-          flexGrow: 1,
+          flexGrow: { md: 0, lg: 1 },
         }}
       >
         Up to 40%

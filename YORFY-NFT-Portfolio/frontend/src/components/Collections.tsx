@@ -23,23 +23,26 @@ function NFTCard({ image, title }: NFTCardProps) {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        padding: "24px",
-        gap: "24px",
-        width: { xs: "100%", sm: "368px" },
-        maxWidth: "368px",
-        height: "432px",
+        padding: { xs: "20px", sm: "24px" },
+        gap: { xs: "20px", sm: "24px" },
+        width: { xs: "100%", sm: "100%", md: "368px" },
+        maxWidth: { xs: "100%", sm: "400px", md: "368px" },
+        minHeight: { xs: "auto", md: "432px" },
         border: "1px solid #1E50FF",
         borderRadius: "8px",
+        margin: { xs: "0 auto", md: "0" },
       }}
     >
       {/* NFT Image */}
       <Box
         sx={{
-          width: "320px",
-          height: "320px",
+          width: "100%",
+          aspectRatio: "1/1",
+          maxWidth: { xs: "100%", sm: "320px" },
           position: "relative",
           borderRadius: "8px",
           overflow: "hidden",
+          margin: "0 auto",
         }}
       >
         <Image
@@ -56,16 +59,16 @@ function NFTCard({ image, title }: NFTCardProps) {
           display: "flex",
           flexDirection: "row",
           alignItems: "flex-start",
-          gap: "16px",
-          width: "320px",
-          height: "40px",
+          gap: { xs: "12px", sm: "16px" },
+          width: "100%",
+          minHeight: { xs: "auto", md: "40px" },
         }}
       >
         {/* Logo */}
         <Box
           sx={{
-            width: "40px",
-            height: "40px",
+            width: { xs: "32px", sm: "40px" },
+            height: { xs: "32px", sm: "40px" },
             position: "relative",
             flexShrink: 0,
           }}
@@ -74,8 +77,8 @@ function NFTCard({ image, title }: NFTCardProps) {
           <Box
             sx={{
               position: "absolute",
-              width: "40px",
-              height: "40px",
+              width: { xs: "32px", sm: "40px" },
+              height: { xs: "32px", sm: "40px" },
               background: "linear-gradient(180deg, #1E50FF 0%, #5699FF 100%)",
               borderRadius: "50%",
               top: 0,
@@ -86,8 +89,8 @@ function NFTCard({ image, title }: NFTCardProps) {
           <Box
             sx={{
               position: "relative",
-              width: "40px",
-              height: "40px",
+              width: { xs: "32px", sm: "40px" },
+              height: { xs: "32px", sm: "40px" },
               zIndex: 1,
             }}
           >
@@ -96,7 +99,7 @@ function NFTCard({ image, title }: NFTCardProps) {
               alt="Yorfy Logo"
               width={40}
               height={40}
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "contain", width: "100%", height: "100%" }}
             />
           </Box>
         </Box>
@@ -107,8 +110,8 @@ function NFTCard({ image, title }: NFTCardProps) {
           sx={{
             fontFamily: "Poppins",
             fontWeight: 700,
-            fontSize: "24px",
-            lineHeight: "40px",
+            fontSize: { xs: "18px", sm: "20px", md: "24px" },
+            lineHeight: { xs: "28px", sm: "32px", md: "40px" },
             color: "#FFFFFF",
             flexGrow: 1,
           }}

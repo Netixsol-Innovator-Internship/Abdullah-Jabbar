@@ -9,29 +9,35 @@ export default function Hero() {
       sx={{
         position: "relative",
         width: "100%",
-        height: "624px", // 496px hero + 128px top offset
-        // overflow: "hidden", // Changed from visible to hidden to prevent overflow
+        minHeight: { xs: "auto", md: "624px" },
+        height: { xs: "auto", md: "624px" },
+        padding: { xs: "80px 20px 40px", sm: "100px 32px 60px", md: "0" },
       }}
     >
       {/* Hero Container - matches Figma absolute positioning */}
       <Box
         sx={{
-          position: "absolute",
-          width: "1280px",
-          height: "496px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          top: "128px",
+          position: { xs: "relative", md: "absolute" },
+          width: { xs: "100%", md: "100%", lg: "1280px" },
+          maxWidth: { xs: "100%", md: "calc(100% - 32px)", lg: "1280px" },
+          minHeight: { xs: "auto", md: "496px" },
+          left: { xs: "0", md: "16px", lg: "50%" },
+          transform: { xs: "none", md: "none", lg: "translateX(-50%)" },
+          top: { xs: "0", md: "128px" },
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: { xs: "0", md: "0" },
         }}
       >
         {/* Background */}
         <Box
           sx={{
             position: "absolute",
-            width: "1280px",
-            height: "464px",
+            width: { xs: "100%", sm: "100%", md: "100%", lg: "1280px" },
+            height: { xs: "100%", sm: "100%", md: "464px" },
             left: "0px",
-            top: "32px", // 160px - 128px (hero top)
+            top: { xs: "0px", sm: "0px", md: "32px" },
+            display: { xs: "block", md: "block" },
           }}
         />
 
@@ -39,10 +45,10 @@ export default function Hero() {
         <Box
           sx={{
             position: "absolute",
-            width: "400px",
-            height: "400px",
-            left: "-160px",
-            top: "96px", // 224px - 128px
+            width: { xs: "200px", sm: "300px", md: "400px" },
+            height: { xs: "200px", sm: "300px", md: "400px" },
+            left: { xs: "-80px", sm: "-120px", md: "-160px" },
+            top: { xs: "20px", sm: "40px", md: "96px" },
             background: "#1E50FF",
             opacity: 0.5,
             filter: "blur(120px)",
@@ -54,10 +60,15 @@ export default function Hero() {
         <Box
           sx={{
             position: "absolute",
-            width: "320px",
-            height: "320px",
-            left: "640px",
-            top: "32px", // 160px - 128px
+            width: { xs: "180px", sm: "250px", md: "320px" },
+            height: { xs: "180px", sm: "250px", md: "320px" },
+            left: { xs: "50%", sm: "50%", md: "640px" },
+            transform: {
+              xs: "translateX(-50%)",
+              sm: "translateX(-50%)",
+              md: "none",
+            },
+            top: { xs: "350px", sm: "400px", md: "32px" },
             background: "#AA00FF",
             filter: "blur(120px)",
             zIndex: 0,
@@ -68,30 +79,36 @@ export default function Hero() {
         <Box
           sx={{
             position: "absolute",
-            width: "400px",
-            height: "400px",
-            left: "880px", // Changed from 960px to prevent overflow
-            top: "96px", // 224px - 128px
+            width: { xs: "200px", sm: "300px", md: "400px" },
+            height: { xs: "200px", sm: "300px", md: "400px" },
+            left: { xs: "auto", sm: "auto", md: "880px" },
+            right: { xs: "-80px", sm: "-120px", md: "auto" },
+            top: { xs: "250px", sm: "300px", md: "96px" },
             background: "#1E50FF",
             filter: "blur(120px)",
             zIndex: 0,
           }}
         />
 
-        {/* Right Column - Text Content */}
+        {/* Left Column - Text Content */}
         <Box
           sx={{
-            position: "absolute",
+            position: { xs: "relative", md: "absolute" },
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
             padding: "0px",
-            gap: "40px",
-            width: "560px",
-            height: "496px",
-            left: "72px",
-            top: "0px",
+            gap: { xs: "24px", md: "clamp(32px, 3vw, 40px)", lg: "40px" },
+            width: {
+              xs: "100%",
+              md: "clamp(50%, 46vw, 560px)",
+              lg: "560px",
+            },
+            minHeight: { xs: "auto", md: "496px" },
+            left: { xs: "0", md: "8px", lg: "72px" },
+            top: { xs: "0", md: "0px" },
             zIndex: 1,
+            order: { xs: 1, md: 1 },
           }}
         >
           {/* Heading */}
@@ -102,18 +119,17 @@ export default function Hero() {
               alignItems: "flex-start",
               padding: "0px",
               gap: "16px",
-              width: "560px",
-              height: "368px",
+              width: "100%",
+              minHeight: { xs: "auto", md: "368px" },
             }}
           >
             <Typography
               sx={{
-                width: "560px",
-                height: "32px",
+                width: "100%",
                 fontFamily: "Poppins",
                 fontWeight: 700,
-                fontSize: "16px",
-                lineHeight: "32px",
+                fontSize: { xs: "14px", sm: "16px" },
+                lineHeight: { xs: "24px", sm: "32px" },
                 color: "#5699FF",
               }}
             >
@@ -122,12 +138,11 @@ export default function Hero() {
 
             <Typography
               sx={{
-                width: "560px",
-                height: "240px",
+                width: { xs: "100%", md: "95%" },
                 fontFamily: "Poppins",
                 fontWeight: 700,
-                fontSize: "64px",
-                lineHeight: "80px",
+                fontSize: { xs: "32px", sm: "48px", md: "56px", lg: "64px" },
+                lineHeight: { xs: "40px", sm: "60px", md: "62px", lg: "80px" },
                 color: "#FFFFFF",
               }}
             >
@@ -136,12 +151,11 @@ export default function Hero() {
 
             <Typography
               sx={{
-                width: "560px",
-                height: "64px",
+                width: { xs: "100%", md: "95%" },
                 fontFamily: "Poppins",
                 fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "32px",
+                fontSize: { xs: "14px", sm: "16px" },
+                lineHeight: { xs: "24px", sm: "32px" },
                 color: "#EBEBEB",
               }}
             >
@@ -157,9 +171,9 @@ export default function Hero() {
               flexDirection: "row",
               alignItems: "flex-start",
               padding: "0px",
-              gap: "40px",
-              width: "560px",
-              height: "88px",
+              gap: { xs: "16px", sm: "24px", md: "40px" },
+              width: "100%",
+              flexWrap: "wrap",
             }}
           >
             {/* Number - NFT Items */}
@@ -169,18 +183,15 @@ export default function Hero() {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 padding: "0px",
-                width: "79px",
-                height: "88px",
+                minWidth: { xs: "70px", md: "79px" },
               }}
             >
               <Typography
                 sx={{
-                  width: "79px",
-                  height: "56px",
                   fontFamily: "Poppins",
                   fontWeight: 700,
-                  fontSize: "40px",
-                  lineHeight: "56px",
+                  fontSize: { xs: "28px", sm: "32px", md: "40px" },
+                  lineHeight: { xs: "40px", sm: "48px", md: "56px" },
                   color: "#FFFFFF",
                 }}
               >
@@ -188,12 +199,10 @@ export default function Hero() {
               </Typography>
               <Typography
                 sx={{
-                  width: "77px",
-                  height: "32px",
                   fontFamily: "Poppins",
                   fontWeight: 400,
-                  fontSize: "16px",
-                  lineHeight: "32px",
+                  fontSize: { xs: "14px", sm: "16px" },
+                  lineHeight: { xs: "24px", sm: "32px" },
                   color: "#EBEBEB",
                 }}
               >
@@ -205,8 +214,9 @@ export default function Hero() {
             <Divider
               orientation="vertical"
               sx={{
+                display: { xs: "none", sm: "block" },
                 width: "0px",
-                height: "80px",
+                height: { xs: "60px", md: "80px" },
                 border: "1px solid #EBEBEB",
               }}
             />
@@ -218,18 +228,15 @@ export default function Hero() {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 padding: "0px",
-                width: "61px",
-                height: "88px",
+                minWidth: { xs: "50px", md: "61px" },
               }}
             >
               <Typography
                 sx={{
-                  width: "50px",
-                  height: "56px",
                   fontFamily: "Poppins",
                   fontWeight: 700,
-                  fontSize: "40px",
-                  lineHeight: "56px",
+                  fontSize: { xs: "28px", sm: "32px", md: "40px" },
+                  lineHeight: { xs: "40px", sm: "48px", md: "56px" },
                   color: "#FFFFFF",
                 }}
               >
@@ -237,12 +244,10 @@ export default function Hero() {
               </Typography>
               <Typography
                 sx={{
-                  width: "61px",
-                  height: "32px",
                   fontFamily: "Poppins",
                   fontWeight: 400,
-                  fontSize: "16px",
-                  lineHeight: "32px",
+                  fontSize: { xs: "14px", sm: "16px" },
+                  lineHeight: { xs: "24px", sm: "32px" },
                   color: "#EBEBEB",
                 }}
               >
@@ -254,8 +259,9 @@ export default function Hero() {
             <Divider
               orientation="vertical"
               sx={{
+                display: { xs: "none", sm: "block" },
                 width: "0px",
-                height: "80px",
+                height: { xs: "60px", md: "80px" },
                 border: "1px solid #EBEBEB",
               }}
             />
@@ -267,18 +273,15 @@ export default function Hero() {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 padding: "0px",
-                width: "84px",
-                height: "88px",
+                minWidth: { xs: "70px", md: "84px" },
               }}
             >
               <Typography
                 sx={{
-                  width: "72px",
-                  height: "56px",
                   fontFamily: "Poppins",
                   fontWeight: 700,
-                  fontSize: "40px",
-                  lineHeight: "56px",
+                  fontSize: { xs: "28px", sm: "32px", md: "40px" },
+                  lineHeight: { xs: "40px", sm: "48px", md: "56px" },
                   color: "#FFFFFF",
                 }}
               >
@@ -286,12 +289,10 @@ export default function Hero() {
               </Typography>
               <Typography
                 sx={{
-                  width: "84px",
-                  height: "32px",
                   fontFamily: "Poppins",
                   fontWeight: 400,
-                  fontSize: "16px",
-                  lineHeight: "32px",
+                  fontSize: { xs: "14px", sm: "16px" },
+                  lineHeight: { xs: "24px", sm: "32px" },
                   color: "#EBEBEB",
                 }}
               >
@@ -301,36 +302,87 @@ export default function Hero() {
           </Box>
         </Box>
 
-        {/* Left Column - Image Card */}
+        {/* Right Column - Image Card */}
         <Box
           sx={{
-            position: "absolute",
+            position: { xs: "relative", md: "absolute" },
             display: "flex",
-            flexDirection: "row",
+            flexDirection: { xs: "row", sm: "row" },
             justifyContent: "center",
             alignItems: "center",
-            padding: "120px 40px 40px",
-            gap: "16px",
+            padding: {
+              xs: "110px 12px 16px",
+              sm: "180px 24px 28px",
+              md: "clamp(80px, 9vw, 120px) clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px)",
+              lg: "120px 40px 40px",
+            },
+            gap: {
+              xs: "12px",
+              sm: "16px",
+              md: "clamp(10px, 1.2vw, 16px)",
+              lg: "16px",
+            },
             isolation: "isolate",
-            width: "480px",
-            height: "208px",
-            left: "728px",
-            top: "288px", // 416px - 128px
+            width: {
+              xs: "95%",
+              sm: "90%",
+              md: "clamp(42%, 40vw, 480px)",
+              lg: "480px",
+            },
+            maxWidth: {
+              xs: "400px",
+              sm: "600px",
+              md: "100%",
+              lg: "480px",
+            },
+            minHeight: {
+              xs: "170px",
+              sm: "150px",
+              md: "clamp(140px, 14vw, 178px)",
+              lg: "178px",
+            },
+            left: { xs: "0", sm: "5%", md: "auto", lg: "728px" },
+            right: { xs: "auto", sm: "auto", md: "8px", lg: "auto" },
+            top: { xs: "0", sm: "0", md: "288px" },
+            margin: { xs: "0 auto", sm: "0 auto", md: "0" },
+            marginTop: { xs: "170px", sm: "180px", md: "0" },
             background: "rgba(255, 255, 255, 0.1)",
             border: "2px solid #1E50FF",
             backdropFilter: "blur(40px)",
             borderRadius: "8px",
             zIndex: 1,
+            order: { xs: 2, md: 2 },
           }}
         >
           {/* Image - six faces */}
           <Box
             sx={{
               position: "absolute",
-              width: "403px",
-              height: "368px",
-              left: "38.5px",
-              top: "-288px",
+              width: {
+                xs: "240px",
+                sm: "320px",
+                md: "calc(280px + (403 - 280) * ((100vw - 900px) / (1280 - 900)))",
+                lg: "403px",
+              },
+              height: {
+                xs: "220px",
+                sm: "292px",
+                md: "calc(256px + (368 - 256) * ((100vw - 900px) / (1280 - 900)))",
+                lg: "368px",
+              },
+              left: { xs: "50%", sm: "50%", md: "50%", lg: "38.5px" },
+              transform: {
+                xs: "translateX(-50%)",
+                sm: "translateX(-50%)",
+                md: "translateX(-50%)",
+                lg: "none",
+              },
+              top: {
+                xs: "-130px",
+                sm: "-140px",
+                md: "calc(-200px + (-288 - (-200)) * ((100vw - 900px) / (1280 - 900)))",
+                lg: "-288px",
+              },
               borderRadius: "8px",
               overflow: "hidden",
               zIndex: 2,
@@ -359,16 +411,22 @@ export default function Hero() {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              padding: "8px 35px",
+              padding: {
+                xs: "6px 16px",
+                sm: "8px 24px",
+                md: "6px 20px",
+                lg: "8px 35px",
+              },
               gap: "8px",
-              width: "214px",
-              height: "48px",
+              width: { xs: "auto", sm: "auto", md: "auto", lg: "214px" },
+              minWidth: { xs: "120px", sm: "140px", md: "140px", lg: "214px" },
+              height: { xs: "40px", sm: "44px", md: "40px", lg: "48px" },
               background: "#1E50FF",
               borderRadius: "8px",
               fontFamily: "Poppins",
               fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "32px",
+              fontSize: { xs: "12px", sm: "14px", md: "13px", lg: "16px" },
+              lineHeight: { xs: "20px", sm: "24px", md: "24px", lg: "32px" },
               color: "#FFFFFF",
               textTransform: "none",
               zIndex: 0,
@@ -388,16 +446,22 @@ export default function Hero() {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              padding: "8px 35px",
+              padding: {
+                xs: "6px 16px",
+                sm: "8px 24px",
+                md: "6px 20px",
+                lg: "8px 35px",
+              },
               gap: "8px",
-              width: "170px",
-              height: "48px",
+              width: { xs: "auto", sm: "auto", md: "auto", lg: "170px" },
+              minWidth: { xs: "100px", sm: "120px", md: "120px", lg: "170px" },
+              height: { xs: "40px", sm: "44px", md: "40px", lg: "48px" },
               border: "1px solid #FFFFFF",
               borderRadius: "8px",
               fontFamily: "Poppins",
               fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "32px",
+              fontSize: { xs: "12px", sm: "14px", md: "13px", lg: "16px" },
+              lineHeight: { xs: "20px", sm: "24px", md: "24px", lg: "32px" },
               color: "#FFFFFF",
               textTransform: "none",
               zIndex: 1,
