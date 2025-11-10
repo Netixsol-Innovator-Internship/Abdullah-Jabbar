@@ -50,8 +50,8 @@ export default function Hero() {
             left: { xs: "-80px", sm: "-120px", md: "-160px" },
             top: { xs: "20px", sm: "40px", md: "96px" },
             background: "#1E50FF",
-            opacity: 0.5,
-            filter: "blur(120px)",
+            opacity: 1.5,
+            filter: "blur(200px)",
             zIndex: 0,
           }}
         />
@@ -62,14 +62,15 @@ export default function Hero() {
             position: "absolute",
             width: { xs: "180px", sm: "250px", md: "320px" },
             height: { xs: "180px", sm: "250px", md: "320px" },
-            left: { xs: "50%", sm: "50%", md: "640px" },
+            left: { xs: "15%", md: "640px" },
             transform: {
               xs: "translateX(-50%)",
               sm: "translateX(-50%)",
               md: "none",
             },
-            top: { xs: "350px", sm: "400px", md: "32px" },
+            top: { xs: "430px", sm: "490px", md: "32px" },
             background: "#AA00FF",
+            borderRadius: "50%",
             filter: "blur(120px)",
             zIndex: 0,
           }}
@@ -81,11 +82,12 @@ export default function Hero() {
             position: "absolute",
             width: { xs: "200px", sm: "300px", md: "400px" },
             height: { xs: "200px", sm: "300px", md: "400px" },
-            left: { xs: "auto", sm: "auto", md: "880px" },
+            left: { xs: "auto", sm: "auto", md: "960px" },
             right: { xs: "-80px", sm: "-120px", md: "auto" },
             top: { xs: "250px", sm: "300px", md: "96px" },
             background: "#1E50FF",
             filter: "blur(120px)",
+            borderRadius: "50%",
             zIndex: 0,
           }}
         />
@@ -169,9 +171,10 @@ export default function Hero() {
             sx={{
               display: "flex",
               flexDirection: "row",
-              alignItems: "flex-start",
+              justifyContent: { xs: "center", sm: "center", md: "flex-start" },
+              alignItems: { xs: "center", md: "flex-start" },
               padding: "0px",
-              gap: { xs: "16px", sm: "24px", md: "40px" },
+              gap: { xs: "20px", sm: "32px", md: "40px", lg: "48px" },
               width: "100%",
               flexWrap: "wrap",
             }}
@@ -214,9 +217,9 @@ export default function Hero() {
             <Divider
               orientation="vertical"
               sx={{
-                display: { xs: "none", sm: "block" },
+                display: "block",
                 width: "0px",
-                height: { xs: "60px", md: "80px" },
+                height: { xs: "50px", sm: "60px", md: "80px" },
                 border: "1px solid #EBEBEB",
               }}
             />
@@ -259,9 +262,9 @@ export default function Hero() {
             <Divider
               orientation="vertical"
               sx={{
-                display: { xs: "none", sm: "block" },
+                display: "block",
                 width: "0px",
-                height: { xs: "60px", md: "80px" },
+                height: { xs: "50px", sm: "60px", md: "80px" },
                 border: "1px solid #EBEBEB",
               }}
             />
@@ -341,7 +344,7 @@ export default function Hero() {
               md: "clamp(140px, 14vw, 178px)",
               lg: "178px",
             },
-            left: { xs: "0", sm: "5%", md: "auto", lg: "728px" },
+            left: { xs: "0", sm: "0", md: "auto", lg: "728px" },
             right: { xs: "auto", sm: "auto", md: "8px", lg: "auto" },
             top: { xs: "0", sm: "0", md: "288px" },
             margin: { xs: "0 auto", sm: "0 auto", md: "0" },
@@ -412,7 +415,7 @@ export default function Hero() {
               justifyContent: "center",
               alignItems: "center",
               padding: {
-                xs: "6px 16px",
+                xs: "6px 13px",
                 sm: "8px 24px",
                 md: "6px 20px",
                 lg: "8px 35px",
@@ -447,7 +450,7 @@ export default function Hero() {
               justifyContent: "center",
               alignItems: "center",
               padding: {
-                xs: "6px 16px",
+                xs: "6px 13px",
                 sm: "8px 24px",
                 md: "6px 20px",
                 lg: "8px 35px",
