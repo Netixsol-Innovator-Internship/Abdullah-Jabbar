@@ -49,7 +49,7 @@ export default function Hero() {
             height: { xs: "200px", sm: "300px", md: "400px" },
             left: { xs: "-80px", sm: "-120px", md: "-160px" },
             top: { xs: "20px", sm: "40px", md: "96px" },
-            background: "#1E50FF",
+            bgcolor: "primary.main",
             opacity: 1.5,
             filter: "blur(200px)",
             zIndex: 0,
@@ -69,7 +69,7 @@ export default function Hero() {
               md: "none",
             },
             top: { xs: "430px", sm: "490px", md: "32px" },
-            background: "#AA00FF",
+            bgcolor: "custom.purple",
             borderRadius: "50%",
             filter: "blur(120px)",
             zIndex: 0,
@@ -85,7 +85,7 @@ export default function Hero() {
             left: { xs: "auto", sm: "auto", md: "960px" },
             right: { xs: "-80px", sm: "-120px", md: "auto" },
             top: { xs: "250px", sm: "300px", md: "96px" },
-            background: "#1E50FF",
+            bgcolor: "primary.main",
             filter: "blur(120px)",
             borderRadius: "50%",
             zIndex: 0,
@@ -128,11 +128,10 @@ export default function Hero() {
             <Typography
               sx={{
                 width: "100%",
-                fontFamily: "Poppins",
                 fontWeight: 700,
                 fontSize: { xs: "14px", sm: "16px" },
                 lineHeight: { xs: "24px", sm: "32px" },
-                color: "#5699FF",
+                color: "primary.light",
               }}
             >
               Welcome to Yorfy
@@ -141,11 +140,9 @@ export default function Hero() {
             <Typography
               sx={{
                 width: { xs: "100%", md: "95%" },
-                fontFamily: "Poppins",
                 fontWeight: 700,
                 fontSize: { xs: "32px", sm: "48px", md: "56px", lg: "64px" },
                 lineHeight: { xs: "40px", sm: "60px", md: "62px", lg: "80px" },
-                color: "#FFFFFF",
               }}
             >
               Now Available, Meet Yorfy NFT Collection ⭐️
@@ -154,11 +151,10 @@ export default function Hero() {
             <Typography
               sx={{
                 width: { xs: "100%", md: "95%" },
-                fontFamily: "Poppins",
                 fontWeight: 400,
                 fontSize: { xs: "14px", sm: "16px" },
                 lineHeight: { xs: "24px", sm: "32px" },
-                color: "#EBEBEB",
+                color: "text.secondary",
               }}
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -191,22 +187,19 @@ export default function Hero() {
             >
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
                   fontWeight: 700,
                   fontSize: { xs: "28px", sm: "32px", md: "40px" },
                   lineHeight: { xs: "40px", sm: "48px", md: "56px" },
-                  color: "#FFFFFF",
                 }}
               >
                 546
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
                   fontWeight: 400,
                   fontSize: { xs: "14px", sm: "16px" },
                   lineHeight: { xs: "24px", sm: "32px" },
-                  color: "#EBEBEB",
+                  color: "text.secondary",
                 }}
               >
                 NFT Items
@@ -220,7 +213,8 @@ export default function Hero() {
                 display: "block",
                 width: "0px",
                 height: { xs: "50px", sm: "60px", md: "80px" },
-                border: "1px solid #EBEBEB",
+                border: "1px solid",
+                borderColor: "text.secondary",
               }}
             />
 
@@ -236,22 +230,19 @@ export default function Hero() {
             >
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
                   fontWeight: 700,
                   fontSize: { xs: "28px", sm: "32px", md: "40px" },
                   lineHeight: { xs: "40px", sm: "48px", md: "56px" },
-                  color: "#FFFFFF",
                 }}
               >
                 42
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
                   fontWeight: 400,
                   fontSize: { xs: "14px", sm: "16px" },
                   lineHeight: { xs: "24px", sm: "32px" },
-                  color: "#EBEBEB",
+                  color: "text.secondary",
                 }}
               >
                 Owners
@@ -265,7 +256,8 @@ export default function Hero() {
                 display: "block",
                 width: "0px",
                 height: { xs: "50px", sm: "60px", md: "80px" },
-                border: "1px solid #EBEBEB",
+                border: "1px solid",
+                borderColor: "text.secondary",
               }}
             />
 
@@ -281,22 +273,19 @@ export default function Hero() {
             >
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
                   fontWeight: 700,
                   fontSize: { xs: "28px", sm: "32px", md: "40px" },
                   lineHeight: { xs: "40px", sm: "48px", md: "56px" },
-                  color: "#FFFFFF",
                 }}
               >
                 378
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
                   fontWeight: 400,
                   fontSize: { xs: "14px", sm: "16px" },
                   lineHeight: { xs: "24px", sm: "32px" },
-                  color: "#EBEBEB",
+                  color: "text.secondary",
                 }}
               >
                 Items Sold
@@ -350,7 +339,8 @@ export default function Hero() {
             margin: { xs: "0 auto", sm: "0 auto", md: "0" },
             marginTop: { xs: "170px", sm: "180px", md: "0" },
             background: "rgba(255, 255, 255, 0.1)",
-            border: "2px solid #1E50FF",
+            border: "2px solid",
+            borderColor: "primary.main",
             backdropFilter: "blur(40px)",
             borderRadius: "8px",
             zIndex: 1,
@@ -424,17 +414,15 @@ export default function Hero() {
               width: { xs: "auto", sm: "auto", md: "auto", lg: "214px" },
               minWidth: { xs: "120px", sm: "140px", md: "140px", lg: "214px" },
               height: { xs: "40px", sm: "44px", md: "40px", lg: "48px" },
-              background: "#1E50FF",
+              bgcolor: "primary.main",
               borderRadius: "8px",
-              fontFamily: "Poppins",
               fontWeight: 600,
               fontSize: { xs: "12px", sm: "14px", md: "13px", lg: "16px" },
               lineHeight: { xs: "20px", sm: "24px", md: "24px", lg: "32px" },
-              color: "#FFFFFF",
               textTransform: "none",
               zIndex: 0,
               "&:hover": {
-                background: "#1640CC",
+                bgcolor: "primary.dark",
               },
             }}
           >
@@ -459,17 +447,17 @@ export default function Hero() {
               width: { xs: "auto", sm: "auto", md: "auto", lg: "170px" },
               minWidth: { xs: "100px", sm: "120px", md: "120px", lg: "170px" },
               height: { xs: "40px", sm: "44px", md: "40px", lg: "48px" },
-              border: "1px solid #FFFFFF",
+              border: "1px solid",
+              borderColor: "text.primary",
               borderRadius: "8px",
-              fontFamily: "Poppins",
               fontWeight: 600,
               fontSize: { xs: "12px", sm: "14px", md: "13px", lg: "16px" },
               lineHeight: { xs: "20px", sm: "24px", md: "24px", lg: "32px" },
-              color: "#FFFFFF",
+              color: "text.primary",
               textTransform: "none",
               zIndex: 1,
               "&:hover": {
-                border: "1px solid #FFFFFF",
+                borderColor: "text.primary",
                 background: "rgba(255, 255, 255, 0.1)",
               },
             }}

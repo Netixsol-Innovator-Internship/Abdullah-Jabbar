@@ -48,7 +48,7 @@ function UserCard({ data }: UserCardProps) {
         },
         top: { xs: "0", sm: `${data.top}px` },
         margin: { xs: "0 auto", sm: "0" },
-        background: "#081956",
+        bgcolor: "secondary.light",
         opacity: { xs: 1, sm: data.opacity },
         boxShadow: "0px 24px 80px rgba(0, 0, 0, 0.8)",
         borderRadius: "8px",
@@ -60,14 +60,16 @@ function UserCard({ data }: UserCardProps) {
           transform: { xs: "scale(1.02)", sm: "translateY(-8px) scale(1.02)" },
           zIndex: 10,
           boxShadow: "0px 32px 100px rgba(30, 80, 255, 0.4)",
-          background: "linear-gradient(135deg, #081956 0%, #1E50FF 100%)",
+          background: (theme) =>
+            `linear-gradient(135deg, ${theme.palette.secondary.light} 0%, ${theme.palette.primary.main} 100%)`,
         },
         "&:focus-within": {
           opacity: 1,
           transform: { xs: "scale(1.02)", sm: "translateY(-8px) scale(1.02)" },
           zIndex: 10,
           boxShadow: "0px 32px 100px rgba(30, 80, 255, 0.4)",
-          outline: "2px solid #5699FF",
+          outline: "2px solid",
+          outlineColor: "primary.light",
           outlineOffset: "2px",
         },
       }}
@@ -78,7 +80,7 @@ function UserCard({ data }: UserCardProps) {
         sx={{
           width: { xs: "48px", sm: "56px" },
           height: { xs: "48px", sm: "56px" },
-          background: "#D9D9D9",
+          bgcolor: "custom.grayLight",
           flex: "none",
         }}
       />
@@ -99,12 +101,9 @@ function UserCard({ data }: UserCardProps) {
         <Typography
           sx={{
             width: "100%",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
             fontWeight: 700,
             fontSize: { xs: "14px", sm: "16px" },
             lineHeight: { xs: "24px", sm: "32px" },
-            color: "#FFFFFF",
             alignSelf: "stretch",
           }}
         >
@@ -115,12 +114,10 @@ function UserCard({ data }: UserCardProps) {
         <Typography
           sx={{
             width: "100%",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
             fontWeight: 400,
             fontSize: { xs: "11px", sm: "12px" },
             lineHeight: { xs: "20px", sm: "24px" },
-            color: "#EBEBEB",
+            color: "text.secondary",
             alignSelf: "stretch",
           }}
         >
@@ -136,12 +133,10 @@ function UserCard({ data }: UserCardProps) {
           flex: "none",
           padding: 0,
           minWidth: 0,
-          color: "#FFFFFF",
           transition: "all 0.2s ease",
           "&:hover": {
-            color: "#5699FF",
-
-            background: "rgba(86, 153, 255, 0.1)",
+            color: "primary.light",
+            bgcolor: "rgba(86, 153, 255, 0.1)",
           },
         }}
       >
@@ -227,12 +222,10 @@ export default function Community({ sx }: CommunityProps) {
           <Typography
             sx={{
               width: "100%",
-              fontFamily: "Poppins",
-              fontStyle: "normal",
               fontWeight: 700,
               fontSize: { xs: "14px", sm: "16px" },
               lineHeight: { xs: "24px", sm: "32px" },
-              color: "#5699FF",
+              color: "primary.light",
             }}
           >
             Community
@@ -242,12 +235,9 @@ export default function Community({ sx }: CommunityProps) {
           <Typography
             sx={{
               width: "100%",
-              fontFamily: "Poppins",
-              fontStyle: "normal",
               fontWeight: 700,
               fontSize: { xs: "32px", sm: "48px", md: "56px" },
               lineHeight: { xs: "40px", sm: "60px", md: "72px" },
-              color: "#FFFFFF",
             }}
           >
             Join Our Community and Get Many Benefits
@@ -257,12 +247,10 @@ export default function Community({ sx }: CommunityProps) {
           <Typography
             sx={{
               width: "100%",
-              fontFamily: "Poppins",
-              fontStyle: "normal",
               fontWeight: 400,
               fontSize: { xs: "14px", sm: "16px" },
               lineHeight: { xs: "24px", sm: "32px" },
-              color: "#EBEBEB",
+              color: "text.secondary",
             }}
           >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -282,17 +270,15 @@ export default function Community({ sx }: CommunityProps) {
             width: { xs: "100%", sm: "auto" },
             maxWidth: { xs: "100%", sm: "214px" },
             height: "48px",
-            background: "#1E50FF",
+            bgcolor: "primary.main",
+            color: "text.primary",
             borderRadius: "8px",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
             fontWeight: 600,
             fontSize: { xs: "14px", sm: "16px" },
             lineHeight: "32px",
-            color: "#FFFFFF",
             textTransform: "none",
             "&:hover": {
-              background: "#1640CC",
+              bgcolor: "primary.dark",
             },
           }}
         >
@@ -312,6 +298,7 @@ export default function Community({ sx }: CommunityProps) {
           justifyContent: "center",
           alignItems: "center",
           margin: { xs: "0", sm: "0 auto", md: "0" },
+          marginTop: { xs: 0, sm: 0, md: "16px" },
           left: { xs: "0", sm: "50%", md: "0" },
           transform: { xs: "none", sm: "translateX(-50%)", md: "none" },
         }}

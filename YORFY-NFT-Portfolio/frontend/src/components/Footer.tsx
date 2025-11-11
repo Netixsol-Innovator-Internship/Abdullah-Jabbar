@@ -30,7 +30,7 @@ export default function Footer() {
         width: "100%",
         maxWidth: "1280px",
         minHeight: { xs: "auto", md: "200px" },
-        backgroundColor: "#051139",
+        backgroundColor: "secondary.main",
         margin: "0 auto",
       }}
     >
@@ -88,10 +88,10 @@ export default function Footer() {
               justifyContent: "center",
               width: "40px",
               height: "40px",
-              border: "1px solid #FFFFFF",
+              border: "1px solid",
+              borderColor: "text.primary",
               borderRadius: "64px",
               padding: "8px",
-              color: "#FFFFFF",
               transition: "all 0.3s ease",
               "&:hover": {
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -103,12 +103,10 @@ export default function Footer() {
           >
             <Typography
               sx={{
-                fontFamily: "Poppins",
                 fontWeight: 400,
                 fontSize: "12px",
                 lineHeight: "24px",
                 textAlign: "center",
-                color: "#FFFFFF",
               }}
             >
               Fb
@@ -124,10 +122,10 @@ export default function Footer() {
               justifyContent: "center",
               width: "40px",
               height: "40px",
-              border: "1px solid #FFFFFF",
+              border: "1px solid",
+              borderColor: "text.primary",
               borderRadius: "64px",
               padding: "8px",
-              color: "#FFFFFF",
               transition: "all 0.3s ease",
               "&:hover": {
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -139,12 +137,10 @@ export default function Footer() {
           >
             <Typography
               sx={{
-                fontFamily: "Poppins",
                 fontWeight: 400,
                 fontSize: "12px",
                 lineHeight: "24px",
                 textAlign: "center",
-                color: "#FFFFFF",
               }}
             >
               Ig
@@ -160,10 +156,10 @@ export default function Footer() {
               justifyContent: "center",
               width: "40px",
               height: "40px",
-              border: "1px solid #FFFFFF",
+              border: "1px solid",
+              borderColor: "text.primary",
               borderRadius: "64px",
               padding: "8px",
-              color: "#FFFFFF",
               transition: "all 0.3s ease",
               "&:hover": {
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -175,12 +171,10 @@ export default function Footer() {
           >
             <Typography
               sx={{
-                fontFamily: "Poppins",
                 fontWeight: 400,
                 fontSize: "12px",
                 lineHeight: "24px",
                 textAlign: "center",
-                color: "#FFFFFF",
               }}
             >
               Li
@@ -196,10 +190,10 @@ export default function Footer() {
               justifyContent: "center",
               width: "40px",
               height: "40px",
-              border: "1px solid #FFFFFF",
+              border: "1px solid",
+              borderColor: "text.primary",
               borderRadius: "64px",
               padding: "8px",
-              color: "#FFFFFF",
               transition: "all 0.3s ease",
               "&:hover": {
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -211,12 +205,10 @@ export default function Footer() {
           >
             <Typography
               sx={{
-                fontFamily: "Poppins",
                 fontWeight: 400,
                 fontSize: "12px",
                 lineHeight: "24px",
                 textAlign: "center",
-                color: "#FFFFFF",
               }}
             >
               Yt
@@ -230,7 +222,7 @@ export default function Footer() {
         sx={{
           width: "100%",
           maxWidth: "1136px",
-          borderColor: "#1E50FF",
+          borderColor: "primary.main",
           borderWidth: "1px",
         }}
       />
@@ -250,12 +242,10 @@ export default function Footer() {
       >
         <Typography
           sx={{
-            fontFamily: "Poppins",
-            fontStyle: "normal",
             fontWeight: 400,
             fontSize: { xs: "14px", sm: "16px" },
             lineHeight: { xs: "24px", sm: "32px" },
-            color: "#EBEBEB",
+            color: "text.secondary",
             textAlign: { xs: "center", sm: "left" },
           }}
         >
@@ -264,12 +254,10 @@ export default function Footer() {
 
         <Typography
           sx={{
-            fontFamily: "Poppins",
-            fontStyle: "normal",
             fontWeight: 400,
             fontSize: { xs: "14px", sm: "16px" },
             lineHeight: { xs: "24px", sm: "32px" },
-            color: "#EBEBEB",
+            color: "text.secondary",
             textAlign: { xs: "center", sm: "right" },
           }}
         >

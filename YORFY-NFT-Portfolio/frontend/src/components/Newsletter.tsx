@@ -45,7 +45,7 @@ export default function Newsletter({ sx }: NewsletterProps) {
           gap: { xs: "32px", md: "40px" },
           width: "100%",
           maxWidth: "1136px",
-          background: "#081956",
+          bgcolor: "secondary.light",
           borderRadius: "16px",
         }}
       >
@@ -64,12 +64,11 @@ export default function Newsletter({ sx }: NewsletterProps) {
           {/* Newsletter Label */}
           <Typography
             sx={{
-              fontFamily: "Poppins",
               fontWeight: 700,
               fontSize: { xs: "14px", sm: "16px" },
               lineHeight: { xs: "24px", sm: "32px" },
               textAlign: "center",
-              color: "#5699FF",
+              color: "primary.light",
               alignSelf: "stretch",
             }}
           >
@@ -79,12 +78,10 @@ export default function Newsletter({ sx }: NewsletterProps) {
           {/* Main Heading */}
           <Typography
             sx={{
-              fontFamily: "Poppins",
               fontWeight: 700,
               fontSize: { xs: "28px", sm: "36px", md: "40px" },
               lineHeight: { xs: "36px", sm: "48px", md: "56px" },
               textAlign: "center",
-              color: "#FFFFFF",
               alignSelf: "stretch",
             }}
           >
@@ -94,12 +91,11 @@ export default function Newsletter({ sx }: NewsletterProps) {
           {/* Description */}
           <Typography
             sx={{
-              fontFamily: "Poppins",
               fontWeight: 400,
               fontSize: { xs: "14px", sm: "16px" },
               lineHeight: { xs: "24px", sm: "32px" },
               textAlign: "center",
-              color: "#EBEBEB",
+              color: "text.secondary",
               alignSelf: "stretch",
             }}
           >
@@ -122,42 +118,50 @@ export default function Newsletter({ sx }: NewsletterProps) {
             maxWidth: "635px",
           }}
         >
-          {/* Input Field */}
           <TextField
             type="email"
-            placeholder="Your email"
+            label="Your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             sx={{
               width: { xs: "100%", sm: "480px" },
               height: "48px",
-              flex: { xs: "none", sm: 1 },
+              "& .MuiInputLabel-root": {
+                color: "text.primary",
+                transform: "translate(14px, 12px) scale(1)", // center label when not focused
+                "&.Mui-focused, &.MuiFormLabel-filled": {
+                  color: "text.primary", // keep label white when focused/filled (override browser/UA styles)
+                  transform: {
+                    xs: "translate(11px, -8px) scale(0.75)",
+                    sm: "translate(14px, -8px) scale(0.75)",
+                  }, // float on focus
+                  // increased horizontal padding for xs
+                },
+              },
               "& .MuiOutlinedInput-root": {
                 height: "48px",
-                padding: "8px 16px",
-                fontFamily: "Poppins",
                 fontWeight: 400,
                 fontSize: { xs: "14px", sm: "16px" },
                 lineHeight: "32px",
-                color: "#FFFFFF",
-                border: "1px solid #FFFFFF",
                 borderRadius: "8px",
                 "& fieldset": {
-                  border: "1px solid #FFFFFF",
+                  border: "1px solid",
+                  borderColor: "text.primary",
                 },
                 "&:hover fieldset": {
-                  border: "1px solid #FFFFFF",
+                  border: "1px solid",
+                  borderColor: "text.primary",
                 },
                 "&.Mui-focused fieldset": {
-                  border: "1px solid #FFFFFF",
+                  border: "1px solid",
+                  borderColor: "text.primary",
                 },
               },
               "& .MuiOutlinedInput-input": {
-                padding: 0,
-                color: "#FFFFFF",
+                padding: "0 14px",
                 "&::placeholder": {
-                  color: "#EBEBEB",
+                  color: "text.secondary",
                   opacity: 1,
                 },
               },
@@ -177,16 +181,14 @@ export default function Newsletter({ sx }: NewsletterProps) {
               gap: "8px",
               width: { xs: "100%", sm: "139px" },
               height: "48px",
-              background: "#1E50FF",
+              bgcolor: "primary.main",
               borderRadius: "8px",
-              fontFamily: "Poppins",
               fontWeight: 600,
               fontSize: { xs: "14px", sm: "16px" },
               lineHeight: "32px",
-              color: "#FFFFFF",
               textTransform: "none",
               "&:hover": {
-                background: "#1640CC",
+                bgcolor: "primary.dark",
               },
             }}
           >

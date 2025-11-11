@@ -47,13 +47,11 @@ export default function Collaborations({ sx }: CollaborationsProps) {
           {/* Collaboration Tag */}
           <Typography
             sx={{
-              fontFamily: "Poppins",
-              fontStyle: "normal",
               fontWeight: 700,
               fontSize: { xs: "14px", sm: "16px" },
               lineHeight: { xs: "24px", sm: "32px" },
               textAlign: "center",
-              color: "#5699FF",
+              color: "primary.light",
               alignSelf: "stretch",
             }}
           >
@@ -63,13 +61,10 @@ export default function Collaborations({ sx }: CollaborationsProps) {
           {/* Our Partners Title */}
           <Typography
             sx={{
-              fontFamily: "Poppins",
-              fontStyle: "normal",
               fontWeight: 700,
               fontSize: { xs: "32px", sm: "48px", md: "56px" },
               lineHeight: { xs: "40px", sm: "60px", md: "72px" },
               textAlign: "center",
-              color: "#FFFFFF",
               alignSelf: "stretch",
             }}
           >

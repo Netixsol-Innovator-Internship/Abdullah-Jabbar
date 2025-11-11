@@ -45,12 +45,11 @@ export default function Highlight({ sx }: HighlightProps) {
         <Typography
           variant="h6"
           sx={{
-            fontFamily: "Poppins",
             fontWeight: 700,
             fontSize: "16px",
             lineHeight: "32px",
             textAlign: "center",
-            color: "#5699FF",
+            color: "primary.light",
             width: "100%",
           }}
         >
@@ -61,12 +60,10 @@ export default function Highlight({ sx }: HighlightProps) {
         <Typography
           variant="h2"
           sx={{
-            fontFamily: "Poppins",
             fontWeight: 700,
             fontSize: { xs: "32px", sm: "40px", md: "56px" },
             lineHeight: { xs: "40px", sm: "56px", md: "72px" },
             textAlign: "center",
-            color: "#FFFFFF",
             width: "100%",
           }}
         >
@@ -76,12 +73,11 @@ export default function Highlight({ sx }: HighlightProps) {
         {/* Description */}
         <Typography
           sx={{
-            fontFamily: "Poppins",
             fontWeight: 400,
             fontSize: "16px",
             lineHeight: "32px",
             textAlign: "center",
-            color: "#EBEBEB",
+            color: "text.secondary",
             width: "100%",
           }}
         >
@@ -101,7 +97,7 @@ export default function Highlight({ sx }: HighlightProps) {
           gap: "40px",
           width: "100%",
           maxWidth: "1136px",
-          background: "#081956",
+          bgcolor: "secondary.light",
           borderRadius: "16px",
         }}
       >
@@ -130,7 +126,8 @@ export default function Highlight({ sx }: HighlightProps) {
                 position: "absolute",
                 width: "80px",
                 height: "80px",
-                background: "linear-gradient(180deg, #1E50FF 0%, #5699FF 100%)",
+                background: (theme) =>
+                  `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 100%)`,
                 borderRadius: "50%",
                 top: 0,
                 left: 0,
@@ -159,12 +156,10 @@ export default function Highlight({ sx }: HighlightProps) {
           <Typography
             variant="h3"
             sx={{
-              fontFamily: "Poppins",
               fontWeight: 700,
               fontSize: { xs: "28px", sm: "32px", md: "40px" },
               lineHeight: { xs: "40px", sm: "48px", md: "56px" },
               textAlign: "center",
-              color: "#FFFFFF",
               width: "100%",
             }}
           >
@@ -174,12 +169,11 @@ export default function Highlight({ sx }: HighlightProps) {
           {/* Description */}
           <Typography
             sx={{
-              fontFamily: "Poppins",
               fontWeight: 400,
               fontSize: "16px",
               lineHeight: "32px",
               textAlign: "center",
-              color: "#EBEBEB",
+              color: "text.secondary",
               width: "100%",
             }}
           >
@@ -220,15 +214,14 @@ export default function Highlight({ sx }: HighlightProps) {
           }}
         >
           {/* Title */}
+          {/* Title */}
           <Typography
             variant="h3"
             sx={{
-              fontFamily: "Poppins",
               fontWeight: 700,
               fontSize: { xs: "28px", sm: "32px", md: "40px" },
               lineHeight: { xs: "40px", sm: "48px", md: "56px" },
               textAlign: "center",
-              color: "#FFFFFF",
               width: "100%",
             }}
           >
@@ -238,12 +231,11 @@ export default function Highlight({ sx }: HighlightProps) {
           {/* Description */}
           <Typography
             sx={{
-              fontFamily: "Poppins",
               fontWeight: 400,
               fontSize: "16px",
               lineHeight: "32px",
               textAlign: "center",
-              color: "#EBEBEB",
+              color: "text.secondary",
               width: "100%",
             }}
           >
@@ -263,16 +255,14 @@ export default function Highlight({ sx }: HighlightProps) {
               gap: "8px",
               width: "214px",
               height: "48px",
-              background: "#1E50FF",
+              bgcolor: "primary.main",
               borderRadius: "8px",
-              fontFamily: "Poppins",
               fontWeight: 600,
               fontSize: "16px",
               lineHeight: "32px",
-              color: "#FFFFFF",
               textTransform: "none",
               "&:hover": {
-                background: "#1640CC",
+                bgcolor: "primary.dark",
               },
             }}
           >

@@ -16,6 +16,239 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Image from "next/image";
 
+// Navigation items data
+const navItems = [
+  { label: "NFT", href: "#" },
+  { label: "Roadmap", href: "#" },
+  { label: "About Us", href: "#" },
+  { label: "Contact Us", href: "#" },
+];
+
+const dropdownItems = {
+  home: [
+    { label: "Home 1", href: "#" },
+    { label: "Home 2", href: "#" },
+    { label: "Home 3", href: "#" },
+  ],
+  pages: [
+    { label: "Page 1", href: "#" },
+    { label: "Page 2", href: "#" },
+    { label: "Page 3", href: "#" },
+  ],
+};
+
+// Reusable Desktop Navigation Link Component
+interface NavLinkProps {
+  href: string;
+  children: React.ReactNode;
+  sx?: object;
+}
+
+function NavLink({ href, children, sx }: NavLinkProps) {
+  return (
+    <Link
+      href={href}
+      sx={{
+        height: "24px",
+        fontWeight: 400,
+        fontSize: "14px",
+        lineHeight: "24px",
+        color: "text.secondary",
+        textDecoration: "none",
+        flex: "none",
+        flexGrow: 0,
+        cursor: "pointer",
+        transition: "color 0.3s ease",
+        "&:hover": {
+          color: "text.primary",
+        },
+        ...sx,
+      }}
+    >
+      {children}
+    </Link>
+  );
+}
+
+// Reusable Dropdown Component
+interface DropdownProps {
+  label: string;
+  items: { label: string; href: string }[];
+  isOpen: boolean;
+  anchorEl: HTMLElement | null;
+  onOpen: (event: React.MouseEvent<HTMLElement>) => void;
+  onClose: () => void;
+  isBold?: boolean;
+}
+
+function Dropdown({
+  label,
+  items,
+  isOpen,
+  anchorEl,
+  onOpen,
+  onClose,
+  isBold = false,
+}: DropdownProps) {
+  return (
+    <>
+      <Box
+        onClick={onOpen}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "flex-start",
+          padding: 0,
+          height: "24px",
+          flex: "none",
+          flexGrow: 0,
+          cursor: "pointer",
+          "&:hover": {
+            "& .MuiTypography-root": {
+              color: "text.primary",
+            },
+            "& .MuiSvgIcon-root": {
+              color: "text.primary",
+            },
+          },
+        }}
+      >
+        <Typography
+          sx={{
+            height: "24px",
+            fontWeight: isBold ? 700 : 400,
+            fontSize: "14px",
+            lineHeight: "24px",
+            color: isOpen ? "text.primary" : "text.secondary",
+            transition: "color 0.3s ease",
+          }}
+        >
+          {label}
+        </Typography>
+        <ArrowDropDownIcon
+          sx={{
+            width: "24px",
+            height: "24px",
+            color: isOpen ? "text.primary" : "text.secondary",
+            transition: "color 0.3s ease, transform 0.3s ease",
+            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+          }}
+        />
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        open={isOpen}
+        onClose={onClose}
+        sx={{
+          "& .MuiPaper-root": {
+            backgroundColor: "transparent",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(30, 80, 255, 0.3)",
+            borderRadius: "8px",
+            mt: 1,
+          },
+        }}
+      >
+        {items.map((item, index) => (
+          <MenuItem
+            key={index}
+            onClick={onClose}
+            sx={{
+              fontSize: "14px",
+              color: "text.secondary",
+              "&:hover": {
+                color: "text.primary",
+              },
+            }}
+          >
+            {item.label}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+}
+
+// Mobile Dropdown Component
+interface MobileDropdownProps {
+  label: string;
+  items: { label: string; href: string }[];
+  isOpen: boolean;
+  onToggle: () => void;
+  isBold?: boolean;
+}
+
+function MobileDropdown({
+  label,
+  items,
+  isOpen,
+  onToggle,
+  isBold = false,
+}: MobileDropdownProps) {
+  return (
+    <Box>
+      <Box
+        onClick={onToggle}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          cursor: "pointer",
+          padding: "8px 0",
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: isBold ? 700 : 400,
+            fontSize: "16px",
+            lineHeight: "24px",
+            color: isBold ? "text.primary" : "text.secondary",
+          }}
+        >
+          {label}
+        </Typography>
+        <ArrowDropDownIcon
+          sx={{
+            color: isBold ? "text.primary" : "text.secondary",
+            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.3s ease",
+          }}
+        />
+      </Box>
+      {isOpen && (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            paddingLeft: "16px",
+            marginTop: "12px",
+          }}
+        >
+          {items.map((item, index) => (
+            <Link
+              key={index}
+              href={item.href}
+              sx={{
+                fontWeight: 400,
+                fontSize: "14px",
+                lineHeight: "20px",
+                color: "text.secondary",
+                textDecoration: "none",
+                "&:hover": {
+                  color: "primary.light",
+                },
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </Box>
+      )}
+    </Box>
+  );
+}
+
 export default function Header() {
   const [homeAnchorEl, setHomeAnchorEl] = useState<null | HTMLElement>(null);
   const [pagesAnchorEl, setPagesAnchorEl] = useState<null | HTMLElement>(null);
@@ -123,323 +356,33 @@ export default function Header() {
           overflow: "hidden",
         }}
       >
-        {/* Dropdown Menu - Home */}
-        <Box
-          onClick={handleHomeClick}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "flex-start",
-            padding: 0,
-            width: "67px",
-            height: "24px",
-            flex: "none",
-            order: 0,
-            flexGrow: 0,
-            cursor: "pointer",
-            "&:hover": {
-              "& .MuiTypography-root": {
-                color: "#FFFFFF",
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#FFFFFF",
-              },
-            },
-          }}
-        >
-          <Typography
-            sx={{
-              width: "43px",
-              height: "24px",
-              fontFamily: "Poppins",
-              fontStyle: "normal",
-              fontWeight: 700,
-              fontSize: "14px",
-              lineHeight: "24px",
-              color: homeOpen ? "#FFFFFF" : "#FFFFFF",
-              transition: "color 0.3s ease",
-            }}
-          >
-            Home
-          </Typography>
-          <ArrowDropDownIcon
-            sx={{
-              width: "24px",
-              height: "24px",
-              color: homeOpen ? "#FFFFFF" : "#FFFFFF",
-              transition: "color 0.3s ease, transform 0.3s ease",
-              transform: homeOpen ? "rotate(180deg)" : "rotate(0deg)",
-            }}
-          />
-        </Box>
-        <Menu
+        {/* Home Dropdown */}
+        <Dropdown
+          label="Home"
+          items={dropdownItems.home}
+          isOpen={homeOpen}
           anchorEl={homeAnchorEl}
-          open={homeOpen}
+          onOpen={handleHomeClick}
           onClose={handleHomeClose}
-          sx={{
-            "& .MuiPaper-root": {
-              backgroundColor: "transparent",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(30, 80, 255, 0.3)",
-              borderRadius: "8px",
-              mt: 1,
-            },
-          }}
-        >
-          <MenuItem
-            onClick={handleHomeClose}
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "14px",
-              color: "#EBEBEB",
-              "&:hover": {
-                backgroundColor: "#1E50FF",
-                color: "#FFFFFF",
-              },
-            }}
-          >
-            Home 1
-          </MenuItem>
-          <MenuItem
-            onClick={handleHomeClose}
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "14px",
-              color: "#EBEBEB",
-              "&:hover": {
-                backgroundColor: "#1E50FF",
-                color: "#FFFFFF",
-              },
-            }}
-          >
-            Home 2
-          </MenuItem>
-          <MenuItem
-            onClick={handleHomeClose}
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "14px",
-              color: "#EBEBEB",
-              "&:hover": {
-                backgroundColor: "#1E50FF",
-                color: "#FFFFFF",
-              },
-            }}
-          >
-            Home 3
-          </MenuItem>
-        </Menu>
+          isBold
+        />
 
-        {/* NFT */}
-        <Link
-          href="#"
-          sx={{
-            width: "25px",
-            height: "24px",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "14px",
-            lineHeight: "24px",
-            color: "#EBEBEB",
-            textDecoration: "none",
-            flex: "none",
-            order: 1,
-            flexGrow: 0,
-            cursor: "pointer",
-            transition: "color 0.3s ease",
-            "&:hover": {
-              color: "#FFFFFF",
-            },
-          }}
-        >
-          NFT
-        </Link>
+        {/* Navigation Links */}
+        {navItems.map((item, index) => (
+          <NavLink key={index} href={item.href}>
+            {item.label}
+          </NavLink>
+        ))}
 
-        {/* Roadmap */}
-        <Link
-          href="#"
-          sx={{
-            width: "70px",
-            height: "24px",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "14px",
-            lineHeight: "24px",
-            color: "#EBEBEB",
-            textDecoration: "none",
-            flex: "none",
-            order: 2,
-            flexGrow: 0,
-            cursor: "pointer",
-            transition: "color 0.3s ease",
-            "&:hover": {
-              color: "#FFFFFF",
-            },
-          }}
-        >
-          Roadmap
-        </Link>
-
-        {/* About Us */}
-        <Link
-          href="#"
-          sx={{
-            width: "63px",
-            height: "24px",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "14px",
-            lineHeight: "24px",
-            color: "#EBEBEB",
-            textDecoration: "none",
-            flex: "none",
-            order: 3,
-            flexGrow: 0,
-            cursor: "pointer",
-            transition: "color 0.3s ease",
-            "&:hover": {
-              color: "#FFFFFF",
-            },
-          }}
-        >
-          About Us
-        </Link>
-
-        {/* Contact Us */}
-        <Link
-          href="#"
-          sx={{
-            width: "78px",
-            height: "24px",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "14px",
-            lineHeight: "24px",
-            color: "#EBEBEB",
-            textDecoration: "none",
-            flex: "none",
-            order: 4,
-            flexGrow: 0,
-            cursor: "pointer",
-            transition: "color 0.3s ease",
-            "&:hover": {
-              color: "#FFFFFF",
-            },
-          }}
-        >
-          Contact Us
-        </Link>
-
-        {/* Dropdown Menu - Pages */}
-        <Box
-          onClick={handlePagesClick}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "flex-start",
-            padding: 0,
-            width: "68px",
-            height: "24px",
-            flex: "none",
-            order: 5,
-            flexGrow: 0,
-            cursor: "pointer",
-            "&:hover": {
-              "& .MuiTypography-root": {
-                color: "#FFFFFF",
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#FFFFFF",
-              },
-            },
-          }}
-        >
-          <Typography
-            sx={{
-              width: "44px",
-              height: "24px",
-              fontFamily: "Poppins",
-              fontStyle: "normal",
-              fontWeight: 400,
-              fontSize: "14px",
-              lineHeight: "24px",
-              color: pagesOpen ? "#FFFFFF" : "#EBEBEB",
-              transition: "color 0.3s ease",
-            }}
-          >
-            Pages
-          </Typography>
-          <ArrowDropDownIcon
-            sx={{
-              width: "24px",
-              height: "24px",
-              color: pagesOpen ? "#FFFFFF" : "#EBEBEB",
-              transition: "color 0.3s ease, transform 0.3s ease",
-              transform: pagesOpen ? "rotate(180deg)" : "rotate(0deg)",
-            }}
-          />
-        </Box>
-        <Menu
+        {/* Pages Dropdown */}
+        <Dropdown
+          label="Pages"
+          items={dropdownItems.pages}
+          isOpen={pagesOpen}
           anchorEl={pagesAnchorEl}
-          open={pagesOpen}
+          onOpen={handlePagesClick}
           onClose={handlePagesClose}
-          sx={{
-            "& .MuiPaper-root": {
-              backgroundColor: "transparent",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(30, 80, 255, 0.3)",
-              borderRadius: "8px",
-              mt: 1,
-            },
-          }}
-        >
-          <MenuItem
-            onClick={handlePagesClose}
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "14px",
-              color: "#EBEBEB",
-              "&:hover": {
-                backgroundColor: "#1E50FF",
-                color: "#FFFFFF",
-              },
-            }}
-          >
-            Page 1
-          </MenuItem>
-          <MenuItem
-            onClick={handlePagesClose}
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "14px",
-              color: "#EBEBEB",
-              "&:hover": {
-                backgroundColor: "#1E50FF",
-                color: "#FFFFFF",
-              },
-            }}
-          >
-            Page 2
-          </MenuItem>
-          <MenuItem
-            onClick={handlePagesClose}
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "14px",
-              color: "#EBEBEB",
-              "&:hover": {
-                backgroundColor: "#1E50FF",
-                color: "#FFFFFF",
-              },
-            }}
-          >
-            Page 3
-          </MenuItem>
-        </Menu>
+        />
       </Box>
 
       {/* Desktop Button */}
@@ -455,7 +398,7 @@ export default function Header() {
           width: { md: "auto", lg: "115px" },
           minWidth: "100px",
           height: "40px",
-          background: "#1E50FF",
+          bgcolor: "primary.main",
           borderRadius: "8px",
           flex: "0 0 auto",
           order: 2,
@@ -463,7 +406,7 @@ export default function Header() {
           textTransform: "none",
           transition: "all 0.3s ease",
           "&:hover": {
-            background: "#1640CC",
+            bgcolor: "primary.dark",
             transform: "translateY(-2px)",
             boxShadow: "0 4px 12px rgba(30, 80, 255, 0.4)",
           },
@@ -476,12 +419,9 @@ export default function Header() {
           sx={{
             width: "auto",
             height: "24px",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
             fontWeight: 600,
             fontSize: "14px",
             lineHeight: "24px",
-            color: "#FFFFFF",
             whiteSpace: "nowrap",
           }}
         >
@@ -495,9 +435,8 @@ export default function Header() {
         sx={{
           display: { xs: "flex", md: "none" },
           marginLeft: "auto",
-          color: "#FFFFFF",
           "&:hover": {
-            background: "rgba(255, 255, 255, 0.1)",
+            bgcolor: "rgba(255, 255, 255, 0.1)",
           },
         }}
       >
@@ -531,9 +470,8 @@ export default function Header() {
             <IconButton
               onClick={toggleMobileMenu}
               sx={{
-                color: "#FFFFFF",
                 "&:hover": {
-                  background: "rgba(255, 255, 255, 0.1)",
+                  bgcolor: "rgba(255, 255, 255, 0.1)",
                 },
               }}
             >
@@ -550,270 +488,43 @@ export default function Header() {
             }}
           >
             {/* Home Dropdown */}
-            <Box>
-              <Box
-                onClick={toggleMobileHome}
+            <MobileDropdown
+              label="Home"
+              items={dropdownItems.home}
+              isOpen={mobileHomeOpen}
+              onToggle={toggleMobileHome}
+              isBold
+            />
+
+            {/* Navigation Links */}
+            {navItems.map((item, index) => (
+              <Link
+                key={index}
+                href={item.href}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  fontWeight: 400,
+                  fontSize: "16px",
+                  lineHeight: "24px",
+                  color: "text.secondary",
+                  textDecoration: "none",
                   cursor: "pointer",
                   padding: "8px 0",
+                  "&:hover": {
+                    color: "text.primary",
+                  },
                 }}
               >
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 700,
-                    fontSize: "16px",
-                    lineHeight: "24px",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  Home
-                </Typography>
-                <ArrowDropDownIcon
-                  sx={{
-                    color: "#FFFFFF",
-                    transform: mobileHomeOpen
-                      ? "rotate(180deg)"
-                      : "rotate(0deg)",
-                    transition: "transform 0.3s ease",
-                  }}
-                />
-              </Box>
-              {mobileHomeOpen && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "12px",
-                    paddingLeft: "16px",
-                    marginTop: "12px",
-                  }}
-                >
-                  <Link
-                    href="#"
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontWeight: 400,
-                      fontSize: "14px",
-                      lineHeight: "20px",
-                      color: "#EBEBEB",
-                      textDecoration: "none",
-                      "&:hover": {
-                        color: "#5699FF",
-                      },
-                    }}
-                  >
-                    Home 1
-                  </Link>
-                  <Link
-                    href="#"
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontWeight: 400,
-                      fontSize: "14px",
-                      lineHeight: "20px",
-                      color: "#EBEBEB",
-                      textDecoration: "none",
-                      "&:hover": {
-                        color: "#5699FF",
-                      },
-                    }}
-                  >
-                    Home 2
-                  </Link>
-                  <Link
-                    href="#"
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontWeight: 400,
-                      fontSize: "14px",
-                      lineHeight: "20px",
-                      color: "#EBEBEB",
-                      textDecoration: "none",
-                      "&:hover": {
-                        color: "#5699FF",
-                      },
-                    }}
-                  >
-                    Home 3
-                  </Link>
-                </Box>
-              )}
-            </Box>
-
-            <Link
-              href="#"
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "24px",
-                color: "#EBEBEB",
-                textDecoration: "none",
-                cursor: "pointer",
-                padding: "8px 0",
-                "&:hover": {
-                  color: "#FFFFFF",
-                },
-              }}
-            >
-              NFT
-            </Link>
-
-            <Link
-              href="#"
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "24px",
-                color: "#EBEBEB",
-                textDecoration: "none",
-                cursor: "pointer",
-                padding: "8px 0",
-                "&:hover": {
-                  color: "#FFFFFF",
-                },
-              }}
-            >
-              Roadmap
-            </Link>
-
-            <Link
-              href="#"
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "24px",
-                color: "#EBEBEB",
-                textDecoration: "none",
-                cursor: "pointer",
-                padding: "8px 0",
-                "&:hover": {
-                  color: "#FFFFFF",
-                },
-              }}
-            >
-              About Us
-            </Link>
-
-            <Link
-              href="#"
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "24px",
-                color: "#EBEBEB",
-                textDecoration: "none",
-                cursor: "pointer",
-                padding: "8px 0",
-                "&:hover": {
-                  color: "#FFFFFF",
-                },
-              }}
-            >
-              Contact Us
-            </Link>
+                {item.label}
+              </Link>
+            ))}
 
             {/* Pages Dropdown */}
-            <Box>
-              <Box
-                onClick={toggleMobilePages}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  cursor: "pointer",
-                  padding: "8px 0",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 400,
-                    fontSize: "16px",
-                    lineHeight: "24px",
-                    color: "#EBEBEB",
-                  }}
-                >
-                  Pages
-                </Typography>
-                <ArrowDropDownIcon
-                  sx={{
-                    color: "#EBEBEB",
-                    transform: mobilePagesOpen
-                      ? "rotate(180deg)"
-                      : "rotate(0deg)",
-                    transition: "transform 0.3s ease",
-                  }}
-                />
-              </Box>
-              {mobilePagesOpen && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "12px",
-                    paddingLeft: "16px",
-                    marginTop: "12px",
-                  }}
-                >
-                  <Link
-                    href="#"
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontWeight: 400,
-                      fontSize: "14px",
-                      lineHeight: "20px",
-                      color: "#EBEBEB",
-                      textDecoration: "none",
-                      "&:hover": {
-                        color: "#5699FF",
-                      },
-                    }}
-                  >
-                    Page 1
-                  </Link>
-                  <Link
-                    href="#"
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontWeight: 400,
-                      fontSize: "14px",
-                      lineHeight: "20px",
-                      color: "#EBEBEB",
-                      textDecoration: "none",
-                      "&:hover": {
-                        color: "#5699FF",
-                      },
-                    }}
-                  >
-                    Page 2
-                  </Link>
-                  <Link
-                    href="#"
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontWeight: 400,
-                      fontSize: "14px",
-                      lineHeight: "20px",
-                      color: "#EBEBEB",
-                      textDecoration: "none",
-                      "&:hover": {
-                        color: "#5699FF",
-                      },
-                    }}
-                  >
-                    Page 3
-                  </Link>
-                </Box>
-              )}
-            </Box>
+            <MobileDropdown
+              label="Pages"
+              items={dropdownItems.pages}
+              isOpen={mobilePagesOpen}
+              onToggle={toggleMobilePages}
+            />
 
             {/* Mobile Join Us Button */}
             <Button
@@ -824,15 +535,13 @@ export default function Header() {
               sx={{
                 marginTop: "16px",
                 padding: "12px 32px",
-                background: "#1E50FF",
+                bgcolor: "primary.main",
                 borderRadius: "8px",
-                fontFamily: "Poppins",
                 fontWeight: 600,
                 fontSize: "16px",
-                color: "#FFFFFF",
                 textTransform: "none",
                 "&:hover": {
-                  background: "#1640CC",
+                  bgcolor: "primary.dark",
                 },
               }}
             >

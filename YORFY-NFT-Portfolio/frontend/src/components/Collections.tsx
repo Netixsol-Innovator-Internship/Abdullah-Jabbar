@@ -28,7 +28,8 @@ function NFTCard({ image, title }: NFTCardProps) {
         width: { xs: "100%", sm: "100%", md: "368px" },
         maxWidth: { xs: "100%", sm: "400px", md: "368px" },
         minHeight: { xs: "auto", md: "432px" },
-        border: "1px solid #1E50FF",
+        border: "1px solid",
+        borderColor: "primary.main",
         borderRadius: "8px",
         margin: { xs: "0 auto", md: "0" },
       }}
@@ -79,7 +80,8 @@ function NFTCard({ image, title }: NFTCardProps) {
               position: "absolute",
               width: { xs: "32px", sm: "40px" },
               height: { xs: "32px", sm: "40px" },
-              background: "linear-gradient(180deg, #1E50FF 0%, #5699FF 100%)",
+              background: (theme) =>
+                `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 100%)`,
               borderRadius: "50%",
               top: 0,
               left: 0,
@@ -108,11 +110,9 @@ function NFTCard({ image, title }: NFTCardProps) {
         <Typography
           variant="h5"
           sx={{
-            fontFamily: "Poppins",
             fontWeight: 700,
             fontSize: { xs: "18px", sm: "20px", md: "24px" },
             lineHeight: { xs: "28px", sm: "32px", md: "40px" },
-            color: "#FFFFFF",
             flexGrow: 1,
           }}
         >
@@ -158,9 +158,9 @@ export default function Collections({ sx }: CollectionsProps) {
           width: "400px",
           height: "400px",
           left: { xs: "-200px", md: "-99px" },
-          top: { sm:"50%", md: "128px" },
+          top: { sm: "50%", md: "128px" },
           bottom: { xs: 0 },
-          background: "#1E50FF",
+          bgcolor: "primary.main",
           opacity: 0.5,
           filter: "blur(120px)",
           borderRadius: "50%",
@@ -177,7 +177,7 @@ export default function Collections({ sx }: CollectionsProps) {
           height: "400px",
           left: { xs: "calc(100% - 200px)", md: "calc(100% + 99px - 400px)" },
           top: { xs: "150px", md: "232px" },
-          background: "#AA00FF",
+          bgcolor: "custom.purple",
           opacity: 0.5,
           filter: "blur(120px)",
           borderRadius: "50%",
@@ -202,12 +202,11 @@ export default function Collections({ sx }: CollectionsProps) {
         <Typography
           variant="h6"
           sx={{
-            fontFamily: "Poppins",
             fontWeight: 700,
             fontSize: "16px",
             lineHeight: "32px",
             textAlign: "center",
-            color: "#5699FF",
+            color: "primary.light",
             width: "100%",
           }}
         >
@@ -218,12 +217,10 @@ export default function Collections({ sx }: CollectionsProps) {
         <Typography
           variant="h2"
           sx={{
-            fontFamily: "Poppins",
             fontWeight: 700,
             fontSize: { xs: "32px", sm: "40px", md: "56px" },
             lineHeight: { xs: "40px", sm: "56px", md: "72px" },
             textAlign: "center",
-            color: "#FFFFFF",
             width: "100%",
           }}
         >
@@ -233,12 +230,11 @@ export default function Collections({ sx }: CollectionsProps) {
         {/* Description */}
         <Typography
           sx={{
-            fontFamily: "Poppins",
             fontWeight: 400,
             fontSize: "16px",
             lineHeight: "32px",
             textAlign: "center",
-            color: "#EBEBEB",
+            color: "text.secondary",
             width: "100%",
           }}
         >
@@ -280,18 +276,18 @@ export default function Collections({ sx }: CollectionsProps) {
           gap: "8px",
           width: "222px",
           height: "48px",
-          border: "1px solid #FFFFFF",
+          border: "1px solid",
+          borderColor: "text.primary",
+          color: "text.primary",
           borderRadius: "8px",
-          fontFamily: "Poppins",
           fontWeight: 600,
           fontSize: "16px",
           lineHeight: "32px",
-          color: "#FFFFFF",
           textTransform: "none",
           position: "relative",
           zIndex: 1,
           "&:hover": {
-            border: "1px solid #5699FF",
+            borderColor: "primary.light",
             backgroundColor: "rgba(86, 153, 255, 0.1)",
           },
         }}
