@@ -3,6 +3,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SaleBanner from "@/components/SaleBanner";
+import TailBanner from "@/components/SaleBannerTail";
 import Highlight from "@/components/Highlight";
 import Collections from "@/components/Collections";
 import Community from "@/components/Community";
@@ -34,6 +35,7 @@ export default function Home() {
         <SaleBanner
           sx={{ marginTop: { xs: "50px", sm: "70px", md: "90px" } }}
         />
+        <TailBanner/>
         <Collaborations
           sx={{ marginTop: { xs: "20px", sm: "30px", md: "40px" } }}
         />

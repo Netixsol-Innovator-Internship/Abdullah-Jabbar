@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Tailwind v4 import - single import that includes preflight + utilities for this project's tailwind v4 setup */
 @import "tailwindcss";
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+
+/* If you need to declare small custom utilities for Tailwind's processor, do it here using @layer utilities.
+   Example:
+   @layer utilities {
+     .test-bg { @apply bg-purple }
+   }
+*/
 
 :root {
   --background: #ffffff;

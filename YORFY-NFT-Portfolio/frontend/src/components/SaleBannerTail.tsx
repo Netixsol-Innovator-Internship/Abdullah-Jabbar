@@ -8,42 +8,28 @@ interface SaleBannerProps {
 
 export default function SaleBanner({ sx }: SaleBannerProps) {
   return (
-    <Box
-      sx={{
-        width: "100vw",
-        marginLeft: "50%",
-        transform: "translateX(-50%)",
-        bgcolor: "custom.purple",
-        overflow: "hidden",
-        ...sx,
-      }}
+    <Box    
+      className="w-screen ml-[50%] -translate-x-1/2 transform overflow-hidden"
+      sx={{ bgcolor: "custom.purple", ...sx }}
     >
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: { xs: "16px 40px", sm: "20px 60px", md: "24px 115px" },
-          paddingLeft:{lg:"130px"},
-          gap: { xs: "10%", sm: "12%", md: "1%" },
-          maxWidth: { xs: "100%", lg: "1280px" },
-          minHeight: { xs: "64px", sm: "80px", md: "96px" },
-          margin: "0 auto",
-        }}
+        className="flex flex-row justify-center items-center max-w-7xl mx-auto 
+            gap-8 sm:gap-12 md:gap-16 lg:gap-20 xl:gap-24
+            px-5 sm:px-8 md:px-14 lg:px-20
+            py-4 sm:py-5 md:py-6 
+            min-h-16 sm:min-h-20 md:min-h-24"
       >
         {/* Discount Sale - First */}
         <Typography
+          className="flex-none whitespace-nowrap md:whitespace-normal"
           sx={{
-            width: { xs: "auto", md: "272px" },
+            color: "text.primary",
+            fontFamily: "Poppins, Arial, sans-serif",
             fontWeight: 700,
             fontSize: { xs: "18px", sm: "24px", md: "32px" },
             lineHeight: { xs: "28px", sm: "36px", md: "48px" },
             textAlign: "center",
-            flex: { xs: "none", md: "none" },
             order: 0,
-            flexGrow: { xs: 0, md: 0, lg: 1 },
-            whiteSpace: { xs: "nowrap", md: "normal" },
           }}
         >
           Discount Sale
@@ -51,13 +37,15 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
 
         {/* Up to 40% - First */}
         <Typography
+          className="flex-none whitespace-nowrap md:whitespace-normal"
           sx={{
-            width: { xs: "auto", md: "272px" },
+            fontFamily: "Poppins, Arial, sans-serif",
             fontWeight: 700,
             fontSize: { xs: "18px", sm: "24px", md: "32px" },
             lineHeight: { xs: "28px", sm: "36px", md: "48px" },
             textAlign: "center",
             color: "transparent",
+            order: 1,
             WebkitTextStroke: (theme) => ({
               xs: `0.8px ${theme.palette.text.primary}`,
               md: `1.2px ${theme.palette.text.primary}`,
@@ -66,10 +54,6 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
               xs: `0.8px ${theme.palette.text.primary}`,
               md: `2px ${theme.palette.text.primary}`,
             }),
-            flex: { xs: "none", md: "none" },
-            order: 1,
-            flexGrow: { xs: 0, md: 0, lg: 1 },
-            whiteSpace: { xs: "nowrap", md: "normal" },
           }}
         >
           Up to 40%
@@ -77,17 +61,16 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
 
         {/* Discount Sale - Second */}
         <Typography
+          className="flex-none whitespace-nowrap md:whitespace-normal"
           sx={{
             display: { xs: "none", sm: "block", md: "block" },
-            width: { xs: "auto", md: "272px" },
+            color: "text.primary",
+            fontFamily: "Poppins, Arial, sans-serif",
             fontWeight: 700,
             fontSize: { xs: "18px", sm: "24px", md: "32px" },
             lineHeight: { xs: "28px", sm: "36px", md: "48px" },
             textAlign: "center",
-            flex: { xs: "none", md: "none" },
             order: 2,
-            flexGrow: { xs: 0, md: 0, lg: 1 },
-            whiteSpace: { xs: "nowrap", md: "normal" },
           }}
         >
           Discount Sale
@@ -95,19 +78,18 @@ export default function SaleBanner({ sx }: SaleBannerProps) {
 
         {/* Up to 40% - Second */}
         <Typography
+          className="flex-none"
           sx={{
             display: { xs: "none", lg: "block" },
-            width: "272px",
+            fontFamily: "Poppins, Arial, sans-serif",
             fontWeight: 700,
             fontSize: "32px",
             lineHeight: "48px",
             textAlign: "center",
             color: "transparent",
+            order: 3,
             WebkitTextStroke: (theme) => `1.2px ${theme.palette.text.primary}`,
             textStroke: (theme) => `2px ${theme.palette.text.primary}`,
-            flex: "none",
-            order: 3,
-            flexGrow: { md: 0, lg: 1 },
           }}
         >
           Up to 40%
