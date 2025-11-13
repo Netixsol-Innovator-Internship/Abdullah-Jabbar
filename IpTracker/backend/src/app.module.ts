@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-import { IpLoggerModule } from './ip-logger/ip-logger.module';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { IpLoggerModule } from './ip-logger/ip-logger.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), // optional but recommended
-    // TypeORM / database temporarily disabled for local dev. To re-enable,
-    // restore the TypeOrmModule.forRootAsync(...) block and install the DB driver.
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRoot(
+      process.env.MONGODB_URI || 'mongodb://localhost:27017/ip-tracker',
+    ),
     IpLoggerModule,
   ],
 })

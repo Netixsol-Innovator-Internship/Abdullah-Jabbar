@@ -1,6 +1,8 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { IpLoggerService } from './ip-logger.service';
+import * as fs from 'fs';
+import * as path from 'path';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const ipaddr = require('ipaddr.js');
 
@@ -58,22 +60,29 @@ function normalizeIp(ip: string | null | undefined): string | null {
  * - If app.set('trust proxy') is enabled, req.ip will be populated by Express.
  * - Otherwise check common headers in order: X-Forwarded-For, CF-Connecting-IP, X-Real-IP
  * - All IPs are normalized to canonical format
- * - For X-Forwarded-For, skip private IPs and return first public IP
+ * - For X-Forwarded-For, optionally skip private IPs based on FILTER_PRIVATE_IPS env var
  */
 function extractIp(req: Request): string | null {
   // Express sets req.ip when trust proxy is enabled
   if (req.ip) return normalizeIp(req.ip);
 
-  // X-Forwarded-For may contain a list, find first public IP (skip private/internal ones)
+  const filterPrivate = process.env.FILTER_PRIVATE_IPS !== 'false';
+
+  // X-Forwarded-For may contain a list
   const xff = req.headers['x-forwarded-for'];
   if (typeof xff === 'string' && xff.length) {
     const ips = xff.split(',').map((ip) => ip.trim());
-    for (const ip of ips) {
-      if (!isPrivateIp(ip)) {
-        return normalizeIp(ip);
+
+    if (filterPrivate) {
+      // Find first public IP (skip private/internal ones)
+      for (const ip of ips) {
+        if (!isPrivateIp(ip)) {
+          return normalizeIp(ip);
+        }
       }
     }
-    // If all are private, return the first one anyway
+
+    // Return the first IP (if filtering disabled or all are private)
     return normalizeIp(ips[0]);
   }
 
@@ -86,30 +95,119 @@ function extractIp(req: Request): string | null {
   return normalizeIp(req.socket?.remoteAddress ?? null);
 }
 
+/**
+ * Extract all IPs from request (for testing/debugging)
+ * Returns an array of all IPs found in headers
+ */
+function extractAllIps(req: Request): string[] {
+  const ips: string[] = [];
+
+  if (req.ip) ips.push(normalizeIp(req.ip) || '');
+
+  const xff = req.headers['x-forwarded-for'];
+  if (typeof xff === 'string' && xff.length) {
+    const xffIps = xff
+      .split(',')
+      .map((ip) => normalizeIp(ip.trim()))
+      .filter(Boolean);
+    ips.push(...(xffIps as string[]));
+  }
+
+  const cf = req.headers['cf-connecting-ip'];
+  if (typeof cf === 'string' && cf.length) ips.push(normalizeIp(cf) || '');
+
+  const xr = req.headers['x-real-ip'];
+  if (typeof xr === 'string' && xr.length) ips.push(normalizeIp(xr) || '');
+
+  const remote = req.socket?.remoteAddress;
+  if (remote) ips.push(normalizeIp(remote) || '');
+
+  return [...new Set(ips.filter(Boolean))];
+}
+
 @Injectable()
 export class IpLoggerMiddleware implements NestMiddleware {
   constructor(private readonly logger: IpLoggerService) {}
 
+  private logToFile(data: any) {
+    const logsDir = path.join(process.cwd(), 'logs');
+    const logFile = path.join(logsDir, 'ip-requests.log');
+
+    // Ensure logs directory exists
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir, { recursive: true });
+    }
+
+    // Append to log file
+    fs.appendFileSync(logFile, JSON.stringify(data) + '\n');
+  }
+
   async use(req: Request, res: Response, next: NextFunction) {
     try {
-      const ip = extractIp(req);
-      const ua = req.get('User-Agent') ?? undefined;
-      // Decide whether you want to persist raw IPs — default: false
       const storeRaw = process.env.STORE_RAW_IP === 'true';
+      const logToFile = process.env.LOG_TO_FILE === 'true';
+      const ua = req.get('User-Agent') ?? undefined;
+      const requestPath = req.originalUrl ?? req.url;
 
-      // Fire and forget: don't block request on DB write
-      this.logger
-        .log({
+      if (logToFile) {
+        // Local testing mode: log raw data to file
+        const allIps = extractAllIps(req);
+        const primaryIp = extractIp(req);
+
+        const logData = {
+          primaryIp,
+          allIps: allIps.length > 1 ? allIps : undefined,
+          userAgent: ua,
+          method: req.method,
+          path: requestPath,
+          headers: {
+            'x-forwarded-for': req.headers['x-forwarded-for'],
+            'cf-connecting-ip': req.headers['cf-connecting-ip'],
+            'x-real-ip': req.headers['x-real-ip'],
+          },
+          createdAt: new Date().toISOString(),
+        };
+
+        this.logToFile(logData);
+      } else {
+        // Production mode: log to MongoDB
+        const ip = extractIp(req);
+
+        // Determine which collection to log to based on path
+        const logData = {
           ip,
           storeRaw,
           userAgent: ua,
           method: req.method,
-          path: req.originalUrl ?? req.url,
-        })
-        .catch(() => {
-          // optionally log DB error somewhere; avoid throwing
-          // console.error('ip log failed');
-        });
+          path: requestPath,
+        };
+
+        // Route to appropriate collection
+        if (requestPath === '/' && req.method === 'GET') {
+          // Log GET / to main ip_logs collection
+          this.logger.log(logData).catch(() => {
+            // console.error('ip log failed');
+          });
+        } else if (requestPath.match(/^\/products?\/\w+/i)) {
+          // Log /product/:id or /products/:id to separate collection per product
+          const match = requestPath.match(/^\/products?\/([\w-]+)/i);
+          const productId = match ? match[1] : 'unknown';
+
+          this.logger
+            .logProduct({
+              productId,
+              ...logData,
+            })
+            .catch(() => {
+              // console.error('product log failed');
+            });
+        } else {
+          // Log everything else to ip_other_logs
+          this.logger.logOther(logData).catch(() => {
+            // console.error('other log failed');
+          });
+        }
+      }
     } finally {
       next();
     }

@@ -10,10 +10,19 @@ async function bootstrap() {
   // Be careful: only enable if you control the proxy.
   const server = app.getHttpAdapter()?.getInstance?.() ?? undefined;
   if (server && typeof server.set === 'function') {
-    // Trust only loopback, link-local, and unique local addresses (RFC 1918 private IPs)
-    // This prevents spoofing from untrusted sources while allowing trusted proxies
-    // For specific proxy IPs, use: server.set('trust proxy', ['192.168.1.1', '10.0.0.1']);
-    server.set('trust proxy', 'loopback, linklocal, uniquelocal');
+    // In production (Vercel), trust the proxy infrastructure
+    // In development, only trust local/private proxies to prevent spoofing
+    const isProduction =
+      process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+
+    if (isProduction) {
+      // Trust Vercel's proxy infrastructure
+      server.set('trust proxy', true);
+    } else {
+      // Development: Trust only loopback, link-local, and unique local addresses
+      // This prevents spoofing from untrusted sources while allowing local testing
+      server.set('trust proxy', 'loopback, linklocal, uniquelocal');
+    }
   }
 
   const port = process.env.PORT ? Number(process.env.PORT) : 3000;

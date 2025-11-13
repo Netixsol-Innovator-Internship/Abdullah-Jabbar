@@ -1,9 +1,21 @@
 import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { IpLoggerService } from './ip-logger.service';
 import { IpLoggerMiddleware } from './ip-logger.middleware';
+import { IpLoggerController } from './ip-logger.controller';
+import { IpLog, IpLogSchema } from './ip-log.entity';
+import { IpResourceLog, IpResourceLogSchema } from './ip-resource-log.entity';
+import { IpOtherLog, IpOtherLogSchema } from './ip-other-log.entity';
 
 @Module({
-  // Database-backed repository temporarily removed; service now writes to a file.
+  imports: [
+    MongooseModule.forFeature([
+      { name: IpLog.name, schema: IpLogSchema },
+      { name: IpResourceLog.name, schema: IpResourceLogSchema },
+      { name: IpOtherLog.name, schema: IpOtherLogSchema },
+    ]),
+  ],
+  controllers: [IpLoggerController],
   providers: [IpLoggerService],
   exports: [IpLoggerService],
 })

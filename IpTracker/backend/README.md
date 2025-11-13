@@ -26,8 +26,10 @@ This application captures and logs IP addresses from all incoming HTTP requests 
 
 ### 📊 Logging
 - **File-based Logging**: Stores logs in `logs/ip-requests.log` as newline-delimited JSON
+- **Path-Based Tracking**: Optional separate log files per route/resource (e.g., track IPs per product)
 - **Comprehensive Data**: Captures IP, user agent, HTTP method, request path, and timestamp
 - **Non-blocking**: Fire-and-forget logging doesn't slow down request processing
+- **Query API**: Built-in endpoints to retrieve IPs by path and generate analytics
 
 ### 🚫 Virtual Adapter Filtering
 Automatically filters out virtual network adapters on startup:
@@ -60,6 +62,7 @@ PORT=3000
 # IP Logging Configuration
 STORE_RAW_IP=false          # Set to 'true' to store raw IPs (privacy risk)
 IP_SALT=your_secret_salt    # Custom salt for IP hashing (change in production!)
+ENABLE_PATH_LOGGING=false   # Set to 'true' to create separate log files per path
 ```
 
 **Important**: 
