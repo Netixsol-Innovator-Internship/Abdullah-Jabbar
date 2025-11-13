@@ -1,0 +1,78 @@
+1. Proxy or Load Balancer Interference
+
+In production (especially with services like Nginx, Cloudflare, AWS ELB, or Vercel), the actual user request passes through one or more proxies before hitting your backend.
+
+The IP you get from req.ip or request.socket.remoteAddress might be the proxy’s IP, not the real client’s.
+
+Fix: Enable app.set('trust proxy', true) (for Express/Nest) or the equivalent in Fastify, and read from x-forwarded-for headers.
+
+2. Misconfigured “trust proxy”
+
+If you set trust proxy incorrectly, you might trust all forwarded IPs, including malicious ones.
+
+Attackers could spoof headers like X-Forwarded-For and make you think the request came from another IP.
+
+Fix: Only trust proxy headers from your own infrastructure (e.g., Cloudflare, Nginx), not blindly from all requests.
+
+3. IPv6 vs IPv4 Formats
+
+Clients may connect using IPv6 addresses (like ::1 or 2001:0db8::1).
+
+If your code or database assumes IPv4 format, it can break or log inconsistent data.
+
+Fix: Normalize the address (e.g., using libraries like ipaddr.js) before storing or hashing.
+
+4. Localhost / Development Confusion
+
+In local testing, you’ll almost always see ::1 (IPv6 localhost) or 127.0.0.1.
+
+You can’t simulate real client IPs locally without a proxy or deployment environment.
+
+5. Reverse Proxies and CDN Masking
+
+CDNs like Cloudflare or Fastly may replace the IP with their own network IPs.
+
+The real client IP might only be in a special header (CF-Connecting-IP, True-Client-IP, etc.).
+
+Fix: Read from those vendor-specific headers if applicable.
+
+6. VPNs and Mobile Networks
+
+Many users connect via VPNs, mobile carriers, or corporate networks that share public IPs.
+
+You can’t reliably identify unique users from IP alone.
+
+Fix: Combine IP with user-agent or session tokens if uniqueness is needed.
+
+7. Privacy and Legal Concerns
+
+Under GDPR and similar laws, an IP address can be considered personal data.
+
+Storing raw IPs (especially tied to user data) might create compliance risks.
+
+Fix: Hash or anonymize IPs before logging (like you did — good move).
+
+8. Serverless and Edge Environments
+
+If you deploy on platforms like Vercel, Netlify, or AWS Lambda, the environment may abstract away the TCP layer.
+
+Sometimes only headers remain available for IP extraction — no direct socket info.
+
+Fix: Always read from x-forwarded-for when behind serverless load balancers.
+
+9. Multiple IPs in Forwarded Headers
+
+The X-Forwarded-For header can contain a list of IPs like:
+
+X-Forwarded-For: 203.0.113.5, 70.41.3.18, 150.172.238.178
+
+
+The leftmost IP is usually the real client, but order may vary depending on proxy setup.
+
+Fix: Always parse and take the first valid non-private IP in the list.
+
+10. IPv4/IPv6 Dual Stack and NAT
+
+Large ISPs often use Carrier-Grade NAT — hundreds of users share one public IP.
+
+A single IP might represent many devices, so it’s not a unique identifier.
