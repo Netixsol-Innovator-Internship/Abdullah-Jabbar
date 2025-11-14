@@ -182,30 +182,45 @@ export class IpLoggerMiddleware implements NestMiddleware {
           path: requestPath,
         };
 
-        // Route to appropriate collection
+        // Route to appropriate collection with retry logic
+        const logWithRetry = async (logFn: Promise<any>, retries = 2) => {
+          for (let i = 0; i <= retries; i++) {
+            try {
+              await logFn;
+              return; // Success
+            } catch (error) {
+              if (i === retries) {
+                // Final attempt failed - log to console for debugging
+                if (process.env.NODE_ENV !== 'production') {
+                  console.error('Failed to log after retries:', error.message);
+                }
+              } else {
+                // Wait before retry (exponential backoff)
+                await new Promise((resolve) =>
+                  setTimeout(resolve, 100 * (i + 1)),
+                );
+              }
+            }
+          }
+        };
+
         if (requestPath === '/' && req.method === 'GET') {
           // Log GET / to main ip_logs collection
-          this.logger.log(logData).catch(() => {
-            // console.error('ip log failed');
-          });
+          logWithRetry(this.logger.log(logData));
         } else if (requestPath.match(/^\/products?\/\w+/i)) {
           // Log /product/:id or /products/:id to separate collection per product
           const match = requestPath.match(/^\/products?\/([\w-]+)/i);
           const productId = match ? match[1] : 'unknown';
 
-          this.logger
-            .logProduct({
+          logWithRetry(
+            this.logger.logProduct({
               productId,
               ...logData,
-            })
-            .catch(() => {
-              // console.error('product log failed');
-            });
+            }),
+          );
         } else {
           // Log everything else to ip_other_logs
-          this.logger.logOther(logData).catch(() => {
-            // console.error('other log failed');
-          });
+          logWithRetry(this.logger.logOther(logData));
         }
       }
     } finally {
